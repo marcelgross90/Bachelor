@@ -1,11 +1,8 @@
 package de.fiw.fhws.lecturers;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,7 +39,6 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 		setUpToolbar();
 
-
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setHasFixedSize(true);
 
@@ -73,8 +69,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 			@Override
 			public void onError(VolleyError error) {
-				//todo extract string
-				Toast.makeText(LecturerDetailActivity.this, "Fehler", Toast.LENGTH_LONG).show();
+				Toast.makeText(LecturerDetailActivity.this, R.string.load_lecturer_error, Toast.LENGTH_LONG).show();
 			}
 		});
 
@@ -98,7 +93,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				}, 0, 0, null, null,
 				new Response.ErrorListener() {
 					public void onErrorResponse(VolleyError error) {
-						//todo show error
+						Toast.makeText(LecturerDetailActivity.this, R.string.load_image_error, Toast.LENGTH_SHORT).show();
 					}
 				});
 		VolleySingleton.getInstance(this).addToRequestQueue(request);
@@ -109,8 +104,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				onBackPressed();
-				//todo animation
-			//	overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+				overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

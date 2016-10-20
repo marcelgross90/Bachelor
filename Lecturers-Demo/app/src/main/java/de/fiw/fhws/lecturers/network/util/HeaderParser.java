@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.network;
+package de.fiw.fhws.lecturers.network.util;
 
 import java.util.HashMap;
 
@@ -8,7 +8,7 @@ public class HeaderParser {
 		if (linkHeader == null) {
 			return null;
 		}
-
+//todo
 		String[] links = linkHeader.split(",\\s*");
 		HashMap<String, String> linkMap = new HashMap<>();
 

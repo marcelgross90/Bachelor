@@ -15,9 +15,9 @@ import com.android.volley.toolbox.ImageLoader;
 
 public class VolleySingleton {
 	private static VolleySingleton instance;
+	private static Context context;
 	private RequestQueue requestQueue;
 	private ImageLoader imageLoader;
-	private static Context context;
 
 	private VolleySingleton(Context context) {
 		this.context = context;
@@ -50,7 +50,7 @@ public class VolleySingleton {
 		if (requestQueue == null) {
 			int size = (int) ((Runtime.getRuntime().maxMemory() / 1024) / 8);
 			Cache cache = new DiskBasedCache(context.getCacheDir(), size);
-			Network network = new BasicNetwork(new HurlStack());
+			Network network = new BasicNetwork(new CustomHurlStack());
 			requestQueue = new RequestQueue(cache, network);
 			requestQueue.start();
 		}

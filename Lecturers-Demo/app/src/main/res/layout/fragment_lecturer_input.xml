@@ -1,0 +1,147 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:orientation="vertical"
+			  tools:context="de.fiw.fhws.lecturers.fragment.NewLecturerFragment">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_medium">
+
+				<EditText
+					android:id="@+id/editText"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_small"
+					android:ems="10"
+					android:hint="@string/title"
+					android:inputType="textPersonName"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_medium">
+
+				<EditText
+					android:id="@+id/editText2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_small"
+					android:ems="10"
+					android:hint="@string/first_name"
+					android:inputType="textPersonName"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_medium">
+
+				<EditText
+					android:id="@+id/editText3"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_small"
+					android:ems="10"
+					android:hint="@string/last_name"
+					android:inputType="textPersonName"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_medium">
+
+				<EditText
+					android:id="@+id/editText4"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_small"
+					android:ems="10"
+					android:hint="@string/email"
+					android:inputType="textEmailAddress"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_medium">
+
+				<EditText
+					android:id="@+id/editText5"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_small"
+					android:ems="10"
+					android:hint="@string/phone_number"
+					android:inputType="textPersonName"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_medium">
+
+				<EditText
+					android:id="@+id/editText6"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_small"
+					android:ems="10"
+					android:hint="@string/address"
+					android:inputType="textPersonName"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_medium">
+
+				<EditText
+					android:id="@+id/editText7"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_small"
+					android:ems="10"
+					android:hint="@string/room"
+					android:inputType="textPersonName"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_medium">
+
+				<EditText
+					android:id="@+id/editText8"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_small"
+					android:ems="10"
+					android:hint="@string/welearn"
+					android:inputType="textPersonName"/>
+
+			</android.support.design.widget.TextInputLayout>
+		</LinearLayout>
+
+	</ScrollView>
+</LinearLayout>

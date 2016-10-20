@@ -5,9 +5,10 @@ import android.content.Context;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import java.util.List;
 import java.util.Map;
 
-import static de.fiw.fhws.lecturers.network.HeaderParser.getLinks;
+import static de.fiw.fhws.lecturers.network.util.HeaderParser.getLinks;
 
 public class CollectionControlHeaderRequest {
 

@@ -85,23 +85,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-/*	private void loadLecturer() {
-		ObjectRequest objectRequest = new ObjectRequest(MITARBEITER_URL + "/11", Request.Method.GET, null, this, new ObjectRequest.ObjectRequestListener() {
-			@Override
-			public void onResponse(Lecturer lecturer) {
-				assignLecturerToView(lecturer);
-				loadImage(lecturer.getUrlProfileImage());
-			}
-
-			@Override
-			public void onError(VolleyError error) {
-				name.setText(error.getMessage());
-			}
-		});
-
-		objectRequest.sendRequest();
-	}
-
+/*
 	private void loadLecturers() {
 		CollectionRequest collectionRequest = new CollectionRequest(MITARBEITER_URL, this, new CollectionRequest.CollectionRequestListener() {
 			@Override

@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.network;
+package de.fiw.fhws.lecturers.network.util;
 
 /**
  * Created by marcelgross on 14.10.16.

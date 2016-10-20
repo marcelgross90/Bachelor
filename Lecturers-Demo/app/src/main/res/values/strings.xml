@@ -7,9 +7,12 @@
 	<string name="phone_number">Phone Number</string>
 	<string name="address">Address</string>
 	<string name="room">Room</string>
+	<string name="first_name">Firstname</string>
+	<string name="last_name">Lastname</string>
+	<string name="add_lecturer">Add Lecturer</string>
+	<string name="new_lecturer">New Lecturer</string>
+	<string name="save">Save</string>
 
-	<!-- TODO: Remove or change this placeholder text -->
-	<string name="hello_blank_fragment">Hello blank fragment</string>
 	<string name="card_caption_contact">Contact</string>
 	<string name="card_caption_email">E-Mail</string>
 	<string name="card_caption_phone">Phone</string>
@@ -17,4 +20,7 @@
 	<string name="card_caption_office">Office</string>
 	<string name="card_caption_room">Room</string>
 	<string name="card_caption_address">Address</string>
+	<string name="load_image_error">Could not load image</string>
+	<string name="load_lecturer_error">Could not load lecturer</string>
+	<string name="profile_picture">Profile picture</string>
 </resources>

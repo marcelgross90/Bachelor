@@ -23,6 +23,7 @@
 			app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 			<ImageView
+				android:contentDescription="@string/profile_picture"
 				android:id="@+id/ivLecturerPicture"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"

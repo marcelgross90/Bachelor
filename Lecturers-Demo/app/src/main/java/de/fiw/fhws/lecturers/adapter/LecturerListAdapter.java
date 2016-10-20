@@ -16,9 +16,8 @@ import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.model.Lecturer;
 import de.fiw.fhws.lecturers.network.CollectionControlHeaderRequest;
 import de.fiw.fhws.lecturers.network.CollectionRequest;
-import de.fiw.fhws.lecturers.network.LinkParser;
+import de.fiw.fhws.lecturers.network.util.LinkParser;
 import de.fiw.fhws.lecturers.viewholder.LecturerListViewHolder;
-
 
 public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHolder> {
 
@@ -56,7 +55,7 @@ public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHo
 	@Override
 	public void onBindViewHolder(LecturerListViewHolder holder, int position) {
 		// -2 that the data is loaded before you reach end of list
-		if (position == getItemCount()-2) {
+		if (position == getItemCount() - 2) {
 			loadControlHeader();
 		}
 		holder.assignData(lecturerList.get(position));
