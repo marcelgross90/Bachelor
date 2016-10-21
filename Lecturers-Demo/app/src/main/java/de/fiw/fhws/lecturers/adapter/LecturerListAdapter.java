@@ -7,20 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.android.volley.VolleyError;
+import com.owlike.genson.GenericType;
+import com.owlike.genson.Genson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.model.Lecturer;
-import de.fiw.fhws.lecturers.network.CollectionControlHeaderRequest;
-import de.fiw.fhws.lecturers.network.CollectionRequest;
+import de.fiw.fhws.lecturers.network.HttpHeroSingleton;
 import de.fiw.fhws.lecturers.network.util.LinkParser;
 import de.fiw.fhws.lecturers.viewholder.LecturerListViewHolder;
+import de.marcelgross.httphero.HttpHeroResponse;
+import de.marcelgross.httphero.HttpHeroResultListener;
+import de.marcelgross.httphero.request.Request;
 
 public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHolder> {
 
+	private Genson genson;
 	private List<Lecturer> lecturerList;
 	private Context context;
 	private final ActivateProgressBar activateProgressBar;
@@ -36,6 +40,7 @@ public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHo
 	}
 
 	public LecturerListAdapter(ActivateProgressBar activateProgressBar, OnLecturerClickListener lecturerClickListener, Context context, String url) {
+		this.genson = new Genson();
 		this.activateProgressBar = activateProgressBar;
 		this.onLecturerClickListener = lecturerClickListener;
 		this.context = context;
@@ -56,7 +61,7 @@ public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHo
 	public void onBindViewHolder(LecturerListViewHolder holder, int position) {
 		// -2 that the data is loaded before you reach end of list
 		if (position == getItemCount() - 2) {
-			loadControlHeader();
+		//	loadControlHeader();
 		}
 		holder.assignData(lecturerList.get(position));
 	}
@@ -67,7 +72,22 @@ public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHo
 	}
 
 	private void loadControlHeader() {
-		CollectionControlHeaderRequest controlHeaderRequest = new CollectionControlHeaderRequest(selfUrl, context, new CollectionControlHeaderRequest.CollectionControlHeaderRequestListener() {
+		HttpHeroSingleton heroSingleton = HttpHeroSingleton.getInstance();
+		Request.Builder builder = new Request.Builder();
+		builder.setUriTemplate(selfUrl).setMediaType("application/json");
+
+		heroSingleton.getHttpHero().performRequest(builder.get(), new HttpHeroResultListener() {
+			@Override
+			public void onSuccess(HttpHeroResponse httpHeroResponse) {
+				//loadLecturers();
+			}
+
+			@Override
+			public void onFailure() {
+
+			}
+		});
+		/*CollectionControlHeaderRequest controlHeaderRequest = new CollectionControlHeaderRequest(selfUrl, context, new CollectionControlHeaderRequest.CollectionControlHeaderRequestListener() {
 			@Override
 			public void onResponse(int numberOfResults, int totalNumberOfResults, String selfUrl) {
 				if (getItemCount() < totalNumberOfResults) {
@@ -88,26 +108,30 @@ public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHo
 				//todo display error
 			}
 		});
-		controlHeaderRequest.sendRequest();
+		controlHeaderRequest.sendRequest();*/
 	}
 
 	private void loadLecturers(String url) {
 		activateProgressBar.showProgressBar(true);
-		CollectionRequest collectionRequest = new CollectionRequest(url, context, new CollectionRequest.CollectionRequestListener() {
+
+		HttpHeroSingleton heroSingleton = HttpHeroSingleton.getInstance();
+		Request.Builder builder = new Request.Builder();
+		builder.setUriTemplate(url).setMediaType("application/json");
+
+		heroSingleton.getHttpHero().performRequest(builder.get(), new HttpHeroResultListener() {
 			@Override
-			public void onResponse(List<Lecturer> lecturer) {
+			public void onSuccess(HttpHeroResponse httpHeroResponse) {
 				activateProgressBar.showProgressBar(false);
-				lecturerList.addAll(lecturer);
+				android.util.Log.d("mgr", "was here");
+				List<Lecturer> lecturerList = genson.deserialize(httpHeroResponse.getData(), new GenericType<List<Lecturer>>() {});
+				lecturerList.addAll(lecturerList);
 				notifyDataSetChanged();
 			}
 
 			@Override
-			public void onError(VolleyError error) {
-				//todo display error
-				android.util.Log.d("mgr", error.getMessage());
+			public void onFailure() {
+				android.util.Log.d("mgr", "doof");
 			}
 		});
-
-		collectionRequest.sendRequest();
 	}
 }

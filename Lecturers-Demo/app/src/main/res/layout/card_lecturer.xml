@@ -11,7 +11,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<com.android.volley.toolbox.NetworkImageView
+		<ImageView
 			android:id="@+id/profileImg"
 			android:layout_height="170dp"
 			android:layout_width="wrap_content"

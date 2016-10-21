@@ -13,15 +13,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
+
+import com.owlike.genson.Genson;
 
 import de.fiw.fhws.lecturers.adapter.LecturerDetailAdapter;
 import de.fiw.fhws.lecturers.model.Lecturer;
-import de.fiw.fhws.lecturers.network.ObjectRequest;
-import de.fiw.fhws.lecturers.network.VolleySingleton;
+import de.fiw.fhws.lecturers.network.HttpHeroSingleton;
+import de.marcelgross.httphero.HttpHeroResponse;
+import de.marcelgross.httphero.HttpHeroResultListener;
+import de.marcelgross.httphero.request.Request;
 
 public class LecturerDetailActivity extends AppCompatActivity implements View.OnClickListener {
 	private Toolbar toolbar;
@@ -61,7 +61,27 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 	private void loadLecturer() {
 		String selfUrl = getIntent().getExtras().getString("selfUrl");
-		ObjectRequest objectRequest = new ObjectRequest(selfUrl, Request.Method.GET, null, this, new ObjectRequest.ObjectRequestListener() {
+		HttpHeroSingleton heroSingleton = HttpHeroSingleton.getInstance();
+
+		Request.Builder builder = new Request.Builder();
+		builder.setUriTemplate(selfUrl);
+		builder.setMediaType("application/json");
+
+		heroSingleton.getHttpHero().performRequest(builder.get(), new HttpHeroResultListener() {
+			@Override
+			public void onSuccess(HttpHeroResponse httpHeroResponse) {
+				Genson genson = new Genson();
+				Lecturer lecturer = genson.deserialize(httpHeroResponse.getData(), Lecturer.class);
+				setUp(lecturer);
+			}
+
+			@Override
+			public void onFailure() {
+				Toast.makeText(LecturerDetailActivity.this, R.string.load_lecturer_error, Toast.LENGTH_LONG).show();
+			}
+		});
+
+/*		ObjectRequest objectRequest = new ObjectRequest(selfUrl, Request.Method.GET, null, this, new ObjectRequest.ObjectRequestListener() {
 			@Override
 			public void onResponse(Lecturer lecturer) {
 				setUp(lecturer);
@@ -73,7 +93,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 			}
 		});
 
-		objectRequest.sendRequest();
+		objectRequest.sendRequest();*/
 	}
 
 	private void setUp(Lecturer lecturer) {
@@ -82,7 +102,8 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	}
 
 	private void displayLecturerPicture(String pictureUrl) {
-		ImageRequest request = new ImageRequest(pictureUrl,
+		//todo load image
+		/*ImageRequest request = new ImageRequest(pictureUrl,
 				new Response.Listener<Bitmap>() {
 					@Override
 					public void onResponse(Bitmap bitmap) {
@@ -96,7 +117,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 						Toast.makeText(LecturerDetailActivity.this, R.string.load_image_error, Toast.LENGTH_SHORT).show();
 					}
 				});
-		VolleySingleton.getInstance(this).addToRequestQueue(request);
+		VolleySingleton.getInstance(this).addToRequestQueue(request);*/
 	}
 
 	@Override

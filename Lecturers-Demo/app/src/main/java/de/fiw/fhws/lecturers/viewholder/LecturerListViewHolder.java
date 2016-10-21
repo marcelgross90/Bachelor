@@ -6,15 +6,12 @@ import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.adapter.LecturerListAdapter;
 import de.fiw.fhws.lecturers.model.Lecturer;
-import de.fiw.fhws.lecturers.network.VolleySingleton;
 
 public class LecturerListViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 	private Lecturer lecturer;
@@ -30,7 +27,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 	private TextView room;
 	private TextView welearn;
 
-	private NetworkImageView profileImg;
+	private ImageView profileImg;
 
 	@Override
 	public boolean onLongClick(View view) {
@@ -71,7 +68,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 		room = (TextView) itemView.findViewById(R.id.room);
 		welearn = (TextView) itemView.findViewById(R.id.welearn);
 
-		profileImg = (NetworkImageView) itemView.findViewById(R.id.profileImg);
+		profileImg = (ImageView) itemView.findViewById(R.id.profileImg);
 	}
 
 	public void assignData(final Lecturer lecturer) {
@@ -86,9 +83,9 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 			}
 		});
 
-
-		ImageLoader imageLoader = VolleySingleton.getInstance(context).getImageLoader();
-		profileImg.setImageUrl(lecturer.getUrlProfileImage(), imageLoader);
+		//todo load image
+/*		ImageLoader imageLoader = VolleySingleton.getInstance(context).getImageLoader();
+		profileImg.setImageUrl(lecturer.getUrlProfileImage(), imageLoader);*/
 
 		hideUnnecessaryViews(lecturer);
 
