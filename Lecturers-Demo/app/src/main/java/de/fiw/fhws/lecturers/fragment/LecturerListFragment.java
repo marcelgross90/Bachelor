@@ -17,23 +17,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.owlike.genson.GenericType;
+import com.owlike.genson.Genson;
+
+import java.util.List;
+
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.MainActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.adapter.LecturerListAdapter;
 import de.fiw.fhws.lecturers.model.Lecturer;
+import de.fiw.fhws.lecturers.network.HttpHeroSingleton;
+import de.marcelgross.httphero.HttpHeroResponse;
+import de.marcelgross.httphero.HttpHeroResultListener;
+import de.marcelgross.httphero.Link;
+import de.marcelgross.httphero.request.Request;
 
-public class LecturerListFragment extends Fragment implements LecturerListAdapter.ActivateProgressBar, LecturerListAdapter.OnLecturerClickListener {
+public class LecturerListFragment extends Fragment implements LecturerListAdapter.OnLecturerClickListener {
 
+	private final Genson genson = new Genson();
 	private RecyclerView modulesRecyclerView;
-	private RecyclerView.Adapter modulesAdapter;
-	private RecyclerView.LayoutManager modulesLayoutMgr;
+	private LecturerListAdapter modulesAdapter;
+	private LinearLayoutManager modulesLayoutMgr;
 	private ProgressBar progressBar;
-
-
-	public LecturerListFragment() {
-		// Required empty public constructor
-	}
+	private String nextUrl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,22 +54,31 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		View view = inflater.inflate(R.layout.fragment_lecturer_list, container, false);
 
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-		/*//colors progressBar
-		progressBar.getIndeterminateDrawable().setColorFilter(
-				ContextCompat.getColor(getActivity(), R.color.colorPrimary),
-				android.graphics.PorterDuff.Mode.MULTIPLY
-		);*/
+
 		modulesRecyclerView = (RecyclerView) view.findViewById(R.id.lecturer_recycler_view);
-		modulesAdapter = new LecturerListAdapter(this, this, getContext(), "https://apistaging.fiw.fhws.de/mi/api/mitarbeiter/");
+		modulesAdapter = new LecturerListAdapter(this);
 		modulesLayoutMgr = new LinearLayoutManager(getContext());
 
 		modulesRecyclerView.setLayoutManager(modulesLayoutMgr);
 		modulesRecyclerView.setAdapter(modulesAdapter);
+		modulesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				super.onScrolled(recyclerView, dx, dy);
+				int visibleItems = recyclerView.getChildCount();
+				int totalItems = modulesLayoutMgr.getItemCount();
+				int firstVisible = modulesLayoutMgr.findFirstVisibleItemPosition();
+				if (totalItems - visibleItems <= firstVisible + 4
+						&& nextUrl != null && !nextUrl.isEmpty()) {
+					loadLecturers(nextUrl);
+				}
+			}
+		});
 
+		loadLecturers("https://apistaging.fiw.fhws.de/mi/api/mitarbeiter/");
 		return view;
 	}
 
-	@Override
 	public void showProgressBar(final boolean show) {
 		if (isAdded()) {
 			getActivity().runOnUiThread(new Runnable() {
@@ -103,5 +119,34 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void loadLecturers(String url) {
+		showProgressBar(true);
+		HttpHeroSingleton heroSingleton = HttpHeroSingleton.getInstance();
+		Request.Builder builder = new Request.Builder();
+		builder.setUriTemplate(url).setMediaType("application/json");
+
+		heroSingleton.getHttpHero().performRequest(builder.get(), new HttpHeroResultListener() {
+			@Override
+			public void onSuccess(HttpHeroResponse httpHeroResponse) {
+				showProgressBar(false);
+				Link nextLink = httpHeroResponse.getMapRelationTypeToLink().get("next");
+				if (nextLink != null) {
+					nextUrl = nextLink.getUrl();
+				} else {
+					nextUrl = "";
+				}
+				modulesAdapter.addLecturer(
+						genson.deserialize(
+								httpHeroResponse.getData(), new GenericType<List<Lecturer>>() {})
+				);
+			}
+
+			@Override
+			public void onFailure() {
+				android.util.Log.d("mgr", "doof");
+			}
+		});
 	}
 }
