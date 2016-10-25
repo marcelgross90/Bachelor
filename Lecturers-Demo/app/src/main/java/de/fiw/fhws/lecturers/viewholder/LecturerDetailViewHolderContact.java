@@ -30,8 +30,4 @@ public class LecturerDetailViewHolderContact extends RecyclerView.ViewHolder {
 	public void displayPhone(String phone) {
 		this.phone.setText(phone);
 	}
-
-	public void displayWebsite(String website) {
-		this.website.setText(website);
-	}
 }

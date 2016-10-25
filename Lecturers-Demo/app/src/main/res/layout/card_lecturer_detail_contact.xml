@@ -11,7 +11,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_medium">
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,7 +53,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="@string/email"
             android:id="@+id/tvEmailValue"
             android:layout_weight="1"
             android:textColor="@color/card_link_color" />
@@ -77,7 +78,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="@string/phone_number"
             android:id="@+id/tvPhoneValue"
             android:layout_weight="1"
             android:textColor="@color/card_link_color" />
@@ -102,7 +103,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="@string/welearn"
             android:id="@+id/tvWebsiteValue"
             android:layout_weight="1"
             android:textColor="@color/card_link_color" />

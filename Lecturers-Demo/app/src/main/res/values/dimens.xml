@@ -8,4 +8,8 @@
 	<dimen name="spacing_normal">12dp</dimen>
 	<dimen name="spacing_large">16dp</dimen>
 
+	<dimen name="picture_height">170dp</dimen>
+	<dimen name="picture_width">110dp</dimen>
+
+
 </resources>

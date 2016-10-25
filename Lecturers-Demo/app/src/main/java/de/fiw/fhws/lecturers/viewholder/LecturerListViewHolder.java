@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.adapter.LecturerListAdapter;
 import de.fiw.fhws.lecturers.model.Lecturer;
@@ -83,10 +85,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 			}
 		});
 
-		//todo load image
-/*		ImageLoader imageLoader = VolleySingleton.getInstance(context).getImageLoader();
-		profileImg.setImageUrl(lecturer.getUrlProfileImage(), imageLoader);*/
-
+		Picasso.with(context).load(lecturer.getUrlProfileImage()).resizeDimen(R.dimen.picture_width, R.dimen.picture_height).into(profileImg);
 		hideUnnecessaryViews(lecturer);
 
 		title.setText(lecturer.getTitle());

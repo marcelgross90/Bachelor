@@ -13,9 +13,9 @@
 
 		<ImageView
 			android:id="@+id/profileImg"
-			android:layout_height="170dp"
+			android:layout_height="@dimen/picture_height"
 			android:layout_width="wrap_content"
-			android:minWidth="50dp"
+			android:minWidth="@dimen/picture_width"
 			android:layout_alignParentTop="true"
 			android:layout_alignParentLeft="true"
 			android:layout_alignParentStart="true"

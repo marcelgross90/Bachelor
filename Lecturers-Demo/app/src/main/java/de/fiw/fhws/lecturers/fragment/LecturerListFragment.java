@@ -107,7 +107,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.lecturer_menu, menu);
+		inflater.inflate(R.menu.lecturer_list_menu, menu);
 	}
 
 	@Override

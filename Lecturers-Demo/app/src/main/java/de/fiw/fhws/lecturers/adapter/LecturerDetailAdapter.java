@@ -46,7 +46,6 @@ public class LecturerDetailAdapter extends RecyclerView.Adapter {
 			LecturerDetailViewHolderContact viewHolder = (LecturerDetailViewHolderContact) holder;
 			viewHolder.displayEmail(lecturer.getEmail());
 			viewHolder.displayPhone(lecturer.getPhone());
-			viewHolder.displayWebsite(lecturer.getUrlWelearn());
 		}
 	}
 

@@ -23,4 +23,6 @@
 	<string name="load_image_error">Could not load image</string>
 	<string name="load_lecturer_error">Could not load lecturer</string>
 	<string name="profile_picture">Profile picture</string>
+	<string name="edit">Edit</string>
+	<string name="delete">Delete</string>
 </resources>
