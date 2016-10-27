@@ -1,14 +1,9 @@
 package de.fiw.fhws.lecturers.network;
 
 
-import de.marcelgross.httphero.BaseCache;
-import de.marcelgross.httphero.Cache;
-import de.marcelgross.httphero.HttpHero;
-
-
 public class HttpHeroSingleton {
 
-	private static HttpHeroSingleton instance;
+	/*private static HttpHeroSingleton instance;
 	private HttpHero httpHero;
 
 	public static HttpHeroSingleton getInstance() {
@@ -25,5 +20,5 @@ public class HttpHeroSingleton {
 
 	public HttpHero getHttpHero() {
 		return httpHero;
-	}
+	}*/
 }

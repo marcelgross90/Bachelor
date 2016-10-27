@@ -15,9 +15,13 @@ public class LecturerDetailAdapter extends RecyclerView.Adapter {
 	private Lecturer lecturer;
 	private View.OnClickListener listener;
 
-	public LecturerDetailAdapter(Lecturer lecturer, View.OnClickListener listener) {
-		this.lecturer = lecturer;
+	public LecturerDetailAdapter(View.OnClickListener listener) {
 		this.listener = listener;
+	}
+
+	public void addLecturer(Lecturer lecturer) {
+		this.lecturer = lecturer;
+		notifyDataSetChanged();
 	}
 
 	@Override

@@ -34,4 +34,10 @@
 	<string name="address_missing">Address is missing!</string>
 	<string name="room_missing">Roomnumber is missing</string>
 	<string name="welearn_missing">Welearn-Address is missing!</string>
+	<string name="lecturer_updated">Lecturer updated!</string>
+	<string name="lecturer_saved">Lecturer saved!</string>
+
+	<string name="delete_dialog_title">Delete %s?</string>
+	<string name="ok">OK</string>
+	<string name="cancel">Cancel</string>
 </resources>

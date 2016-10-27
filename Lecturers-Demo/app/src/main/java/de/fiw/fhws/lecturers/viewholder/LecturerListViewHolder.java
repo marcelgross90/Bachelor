@@ -86,8 +86,11 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 			}
 		});
 		Link profileImage = lecturer.getProfileImageUrl();
+		String profileImageUrl="empty";
 		if (profileImage != null)
-			Picasso.with(context).load(profileImage.getHrefWithoutQueryParams()).resizeDimen(R.dimen.picture_width, R.dimen.picture_height).into(profileImg);
+			profileImageUrl = profileImage.getHrefWithoutQueryParams();
+
+		Picasso.with(context).load(profileImageUrl).resizeDimen(R.dimen.picture_width, R.dimen.picture_height).error(R.drawable.user_picture).into(profileImg);
 		hideUnnecessaryViews(lecturer);
 
 		title.setText(lecturer.getTitle());

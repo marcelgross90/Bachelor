@@ -1,5 +1,6 @@
 package de.fiw.fhws.lecturers.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -11,12 +12,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.owlike.genson.Genson;
+
+import java.io.IOException;
+
+import de.fiw.fhws.lecturers.EditLecturerActivity;
+import de.fiw.fhws.lecturers.FragmentHandler;
+import de.fiw.fhws.lecturers.MainActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.model.Lecturer;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class NewLecturerFragment extends Fragment {
 
+	private final Genson genson = new Genson();
+	private String url;
+	private String mediaType;
 	private View view;
 	private EditText title;
 	private EditText firstName;
@@ -43,6 +62,9 @@ public class NewLecturerFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Bundle bundle = getArguments();
+		this.url = bundle.getString("url");
+		this.mediaType = bundle.getString("mediaType");
 		setHasOptionsMenu(true);
 	}
 
@@ -81,9 +103,7 @@ public class NewLecturerFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.saveLecturer:
-//				MainActivity.replaceFragment(getFragmentManager(), new NewLecturerFragment());
 				save();
-				Snackbar.make(view, R.string.save,  Snackbar.LENGTH_LONG).show();
 				break;
 		}
 
@@ -144,6 +164,40 @@ public class NewLecturerFragment extends Fragment {
 			lecturer.setAddress(addressString);
 			lecturer.setRoomNumber(roomString);
 			lecturer.setUrlWelearn(welearnString);
+			postLecturer(lecturer);
 		}
+	}
+
+	private void postLecturer(Lecturer lecturer) {
+		String lecturerJson = genson.serialize(lecturer);
+
+		OkHttpClient client = new OkHttpClient();
+		RequestBody body = RequestBody.create(MediaType.parse(mediaType), lecturerJson);
+		final Request request = new Request.Builder()
+				.url(url)
+				.post(body)
+				.build();
+
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				e.printStackTrace();
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				if (!response.isSuccessful()) {
+					throw new IOException("Unexpected code " + response);
+				}
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getActivity(), R.string.lecturer_saved, Toast.LENGTH_SHORT).show();
+						FragmentHandler.replaceFragmentPopBackStack(getFragmentManager(), new LecturerListFragment());
+					}
+				});
+
+			}
+		});
 	}
 }

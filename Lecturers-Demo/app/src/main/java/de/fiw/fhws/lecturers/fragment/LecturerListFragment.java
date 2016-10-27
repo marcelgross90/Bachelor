@@ -20,23 +20,27 @@ import android.widget.ProgressBar;
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
-import de.fiw.fhws.lecturers.MainActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.adapter.LecturerListAdapter;
 import de.fiw.fhws.lecturers.model.Lecturer;
-import de.fiw.fhws.lecturers.network.HttpHeroSingleton;
-import de.marcelgross.httphero.HttpHeroResponse;
-import de.marcelgross.httphero.HttpHeroResultListener;
-import de.marcelgross.httphero.Link;
-import de.marcelgross.httphero.request.Request;
+import de.fiw.fhws.lecturers.model.Link;
+import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class LecturerListFragment extends Fragment implements LecturerListAdapter.OnLecturerClickListener {
 
 	private final Genson genson = new Genson();
+	private final String baseUrl = "https://apistaging.fiw.fhws.de/mig/api/lecturers/";
 	private RecyclerView modulesRecyclerView;
 	private LecturerListAdapter modulesAdapter;
 	private LinearLayoutManager modulesLayoutMgr;
@@ -69,14 +73,14 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 				int visibleItems = recyclerView.getChildCount();
 				int totalItems = modulesLayoutMgr.getItemCount();
 				int firstVisible = modulesLayoutMgr.findFirstVisibleItemPosition();
-				if (totalItems - visibleItems <= firstVisible + 4
+				if (totalItems - visibleItems <= firstVisible + 1
 						&& nextUrl != null && !nextUrl.isEmpty()) {
 					loadLecturers(nextUrl);
 				}
 			}
 		});
 
-		loadLecturers("https://apistaging.fiw.fhws.de/mig/api/lecturers/");
+		loadLecturers(baseUrl);
 		return view;
 	}
 
@@ -116,7 +120,12 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.addLecturer:
-				FragmentHandler.replaceFragment(getFragmentManager(), new NewLecturerFragment());
+				Bundle bundle = new Bundle();
+				bundle.putString("url", baseUrl);
+				bundle.putString("mediaType", "application/vnd.fhws-lecturer.default+json");
+				Fragment fragment = new NewLecturerFragment();
+				fragment.setArguments(bundle);
+				FragmentHandler.replaceFragmentPopBackStack(getFragmentManager(), fragment);
 				break;
 		}
 
@@ -125,29 +134,43 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 
 	private void loadLecturers(String url) {
 		showProgressBar(true);
-		HttpHeroSingleton heroSingleton = HttpHeroSingleton.getInstance();
-		Request.Builder builder = new Request.Builder();
-		builder.setUriTemplate(url).setMediaType("application/vnd.fhws-lecturer.default+json");
 
-		heroSingleton.getHttpHero().performRequest(builder.get(), new HttpHeroResultListener() {
+		Request request = new Request.Builder()
+				.header("Accept", "application/vnd.fhws-lecturer.default+json")
+				.url(url)
+				.build();
+
+		OkHttpClient client = new OkHttpClient();
+
+		client.newCall(request).enqueue(new Callback() {
 			@Override
-			public void onSuccess(HttpHeroResponse httpHeroResponse) {
-				showProgressBar(false);
-				Link nextLink = httpHeroResponse.getMapRelationTypeToLink().get("next");
-				if (nextLink != null) {
-					nextUrl = nextLink.getUrl();
-				} else {
-					nextUrl = "";
-				}
-				modulesAdapter.addLecturer(
-						genson.deserialize(
-								httpHeroResponse.getData(), new GenericType<List<Lecturer>>() {})
-				);
+			public void onFailure(Call call, IOException e) {
+				e.printStackTrace();
 			}
 
 			@Override
-			public void onFailure() {
-				android.util.Log.d("mgr", "doof");
+			public void onResponse(Call call, final Response response) throws IOException {
+				if (!response.isSuccessful()) {
+					throw new IOException("Unexpected code " + response);
+				}
+
+				final List<Lecturer> lecturers = genson.deserialize(response.body().charStream(), new GenericType<List<Lecturer>>() {
+				});
+				Map<String, List<String>> headers = response.headers().toMultimap();
+				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
+				Link nextLink = linkHeader.get("next");
+				if (nextLink != null) {
+					nextUrl = nextLink.getHref();
+				} else {
+					nextUrl = "";
+				}
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						showProgressBar(false);
+						modulesAdapter.addLecturer(lecturers);
+					}
+				});
 			}
 		});
 	}

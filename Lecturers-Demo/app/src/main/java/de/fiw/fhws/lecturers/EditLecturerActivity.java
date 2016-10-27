@@ -14,13 +14,20 @@ import android.widget.Toast;
 
 import com.owlike.genson.Genson;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import de.fiw.fhws.lecturers.model.Lecturer;
 import de.fiw.fhws.lecturers.model.Link;
-import de.fiw.fhws.lecturers.network.HttpHeroSingleton;
-import de.marcelgross.httphero.HttpHero;
-import de.marcelgross.httphero.HttpHeroResponse;
-import de.marcelgross.httphero.HttpHeroResultListener;
-import de.marcelgross.httphero.request.Request;
+import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class EditLecturerActivity extends AppCompatActivity {
 
@@ -28,7 +35,7 @@ public class EditLecturerActivity extends AppCompatActivity {
 
 	private Toolbar toolbar;
 	private Lecturer currentLecturer;
-	private Link lectuererEditLink;
+	private Link lecturerEditLink;
 	private EditText title;
 	private EditText firstName;
 	private EditText lastName;
@@ -121,25 +128,37 @@ public class EditLecturerActivity extends AppCompatActivity {
 	}
 
 	private void loadLecturer(String selfUrl) {
-		HttpHeroSingleton heroSingleton = HttpHeroSingleton.getInstance();
+		final Request request = new Request.Builder()
+				.header("Accept", mediaType)
+				.url(selfUrl)
+				.build();
 
-		Request.Builder builder = new Request.Builder();
-		builder.setUriTemplate(selfUrl);
-		builder.setMediaType(mediaType);
+		OkHttpClient client = new OkHttpClient();
 
-		heroSingleton.getHttpHero().performRequest(builder.get(), new HttpHeroResultListener() {
+		client.newCall(request).enqueue(new Callback() {
 			@Override
-			public void onSuccess(HttpHeroResponse httpHeroResponse) {
-				Genson genson = new Genson();
-				currentLecturer = genson.deserialize(httpHeroResponse.getData(), Lecturer.class);
-				de.marcelgross.httphero.Link httpHerroLink = httpHeroResponse.getMapRelationTypeToLink().get("updateLecturer");
-				lectuererEditLink = new Link(httpHerroLink.getUrl(), httpHerroLink.getRelationType(), httpHerroLink.getMediaType());
-				setUpLecturer(currentLecturer);
+			public void onFailure(Call call, IOException e) {
+				e.printStackTrace();
 			}
 
 			@Override
-			public void onFailure() {
-				Toast.makeText(EditLecturerActivity.this, R.string.load_lecturer_error, Toast.LENGTH_LONG).show();
+			public void onResponse(Call call, final Response response) throws IOException {
+				if (!response.isSuccessful()) {
+					throw new IOException("Unexpected code " + response);
+				}
+				final Lecturer lecturer = genson.deserialize(response.body().charStream(), Lecturer.class);
+				currentLecturer = lecturer;
+
+				Map<String, List<String>> headers = response.headers().toMultimap();
+				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
+				lecturerEditLink = linkHeader.get("updateLecturer");
+
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						setUpLecturer(lecturer);
+					}
+				});
 			}
 		});
 	}
@@ -227,23 +246,35 @@ public class EditLecturerActivity extends AppCompatActivity {
 
 	private void saveLecturer() {
 		String lecturerJson = genson.serialize(currentLecturer);
-		HttpHero httpHero = HttpHeroSingleton.getInstance().getHttpHero();
 
-		Request.Builder builder = new Request.Builder();
-		builder.setUriTemplate(lectuererEditLink.getHref());
-		builder.setMediaType(lectuererEditLink.getType());
+		OkHttpClient client = new OkHttpClient();
+		RequestBody body = RequestBody.create(MediaType.parse(lecturerEditLink.getType()), lecturerJson);
+		final Request request = new Request.Builder()
+				.url(lecturerEditLink.getHref())
+				.put(body)
+				.build();
 
-		Request request = builder.put(lecturerJson.getBytes());
-
-		httpHero.performRequest(request, new HttpHeroResultListener() {
+		client.newCall(request).enqueue(new Callback() {
 			@Override
-			public void onSuccess(HttpHeroResponse httpHeroResponse) {
-				Toast.makeText(EditLecturerActivity.this, "updated", Toast.LENGTH_SHORT).show();
+			public void onFailure(Call call, IOException e) {
+				e.printStackTrace();
 			}
 
 			@Override
-			public void onFailure() {
-				Toast.makeText(EditLecturerActivity.this, "not updated", Toast.LENGTH_SHORT).show();
+			public void onResponse(Call call, Response response) throws IOException {
+				if (!response.isSuccessful()) {
+					throw new IOException("Unexpected code " + response);
+				}
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(EditLecturerActivity.this, R.string.lecturer_updated, Toast.LENGTH_SHORT).show();
+						Intent intent=new Intent();
+						setResult(1,intent);
+						finish();
+					}
+				});
+
 			}
 		});
 	}

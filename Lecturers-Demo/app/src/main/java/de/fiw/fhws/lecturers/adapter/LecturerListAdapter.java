@@ -28,7 +28,11 @@ public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHo
 	}
 
 	public void addLecturer(List<Lecturer> newLecturers) {
-		this.lecturerList.addAll(newLecturers);
+		for (Lecturer newLecturer : newLecturers) {
+			if (!this.lecturerList.contains(newLecturer)) {
+				this.lecturerList.add(newLecturer);
+			}
+		}
 		notifyDataSetChanged();
 	}
 

@@ -46,4 +46,25 @@ public class Link {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Link link = (Link) o;
+
+		if (href != null ? !href.equals(link.href) : link.href != null) return false;
+		if (rel != null ? !rel.equals(link.rel) : link.rel != null) return false;
+		return type != null ? type.equals(link.type) : link.type == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = href != null ? href.hashCode() : 0;
+		result = 31 * result + (rel != null ? rel.hashCode() : 0);
+		result = 31 * result + (type != null ? type.hashCode() : 0);
+		return result;
+	}
 }
