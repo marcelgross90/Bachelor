@@ -1,61 +1,35 @@
 package de.fiw.fhws.lecturers.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Lecturer {
 
 	private int id;
-	private String address;
-	private String email;
+	private String title;
 	private String firstName;
 	private String lastName;
+	private String email;
 	private String phone;
 	private String roomNumber;
-	private String title;
-	private String urlProfileImage;
+	private String address;
 	private String urlWelearn;
-	private Link roundImage;
+	private Link profileImageUrl;
 	private Link self;
 
 	public Lecturer() {
 		//for genson
 	}
 
-	public Lecturer(int id, String address, String email, String firstName, String lastName, String phone, String roomNumber, String title, String urlProfileImage, String urlWelearn, Link roundImage, Link self) {
+	public Lecturer(int id, String title, String firstName, String lastName, String email, String phone, String roomNumber, String address, String urlWelearn, Link profileImageUrl, Link self) {
 		this.id = id;
-		this.address = address;
-		this.email = email;
+		this.title = title;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.email = email;
 		this.phone = phone;
 		this.roomNumber = roomNumber;
-		this.title = title;
-		this.urlProfileImage = urlProfileImage;
+		this.address = address;
 		this.urlWelearn = urlWelearn;
-		this.roundImage = roundImage;
+		this.profileImageUrl = profileImageUrl;
 		this.self = self;
-	}
-
-	public static Lecturer toEntity(JSONObject jsonObject) {
-		try {
-			Lecturer lecturer = new Lecturer();
-			lecturer.setId(jsonObject.getInt("id"));
-			lecturer.setAddress(jsonObject.getString("address"));
-			lecturer.setEmail(jsonObject.getString("email"));
-			lecturer.setFirstName(jsonObject.getString("firstName"));
-			lecturer.setLastName(jsonObject.getString("lastName"));
-			lecturer.setPhone(jsonObject.getString("phone"));
-			lecturer.setRoomNumber(jsonObject.getString("roomNumber"));
-			lecturer.setTitle(jsonObject.getString("title"));
-			lecturer.setUrlProfileImage(jsonObject.getString("urlProfileImage"));
-			lecturer.setUrlWelearn(jsonObject.getString("urlWelearn"));
-			lecturer.setRoundImage(Link.toEntity(jsonObject.getJSONObject("roundImage")));
-			lecturer.setSelf(Link.toEntity(jsonObject.getJSONObject("self")));
-			return lecturer;
-		} catch (JSONException ex) {
-			return null;
-		}
 	}
 
 	public int getId() {
@@ -66,20 +40,12 @@ public class Lecturer {
 		this.id = id;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getFirstName() {
@@ -98,6 +64,14 @@ public class Lecturer {
 		this.lastName = lastName;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPhone() {
 		return phone;
 	}
@@ -114,20 +88,12 @@ public class Lecturer {
 		this.roomNumber = roomNumber;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getUrlProfileImage() {
-		return urlProfileImage;
-	}
-
-	public void setUrlProfileImage(String urlProfileImage) {
-		this.urlProfileImage = urlProfileImage;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getUrlWelearn() {
@@ -138,12 +104,12 @@ public class Lecturer {
 		this.urlWelearn = urlWelearn;
 	}
 
-	public Link getRoundImage() {
-		return roundImage;
+	public Link getProfileImageUrl() {
+		return profileImageUrl;
 	}
 
-	public void setRoundImage(Link roundImage) {
-		this.roundImage = roundImage;
+	public void setProfileImageUrl(Link profileImageUrl) {
+		this.profileImageUrl = profileImageUrl;
 	}
 
 	public Link getSelf() {

@@ -1,32 +1,30 @@
 package de.fiw.fhws.lecturers.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Link {
 
 	private String href;
 	private String rel;
+	private String type;
 
 	public Link() {
 		//for genson
 	}
 
-	public Link(String href, String rel) {
+	public Link(String href, String rel, String type) {
 		this.href = href;
 		this.rel = rel;
-	}
-
-	public static Link toEntity(JSONObject jsonObject) {
-		try {
-			return new Link(jsonObject.getString("href"), jsonObject.getString("rel"));
-		} catch (JSONException ex) {
-			return null;
-		}
+		this.type = type;
 	}
 
 	public String getHref() {
 		return href;
+	}
+
+	public String getHrefWithoutQueryParams() {
+		if (href.contains("?")) {
+			return this.href.split("\\?")[0];
+		}
+		return this.href;
 	}
 
 	public void setHref(String href) {
@@ -39,5 +37,13 @@ public class Link {
 
 	public void setRel(String rel) {
 		this.rel = rel;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

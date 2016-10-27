@@ -68,6 +68,10 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
 				return true;
 			case R.id.edit_lecturer:
+				Intent intent = new Intent(LecturerDetailActivity.this, EditLecturerActivity.class);
+				intent.putExtra("url", currentLecturer.getSelf().getHref());
+				intent.putExtra("mediaType", currentLecturer.getSelf().getType());
+				startActivity(intent);
 				return true;
 			case R.id.delete_lecturer:
 				return true;
@@ -92,12 +96,14 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	}
 
 	private void loadLecturer() {
-		String selfUrl = getIntent().getExtras().getString("selfUrl");
+		Intent intent = getIntent();
+		String selfUrl = intent.getExtras().getString("selfUrl");
+		String mediaType = intent.getExtras().getString("mediaType");
 		HttpHeroSingleton heroSingleton = HttpHeroSingleton.getInstance();
 
 		Request.Builder builder = new Request.Builder();
 		builder.setUriTemplate(selfUrl);
-		builder.setMediaType("application/json");
+		builder.setMediaType(mediaType);
 
 		heroSingleton.getHttpHero().performRequest(builder.get(), new HttpHeroResultListener() {
 			@Override
@@ -115,12 +121,12 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	}
 
 	private void setUp(Lecturer lecturer) {
-		displayLecturerPicture(lecturer.getUrlProfileImage());
+		displayLecturerPicture(lecturer.getProfileImageUrl().getHrefWithoutQueryParams());
 		recyclerView.setAdapter(new LecturerDetailAdapter(lecturer, LecturerDetailActivity.this));
 	}
 
 	private void displayLecturerPicture(String pictureUrl) {
-		Target target = new Target() {
+		/*Target target = new Target() {
 			@Override
 			public void onPrepareLoad(Drawable placeHolderDrawable) {
 			}
@@ -136,7 +142,8 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 			public void onBitmapFailed(Drawable errorDrawable) {
 			}
 		};
-		Picasso.with(getApplicationContext()).load(pictureUrl).into(target);
+		Picasso.with(this).load(pictureUrl).into(target);*/
+		Picasso.with(this).load(pictureUrl).into(imageView);
 	}
 
 

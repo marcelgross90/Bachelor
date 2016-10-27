@@ -19,6 +19,8 @@
 		</activity>
 		<activity android:name=".LecturerDetailActivity">
 		</activity>
+		<activity android:name=".EditLecturerActivity">
+		</activity>
 	</application>
 
 </manifest>

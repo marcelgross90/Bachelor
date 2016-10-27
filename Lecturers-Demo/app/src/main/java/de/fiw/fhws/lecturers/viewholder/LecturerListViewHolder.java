@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.adapter.LecturerListAdapter;
 import de.fiw.fhws.lecturers.model.Lecturer;
+import de.fiw.fhws.lecturers.model.Link;
 
 public class LecturerListViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 	private Lecturer lecturer;
@@ -84,8 +85,9 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 				}
 			}
 		});
-
-		Picasso.with(context).load(lecturer.getUrlProfileImage()).resizeDimen(R.dimen.picture_width, R.dimen.picture_height).into(profileImg);
+		Link profileImage = lecturer.getProfileImageUrl();
+		if (profileImage != null)
+			Picasso.with(context).load(profileImage.getHrefWithoutQueryParams()).resizeDimen(R.dimen.picture_width, R.dimen.picture_height).into(profileImg);
 		hideUnnecessaryViews(lecturer);
 
 		title.setText(lecturer.getTitle());

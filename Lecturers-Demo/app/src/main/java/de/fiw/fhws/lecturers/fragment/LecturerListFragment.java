@@ -22,6 +22,7 @@ import com.owlike.genson.Genson;
 
 import java.util.List;
 
+import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.MainActivity;
 import de.fiw.fhws.lecturers.R;
@@ -75,7 +76,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 			}
 		});
 
-		loadLecturers("https://apistaging.fiw.fhws.de/mi/api/mitarbeiter/");
+		loadLecturers("https://apistaging.fiw.fhws.de/mig/api/lecturers/");
 		return view;
 	}
 
@@ -93,6 +94,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	public void onLecturerClick(Lecturer lecturer, ImageView view) {
 		Intent intent = new Intent(getActivity(), LecturerDetailActivity.class);
 		intent.putExtra("selfUrl", lecturer.getSelf().getHref());
+		intent.putExtra("mediaType", lecturer.getSelf().getType());
 		intent.putExtra("fullName", lecturer.getFirstName() + " " + lecturer.getLastName());
 
 		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -114,7 +116,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.addLecturer:
-				MainActivity.replaceFragment(getFragmentManager(), new NewLecturerFragment());
+				FragmentHandler.replaceFragment(getFragmentManager(), new NewLecturerFragment());
 				break;
 		}
 
@@ -125,7 +127,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		showProgressBar(true);
 		HttpHeroSingleton heroSingleton = HttpHeroSingleton.getInstance();
 		Request.Builder builder = new Request.Builder();
-		builder.setUriTemplate(url).setMediaType("application/json");
+		builder.setUriTemplate(url).setMediaType("application/vnd.fhws-lecturer.default+json");
 
 		heroSingleton.getHttpHero().performRequest(builder.get(), new HttpHeroResultListener() {
 			@Override
