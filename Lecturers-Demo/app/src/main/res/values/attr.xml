@@ -24,4 +24,5 @@
 	<declare-styleable name="LecturerCardView">
 		<attr name="lecturerJson" format="string" />
 	</declare-styleable>
+	<declare-styleable name="ProfileImageView"/>
 </resources>

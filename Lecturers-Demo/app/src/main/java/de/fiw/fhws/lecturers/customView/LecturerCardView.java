@@ -6,7 +6,6 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.model.Lecturer;
@@ -14,6 +13,7 @@ import de.fiw.fhws.lecturers.model.Lecturer;
 
 public class LecturerCardView extends CardView {
 
+	private ProfileImageView imageView;
 	private TitleView titleView;
 	private NameView nameView;
 	private MailView mailView;
@@ -44,7 +44,7 @@ public class LecturerCardView extends CardView {
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerCardView, defStyle, 0);
 		try {
 
-			ImageView imageView = (ImageView) findViewById(R.id.profileImg);
+			imageView = (ProfileImageView) findViewById(R.id.profileImg);
 			titleView = (TitleView) findViewById(R.id.title);
 			nameView = (NameView) findViewById(R.id.name);
 			mailView = (MailView) findViewById(R.id.email);
@@ -67,7 +67,7 @@ public class LecturerCardView extends CardView {
 		phoneView.setText(lecturer.getPhone());
 		roomView.setText(lecturer.getRoomNumber());
 		addressView.setText(lecturer.getAddress());
-		welearnView.setText(lecturer.getUrlWelearn());
+		imageView.loadImage(lecturer.getProfileImageUrl());
 	}
 
 	private void hideUnnecessaryViews(Lecturer lecturer) {

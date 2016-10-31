@@ -7,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.adapter.LecturerListAdapter;
 import de.fiw.fhws.lecturers.customView.AddressView;
@@ -16,7 +14,6 @@ import de.fiw.fhws.lecturers.customView.LecturerCardView;
 import de.fiw.fhws.lecturers.customView.MailView;
 import de.fiw.fhws.lecturers.customView.PhoneView;
 import de.fiw.fhws.lecturers.model.Lecturer;
-import de.fiw.fhws.lecturers.model.Link;
 
 public class LecturerListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -75,12 +72,6 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 				}
 			}
 		});
-		Link profileImage = lecturer.getProfileImageUrl();
-		String profileImageUrl = "empty";
-		if (profileImage != null)
-			profileImageUrl = profileImage.getHrefWithoutQueryParams();
-
-		Picasso.with(context).load(profileImageUrl).resizeDimen(R.dimen.picture_width, R.dimen.picture_height).error(R.drawable.user_picture).into(profileImg);
 
 		cardView.setUpView(lecturer);
 
