@@ -17,6 +17,7 @@
 			android:layout_alignParentLeft="true"
 			android:layout_alignParentStart="true"
 			android:layout_alignParentTop="true"
+			android:transitionName="pic"
 			android:minWidth="@dimen/picture_width"
 			/>
 

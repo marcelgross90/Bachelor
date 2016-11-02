@@ -13,6 +13,7 @@ import de.fiw.fhws.lecturers.customView.AddressView;
 import de.fiw.fhws.lecturers.customView.LecturerCardView;
 import de.fiw.fhws.lecturers.customView.MailView;
 import de.fiw.fhws.lecturers.customView.PhoneView;
+import de.fiw.fhws.lecturers.customView.ProfileImageView;
 import de.fiw.fhws.lecturers.model.Lecturer;
 
 public class LecturerListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -26,7 +27,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 	private PhoneView phone;
 	private AddressView address;
 
-	private ImageView profileImg;
+	private ProfileImageView profileImg;
 
 	@Override
 	public void onClick(View view) {
@@ -59,7 +60,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 		phone = (PhoneView) itemView.findViewById(R.id.phone);
 		address = (AddressView) itemView.findViewById(R.id.address);
 
-		profileImg = (ImageView) itemView.findViewById(R.id.profileImg);
+		profileImg = (ProfileImageView) itemView.findViewById(R.id.profileImg);
 	}
 
 	public void assignData(final Lecturer lecturer) {

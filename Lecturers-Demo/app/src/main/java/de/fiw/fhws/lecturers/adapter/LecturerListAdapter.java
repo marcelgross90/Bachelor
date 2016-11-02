@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fiw.fhws.lecturers.R;
+import de.fiw.fhws.lecturers.customView.ProfileImageView;
 import de.fiw.fhws.lecturers.model.Lecturer;
 import de.fiw.fhws.lecturers.viewholder.LecturerListViewHolder;
 
@@ -20,7 +21,7 @@ public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHo
 
 
 	public interface OnLecturerClickListener {
-		void onLecturerClick(Lecturer lecturer, ImageView imageView);
+		void onLecturerClick(Lecturer lecturer, ProfileImageView imageView);
 	}
 
 	public LecturerListAdapter(OnLecturerClickListener lecturerClickListener) {

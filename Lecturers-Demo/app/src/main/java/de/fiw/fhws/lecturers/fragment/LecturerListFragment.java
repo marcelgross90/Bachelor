@@ -28,6 +28,7 @@ import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.adapter.LecturerListAdapter;
+import de.fiw.fhws.lecturers.customView.ProfileImageView;
 import de.fiw.fhws.lecturers.model.Lecturer;
 import de.fiw.fhws.lecturers.model.Link;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
@@ -95,7 +96,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	}
 
 	@Override
-	public void onLecturerClick(Lecturer lecturer, ImageView view) {
+	public void onLecturerClick(Lecturer lecturer, ProfileImageView view) {
 		Intent intent = new Intent(getActivity(), LecturerDetailActivity.class);
 		intent.putExtra("selfUrl", lecturer.getSelf().getHref());
 		intent.putExtra("mediaType", lecturer.getSelf().getType());
