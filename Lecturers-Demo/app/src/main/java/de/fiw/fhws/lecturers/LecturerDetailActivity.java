@@ -5,23 +5,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.owlike.genson.Genson;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.adapter.LecturerDetailAdapter;
+import de.fiw.fhws.lecturers.customView.LecturerDetailView;
 import de.fiw.fhws.lecturers.customView.ProfileImageView;
 import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
 import de.fiw.fhws.lecturers.model.Lecturer;
@@ -35,11 +31,11 @@ import okhttp3.Response;
 
 
 public class LecturerDetailActivity extends AppCompatActivity implements View.OnClickListener {
+	private LecturerDetailView lecturerDetailView;
 	private final Genson genson = new Genson();
 	private Link deleteLink;
 	private Toolbar toolbar;
 	private ProfileImageView imageView;
-	private RecyclerView recyclerView;
 	private Lecturer currentLecturer;
 	private static LecturerDetailActivity activity;
 
@@ -57,14 +53,11 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 		activity = this;
 
+		lecturerDetailView = (LecturerDetailView) findViewById(R.id.detail_view);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		imageView = (ProfileImageView) findViewById(R.id.ivLecturerPicture);
-		recyclerView = (RecyclerView) findViewById(R.id.rvLecturerDetails);
 
 		setUpToolbar();
-
-		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		recyclerView.setHasFixedSize(true);
 
 		loadLecturer();
 	}
@@ -102,7 +95,6 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				return super.onOptionsItemSelected(item);
 		}
 	}
-
 
 	private void setUpToolbar() {
 		if (toolbar != null) {
@@ -158,11 +150,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	}
 
 	private void setUp(Lecturer lecturer) {
-		LecturerDetailAdapter adapter = new LecturerDetailAdapter(LecturerDetailActivity.this);
-		adapter.addLecturer(lecturer);
-		if (lecturer.getProfileImageUrl() != null)
-			displayLecturerPicture(lecturer.getProfileImageUrl().getHrefWithoutQueryParams());
-		recyclerView.setAdapter(adapter);
+		lecturerDetailView.setUpView(lecturer, this);
 	}
 
 	private void displayLecturerPicture(String pictureUrl) {
