@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.customView.LecturerDetailView;
-import de.fiw.fhws.lecturers.customView.ProfileImageView;
 import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
 import de.fiw.fhws.lecturers.model.Lecturer;
 import de.fiw.fhws.lecturers.model.Link;
@@ -35,7 +34,6 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	private final Genson genson = new Genson();
 	private Link deleteLink;
 	private Toolbar toolbar;
-	private ProfileImageView imageView;
 	private Lecturer currentLecturer;
 	private static LecturerDetailActivity activity;
 
@@ -55,7 +53,6 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 		lecturerDetailView = (LecturerDetailView) findViewById(R.id.detail_view);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
-		imageView = (ProfileImageView) findViewById(R.id.ivLecturerPicture);
 
 		setUpToolbar();
 
@@ -112,8 +109,8 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 	private void loadLecturer() {
 		Intent intent = getIntent();
-		String selfUrl = intent.getExtras().getString("selfUrl");
-		String mediaType = intent.getExtras().getString("mediaType");
+		String selfUrl = intent.getExtras().getString("selfUrl", "");
+		String mediaType = intent.getExtras().getString("mediaType", "");
 
 
 		final Request request = new Request.Builder()
@@ -152,29 +149,6 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	private void setUp(Lecturer lecturer) {
 		lecturerDetailView.setUpView(lecturer, this);
 	}
-
-	private void displayLecturerPicture(String pictureUrl) {
-		/*Target target = new Target() {
-			@Override
-			public void onPrepareLoad(Drawable placeHolderDrawable) {
-			}
-
-			@Override
-			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-				Bitmap editedBitmap = Bitmap.createBitmap(bitmap, 0, 50, bitmap.getWidth(), 300);
-				BitmapDrawable drawable = new BitmapDrawable(getResources(), editedBitmap);
-				imageView.setImageDrawable(drawable);
-			}
-
-			@Override
-			public void onBitmapFailed(Drawable errorDrawable) {
-			}
-		};
-		Picasso.with(this).load(pictureUrl).into(target);*/
-		imageView.loadImage(currentLecturer.getProfileImageUrl());
-		//Picasso.with(this).load(pictureUrl).into(imageView);
-	}
-
 
 	@Override
 	public void onClick(View view) {

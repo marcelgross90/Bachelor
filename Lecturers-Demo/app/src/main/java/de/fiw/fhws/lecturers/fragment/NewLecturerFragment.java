@@ -1,8 +1,6 @@
 package de.fiw.fhws.lecturers.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,9 +16,7 @@ import com.owlike.genson.Genson;
 
 import java.io.IOException;
 
-import de.fiw.fhws.lecturers.EditLecturerActivity;
 import de.fiw.fhws.lecturers.FragmentHandler;
-import de.fiw.fhws.lecturers.MainActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.model.Lecturer;
 import okhttp3.Call;
@@ -36,7 +32,6 @@ public class NewLecturerFragment extends Fragment {
 	private final Genson genson = new Genson();
 	private String url;
 	private String mediaType;
-	private View view;
 	private EditText title;
 	private EditText firstName;
 	private EditText lastName;
@@ -71,7 +66,7 @@ public class NewLecturerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_lecturer_input, container, false);
+		View view = inflater.inflate(R.layout.fragment_lecturer_input, container, false);
 
 		title = (EditText) view.findViewById(R.id.title);
 		firstName = (EditText) view.findViewById(R.id.firstName);

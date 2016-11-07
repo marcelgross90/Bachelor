@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import de.fiw.fhws.lecturers.viewholder.LecturerListViewHolder;
 
 public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHolder> {
 
-	private List<Lecturer> lecturerList = new ArrayList<>();
+	private final List<Lecturer> lecturerList = new ArrayList<>();
 	private final OnLecturerClickListener onLecturerClickListener;
 
 
@@ -42,7 +41,7 @@ public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHo
 		View moduleCard = LayoutInflater
 				.from(parent.getContext())
 				.inflate(R.layout.card_lecturer, parent, false);
-		return new LecturerListViewHolder(moduleCard, parent.getContext(), onLecturerClickListener);
+		return new LecturerListViewHolder(moduleCard, onLecturerClickListener);
 	}
 
 	@Override

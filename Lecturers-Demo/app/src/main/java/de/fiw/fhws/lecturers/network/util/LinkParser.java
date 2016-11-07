@@ -1,12 +1,8 @@
 package de.fiw.fhws.lecturers.network.util;
 
-/**
- * Created by marcelgross on 14.10.16.
- */
-
 public class LinkParser {
 
-	public static String gerateNewUrl(String url, int newSize, int newOffset) {
+	public static String createNewUrl(String url, int newSize, int newOffset) {
 		return url
 				.replace("size=" + getSize(url), "size=" + newSize)
 				.replace("offset=" + getOffset(url), "offset=" + newOffset);

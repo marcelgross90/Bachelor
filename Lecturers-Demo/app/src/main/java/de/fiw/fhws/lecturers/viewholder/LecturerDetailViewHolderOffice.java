@@ -9,14 +9,13 @@ import de.fiw.fhws.lecturers.customView.LecturerDetailOfficeCardView;
 import de.fiw.fhws.lecturers.model.Lecturer;
 
 public class LecturerDetailViewHolderOffice extends RecyclerView.ViewHolder {
-	private LecturerDetailOfficeCardView lecturerDetailOfficeCardView;
-	private AddressView address;
+	private final LecturerDetailOfficeCardView lecturerDetailOfficeCardView;
 
 	public LecturerDetailViewHolderOffice(View itemView, View.OnClickListener listener) {
 		super(itemView);
 
 		this.lecturerDetailOfficeCardView = (LecturerDetailOfficeCardView) itemView.findViewById(R.id.cardView);
-		this.address = (AddressView) itemView.findViewById(R.id.tvAddressValue);
+		AddressView address = (AddressView) itemView.findViewById(R.id.tvAddressValue);
 
 		address.setOnClickListener(listener);
 	}

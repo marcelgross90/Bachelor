@@ -6,6 +6,7 @@
 
 	<application
 		android:allowBackup="true"
+		android:fullBackupContent="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
 		android:supportsRtl="true"
@@ -15,12 +16,19 @@
 				<action android:name="android.intent.action.MAIN"/>
 
 				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
-		<activity android:name=".LecturerDetailActivity">
-		</activity>
-		<activity android:name=".EditLecturerActivity">
-		</activity>
-	</application>
 
-</manifest>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="http"
+					  android:host="www.fhws.de" />
+
+					</intent-filter>
+				</activity>
+				<activity android:name=".LecturerDetailActivity">
+				</activity>
+				<activity android:name=".EditLecturerActivity">
+				</activity>
+			</application>
+
+		</manifest>

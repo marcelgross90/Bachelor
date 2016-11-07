@@ -13,7 +13,7 @@ import de.fiw.fhws.lecturers.viewholder.LecturerDetailViewHolderOffice;
 
 public class LecturerDetailAdapter extends RecyclerView.Adapter {
 	private Lecturer lecturer;
-	private View.OnClickListener listener;
+	private final View.OnClickListener listener;
 
 	public LecturerDetailAdapter(View.OnClickListener listener) {
 		this.listener = listener;

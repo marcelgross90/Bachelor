@@ -32,7 +32,7 @@ public class LecturerDetailOfficeCardView extends CardView {
 
 	private void init(Context context, AttributeSet attributeSet, int defStyle) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.addView(inflater.inflate(R.layout.view_lecturer_detail_office_card, null));
+		this.addView(inflater.inflate(R.layout.view_lecturer_detail_office_card, this, false));
 
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerDetailOfficeCardView, defStyle, 0);
 		try {

@@ -2,17 +2,15 @@ package de.fiw.fhws.lecturers.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.customView.LecturerDetailContactCardView;
 import de.fiw.fhws.lecturers.customView.MailView;
 import de.fiw.fhws.lecturers.customView.PhoneView;
-import de.fiw.fhws.lecturers.customView.WelearnView;
 import de.fiw.fhws.lecturers.model.Lecturer;
 
 public class LecturerDetailViewHolderContact extends RecyclerView.ViewHolder {
-	private LecturerDetailContactCardView lecturerDetailContactCardView;
+	private final LecturerDetailContactCardView lecturerDetailContactCardView;
 
 	public LecturerDetailViewHolderContact(View itemView, View.OnClickListener listener) {
 		super(itemView);

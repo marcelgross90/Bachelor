@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.owlike.genson.GenericType;
@@ -42,7 +41,6 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 
 	private final Genson genson = new Genson();
 	private final String baseUrl = "https://apistaging.fiw.fhws.de/mig/api/lecturers/";
-	private RecyclerView modulesRecyclerView;
 	private LecturerListAdapter modulesAdapter;
 	private LinearLayoutManager modulesLayoutMgr;
 	private ProgressBar progressBar;
@@ -61,7 +59,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-		modulesRecyclerView = (RecyclerView) view.findViewById(R.id.lecturer_recycler_view);
+		RecyclerView modulesRecyclerView = (RecyclerView) view.findViewById(R.id.lecturer_recycler_view);
 		modulesAdapter = new LecturerListAdapter(this);
 		modulesLayoutMgr = new LinearLayoutManager(getContext());
 
@@ -85,7 +83,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		return view;
 	}
 
-	public void showProgressBar(final boolean show) {
+	private void showProgressBar(final boolean show) {
 		if (isAdded()) {
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {

@@ -26,9 +26,9 @@ public class HeaderParser {
 		return linkMap;
 	}
 
-	public static HashMap<String, Link> getLinks(List<String> linkheader) {
+	public static HashMap<String, Link> getLinks(List<String> linkHeader) {
 		HashMap<String, Link> linkHashMap = new HashMap<>();
-		for (String s : linkheader) {
+		for (String s : linkHeader) {
 			Link link = getLink(s);
 			linkHashMap.put(link.getRel(), link);
 		}

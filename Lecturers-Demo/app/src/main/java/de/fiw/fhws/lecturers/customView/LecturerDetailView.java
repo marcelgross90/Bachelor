@@ -39,7 +39,7 @@ public class LecturerDetailView extends LinearLayout {
 
 	private void init(Context context, AttributeSet attributeSet, int defStyle) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.addView(inflater.inflate(R.layout.view_lecturer_detail, null));
+		this.addView(inflater.inflate(R.layout.view_lecturer_detail, this, false));
 
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerDetailView, defStyle, 0);
 		try {

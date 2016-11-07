@@ -20,8 +20,7 @@ import okhttp3.Response;
 
 public class DeleteDialogFragment extends DialogFragment {
 
-	String url;
-	String name;
+	private String url;
 
 	@NonNull
 	@Override
@@ -29,7 +28,7 @@ public class DeleteDialogFragment extends DialogFragment {
 
 		Bundle bundle = getArguments();
 		url = bundle.getString("url");
-		name = bundle.getString("name");
+		String name = bundle.getString("name");
 
 		return new AlertDialog.Builder(getActivity())
 				.setTitle(getString(R.string.delete_dialog_title, name))

@@ -2,7 +2,6 @@
 	<string name="app_name">Lecturers</string>
 	<string name="welearn">welearn</string>
 	<string name="title">Title</string>
-	<string name="name">Name</string>
 	<string name="email">E-Mail</string>
 	<string name="phone_number">Phone Number</string>
 	<string name="address">Address</string>
@@ -10,7 +9,6 @@
 	<string name="first_name">Firstname</string>
 	<string name="last_name">Lastname</string>
 	<string name="add_lecturer">Add Lecturer</string>
-	<string name="new_lecturer">New Lecturer</string>
 	<string name="save">Save</string>
 
 	<string name="card_caption_contact">Contact</string>
@@ -20,8 +18,6 @@
 	<string name="card_caption_office">Office</string>
 	<string name="card_caption_room">Room</string>
 	<string name="card_caption_address">Address</string>
-	<string name="load_image_error">Could not load image</string>
-	<string name="load_lecturer_error">Could not load lecturer</string>
 	<string name="profile_picture">Profile picture</string>
 	<string name="edit">Edit</string>
 	<string name="delete">Delete</string>

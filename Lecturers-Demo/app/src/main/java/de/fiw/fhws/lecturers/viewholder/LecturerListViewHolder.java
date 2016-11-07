@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.adapter.LecturerListAdapter;
@@ -19,15 +18,15 @@ import de.fiw.fhws.lecturers.model.Lecturer;
 public class LecturerListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 	private Lecturer lecturer;
-	private Context context;
-	private LecturerListAdapter.OnLecturerClickListener onLecturerClickListener;
+	private final Context context;
+	private final LecturerListAdapter.OnLecturerClickListener onLecturerClickListener;
 
-	private LecturerCardView cardView;
-	private MailView email;
-	private PhoneView phone;
-	private AddressView address;
+	private final LecturerCardView cardView;
+	private final MailView email;
+	private final PhoneView phone;
+	private final AddressView address;
 
-	private ProfileImageView profileImg;
+	private final ProfileImageView profileImg;
 
 	@Override
 	public void onClick(View view) {
@@ -50,9 +49,9 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 		}
 	}
 
-	public LecturerListViewHolder(View itemView, Context context, LecturerListAdapter.OnLecturerClickListener onLecturerClickListener) {
+	public LecturerListViewHolder(View itemView, LecturerListAdapter.OnLecturerClickListener onLecturerClickListener) {
 		super(itemView);
-		this.context = context;
+		this.context = itemView.getContext();
 		this.onLecturerClickListener = onLecturerClickListener;
 		cardView = (LecturerCardView) itemView.findViewById(R.id.lecturer_card);
 
