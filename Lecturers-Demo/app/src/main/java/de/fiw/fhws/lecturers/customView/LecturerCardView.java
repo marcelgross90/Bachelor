@@ -67,6 +67,7 @@ public class LecturerCardView extends CardView {
 		phoneView.setText(lecturer.getPhone());
 		roomView.setText(lecturer.getRoomNumber());
 		addressView.setText(lecturer.getAddress());
+		welearnView.setAddress(lecturer.getUrlWelearn());
 		imageView.loadImage(lecturer.getProfileImageUrl());
 	}
 

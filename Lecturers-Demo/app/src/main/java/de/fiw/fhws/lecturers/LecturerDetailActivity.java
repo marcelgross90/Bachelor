@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.adapter.LecturerDetailAdapter;
+import de.fiw.fhws.lecturers.customView.ProfileImageView;
 import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
 import de.fiw.fhws.lecturers.model.Lecturer;
 import de.fiw.fhws.lecturers.model.Link;
@@ -37,7 +38,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	private final Genson genson = new Genson();
 	private Link deleteLink;
 	private Toolbar toolbar;
-	private ImageView imageView;
+	private ProfileImageView imageView;
 	private RecyclerView recyclerView;
 	private Lecturer currentLecturer;
 	private static LecturerDetailActivity activity;
@@ -57,7 +58,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 		activity = this;
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
-		imageView = (ImageView) findViewById(R.id.ivLecturerPicture);
+		imageView = (ProfileImageView) findViewById(R.id.ivLecturerPicture);
 		recyclerView = (RecyclerView) findViewById(R.id.rvLecturerDetails);
 
 		setUpToolbar();
@@ -182,7 +183,8 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 			}
 		};
 		Picasso.with(this).load(pictureUrl).into(target);*/
-		Picasso.with(this).load(pictureUrl).into(imageView);
+		imageView.loadImage(currentLecturer.getProfileImageUrl());
+		//Picasso.with(this).load(pictureUrl).into(imageView);
 	}
 
 

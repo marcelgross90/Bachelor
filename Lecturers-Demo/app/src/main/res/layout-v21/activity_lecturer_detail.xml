@@ -3,11 +3,9 @@
 <android.support.design.widget.CoordinatorLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:fitsSystemWindows="true"
-	tools:context="de.fiw.fhws.lecturers.LecturerDetailActivity">
+	android:fitsSystemWindows="true">
 
 	<android.support.design.widget.AppBarLayout
 		android:id="@+id/lecturer_detail_appbar"
@@ -22,7 +20,7 @@
 			app:contentScrim="?attr/colorPrimary"
 			app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-			<ImageView
+			<de.fiw.fhws.lecturers.customView.ProfileImageView
 				android:contentDescription="@string/profile_picture"
 				android:id="@+id/ivLecturerPicture"
 				android:layout_width="match_parent"
@@ -46,13 +44,10 @@
 	<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"
-		tools:context=".MainActivity"
-		tools:showIn="@layout/activity_main">
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 		<android.support.v7.widget.RecyclerView
 			android:id="@+id/rvLecturerDetails"

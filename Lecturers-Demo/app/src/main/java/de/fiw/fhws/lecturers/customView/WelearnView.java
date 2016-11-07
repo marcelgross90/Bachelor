@@ -13,19 +13,24 @@ import de.fiw.fhws.lecturers.R;
 
 public class WelearnView extends TextView {
 
+	private final Context context;
+
 	public WelearnView(Context context) {
 		super(context);
+		this.context = context;
 		init(context, null, 0);
 
 	}
 
 	public WelearnView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		this.context = context;
 		init(context, attrs, 0);
 	}
 
 	public WelearnView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		this.context = context;
 		init(context, attrs, defStyle);
 	}
 
@@ -35,18 +40,18 @@ public class WelearnView extends TextView {
 
 		try {
 			setText(R.string.welearn);
-			final String welearnUrl = typedArray.getString(R.styleable.WelearnView_welearnAddress);
-			if (welearnUrl != null) {
-				setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(welearnUrl));
-						context.startActivity(browserIntent);
-					}
-				});
-			}
 		} finally {
 			typedArray.recycle();
 		}
+	}
+
+	public void setAddress(final String welearnUrl) {
+		setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(welearnUrl));
+				context.startActivity(browserIntent);
+			}
+		});
 	}
 }

@@ -44,12 +44,10 @@ public class LecturerDetailAdapter extends RecyclerView.Adapter {
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		if (position == 0) {
 			LecturerDetailViewHolderOffice viewHolder = (LecturerDetailViewHolderOffice) holder;
-			viewHolder.displayRoom(lecturer.getRoomNumber());
-			viewHolder.displayAddress(lecturer.getAddress());
+			viewHolder.assignData(lecturer);
 		} else if (position == 1) {
 			LecturerDetailViewHolderContact viewHolder = (LecturerDetailViewHolderContact) holder;
-			viewHolder.displayEmail(lecturer.getEmail());
-			viewHolder.displayPhone(lecturer.getPhone());
+			viewHolder.assignLecturer(lecturer);
 		}
 	}
 
