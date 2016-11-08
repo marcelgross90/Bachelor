@@ -68,7 +68,7 @@ public class LecturerCardView extends CardView {
 		roomView.setText(lecturer.getRoomNumber());
 		addressView.setText(lecturer.getAddress());
 		welearnView.setAddress(lecturer.getUrlWelearn());
-		imageView.loadImage(lecturer.getProfileImageUrl());
+		imageView.loadImage(lecturer.getProfileImageUrl(), R.dimen.picture_width, R.dimen.picture_height);
 	}
 
 	private void hideUnnecessaryViews(Lecturer lecturer) {

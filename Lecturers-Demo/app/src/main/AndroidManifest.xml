@@ -17,18 +17,19 @@
 
 				<category android:name="android.intent.category.LAUNCHER"/>
 
+			</intent-filter>
+			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:scheme="http"
 					  android:host="www.fhws.de" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".LecturerDetailActivity">
+		</activity>
+		<activity android:name=".EditLecturerActivity">
+		</activity>
+	</application>
 
-					</intent-filter>
-				</activity>
-				<activity android:name=".LecturerDetailActivity">
-				</activity>
-				<activity android:name=".EditLecturerActivity">
-				</activity>
-			</application>
-
-		</manifest>
+</manifest>
