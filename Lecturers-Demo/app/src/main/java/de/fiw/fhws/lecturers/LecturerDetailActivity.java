@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.customView.LecturerDetailView;
+import de.marcelgross.lecturer_lib.customView.LecturerDetailView;
 import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
-import de.fiw.fhws.lecturers.model.Lecturer;
-import de.fiw.fhws.lecturers.model.Link;
+import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.model.Link;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
 import okhttp3.Call;
 import okhttp3.Callback;

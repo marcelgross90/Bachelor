@@ -18,7 +18,7 @@ import java.io.IOException;
 
 import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.model.Lecturer;
+import de.marcelgross.lecturer_lib.model.Lecturer;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;

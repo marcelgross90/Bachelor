@@ -3,7 +3,7 @@ package de.fiw.fhws.lecturers.network.util;
 import java.util.HashMap;
 import java.util.List;
 
-import de.fiw.fhws.lecturers.model.Link;
+import de.marcelgross.lecturer_lib.model.Link;
 
 public class HeaderParser {
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<de.fiw.fhws.lecturers.customView.LecturerDetailView
+<de.marcelgross.lecturer_lib.customView.LecturerDetailView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/detail_view"
 	android:layout_width="match_parent"

@@ -1,0 +1,20 @@
+<resources>
+	<string name="app_name">lecturer_lib</string>
+	<string name="welearn">welearn</string>
+	<string name="title">Title</string>
+	<string name="email">E-Mail</string>
+	<string name="phone_number">Phone Number</string>
+	<string name="address">Address</string>
+	<string name="room">Room</string>
+
+	<string name="card_caption_contact">Contact</string>
+	<string name="card_caption_email">E-Mail</string>
+	<string name="card_caption_phone">Phone</string>
+	<string name="card_caption_website">Homepage</string>
+	<string name="card_caption_office">Office</string>
+	<string name="card_caption_room">Room</string>
+	<string name="card_caption_address">Address</string>
+	<string name="profile_picture">Profile picture</string>
+
+	<string name="full_name">Fullname</string>
+</resources>
