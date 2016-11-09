@@ -1,5 +1,8 @@
 package de.marcelgross.lecturer_lib.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Link {
 
 	private String href;
@@ -66,5 +69,51 @@ public class Link {
 		result = 31 * result + (rel != null ? rel.hashCode() : 0);
 		result = 31 * result + (type != null ? type.hashCode() : 0);
 		return result;
+	}
+
+	public static class Builder {
+		private String orgUrl;
+		private String baseUrl;
+		private String generatedUrl;
+		private final Map<String, String> queryParamsWithWildcards = new HashMap<>();
+
+
+		public Builder(String orgUrl) {
+			this.orgUrl = orgUrl;
+			String[] splitUrl = orgUrl.split("\\?");
+			this.baseUrl = splitUrl[0];
+			this.generatedUrl = baseUrl;
+			splitQueryParams(splitUrl[1]);
+		}
+
+		public Builder(Link link) {
+			this(link.getHref());
+		}
+
+		public Builder addQueryParam(String key, String value) {
+			String queryTemplate = queryParamsWithWildcards.get(key);
+			if (queryTemplate != null) {
+				if (this.generatedUrl.contains("?")) {
+					this.generatedUrl += "&" + queryTemplate + value;
+				} else {
+					this.generatedUrl += "?" + queryTemplate + value;
+				}
+			}
+			return this;
+		}
+
+		public String build() {
+			return this.generatedUrl;
+		}
+
+		private void splitQueryParams(String queryParamsAsString) {
+			String[] queryParams = queryParamsAsString.split("&");
+
+			for (String queryParam : queryParams) {
+				String[] splitParam = queryParam.split("=");
+				queryParamsWithWildcards.put(splitParam[0], splitParam[0] + "=");
+			}
+		}
+
 	}
 }

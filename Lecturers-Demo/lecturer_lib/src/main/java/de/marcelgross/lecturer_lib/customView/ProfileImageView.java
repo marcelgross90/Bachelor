@@ -73,15 +73,23 @@ public class ProfileImageView extends ImageView {
 			}
 
 			@Override
-			public void onBitmapFailed( Drawable errorDrawable ) {}
+			public void onBitmapFailed( Drawable errorDrawable ) {
+				setImageDrawable(errorDrawable);
+			}
 		};
 
 		Picasso.with(context).load(profileImageUrl).error(R.drawable.user_picture).into(target);
 	}
 
 	private String getValidUrl(Link profileImageLink) {
-		if (profileImageLink != null)
-			return profileImageLink.getHrefWithoutQueryParams();
+		if (profileImageLink != null) {
+			Link.Builder linkBuilder = new Link.Builder(profileImageLink);
+			linkBuilder.addQueryParam("width", "394");
+			linkBuilder.addQueryParam("height", "591");
+
+			return linkBuilder.build();
+		}
+
 		return "empty";
 	}
 }
