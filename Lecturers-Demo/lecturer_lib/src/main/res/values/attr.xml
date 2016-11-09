@@ -28,4 +28,14 @@
 	<declare-styleable name="LecturerDetailContactCardView"/>
 	<declare-styleable name="LecturerDetailOfficeCardView"/>
 	<declare-styleable name="LecturerDetailView" />
+
+	<declare-styleable name="TitleInput" />
+	<declare-styleable name="FirstNameInput" />
+	<declare-styleable name="LastNameInput" />
+	<declare-styleable name="MailInput" />
+	<declare-styleable name="AddressInput" />
+	<declare-styleable name="RoomInput" />
+	<declare-styleable name="WelearnInput" />
+	<declare-styleable name="PhoneInput" />
+	<declare-styleable name="LecturerInputView" />
 </resources>

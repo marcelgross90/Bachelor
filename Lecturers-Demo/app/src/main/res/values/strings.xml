@@ -8,15 +8,6 @@
 
 	<string name="edit">Edit</string>
 	<string name="delete">Delete</string>
-
-	<string name="title_missing">Title is missing!</string>
-	<string name="first_name_missing">Firstname is missing!</string>
-	<string name="last_name_missing">Lastname is missing!</string>
-	<string name="email_missing">Email is missing!</string>
-	<string name="phone_number_missing">Phonenumber is missing!</string>
-	<string name="address_missing">Address is missing!</string>
-	<string name="room_missing">Roomnumber is missing</string>
-	<string name="welearn_missing">Welearn-Address is missing!</string>
 	<string name="lecturer_updated">Lecturer updated!</string>
 	<string name="lecturer_saved">Lecturer saved!</string>
 

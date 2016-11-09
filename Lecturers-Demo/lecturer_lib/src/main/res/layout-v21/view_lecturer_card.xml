@@ -30,14 +30,14 @@
 			android:layout_toEndOf="@+id/profileImg"
 			android:background="@color/colorPrimary"/>
 
-		<de.marcelgross.lecturer_lib.customView.TitleView
+		<de.marcelgross.lecturer_lib.customView.textView.TitleView
 			android:id="@+id/title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
 			android:layout_toEndOf="@+id/border"/>
 
-		<de.marcelgross.lecturer_lib.customView.NameView
+		<de.marcelgross.lecturer_lib.customView.textView.NameView
 			android:id="@+id/name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
 			android:layout_toEndOf="@+id/border"
 			android:textSize="18sp"/>
 
-		<de.marcelgross.lecturer_lib.customView.MailView
+		<de.marcelgross.lecturer_lib.customView.textView.MailView
 			android:id="@+id/email"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_email"/>
 
-		<de.marcelgross.lecturer_lib.customView.PhoneView
+		<de.marcelgross.lecturer_lib.customView.textView.PhoneView
 			android:id="@+id/phone"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_phone"/>
 
-		<de.marcelgross.lecturer_lib.customView.AddressView
+		<de.marcelgross.lecturer_lib.customView.textView.AddressView
 			android:id="@+id/address"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_home"/>
 
-		<de.marcelgross.lecturer_lib.customView.RoomView
+		<de.marcelgross.lecturer_lib.customView.textView.RoomView
 			android:id="@+id/room"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_location"/>
 
-		<de.marcelgross.lecturer_lib.customView.WelearnView
+		<de.marcelgross.lecturer_lib.customView.textView.WelearnView
 			android:id="@+id/welearn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

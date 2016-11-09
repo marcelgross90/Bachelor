@@ -9,6 +9,10 @@
 
 	<include layout="@layout/toolbar"/>
 
-	<include layout="@layout/fragment_lecturer_input" />
+	<de.marcelgross.lecturer_lib.customView.LecturerInputView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/lecturer_input">
+	</de.marcelgross.lecturer_lib.customView.LecturerInputView>
 
 </LinearLayout>

@@ -8,6 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
+import de.marcelgross.lecturer_lib.customView.textView.AddressView;
+import de.marcelgross.lecturer_lib.customView.textView.MailView;
+import de.marcelgross.lecturer_lib.customView.textView.NameView;
+import de.marcelgross.lecturer_lib.customView.textView.PhoneView;
+import de.marcelgross.lecturer_lib.customView.textView.RoomView;
+import de.marcelgross.lecturer_lib.customView.textView.TitleView;
+import de.marcelgross.lecturer_lib.customView.textView.WelearnView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 
@@ -39,7 +46,7 @@ public class LecturerCardView extends CardView {
 
 	private void init(Context context, AttributeSet attributeSet, int defStyle) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.addView(inflater.inflate(R.layout.view_lecturer_card, null));
+		this.addView(inflater.inflate(R.layout.view_lecturer_card, this, false));
 
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerCardView, defStyle, 0);
 		try {

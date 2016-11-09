@@ -1,4 +1,4 @@
-package de.marcelgross.lecturer_lib.customView;
+package de.marcelgross.lecturer_lib.customView.textView;
 
 
 import android.content.Context;

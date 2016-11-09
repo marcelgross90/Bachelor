@@ -5,8 +5,8 @@ import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.customView.LecturerDetailContactCardView;
-import de.marcelgross.lecturer_lib.customView.MailView;
-import de.marcelgross.lecturer_lib.customView.PhoneView;
+import de.marcelgross.lecturer_lib.customView.textView.MailView;
+import de.marcelgross.lecturer_lib.customView.textView.PhoneView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class LecturerDetailViewHolderContact extends RecyclerView.ViewHolder {

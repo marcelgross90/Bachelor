@@ -2,6 +2,8 @@
 	<string name="app_name">lecturer_lib</string>
 	<string name="welearn">welearn</string>
 	<string name="title">Title</string>
+	<string name="first_name">Firstname</string>
+	<string name="last_name">Lastname</string>
 	<string name="email">E-Mail</string>
 	<string name="phone_number">Phone Number</string>
 	<string name="address">Address</string>
@@ -15,6 +17,17 @@
 	<string name="card_caption_room">Room</string>
 	<string name="card_caption_address">Address</string>
 	<string name="profile_picture">Profile picture</string>
+
+	<string name="title_missing">Title is missing!</string>
+	<string name="first_name_missing">Firstname is missing!</string>
+	<string name="last_name_missing">Lastname is missing!</string>
+	<string name="email_missing">Email is missing!</string>
+	<string name="phone_number_missing">Phonenumber is missing!</string>
+	<string name="address_missing">Address is missing!</string>
+	<string name="room_missing">Roomnumber is missing!</string>
+	<string name="welearn_missing">Welearn-Address is missing!</string>
+	<string name="lecturer_updated">Lecturer updated!</string>
+	<string name="lecturer_saved">Lecturer saved!</string>
 
 	<string name="full_name">Fullname</string>
 </resources>

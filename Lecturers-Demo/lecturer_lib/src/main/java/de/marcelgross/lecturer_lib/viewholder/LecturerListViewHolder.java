@@ -8,10 +8,10 @@ import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
-import de.marcelgross.lecturer_lib.customView.AddressView;
+import de.marcelgross.lecturer_lib.customView.textView.AddressView;
 import de.marcelgross.lecturer_lib.customView.LecturerCardView;
-import de.marcelgross.lecturer_lib.customView.MailView;
-import de.marcelgross.lecturer_lib.customView.PhoneView;
+import de.marcelgross.lecturer_lib.customView.textView.MailView;
+import de.marcelgross.lecturer_lib.customView.textView.PhoneView;
 import de.marcelgross.lecturer_lib.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
