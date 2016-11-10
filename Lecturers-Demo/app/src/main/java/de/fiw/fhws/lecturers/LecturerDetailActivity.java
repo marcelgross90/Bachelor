@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.owlike.genson.Genson;
 
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.marcelgross.lecturer_lib.customView.LecturerDetailView;
 import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
 import de.marcelgross.lecturer_lib.model.Lecturer;
@@ -29,29 +31,29 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class LecturerDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class LecturerDetailActivity extends AppCompatActivity implements View.OnClickListener, DeleteDialogFragment.DeleteDialogListener {
 	private LecturerDetailView lecturerDetailView;
 	private final Genson genson = new Genson();
 	private Link deleteLink;
 	private Link updateLink;
 	private Toolbar toolbar;
 	private Lecturer currentLecturer;
-	private static LecturerDetailActivity activity;
-	private Menu menu;
 
-	public static void startMainActivity() {
-		Intent intent = new Intent(activity, MainActivity.class);
-		activity.startActivity(intent);
-		activity.finish();
-
+	@Override
+	public void onDialogClosed(boolean successfullyDeleted) {
+		if (successfullyDeleted) {
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
+			finish();
+		} else {
+			Toast.makeText(this, R.string.delete_error, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lecturer_detail);
-
-		activity = this;
 
 		lecturerDetailView = (LecturerDetailView) findViewById(R.id.detail_view);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -63,9 +65,13 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		this.menu = menu;
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.lecturer_menu, menu);
+		MenuItem deleteItem = menu.findItem(R.id.delete_lecturer);
+		MenuItem updateItem = menu.findItem(R.id.edit_lecturer);
+		deleteItem.setVisible(deleteLink != null);
+		updateItem.setVisible(updateLink != null);
+
 		return super.onCreateOptionsMenu(menu);
 
 	}
@@ -121,7 +127,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				.url(selfUrl)
 				.build();
 
-		OkHttpClient client = new OkHttpClient();
+		OkHttpClient client = OKHttpSingleton.getInstance(this).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override
@@ -152,14 +158,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	}
 
 	private void setUp(Lecturer lecturer) {
-		if (deleteLink == null) {
-			MenuItem item = menu.findItem(R.id.delete_lecturer);
-			item.setVisible(false);
-		}
-		if (updateLink == null) {
-			MenuItem item = menu.findItem(R.id.edit_lecturer);
-			item.setVisible(false);
-		}
+		invalidateOptionsMenu();
 		lecturerDetailView.setUpView(lecturer, this);
 	}
 

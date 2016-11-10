@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
 import de.marcelgross.lecturer_lib.customView.LecturerInputView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
@@ -99,7 +100,7 @@ public class EditLecturerActivity extends AppCompatActivity {
 				.url(selfUrl)
 				.build();
 
-		OkHttpClient client = new OkHttpClient();
+		OkHttpClient client = OKHttpSingleton.getInstance(this).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override
@@ -147,7 +148,7 @@ public class EditLecturerActivity extends AppCompatActivity {
 		if (lecturer != null) {
 			String lecturerJson = genson.serialize(lecturer);
 
-			OkHttpClient client = new OkHttpClient();
+			OkHttpClient client = OKHttpSingleton.getInstance(this).getClient();
 			RequestBody body = RequestBody.create(MediaType.parse(lecturerEditLink.getType()), lecturerJson);
 			final Request request = new Request.Builder()
 					.url(lecturerEditLink.getHref())

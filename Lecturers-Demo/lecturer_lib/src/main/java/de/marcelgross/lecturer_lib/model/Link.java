@@ -72,8 +72,8 @@ public class Link {
 	}
 
 	public static class Builder {
-		private String orgUrl;
-		private String baseUrl;
+		private final String orgUrl;
+		private final String baseUrl;
 		private String generatedUrl;
 		private final Map<String, String> queryParamsWithWildcards = new HashMap<>();
 

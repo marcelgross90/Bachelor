@@ -20,7 +20,7 @@ import de.marcelgross.lecturer_lib.model.Lecturer;
 public class LecturerInputView extends ScrollView {
 
 	private final Context context;
-	private Lecturer currentLecturer;
+	private final Lecturer currentLecturer;
 	private TitleInput titleInput;
 	private FirstNameInput firstNameInput;
 	private LastNameInput lastNameInput;

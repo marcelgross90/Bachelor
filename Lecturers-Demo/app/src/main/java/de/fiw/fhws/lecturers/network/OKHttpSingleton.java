@@ -10,8 +10,7 @@ public class OKHttpSingleton {
 
 	private static OKHttpSingleton instance;
 
-	private Cache cache;
-	private OkHttpClient client;
+	private final OkHttpClient client;
 
 	public static OKHttpSingleton getInstance(Context context) {
 		if (instance == null) {
@@ -27,7 +26,7 @@ public class OKHttpSingleton {
 
 	private OKHttpSingleton(Context context) {
 		int cacheSize = (int) ((Runtime.getRuntime().maxMemory() / 1024) / 8);
-		cache = new Cache(context.getCacheDir(), cacheSize);
+		Cache cache = new Cache(context.getCacheDir(), cacheSize);
 
 		client = new OkHttpClient.Builder()
 				.cache(cache)

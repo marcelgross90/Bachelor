@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.R;
+import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.marcelgross.lecturer_lib.customView.LecturerInputView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import okhttp3.Call;
@@ -77,7 +78,7 @@ public class NewLecturerFragment extends Fragment {
 		if (lecturer != null) {
 			String lecturerJson = genson.serialize(lecturer);
 
-			OkHttpClient client = new OkHttpClient();
+			OkHttpClient client = OKHttpSingleton.getInstance(getActivity()).getClient();
 			RequestBody body = RequestBody.create(MediaType.parse(mediaType), lecturerJson);
 			final Request request = new Request.Builder()
 					.url(url)

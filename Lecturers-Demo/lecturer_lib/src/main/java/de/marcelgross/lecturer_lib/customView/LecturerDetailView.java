@@ -59,7 +59,7 @@ public class LecturerDetailView extends LinearLayout {
 		LecturerDetailAdapter adapter = new LecturerDetailAdapter(listener);
 		adapter.addLecturer(lecturer);
 		if (lecturer.getProfileImageUrl() != null) {
-			profileImageView.loadCuttedImage(lecturer.getProfileImageUrl());
+			profileImageView.loadCutImage(lecturer.getProfileImageUrl());
 		}
 		recyclerView.setAdapter(adapter);
 	}

@@ -1,6 +1,7 @@
 package de.fiw.fhws.lecturers.fragment;
 
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
@@ -15,17 +16,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
+import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
 import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
 import de.marcelgross.lecturer_lib.customView.ProfileImageView;
@@ -33,6 +37,7 @@ import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -40,8 +45,7 @@ import okhttp3.Response;
 public class LecturerListFragment extends Fragment implements LecturerListAdapter.OnLecturerClickListener {
 
 	private final Genson genson = new Genson();
-	private String baseUrl;
-	private String relType;
+	private Link allLecturersLink;
 	private LecturerListAdapter modulesAdapter;
 	private LinearLayoutManager modulesLayoutMgr;
 	private ProgressBar progressBar;
@@ -52,13 +56,45 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		modulesAdapter = new LecturerListAdapter(this);
-		if (savedInstanceState == null) {
-			Bundle bundle = getArguments();
-			baseUrl = HeaderParser.getUrlWithoutQueryParams(bundle.getString("url", ""));
-			relType = bundle.getString("type", "");
+		initialNetworkRequest();
+	}
 
-			loadLecturers(baseUrl);
-		}
+	private void initialNetworkRequest() {
+		OkHttpClient client = OKHttpSingleton.getInstance(getActivity()).getClient();
+		Request request = new Request.Builder()
+				.url(getResources().getString(R.string.entry_url))
+				.build();
+
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getActivity(), R.string.load_error, Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				Activity activity = getActivity();
+				Headers headers = response.headers();
+				List<String> linkHeaderList = headers.toMultimap().get("link");
+				Map<String, Link> linkHeader = new HashMap<>();
+				if (linkHeaderList != null && linkHeaderList.size() > 0)
+					linkHeader = HeaderParser.getLinks(linkHeaderList);
+
+
+				if (linkHeader.size() > 0) {
+					allLecturersLink = linkHeader.get(activity.getResources().getString(R.string.rel_type_get_all_lecturers));
+					loadLecturers(allLecturersLink.getHrefWithoutQueryParams());
+				} else {
+					allLecturersLink = null;
+				}
+			}
+		});
+
 	}
 
 	@Override
@@ -127,7 +163,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 			case R.id.addLecturer:
 				Bundle bundle = new Bundle();
 				if (createNewLecturerLink != null) {
-					bundle.putString("url", baseUrl);
+					bundle.putString("url", createNewLecturerLink.getHref());
 					bundle.putString("mediaType", createNewLecturerLink.getType());
 				}
 				Fragment fragment = new NewLecturerFragment();
@@ -143,11 +179,11 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		showProgressBar(true);
 
 		Request request = new Request.Builder()
-				.header("Accept", relType)
+				.header("Accept", allLecturersLink.getType())
 				.url(url)
 				.build();
 
-		OkHttpClient client = new OkHttpClient();
+		OkHttpClient client = OKHttpSingleton.getInstance(getActivity()).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override
