@@ -1,0 +1,11 @@
+/Thesis/*.xml
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.lof
+*.lot
+*.log
+*.out
+*.gz
+*.toc
