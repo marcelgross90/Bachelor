@@ -14,4 +14,6 @@
 	<string name="delete_dialog_title">Delete %s?</string>
 	<string name="ok">OK</string>
 	<string name="cancel">Cancel</string>
+
+	<string name="load_error">Could not load lecturers</string>
 </resources>

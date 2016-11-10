@@ -33,9 +33,11 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	private LecturerDetailView lecturerDetailView;
 	private final Genson genson = new Genson();
 	private Link deleteLink;
+	private Link updateLink;
 	private Toolbar toolbar;
 	private Lecturer currentLecturer;
 	private static LecturerDetailActivity activity;
+	private Menu menu;
 
 	public static void startMainActivity() {
 		Intent intent = new Intent(activity, MainActivity.class);
@@ -61,6 +63,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		this.menu = menu;
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.lecturer_menu, menu);
 		return super.onCreateOptionsMenu(menu);
@@ -76,8 +79,8 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				return true;
 			case R.id.edit_lecturer:
 				Intent intent = new Intent(LecturerDetailActivity.this, EditLecturerActivity.class);
-				intent.putExtra("url", currentLecturer.getSelf().getHref());
-				intent.putExtra("mediaType", currentLecturer.getSelf().getType());
+				intent.putExtra("url", updateLink.getHref());
+				intent.putExtra("mediaType", updateLink.getType());
 				startActivityForResult(intent, 1);
 				return true;
 			case R.id.delete_lecturer:
@@ -135,7 +138,9 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				currentLecturer = lecturer;
 				Map<String, List<String>> headers = response.headers().toMultimap();
 				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
-				deleteLink = linkHeader.get("deleteLecturer");
+				deleteLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_create_delete_lecturer));
+				updateLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_create_update_lecturer));
+
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -147,6 +152,14 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	}
 
 	private void setUp(Lecturer lecturer) {
+		if (deleteLink == null) {
+			MenuItem item = menu.findItem(R.id.delete_lecturer);
+			item.setVisible(false);
+		}
+		if (updateLink == null) {
+			MenuItem item = menu.findItem(R.id.edit_lecturer);
+			item.setVisible(false);
+		}
 		lecturerDetailView.setUpView(lecturer, this);
 	}
 

@@ -36,6 +36,13 @@ public class HeaderParser {
 		return  linkHashMap;
 	}
 
+	public static String getUrlWithoutQueryParams(String url) {
+		if (url.contains("?")) {
+			return url.split("\\?")[0];
+		}
+		return url;
+	}
+
 
 	private static String[] getLinkPair(String linkAndRelType) {
 		String[] links = linkAndRelType.split(";\\s*");

@@ -26,11 +26,11 @@ import java.util.Map;
 import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
+import de.fiw.fhws.lecturers.network.util.HeaderParser;
 import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
 import de.marcelgross.lecturer_lib.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
-import de.fiw.fhws.lecturers.network.util.HeaderParser;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -40,16 +40,25 @@ import okhttp3.Response;
 public class LecturerListFragment extends Fragment implements LecturerListAdapter.OnLecturerClickListener {
 
 	private final Genson genson = new Genson();
-	private final String baseUrl = "https://apistaging.fiw.fhws.de/mig/api/lecturers/";
+	private String baseUrl;
+	private String relType;
 	private LecturerListAdapter modulesAdapter;
 	private LinearLayoutManager modulesLayoutMgr;
 	private ProgressBar progressBar;
 	private String nextUrl;
+	private Link createNewLecturerLink;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
+		modulesAdapter = new LecturerListAdapter(this);
+		if (savedInstanceState == null) {
+			Bundle bundle = getArguments();
+			baseUrl = HeaderParser.getUrlWithoutQueryParams(bundle.getString("url", ""));
+			relType = bundle.getString("type", "");
+
+			loadLecturers(baseUrl);
+		}
 	}
 
 	@Override
@@ -60,7 +69,6 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
 		RecyclerView modulesRecyclerView = (RecyclerView) view.findViewById(R.id.lecturer_recycler_view);
-		modulesAdapter = new LecturerListAdapter(this);
 		modulesLayoutMgr = new LinearLayoutManager(getContext());
 
 		modulesRecyclerView.setLayoutManager(modulesLayoutMgr);
@@ -78,8 +86,6 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 				}
 			}
 		});
-
-		loadLecturers(baseUrl);
 		return view;
 	}
 
@@ -120,11 +126,13 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		switch (item.getItemId()) {
 			case R.id.addLecturer:
 				Bundle bundle = new Bundle();
-				bundle.putString("url", baseUrl);
-				bundle.putString("mediaType", "application/vnd.fhws-lecturer.default+json");
+				if (createNewLecturerLink != null) {
+					bundle.putString("url", baseUrl);
+					bundle.putString("mediaType", createNewLecturerLink.getType());
+				}
 				Fragment fragment = new NewLecturerFragment();
 				fragment.setArguments(bundle);
-				FragmentHandler.replaceFragmentPopBackStack(getFragmentManager(), fragment);
+				FragmentHandler.replaceFragment(getFragmentManager(), fragment);
 				break;
 		}
 
@@ -135,7 +143,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		showProgressBar(true);
 
 		Request request = new Request.Builder()
-				.header("Accept", "application/vnd.fhws-lecturer.default+json")
+				.header("Accept", relType)
 				.url(url)
 				.build();
 
@@ -157,15 +165,18 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 				});
 				Map<String, List<String>> headers = response.headers().toMultimap();
 				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
-				Link nextLink = linkHeader.get("next");
+				Link nextLink = linkHeader.get(getActivity().getString(R.string.rel_type_next));
+				createNewLecturerLink = linkHeader.get(getActivity().getString(R.string.rel_type_create_new_lecturer));
 				if (nextLink != null) {
 					nextUrl = nextLink.getHref();
 				} else {
 					nextUrl = "";
 				}
+
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
+						setHasOptionsMenu(createNewLecturerLink != null);
 						showProgressBar(false);
 						modulesAdapter.addLecturer(lecturers);
 					}

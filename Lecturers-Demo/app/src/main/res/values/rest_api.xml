@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="entry_url">https://apistaging.fiw.fhws.de/mig/api/</string>
+	<string name="rel_type_get_all_lecturers">getAllLecturers</string>
+	<string name="rel_type_next">next</string>
+	<string name="rel_type_create_new_lecturer">createNewLecturer</string>
+	<string name="rel_type_create_update_lecturer">updateLecturer</string>
+	<string name="rel_type_create_delete_lecturer">deleteLecturer</string>
+</resources>
