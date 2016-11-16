@@ -24,6 +24,7 @@
 	<declare-styleable name="LecturerCardView">
 		<attr name="lecturerJson" format="string" />
 	</declare-styleable>
+	<declare-styleable name="ChargeCardView"/>
 	<declare-styleable name="ProfileImageView"/>
 	<declare-styleable name="LecturerDetailContactCardView"/>
 	<declare-styleable name="LecturerDetailOfficeCardView"/>

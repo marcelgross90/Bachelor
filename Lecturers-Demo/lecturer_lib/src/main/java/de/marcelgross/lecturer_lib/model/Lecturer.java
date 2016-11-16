@@ -13,12 +13,13 @@ public class Lecturer {
 	private String urlWelearn;
 	private Link profileImageUrl;
 	private Link self;
+	private Link chargeUrl;
 
 	public Lecturer() {
 		//for genson
 	}
 
-	public Lecturer(int id, String title, String firstName, String lastName, String email, String phone, String roomNumber, String address, String urlWelearn, Link profileImageUrl, Link self) {
+	public Lecturer(int id, String title, String firstName, String lastName, String email, String phone, String roomNumber, String address, String urlWelearn, Link profileImageUrl, Link self, Link chargeUrl) {
 		this.id = id;
 		this.title = title;
 		this.firstName = firstName;
@@ -30,6 +31,7 @@ public class Lecturer {
 		this.urlWelearn = urlWelearn;
 		this.profileImageUrl = profileImageUrl;
 		this.self = self;
+		this.chargeUrl = chargeUrl;
 	}
 
 	public int getId() {
@@ -120,6 +122,14 @@ public class Lecturer {
 		this.self = self;
 	}
 
+	public Link getChargeUrl() {
+		return chargeUrl;
+	}
+
+	public void setChargeUrl(Link chargeUrl) {
+		this.chargeUrl = chargeUrl;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -143,7 +153,8 @@ public class Lecturer {
 			return false;
 		if (profileImageUrl != null ? !profileImageUrl.equals(lecturer.profileImageUrl) : lecturer.profileImageUrl != null)
 			return false;
-		return self != null ? self.equals(lecturer.self) : lecturer.self == null;
+		if (self != null ? !self.equals(lecturer.self) : lecturer.self != null) return false;
+		return chargeUrl != null ? chargeUrl.equals(lecturer.chargeUrl) : lecturer.chargeUrl == null;
 
 	}
 
@@ -160,6 +171,7 @@ public class Lecturer {
 		result = 31 * result + (urlWelearn != null ? urlWelearn.hashCode() : 0);
 		result = 31 * result + (profileImageUrl != null ? profileImageUrl.hashCode() : 0);
 		result = 31 * result + (self != null ? self.hashCode() : 0);
+		result = 31 * result + (chargeUrl != null ? chargeUrl.hashCode() : 0);
 		return result;
 	}
 }

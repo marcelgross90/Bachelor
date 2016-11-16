@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.customView.textView.MailView;
@@ -44,6 +45,7 @@ public class LecturerDetailContactCardView extends CardView {
 			mailView = (MailView) findViewById(R.id.tvEmailValue);
 			phoneView = (PhoneView) findViewById(R.id.tvPhoneValue);
 			welearnView = (WelearnView) findViewById(R.id.tvWebsiteValue);
+			Button chargesButton = (Button) findViewById(R.id.charges_btn);
 
 		} finally {
 			typedArray.recycle();

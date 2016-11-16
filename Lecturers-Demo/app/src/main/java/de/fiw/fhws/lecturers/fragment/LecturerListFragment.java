@@ -71,7 +71,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						Toast.makeText(getActivity(), R.string.load_error, Toast.LENGTH_SHORT).show();
+						Toast.makeText(getActivity(), R.string.load_lecturer_error, Toast.LENGTH_SHORT).show();
 					}
 				});
 			}

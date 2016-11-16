@@ -1,8 +1,10 @@
 package de.fiw.fhws.lecturers;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import de.fiw.fhws.lecturers.fragment.ChargeListFragment;
 import de.fiw.fhws.lecturers.fragment.LecturerListFragment;
 
 public class FragmentHandler {
@@ -23,6 +25,17 @@ public class FragmentHandler {
 
 	public static void startLecturerListFragment(FragmentManager fm) {
 		Fragment fragment = new LecturerListFragment();
+
+		replaceFragment(fm, fragment);
+	}
+
+	public static void startChargesListFragment(FragmentManager fm, String url, String mediaType) {
+		Fragment fragment = new ChargeListFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString("url", url);
+		bundle.putString("mediaType", mediaType);
+
+		fragment.setArguments(bundle);
 
 		replaceFragment(fm, fragment);
 	}

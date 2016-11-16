@@ -19,27 +19,27 @@
 			android:id="@+id/tvCardHeader"
 			android:textSize="16sp"
 			android:layout_gravity="end"
-			android:layout_marginRight="8dp"
-			android:layout_marginEnd="8dp"
-			android:layout_marginTop="8dp" />
+			android:layout_marginRight="@dimen/spacing_medium"
+			android:layout_marginEnd="@dimen/spacing_medium"
+			android:layout_marginTop="@dimen/spacing_medium" />
 
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
 			android:background="@android:color/darker_gray"
 			android:id="@+id/separator"
-			android:layout_marginTop="8dp"
-			android:layout_marginLeft="8dp"
-			android:layout_marginRight="8dp" />
+			android:layout_marginTop="@dimen/spacing_medium"
+			android:layout_marginLeft="@dimen/spacing_medium"
+			android:layout_marginRight="@dimen/spacing_medium" />
 
 		<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/contentRoom"
-			android:layout_marginLeft="8dp"
-			android:layout_marginRight="8dp"
-			android:layout_marginTop="8dp" >
+			android:layout_marginLeft="@dimen/spacing_medium"
+			android:layout_marginRight="@dimen/spacing_medium"
+			android:layout_marginTop="@dimen/spacing_medium" >
 
 			<TextView
 				android:layout_width="match_parent"
@@ -60,9 +60,9 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/contentAddress"
-			android:layout_marginLeft="8dp"
-			android:layout_marginRight="8dp"
-			android:layout_marginTop="8dp" >
+			android:layout_marginLeft="@dimen/spacing_medium"
+			android:layout_marginRight="@dimen/spacing_medium"
+			android:layout_marginTop="@dimen/spacing_medium" >
 
 			<TextView
 				android:layout_width="match_parent"

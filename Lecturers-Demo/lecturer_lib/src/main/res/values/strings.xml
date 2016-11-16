@@ -16,7 +16,9 @@
 	<string name="card_caption_office">Office</string>
 	<string name="card_caption_room">Room</string>
 	<string name="card_caption_address">Address</string>
+	<string name="card_caption_charge">Charge</string>
 	<string name="profile_picture">Profile picture</string>
+	<string name="show_charges">Show charges</string>
 
 	<string name="title_missing">Title is missing!</string>
 	<string name="first_name_missing">Firstname is missing!</string>

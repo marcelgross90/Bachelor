@@ -190,6 +190,13 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				startActivity(mapIntent);
 				break;
 
+			case R.id.charges_btn:
+				Intent intent3 = new Intent(LecturerDetailActivity.this, ChargeActivity.class);
+				intent3.putExtra("name", currentLecturer.getFirstName() + " " +currentLecturer.getLastName());
+				intent3.putExtra("url", currentLecturer.getChargeUrl().getHref());
+				intent3.putExtra("mediaType", currentLecturer.getChargeUrl().getType());
+				startActivity(intent3);
+				break;
 		}
 	}
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content">
+
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/spacing_medium">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/card_caption_charge"
+			android:id="@+id/charge_title"
+			android:layout_margin="@dimen/spacing_medium"
+			android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+		<View
+			android:layout_below="@+id/charge_title"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@android:color/darker_gray"
+			android:id="@+id/separator"
+			android:layout_marginLeft="@dimen/spacing_medium"
+			android:layout_marginRight="@dimen/spacing_medium" />
+
+
+		<TextView
+			android:layout_below="@+id/separator"
+			android:text="@string/card_caption_charge"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/charge_period"
+			android:layout_marginTop="@dimen/spacing_medium"
+			android:layout_marginLeft="@dimen/spacing_medium"
+			android:layout_marginRight="@dimen/spacing_medium" />
+
+	</RelativeLayout>
+
+</android.support.v7.widget.CardView>
