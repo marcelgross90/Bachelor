@@ -5,13 +5,13 @@ Das Smartphone ist heutzugtage der stete Begleiter eines Menschen. \enquote{Zwei
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=0.86\textwidth]{images/prognose-zur-anzahl-der-smartphone-nutzer-weltweit-bis-2020.png}
-		\caption{Prognose zur Anzahl der Smartphone-Nutzer weltweit von 2012 bis 2020 (in Milliarden) \cite{prognose}}
+		\caption{Prognose zur Anzahl der Smartphone-Nutzer weltweit von 2012 bis 2020 (in Milliarden) \cite{prognose}.}
 		\label{fig:prognose_fig}
 	\end{center}
 \end{figure}
 
 Umso wichtiger ist es das die Softwareentwicklung diesen Trend ernst nimmt. Der ehemalige Google-Chef Eric Schmidt sagte bereits 2010: \enquote{Googles Devise heißt jetzt \enquote{Mobile first}}. 
-Diese Devise wird auch heute noch von vielen Unternehmen verfolgt, das ist der Grund weswegen in den einzelnen Stores heutzutage so viele Apps angeboten werden. Bei Android im Playstore sind es im Oktober 2016 ca 2.432.000 Apps \cite{play_store}, bei Apple im App Store sind es ca 2.000.000 Apps (Stand Juni 2016) \cite{app_store}. Neben Googles Android und Apples IOs gibt es noch andere Betriebssysteme, wie Microsofts Windows Phone oder Blackberrys Blackberrys OS und noch ein paar andere. Jedoch bestimmen die beiden erstgenannten Systeme den Markt (Abbildung \ref{fig:os_fig}).
+Diese Devise wird von vielen Unternehmen verfolgt, das ist der Grund weswegen in den einzelnen Stores heutzutage so viele Apps angeboten werden. Bei Android im Playstore sind es im Oktober 2016 ca. 2,4 Millionen Apps \cite{play_store}, bei Apple im App Store sind es ca. 2 Millionen Apps (Stand Juni 2016) \cite{app_store}. Neben Googles Android und Apples IOs gibt es noch andere Betriebssysteme, beispielsweise Microsofts Windows Phone oder Blackberrys Blackberrys OS. Jedoch bestimmen die beiden erstgenannten Systeme den Markt (Abbildung \ref{fig:os_fig}).
 
 \begin{figure}[H]
 	\begin{center}
@@ -21,25 +21,26 @@ Diese Devise wird auch heute noch von vielen Unternehmen verfolgt, das ist der G
 	\end{center}
 \end{figure}
 
-Ein großes Problem in dieser Branche ist die ernorme Schnelllebigkeit. Vor allem im Bereich Android werden beinahe wöchentlich neue Geräte durch unterschiedliche Hersteller vorgestellt. Neben den hardware-spezifischen Unterschieden wie: Größe und Auflösung des Displays, Größe des verbauten RAMs, Prozessorleistung und so weiter, muss ein Entwickler für Android Applikations zusätzlich noch mit den hersteller-spezifischen Eigenentwicklungen von Android kämpfen. So nutzt zum Beispiel HTC, ihre HTC Sense \cite{htc_sense}, Samsung setzt auf TouchWiz \cite{touchwiz}. Neben diesen herstellergebundenen Systeme gibt es zusätzlich noch Custom-ROMs, welche durch den Nutzer selbst installiert werden können. Die beliebtesten ROMs sind Paranoid Android und CyanogenMod \cite{rom}. Jedes dieser Systeme besitzt auserdem noch unterschiedliche Versionen so befindet sich Vanilla Android im Moment in der Version 7.0 Nougat.
-Durch die einzelnen Systeme und deren Versionen entstehen ernorm viele Anforderungen an die Software, welche möglichst eine Vielzahl der Varianten unterstützen sollte. Um diese Anforderungen stemmen zu können, muss ein extrem hoher Anteil an Wartung in die Entwicklung und Instandhaltung einfließen. Zusätzlich zu dem Mehraufwand muss sich der Android-Entwickler ständig über die neuen Spezifikationen informieren.
+Jede dieser Applikationen wurden einzeln für sich entwickelt und implementiert. Bei jedem Update zum Beispiel des Systems, müssen alle Anwendungen gewartet und überarbeitet werden, um die volle Funktionalität zu gewährleisten.
+
+Würden einige Applikationen jedoch genauer analysiert werden, wäre das Ergbniss, dass in jeder dieser Anwendungen Codepassagen vorhanden sind, welche einen ähnlichen beziehungsweise den selben Zweck erfüllen. Werden diese Stellen im Programmcode abstrahiert, gibt es die Möglichkeit diese generieren zu lassen. Um Code generieren zu lassen, benötigt man so genannte Code-Generatoren. 
+
+Im Bereich der Backend-Entwicklung gibt es bereits verschiedene Projekte die sich damit befassen. Ein Beispiel wäre der \enquote{CRUD Admin Generator} \cite{generators}. Die Hochschule für angewandte Wissenschaften Würzburg-Schweinfurt entwickelt  unter der Leitung von Prof. Dr. Peter Braun auch einen Code-Generator unter dem Namen: \ac{gemara}. Mit Hilfe solcher Generatoren für den Bereich von Mobilen Applikationen, könnte der Entwicklungs- und Wartungsaufwand reduziert werden. 
+
+Führt ein Systemupdate dazu, dass die Implementierung von verschiedenen Anforderungen nicht weiter funktionsfähig ist, muss dies nur einmalig an der entsprechenden Stelle im Code-Generator geändert werden und nicht in jeder Applikation einzeln. 
 
 \section{Motivation}\label{sec:motivation}
-Aus der Analyse der \enquote{Top 20 Android-Smartphone-Apps in Deutschland} \cite{top_apps} geht hervor das bei den meisten Applikationen mehr oder weniger die gleichen Grundfunktionen verwendet werden:
-\begin{itemize}
-	\item Anzeigen von nachgeladenen Daten.
-	\item Neue Daten zum Backend senden.
-	\item Bestehende Daten manipulieren.
-	\item Bestehende Daten löschen.
-\end{itemize}
+Im Rahmen des Projektes \ac{gemara} gab es bereits Arbeiten, welche sich mit dem Thema der Generierung von Android Aktivities beschäftigt. Die dabei entstandenen Lösungen, reslultierten darin, das dass generieren von Aktivities zu Problemen führt. Deshalb beschäftigt sich diese Ausarbeitung damit, nicht eine komplette Aktivity zu erzeugen, sondern sogenannte Komponenten.
 
-Jedoch sind diese Implementierungen der Grundfunktionen so in die einzelnen Applikationen verwoben, das sie jedes mal neu Implementiert werden müssen. Es geht sogar noch weiter, nehmen wir zum Beispiel eine Kampus-App, hier werden ganze Designkomponenten mehrfach implementiert. Die meisten dieser Kampus-Apps besitzt eine View, welche eine Liste aller Dozenten anzeigt, oder es gibt die Möglichkeit einen Dozenten im Detail zu betrachten. Dafür muss jedesmal eine Businesslogik geschrieben werden, die sich kaum von einer anderen Applikation unterscheidet. Auch muss sich der Entwickler jedes mal um das Design gedanken machnen. 
+Eine Komponente, ist im wesentlichen eine kleine Anwendung für sich, welche nur eine einzige Aufgabe erfüllt. Dies könnte zum Beispiel das Anzeigen eines Dozenten in einer Campus-Applikation sein.
 
-Diese Arbeit soll nun Lösungsansätze erarbeiten, welche den oben genannten Mehraufwand reduzieren kann. Der Entwickler von neuen Applikationen oder von Erweiterungen soll sich auf spezifische Anforderungen konzentrieren können und den allgemeinen Teil generieren lassen.
-Auch die Wartung der allgemeinen Teile wird durch die Generierung vereinfacht. Da diese nur einmalig vorgenommen werden muss und dann in allen anderen Applikationen übernommen werden kann.
+Aus den erzeugten Komponenten, kann eine Art \enquote{Bausatz} entstehen. Mit dessen Hilfe der Entwickler seine Applikation zusammen bauen kann. Dabei wird ihm freie Wahl gelassen, wie der Aufbau seiner Anwendung aussieht, er bedient sich nur an gegebener Stelle an den Komponenten. Dadurch reduziert sich der Entwicklungsaufwand für ihn.
+
+Bewegen wir uns in der Domaine einer Hochschule, so kann eine Bibliotek mit den erzeugten Komponenten allen Studierenden zur Verfügung gestellt werden. Dadurch wäre jeder dieser Studierenden in der Lage eine persönliche Campus-Applikation zu entwickeln. Durch die einzelnen Komponenten kann dann sichergestellt werden, dass grundsätzliche Funktionalität bereits gewährleistet ist.
 
 \section{Zielsetzung}\label{sec:target}
-Das Ziel dieser Ausarbeitung liegt darin, das der Leser ein grundsätzliches Verständnis in der Implementierung von Custom Views in Android, Erstellung von AAR-Bibliotheken und der Datenkommunikation mittels einer REST-API erlangen. Mit diesem Wissen, sollte der Leser dann in der Lage sein Generatoren für Custom Views zu entwickeln, welche die oben genannten Grundfunktionen einer Applikation abdecken.\\
+Das Ziel dieser Ausarbeitung liegt darin, das der Leser ein grundsätzliches Verständnis in der Implementierung von Custom Views in Android, Erstellung von Bibliotheken und der Datenkommunikation mittels einer REST-API erlangen. Mit diesem Wissen, sollte der Leser dann in der Lage sein Generatoren für Custom Views zu entwickeln, welche die oben genannten Grundfunktionen einer Applikation abdecken.
+
 Darüber hinaus soll auch ein Gefühl dafür entwickelt werden, wann es Sinn macht eine View als Custom View zu implementieren und wann der benötigte Mehraufwand nicht mehr in Relation zu einem vernünftigen Ergebniss steht.
 
 
