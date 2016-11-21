@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
@@ -35,7 +36,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class ChargeListFragment extends Fragment {
+public class ChargeListFragment extends Fragment implements ChargeListAdapter.OnChargeClickListener {
 
 	private final Genson genson = new GensonBuilder()
 			.useDateAsTimestamp(false)
@@ -44,9 +45,22 @@ public class ChargeListFragment extends Fragment {
 	private ChargeListAdapter chargeListAdapter;
 	private ProgressBar progressBar;
 	private String url;
+	private String detailChargeTemplateUrl;
 	private String mediaType;
 	private String nextUrl;
 
+	@Override
+	public void onChargeClick(Charge charge) {
+		Fragment fragment = new ChargeDetailFragment();
+		Bundle bundle = new Bundle();
+
+		bundle.putString("url", detailChargeTemplateUrl.replace("{id}", String.valueOf(charge.getId())));
+		bundle.putString("mediaType", charge.getSelf().getType());
+
+		fragment.setArguments(bundle);
+
+		FragmentHandler.replaceFragment(getFragmentManager(), fragment);
+	}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +77,7 @@ public class ChargeListFragment extends Fragment {
 
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-		chargeListAdapter = new ChargeListAdapter();
+		chargeListAdapter = new ChargeListAdapter(this);
 		RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.charge_recycler_view);
 		final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 		recyclerView.setLayoutManager(linearLayoutManager);
@@ -127,10 +141,17 @@ public class ChargeListFragment extends Fragment {
 				Map<String, List<String>> headers = response.headers().toMultimap();
 				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
 				Link nextLink = linkHeader.get(getActivity().getString(R.string.rel_type_next));
+				Link oneChargeOfLecturerLink = linkHeader.get(getActivity().getString(R.string.rel_type_get_one_charge_of_lecturer));
 				if (nextLink != null) {
 					nextUrl = nextLink.getHref();
 				} else {
 					nextUrl = "";
+				}
+
+				if (oneChargeOfLecturerLink != null) {
+					detailChargeTemplateUrl = oneChargeOfLecturerLink.getHref();
+				} else {
+					detailChargeTemplateUrl = "";
 				}
 
 				getActivity().runOnUiThread(new Runnable() {

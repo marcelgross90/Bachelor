@@ -29,6 +29,7 @@
 	<declare-styleable name="LecturerDetailContactCardView"/>
 	<declare-styleable name="LecturerDetailOfficeCardView"/>
 	<declare-styleable name="LecturerDetailView" />
+	<declare-styleable name="ChargeDetailView" />
 
 	<declare-styleable name="TitleInput" />
 	<declare-styleable name="FirstNameInput" />
@@ -39,4 +40,8 @@
 	<declare-styleable name="WelearnInput" />
 	<declare-styleable name="PhoneInput" />
 	<declare-styleable name="LecturerInputView" />
+	<declare-styleable name="ChargeInputView" />
+
+	<declare-styleable name="StartDateView" />
+	<declare-styleable name="EndDateView" />
 </resources>

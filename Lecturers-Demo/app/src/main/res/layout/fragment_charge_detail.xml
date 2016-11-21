@@ -1,0 +1,12 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			 xmlns:tools="http://schemas.android.com/tools"
+			 android:layout_width="match_parent"
+			 android:layout_height="match_parent"
+			 tools:context="de.fiw.fhws.lecturers.fragment.ChargeDetailFragment">
+
+	<de.marcelgross.lecturer_lib.customView.ChargeDetailView
+		android:id="@+id/charge_detail_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+</FrameLayout>

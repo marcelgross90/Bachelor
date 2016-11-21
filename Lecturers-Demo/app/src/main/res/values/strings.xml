@@ -19,4 +19,7 @@
 	<string name="load__charges_error">Could not load charges</string>
 	<string name="delete_error">Could not delete lecturer</string>
 
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -72,14 +72,12 @@ public class Link {
 	}
 
 	public static class Builder {
-		private final String orgUrl;
 		private final String baseUrl;
 		private String generatedUrl;
 		private final Map<String, String> queryParamsWithWildcards = new HashMap<>();
 
 
 		public Builder(String orgUrl) {
-			this.orgUrl = orgUrl;
 			String[] splitUrl = orgUrl.split("\\?");
 			this.baseUrl = splitUrl[0];
 			this.generatedUrl = baseUrl;

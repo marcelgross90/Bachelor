@@ -15,7 +15,15 @@ import de.marcelgross.lecturer_lib.viewholder.ChargeViewHolder;
 public class ChargeListAdapter extends RecyclerView.Adapter<ChargeViewHolder> {
 
 	private final List<Charge> chargeList = new ArrayList<>();
+	private final OnChargeClickListener onChargeClickListener;
 
+	public interface OnChargeClickListener {
+		void onChargeClick(Charge charge);
+	}
+
+	public ChargeListAdapter(OnChargeClickListener onChargeClickListener) {
+		this.onChargeClickListener = onChargeClickListener;
+	}
 
 	public void addCharge(List<Charge> newCharges) {
 		for (Charge newCharge : newCharges) {
@@ -31,7 +39,7 @@ public class ChargeListAdapter extends RecyclerView.Adapter<ChargeViewHolder> {
 		View moduleCard = LayoutInflater
 				.from(parent.getContext())
 				.inflate(R.layout.card_charge, parent, false);
-		return new ChargeViewHolder(moduleCard);
+		return new ChargeViewHolder(moduleCard, onChargeClickListener);
 	}
 
 	@Override

@@ -66,9 +66,9 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.lecturer_menu, menu);
-		MenuItem deleteItem = menu.findItem(R.id.delete_lecturer);
-		MenuItem updateItem = menu.findItem(R.id.edit_lecturer);
+		inflater.inflate(R.menu.detail_menu, menu);
+		MenuItem deleteItem = menu.findItem(R.id.delete_item);
+		MenuItem updateItem = menu.findItem(R.id.edit_item);
 		deleteItem.setVisible(deleteLink != null);
 		updateItem.setVisible(updateLink != null);
 
@@ -83,13 +83,13 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				onBackPressed();
 				overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
 				return true;
-			case R.id.edit_lecturer:
+			case R.id.edit_item:
 				Intent intent = new Intent(LecturerDetailActivity.this, EditLecturerActivity.class);
 				intent.putExtra("url", updateLink.getHref());
 				intent.putExtra("mediaType", updateLink.getType());
 				startActivityForResult(intent, 1);
 				return true;
-			case R.id.delete_lecturer:
+			case R.id.delete_item:
 				Bundle bundle = new Bundle();
 				bundle.putString("url", deleteLink.getHref());
 				bundle.putString("name", currentLecturer.getFirstName() + " " + currentLecturer.getLastName());
