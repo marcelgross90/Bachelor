@@ -39,10 +39,13 @@ Aus den erzeugten Komponenten, kann eine Art \enquote{Bausatz} entstehen. Mit de
 Bewegen wir uns in der Domaine einer Hochschule, so kann eine Bibliotek mit den erzeugten Komponenten allen Studierenden zur Verfügung gestellt werden. Dadurch wäre jeder dieser Studierenden in der Lage eine persönliche Campus-Applikation zu entwickeln. Durch die einzelnen Komponenten kann dann sichergestellt werden, dass grundsätzliche Funktionalität bereits gewährleistet ist.
 
 \section{Zielsetzung}\label{sec:target}
-Das Ziel dieser Ausarbeitung liegt darin, das der Leser ein grundsätzliches Verständnis in der Implementierung von Custom Views in Android, Erstellung von Bibliotheken und der Datenkommunikation mittels einer REST-API erlangen. Mit diesem Wissen, sollte der Leser dann in der Lage sein Generatoren für Custom Views zu entwickeln, welche die oben genannten Grundfunktionen einer Applikation abdecken.
+Ziel dieser Ausarbeitung liegt darin, dass der Leser ein grundsätzliches Verständnis für die Entwicklung von Android-Applikationen beziehungsweise Android-Bibliotheken vermittelt bekommt. Weiterhin soll das Wissen über Datenkommunikation mittels \ac{rest} vertieft werden. Hierbei wird ein Schwerpunkt auf das Hypermedia-Prinzip gelegt. 
 
-Darüber hinaus soll auch ein Gefühl dafür entwickelt werden, wann es Sinn macht eine View als Custom View zu implementieren und wann der benötigte Mehraufwand nicht mehr in Relation zu einem vernünftigen Ergebniss steht.
+Neben diesen spezifischen Anforderungen, soll ein Verständnis für der Implementierung von Generatoren entstehen. Dafür muss der Entwickler entscheiden können, was von der Implementierung als statischer Code angesehen werden kann und welcher generisch ist. Dieses Verständnis ist wichtig, um die Komplexität der Generatoren zu reduzieren. Da die statischen Anteile jedesmal identisch sind.
 
+Auch soll auf die Frage eingegangen werden, ob man das \ac{ui}, welches ebenfalls generiert wird, auch generisch gestalten kann. Das bedeutet, dass nicht nur die Informationen, welche angezeigt werden sollen beschreibt. Sondern auch wie diese angezeigt werden sollen.
+
+Wenn es möglich ist dass das\ac{ui} als Teil der \ac{dsl} beschrieben werden kann, so hat der Nutzer des entsprechenden Generators die Freiheit, selbst zu entscheiden ob zum Beispiel bei seiner Campus-App, bei der Liste aller Dozenten das Profilbild links oder rechts angezeigt werden soll.
 
 \section{Aufbau der Arbeit}\label{sec:structure}
 Aufbau
