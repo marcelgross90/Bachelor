@@ -9,7 +9,9 @@
 	<string name="edit">Edit</string>
 	<string name="delete">Delete</string>
 	<string name="lecturer_updated">Lecturer updated!</string>
+	<string name="charge_updated">Charge updated!</string>
 	<string name="lecturer_saved">Lecturer saved!</string>
+	<string name="charge_saved">Charge saved!</string>
 
 	<string name="delete_dialog_title">Delete %s?</string>
 	<string name="ok">OK</string>
@@ -17,9 +19,7 @@
 
 	<string name="load_lecturer_error">Could not load lecturers</string>
 	<string name="load__charges_error">Could not load charges</string>
-	<string name="delete_error">Could not delete lecturer</string>
-
-	<!-- TODO: Remove or change this placeholder text -->
-	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="lecturer_delete_error">Could not delete lecturer</string>
+	<string name="charge_delete_error">Could not delete charge</string>
 
 </resources>

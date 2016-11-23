@@ -9,14 +9,42 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"/>
 
-	<de.marcelgross.lecturer_lib.customView.textView.StartDateView
-		android:id="@+id/startDate"
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
 
-	<de.marcelgross.lecturer_lib.customView.textView.EndDateView
-		android:id="@+id/endDate"
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
+			android:text="@string/start_date"/>
+
+		<de.marcelgross.lecturer_lib.customView.textView.StartDateView
+			android:id="@+id/startDate"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"/>
+	</LinearLayout>
+
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
+			android:text="@string/end_date"/>
+
+		<de.marcelgross.lecturer_lib.customView.textView.EndDateView
+			android:id="@+id/endDate"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"/>
+
+	</LinearLayout>
+
 
 </LinearLayout>

@@ -48,7 +48,7 @@ public class EditLecturerActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onSupportNavigateUp() {
-		finish();
+		onBackPressed();
 
 		return false;
 	}
@@ -86,7 +86,7 @@ public class EditLecturerActivity extends AppCompatActivity {
 			case android.R.id.home:
 				onBackPressed();
 				return true;
-			case R.id.saveLecturer:
+			case R.id.saveItem:
 				saveLecturer();
 				return true;
 			default:
@@ -117,7 +117,7 @@ public class EditLecturerActivity extends AppCompatActivity {
 
 				Map<String, List<String>> headers = response.headers().toMultimap();
 				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
-				lecturerEditLink = linkHeader.get("updateLecturer");
+				lecturerEditLink = linkHeader.get(EditLecturerActivity.this.getString(R.string.rel_type_update_lecturer));
 
 				runOnUiThread(new Runnable() {
 					@Override

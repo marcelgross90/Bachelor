@@ -21,7 +21,7 @@ import okhttp3.Response;
 public class DeleteDialogFragment extends DialogFragment {
 
 	private String url;
-
+	private DeleteDialogListener deleteDialogListener;
 
 	public interface DeleteDialogListener {
 		void onDialogClosed(boolean successfullyDeleted);
@@ -30,7 +30,11 @@ public class DeleteDialogFragment extends DialogFragment {
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		final DeleteDialogListener deleteDialogListener = (DeleteDialogListener) getActivity();
+		try {
+			deleteDialogListener = (DeleteDialogListener) getActivity();
+		} catch (ClassCastException ex) {
+			deleteDialogListener = (DeleteDialogListener) getTargetFragment();
+		}
 		Bundle bundle = getArguments();
 		url = bundle.getString("url");
 		String name = bundle.getString("name");

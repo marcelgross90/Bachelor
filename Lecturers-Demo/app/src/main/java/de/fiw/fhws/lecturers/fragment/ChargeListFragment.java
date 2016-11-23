@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -35,7 +38,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-
 public class ChargeListFragment extends Fragment implements ChargeListAdapter.OnChargeClickListener {
 
 	private final Genson genson = new GensonBuilder()
@@ -48,6 +50,7 @@ public class ChargeListFragment extends Fragment implements ChargeListAdapter.On
 	private String detailChargeTemplateUrl;
 	private String mediaType;
 	private String nextUrl;
+	private Link createNewChargeLink;
 
 	@Override
 	public void onChargeClick(Charge charge) {
@@ -99,6 +102,29 @@ public class ChargeListFragment extends Fragment implements ChargeListAdapter.On
 		return view;
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.lecturer_list_menu, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.addLecturer:
+				Bundle bundle = new Bundle();
+				if (createNewChargeLink != null) {
+					bundle.putString("url", createNewChargeLink.getHref());
+					bundle.putString("mediaType", createNewChargeLink.getType());
+				}
+				Fragment fragment = new NewChargeFragment();
+				fragment.setArguments(bundle);
+				FragmentHandler.replaceFragment(getFragmentManager(), fragment);
+				break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
 	private void showProgressBar(final boolean show) {
 		if (isAdded()) {
 			getActivity().runOnUiThread(new Runnable() {
@@ -142,6 +168,7 @@ public class ChargeListFragment extends Fragment implements ChargeListAdapter.On
 				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
 				Link nextLink = linkHeader.get(getActivity().getString(R.string.rel_type_next));
 				Link oneChargeOfLecturerLink = linkHeader.get(getActivity().getString(R.string.rel_type_get_one_charge_of_lecturer));
+				createNewChargeLink = linkHeader.get(getActivity().getString(R.string.rel_type_create_charge_of_lecturer));
 				if (nextLink != null) {
 					nextUrl = nextLink.getHref();
 				} else {
@@ -157,6 +184,7 @@ public class ChargeListFragment extends Fragment implements ChargeListAdapter.On
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
+						setHasOptionsMenu(createNewChargeLink != null);
 						showProgressBar(false);
 						chargeListAdapter.addCharge(charges);
 					}

@@ -27,12 +27,13 @@ import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class ChargeInputView extends LinearLayout {
 
-	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.GERMANY);
+	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY);
 	private final Context context;
 	private final Charge currentCharge;
 	private TitleInput titleInput;
 	private StartDateView startDateView;
 	private EndDateView endDateView;
+	private Charge charge;
 
 	public ChargeInputView(Context context) {
 		super(context);
@@ -71,6 +72,7 @@ public class ChargeInputView extends LinearLayout {
 	}
 
 	public void setCharge(Charge charge) {
+		this.charge = charge;
 		titleInput.setText(charge.getTitle());
 		startDateView.setText(dateToString(charge.getFromDate()));
 		endDateView.setText(dateToString(charge.getToDate()));
@@ -88,6 +90,9 @@ public class ChargeInputView extends LinearLayout {
 		}
 
 		if (!error) {
+			if (charge != null) {
+				currentCharge.setId(charge.getId());
+			}
 			currentCharge.setTitle(titleString);
 			currentCharge.setFromDate(stringToDate(startDateString));
 			currentCharge.setToDate(stringToDate(endDateString));
@@ -97,7 +102,6 @@ public class ChargeInputView extends LinearLayout {
 	}
 
 	private String dateToString(Date date) {
-
 		return simpleDateFormat.format(date);
 	}
 
@@ -105,6 +109,7 @@ public class ChargeInputView extends LinearLayout {
 		try {
 			return simpleDateFormat.parse(date);
 		} catch (ParseException ex) {
+			ex.printStackTrace();
 			return  new Date();
 		}
 	}

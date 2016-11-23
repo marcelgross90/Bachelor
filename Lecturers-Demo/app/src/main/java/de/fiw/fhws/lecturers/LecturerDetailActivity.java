@@ -46,7 +46,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 			startActivity(intent);
 			finish();
 		} else {
-			Toast.makeText(this, R.string.delete_error, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.lecturer_delete_error, Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -144,8 +144,8 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				currentLecturer = lecturer;
 				Map<String, List<String>> headers = response.headers().toMultimap();
 				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
-				deleteLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_create_delete_lecturer));
-				updateLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_create_update_lecturer));
+				deleteLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_delete_lecturer));
+				updateLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_update_lecturer));
 
 				runOnUiThread(new Runnable() {
 					@Override
@@ -192,7 +192,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 
 			case R.id.charges_btn:
 				Intent intent3 = new Intent(LecturerDetailActivity.this, ChargeActivity.class);
-				intent3.putExtra("name", currentLecturer.getFirstName() + " " +currentLecturer.getLastName());
+				intent3.putExtra("name", currentLecturer.getFirstName() + " " + currentLecturer.getLastName());
 				intent3.putExtra("url", currentLecturer.getChargeUrl().getHref());
 				intent3.putExtra("mediaType", currentLecturer.getChargeUrl().getType());
 				startActivity(intent3);

@@ -34,10 +34,6 @@ public class NewLecturerFragment extends Fragment {
 	private String mediaType;
 	private LecturerInputView lecturerInputView;
 
-	public NewLecturerFragment() {
-		// Required empty public constructor
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,7 +61,7 @@ public class NewLecturerFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.saveLecturer:
+			case R.id.saveItem:
 				postLecturer();
 				break;
 		}
