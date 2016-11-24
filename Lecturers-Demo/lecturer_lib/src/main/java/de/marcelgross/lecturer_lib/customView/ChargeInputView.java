@@ -12,8 +12,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textView.EndDateView;
-import de.marcelgross.lecturer_lib.customView.textView.StartDateView;
 import de.marcelgross.lecturer_lib.model.Charge;
 
 public class ChargeInputView extends LinearLayout {
@@ -22,8 +20,8 @@ public class ChargeInputView extends LinearLayout {
 	private final Context context;
 	private final Charge currentCharge;
 	private AttributeInput titleInput;
-	private StartDateView startDateView;
-	private EndDateView endDateView;
+	private DateTimeView startDateView;
+	private DateTimeView endDateView;
 	private Charge charge;
 
 	public ChargeInputView(Context context) {
@@ -55,8 +53,8 @@ public class ChargeInputView extends LinearLayout {
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.ChargeInputView, defStyle, 0);
 		try {
 			titleInput = (AttributeInput) findViewById(R.id.title);
-			startDateView = (StartDateView) findViewById(R.id.startDate);
-			endDateView = (EndDateView) findViewById(R.id.endDate);
+			startDateView = (DateTimeView) findViewById(R.id.startDate);
+			endDateView = (DateTimeView) findViewById(R.id.endDate);
  		} finally {
 			typedArray.recycle();
 		}

@@ -197,6 +197,11 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				intent3.putExtra("mediaType", currentLecturer.getChargeUrl().getType());
 				startActivity(intent3);
 				break;
+
+			case R.id.welearn:
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentLecturer.getUrlWelearn()));
+				startActivity(browserIntent);
+				break;
 		}
 	}
 

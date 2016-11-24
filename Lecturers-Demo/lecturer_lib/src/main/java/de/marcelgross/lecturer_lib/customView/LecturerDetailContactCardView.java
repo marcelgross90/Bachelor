@@ -9,15 +9,13 @@ import android.view.View;
 import android.widget.Button;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
-import de.marcelgross.lecturer_lib.customView.textView.WelearnView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class LecturerDetailContactCardView extends CardView {
 
 	private AttributeView mailView;
 	private AttributeView phoneView;
-	private WelearnView welearnView;
+	private AttributeView welearnView;
 
 	public LecturerDetailContactCardView(Context context) {
 		super(context);
@@ -43,7 +41,7 @@ public class LecturerDetailContactCardView extends CardView {
 
 			mailView = (AttributeView) findViewById(R.id.tvEmailValue);
 			phoneView = (AttributeView) findViewById(R.id.tvPhoneValue);
-			welearnView = (WelearnView) findViewById(R.id.tvWebsiteValue);
+			welearnView = (AttributeView) findViewById(R.id.tvWebsiteValue);
 			Button chargesButton = (Button) findViewById(R.id.charges_btn);
 
 		} finally {
@@ -55,7 +53,7 @@ public class LecturerDetailContactCardView extends CardView {
 		hideUnnecessaryViews(lecturer);
 		mailView.setText(lecturer.getEmail());
 		phoneView.setText(lecturer.getPhone());
-		welearnView.setAddress(lecturer.getUrlWelearn());
+		welearnView.setText(getResources().getText(R.string.welearn));
 	}
 
 	private void hideUnnecessaryViews(Lecturer lecturer) {

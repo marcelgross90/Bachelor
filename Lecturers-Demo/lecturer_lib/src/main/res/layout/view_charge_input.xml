@@ -23,7 +23,7 @@
 			android:layout_weight="0.5"
 			android:text="@string/start_date"/>
 
-		<de.marcelgross.lecturer_lib.customView.textView.StartDateView
+		<de.marcelgross.lecturer_lib.customView.DateTimeView
 			android:id="@+id/startDate"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
 			android:layout_weight="0.5"
 			android:text="@string/end_date"/>
 
-		<de.marcelgross.lecturer_lib.customView.textView.EndDateView
+		<de.marcelgross.lecturer_lib.customView.DateTimeView
 			android:id="@+id/endDate"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

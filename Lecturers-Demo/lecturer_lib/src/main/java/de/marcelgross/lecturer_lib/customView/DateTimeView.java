@@ -1,5 +1,4 @@
-package de.marcelgross.lecturer_lib.customView.textView;
-
+package de.marcelgross.lecturer_lib.customView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,20 +13,20 @@ import java.util.Locale;
 import de.marcelgross.lecturer_lib.R;
 
 
-public class EndDateView extends TextView {
+public class DateTimeView extends TextView {
 
-	public EndDateView(Context context) {
+	public DateTimeView(Context context) {
 		super(context);
 		init(context, null, 0);
 
 	}
 
-	public EndDateView(Context context, AttributeSet attrs) {
+	public DateTimeView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context, attrs, 0);
 	}
 
-	public EndDateView(Context context, AttributeSet attrs, int defStyle) {
+	public DateTimeView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context, attrs, defStyle);
 	}
@@ -35,7 +34,7 @@ public class EndDateView extends TextView {
 
 	private void init(Context context, AttributeSet attrs, int defStyle) {
 
-		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.EndDateView, defStyle, 0);
+		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DateTimeView, defStyle, 0);
 
 		try {
 			Calendar calendar = Calendar.getInstance();

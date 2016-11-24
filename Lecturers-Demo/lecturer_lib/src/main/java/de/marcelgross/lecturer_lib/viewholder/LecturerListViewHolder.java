@@ -9,7 +9,7 @@ import android.view.View;
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
 import de.marcelgross.lecturer_lib.customView.LecturerCardView;
-import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
+import de.marcelgross.lecturer_lib.customView.AttributeView;
 import de.marcelgross.lecturer_lib.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
@@ -23,6 +23,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 	private final AttributeView email;
 	private final AttributeView phone;
 	private final AttributeView address;
+	private final AttributeView welearn;
 
 	private final ProfileImageView profileImg;
 
@@ -44,6 +45,9 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 			mapIntent.setPackage("com.google.android.apps.maps");
 			context.startActivity(mapIntent);
 
+		} else if (i == R.id.welearn) {
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(lecturer.getUrlWelearn()));
+			context.startActivity(browserIntent);
 		}
 	}
 
@@ -56,6 +60,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 		email = (AttributeView) itemView.findViewById(R.id.email);
 		phone = (AttributeView) itemView.findViewById(R.id.phone);
 		address = (AttributeView) itemView.findViewById(R.id.address);
+		welearn = (AttributeView) itemView.findViewById(R.id.welearn);
 
 		profileImg = (ProfileImageView) itemView.findViewById(R.id.profileImg);
 	}
@@ -76,6 +81,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 		email.setOnClickListener(this);
 		phone.setOnClickListener(this);
 		address.setOnClickListener(this);
+		welearn.setOnClickListener(this);
 	}
 
 }

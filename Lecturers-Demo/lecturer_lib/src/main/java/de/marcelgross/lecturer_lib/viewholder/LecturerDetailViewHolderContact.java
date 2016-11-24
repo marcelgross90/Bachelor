@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.customView.LecturerDetailContactCardView;
-import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
+import de.marcelgross.lecturer_lib.customView.AttributeView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class LecturerDetailViewHolderContact extends RecyclerView.ViewHolder {
@@ -17,10 +17,12 @@ public class LecturerDetailViewHolderContact extends RecyclerView.ViewHolder {
 		this.lecturerDetailContactCardView = (LecturerDetailContactCardView) itemView.findViewById(R.id.contact_card);
 		AttributeView email = (AttributeView) itemView.findViewById(R.id.tvEmailValue);
 		AttributeView phone = (AttributeView) itemView.findViewById(R.id.tvPhoneValue);
+		AttributeView welearn = (AttributeView) itemView.findViewById(R.id.tvWebsiteValue);
 		Button chargesButton = (Button) itemView.findViewById(R.id.charges_btn);
 
 		email.setOnClickListener(listener);
 		phone.setOnClickListener(listener);
+		welearn.setOnClickListener(listener);
 		chargesButton.setOnClickListener(listener);
 	}
 

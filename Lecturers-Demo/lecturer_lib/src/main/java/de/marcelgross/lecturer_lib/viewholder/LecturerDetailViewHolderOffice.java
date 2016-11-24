@@ -5,7 +5,7 @@ import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.customView.LecturerDetailOfficeCardView;
-import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
+import de.marcelgross.lecturer_lib.customView.AttributeView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 

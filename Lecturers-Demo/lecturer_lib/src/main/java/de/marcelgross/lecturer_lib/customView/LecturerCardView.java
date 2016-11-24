@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
-import de.marcelgross.lecturer_lib.customView.textView.WelearnView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 
@@ -22,7 +20,7 @@ public class LecturerCardView extends CardView {
 	private AttributeView phoneView;
 	private AttributeView roomView;
 	private AttributeView addressView;
-	private WelearnView welearnView;
+	private AttributeView welearnView;
 
 	public LecturerCardView(Context context) {
 		super(context);
@@ -53,7 +51,7 @@ public class LecturerCardView extends CardView {
 			phoneView = (AttributeView) findViewById(R.id.phone);
 			roomView = (AttributeView) findViewById(R.id.room);
 			addressView = (AttributeView) findViewById(R.id.address);
-			welearnView = (WelearnView) findViewById(R.id.welearn);
+			welearnView = (AttributeView) findViewById(R.id.welearn);
 
 		} finally {
 			typedArray.recycle();
@@ -69,7 +67,7 @@ public class LecturerCardView extends CardView {
 		phoneView.setText(lecturer.getPhone());
 		roomView.setText(lecturer.getRoomNumber());
 		addressView.setText(lecturer.getAddress());
-		welearnView.setAddress(lecturer.getUrlWelearn());
+		welearnView.setText(getResources().getText(R.string.welearn));
 		imageView.loadImage(lecturer.getProfileImageUrl(), R.dimen.picture_width, R.dimen.picture_height);
 	}
 

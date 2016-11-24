@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<declare-styleable name="AttributeView" />
-
-	<declare-styleable name="WelearnView">
-		<attr name="welearnAddress" format="string" />
-	</declare-styleable>
-	<declare-styleable name="LecturerCardView">
-		<attr name="lecturerJson" format="string" />
-	</declare-styleable>
-	<declare-styleable name="ChargeCardView"/>
-	<declare-styleable name="ProfileImageView"/>
-	<declare-styleable name="LecturerDetailContactCardView"/>
-	<declare-styleable name="LecturerDetailOfficeCardView"/>
-	<declare-styleable name="LecturerDetailView" />
-	<declare-styleable name="ChargeDetailView" />
-
 	<declare-styleable name="AttributeInput">
 		<attr name="hintText" format="integer"/>
 		<attr name="inputType" format="string"/>
 	</declare-styleable>
 
+	<declare-styleable name="ProfileImageView"/>
+
+	<declare-styleable name="DateTimeView"/>
+
+	<declare-styleable name="LecturerCardView" />
+	<declare-styleable name="ChargeCardView"/>
+
+	<declare-styleable name="ChargeDetailView" />
+	<declare-styleable name="LecturerDetailView" />
+	<declare-styleable name="LecturerDetailContactCardView"/>
+	<declare-styleable name="LecturerDetailOfficeCardView"/>
+
 	<declare-styleable name="LecturerInputView" />
 	<declare-styleable name="ChargeInputView" />
-
-	<declare-styleable name="StartDateView" />
-	<declare-styleable name="EndDateView" />
 </resources>

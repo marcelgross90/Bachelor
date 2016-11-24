@@ -27,8 +27,7 @@ import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
 import de.marcelgross.lecturer_lib.customView.ChargeInputView;
-import de.marcelgross.lecturer_lib.customView.textView.EndDateView;
-import de.marcelgross.lecturer_lib.customView.textView.StartDateView;
+import de.marcelgross.lecturer_lib.customView.DateTimeView;
 import de.marcelgross.lecturer_lib.fragment.DateTimePickerFragment;
 import de.marcelgross.lecturer_lib.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
@@ -47,8 +46,8 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 			.useDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.GERMANY))
 			.create();
 	private ChargeInputView chargeInputView;
-	private StartDateView startDateView;
-	private EndDateView endDateView;
+	private DateTimeView startDateView;
+	private DateTimeView endDateView;
 	private int state;
 
 	private String url;
@@ -74,8 +73,8 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 		View view = inflater.inflate(R.layout.fragment_edit_charge, container, false);
 
 		chargeInputView = (ChargeInputView) view.findViewById(R.id.input_view);
-		startDateView = (StartDateView) view.findViewById(R.id.startDate);
-		endDateView = (EndDateView) view.findViewById(R.id.endDate);
+		startDateView = (DateTimeView) view.findViewById(R.id.startDate);
+		endDateView = (DateTimeView) view.findViewById(R.id.endDate);
 
 		startDateView.setOnClickListener(this);
 		endDateView.setOnClickListener(this);

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class LecturerDetailOfficeCardView extends CardView {
