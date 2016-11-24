@@ -12,25 +12,16 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.AddressInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.FirstNameInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.LastNameInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.MailInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.PhoneInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.RoomInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.TitleInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.WelearnInput;
 import de.marcelgross.lecturer_lib.customView.textView.EndDateView;
 import de.marcelgross.lecturer_lib.customView.textView.StartDateView;
 import de.marcelgross.lecturer_lib.model.Charge;
-import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class ChargeInputView extends LinearLayout {
 
 	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY);
 	private final Context context;
 	private final Charge currentCharge;
-	private TitleInput titleInput;
+	private AttributeInput titleInput;
 	private StartDateView startDateView;
 	private EndDateView endDateView;
 	private Charge charge;
@@ -63,7 +54,7 @@ public class ChargeInputView extends LinearLayout {
 
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.ChargeInputView, defStyle, 0);
 		try {
-			titleInput = (TitleInput) findViewById(R.id.title);
+			titleInput = (AttributeInput) findViewById(R.id.title);
 			startDateView = (StartDateView) findViewById(R.id.startDate);
 			endDateView = (EndDateView) findViewById(R.id.endDate);
  		} finally {

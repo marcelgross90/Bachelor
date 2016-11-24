@@ -2,9 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent"
+			  xmlns:custom="http://schemas.android.com/apk/res-auto"
 			  android:orientation="vertical">
 
-	<de.marcelgross.lecturer_lib.customView.textInputLayout.TitleInput
+	<de.marcelgross.lecturer_lib.customView.AttributeInput
+		custom:hintText="@string/title"
+		custom:inputType="text"
 		android:id="@+id/title"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"/>

@@ -31,14 +31,11 @@
 	<declare-styleable name="LecturerDetailView" />
 	<declare-styleable name="ChargeDetailView" />
 
-	<declare-styleable name="TitleInput" />
-	<declare-styleable name="FirstNameInput" />
-	<declare-styleable name="LastNameInput" />
-	<declare-styleable name="MailInput" />
-	<declare-styleable name="AddressInput" />
-	<declare-styleable name="RoomInput" />
-	<declare-styleable name="WelearnInput" />
-	<declare-styleable name="PhoneInput" />
+	<declare-styleable name="AttributeInput">
+		<attr name="hintText" format="integer"/>
+		<attr name="inputType" format="string"/>
+	</declare-styleable>
+
 	<declare-styleable name="LecturerInputView" />
 	<declare-styleable name="ChargeInputView" />
 

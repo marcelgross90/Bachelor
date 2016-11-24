@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:custom="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
@@ -9,52 +10,68 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
-		<de.marcelgross.lecturer_lib.customView.textInputLayout.TitleInput
+		<de.marcelgross.lecturer_lib.customView.AttributeInput
+			android:id="@+id/title"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/title">
-		</de.marcelgross.lecturer_lib.customView.textInputLayout.TitleInput>
+			custom:hintText="@string/title"
+			custom:inputType="text">
+		</de.marcelgross.lecturer_lib.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.textInputLayout.FirstNameInput
+		<de.marcelgross.lecturer_lib.customView.AttributeInput
+			android:id="@+id/firstName"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/firstName">
-		</de.marcelgross.lecturer_lib.customView.textInputLayout.FirstNameInput>
+			custom:hintText="@string/first_name"
+			custom:inputType="text">
+		</de.marcelgross.lecturer_lib.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.textInputLayout.LastNameInput
+		<de.marcelgross.lecturer_lib.customView.AttributeInput
+			android:id="@+id/lastName"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/lastName">
-		</de.marcelgross.lecturer_lib.customView.textInputLayout.LastNameInput>
+			custom:hintText="@string/last_name"
+			custom:inputType="text">
+		</de.marcelgross.lecturer_lib.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.textInputLayout.MailInput
+		<de.marcelgross.lecturer_lib.customView.AttributeInput
+			android:id="@+id/mail"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/mail">
-		</de.marcelgross.lecturer_lib.customView.textInputLayout.MailInput>
+			custom:hintText="@string/email"
+			custom:inputType="mail">
+		</de.marcelgross.lecturer_lib.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.textInputLayout.PhoneInput
+		<de.marcelgross.lecturer_lib.customView.AttributeInput
+			android:id="@+id/phone"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/phone">
-		</de.marcelgross.lecturer_lib.customView.textInputLayout.PhoneInput>
+			custom:hintText="@string/phone_number"
+			custom:inputType="phone">
+		</de.marcelgross.lecturer_lib.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.textInputLayout.AddressInput
+		<de.marcelgross.lecturer_lib.customView.AttributeInput
+			android:id="@+id/address"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/address">
-		</de.marcelgross.lecturer_lib.customView.textInputLayout.AddressInput>
+			custom:hintText="@string/address"
+			custom:inputType="text">
+		</de.marcelgross.lecturer_lib.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.textInputLayout.RoomInput
+		<de.marcelgross.lecturer_lib.customView.AttributeInput
+			android:id="@+id/room"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/room">
-		</de.marcelgross.lecturer_lib.customView.textInputLayout.RoomInput>
+			custom:hintText="@string/room"
+			custom:inputType="text">
+		</de.marcelgross.lecturer_lib.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.textInputLayout.WelearnInput
+		<de.marcelgross.lecturer_lib.customView.AttributeInput
+			android:id="@+id/welearn"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/welearn">
-		</de.marcelgross.lecturer_lib.customView.textInputLayout.WelearnInput>
+			custom:hintText="@string/welearn"
+			custom:inputType="text">
+		</de.marcelgross.lecturer_lib.customView.AttributeInput>
 	</LinearLayout>
 </ScrollView>

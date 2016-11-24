@@ -7,28 +7,20 @@ import android.view.LayoutInflater;
 import android.widget.ScrollView;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.AddressInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.FirstNameInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.LastNameInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.MailInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.PhoneInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.RoomInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.TitleInput;
-import de.marcelgross.lecturer_lib.customView.textInputLayout.WelearnInput;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class LecturerInputView extends ScrollView {
 
 	private final Context context;
 	private final Lecturer currentLecturer;
-	private TitleInput titleInput;
-	private FirstNameInput firstNameInput;
-	private LastNameInput lastNameInput;
-	private MailInput mailInput;
-	private PhoneInput phoneInput;
-	private RoomInput roomInput;
-	private AddressInput addressInput;
-	private WelearnInput welearnInput;
+	private AttributeInput titleInput;
+	private AttributeInput firstNameInput;
+	private AttributeInput lastNameInput;
+	private AttributeInput mailInput;
+	private AttributeInput phoneInput;
+	private AttributeInput roomInput;
+	private AttributeInput addressInput;
+	private AttributeInput welearnInput;
 
 	public LecturerInputView(Context context) {
 		super(context);
@@ -58,17 +50,22 @@ public class LecturerInputView extends ScrollView {
 
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerInputView, defStyle, 0);
 		try {
-			titleInput = (TitleInput) findViewById(R.id.title);
-			firstNameInput = (FirstNameInput) findViewById(R.id.firstName);
-			lastNameInput = (LastNameInput) findViewById(R.id.lastName);
-			mailInput = (MailInput) findViewById(R.id.mail);
-			phoneInput = (PhoneInput) findViewById(R.id.phone);
-			roomInput = (RoomInput) findViewById(R.id.room);
-			addressInput = (AddressInput) findViewById(R.id.address);
-			welearnInput = (WelearnInput) findViewById(R.id.welearn);
+			initializeViews();
+
  		} finally {
 			typedArray.recycle();
 		}
+	}
+
+	private void initializeViews() {
+		titleInput = (AttributeInput) findViewById(R.id.title);
+		firstNameInput = (AttributeInput) findViewById(R.id.firstName);
+		lastNameInput = (AttributeInput) findViewById(R.id.lastName);
+		mailInput = (AttributeInput) findViewById(R.id.mail);
+		phoneInput = (AttributeInput) findViewById(R.id.phone);
+		roomInput = (AttributeInput) findViewById(R.id.room);
+		addressInput = (AttributeInput) findViewById(R.id.address);
+		welearnInput = (AttributeInput) findViewById(R.id.welearn);
 	}
 
 	public void setLecturer(Lecturer lecturer) {
