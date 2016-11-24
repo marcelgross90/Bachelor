@@ -13,19 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.owlike.genson.Genson;
-import com.owlike.genson.GensonBuilder;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import de.fiw.fhws.lecturers.util.FragmentHandler;
+import de.fiw.fhws.lecturers.util.GensonBuilder;
 import de.marcelgross.lecturer_lib.customView.ChargeInputView;
 import de.marcelgross.lecturer_lib.customView.DateTimeView;
 import de.marcelgross.lecturer_lib.fragment.DateTimePickerFragment;
@@ -41,10 +39,7 @@ import okhttp3.Response;
 
 public class EditChargeFragment extends Fragment implements View.OnClickListener, DateTimePickerFragment.OnDateTimeSetListener {
 
-	private final Genson genson = new GensonBuilder()
-			.useDateAsTimestamp(false)
-			.useDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.GERMANY))
-			.create();
+	private final Genson genson = new GensonBuilder().getDateFormater();
 	private ChargeInputView chargeInputView;
 	private DateTimeView startDateView;
 	private DateTimeView endDateView;
@@ -126,7 +121,7 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 				.url(url)
 				.build();
 
-		OkHttpClient client = OKHttpSingleton.getInstance(getActivity()).getClient();
+		OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override
@@ -137,7 +132,7 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 			@Override
 			public void onResponse(Call call, Response response) throws IOException {
 				if (!response.isSuccessful()) {
-					throw  new IOException();
+					throw new IOException();
 				}
 
 				final Charge charge = genson.deserialize(response.body().charStream(), Charge.class);
@@ -169,7 +164,7 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 					.put(body)
 					.build();
 
-			OkHttpClient client = OKHttpSingleton.getInstance(getActivity()).getClient();
+			OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
 
 			client.newCall(request).enqueue(new Callback() {
 				@Override
@@ -180,7 +175,7 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 				@Override
 				public void onResponse(Call call, Response response) throws IOException {
 					if (!response.isSuccessful()) {
-						throw  new IOException("Unexpected code " + response);
+						throw new IOException("Unexpected code " + response);
 					}
 
 					Map<String, List<String>> headers = response.headers().toMultimap();

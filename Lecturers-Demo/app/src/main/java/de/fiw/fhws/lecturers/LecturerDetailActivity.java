@@ -127,7 +127,7 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				.url(selfUrl)
 				.build();
 
-		OkHttpClient client = OKHttpSingleton.getInstance(this).getClient();
+		OkHttpClient client = OKHttpSingleton.getCacheInstance(this).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override

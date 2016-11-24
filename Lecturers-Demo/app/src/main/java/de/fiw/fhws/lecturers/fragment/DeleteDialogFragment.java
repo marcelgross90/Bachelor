@@ -58,7 +58,7 @@ public class DeleteDialogFragment extends DialogFragment {
 
 	private void delete(final DeleteDialogListener listener) {
 		final Request request = new Request.Builder().url(url).delete().build();
-		OkHttpClient client = OKHttpSingleton.getInstance(getActivity()).getClient();
+		OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
 		client.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call, IOException e) {

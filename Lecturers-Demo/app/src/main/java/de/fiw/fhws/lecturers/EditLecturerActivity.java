@@ -100,7 +100,7 @@ public class EditLecturerActivity extends AppCompatActivity {
 				.url(selfUrl)
 				.build();
 
-		OkHttpClient client = OKHttpSingleton.getInstance(this).getClient();
+		OkHttpClient client = OKHttpSingleton.getCacheInstance(this).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override
@@ -148,7 +148,7 @@ public class EditLecturerActivity extends AppCompatActivity {
 		if (lecturer != null) {
 			String lecturerJson = genson.serialize(lecturer);
 
-			OkHttpClient client = OKHttpSingleton.getInstance(this).getClient();
+			OkHttpClient client = OKHttpSingleton.getCacheInstance(this).getClient();
 			RequestBody body = RequestBody.create(MediaType.parse(lecturerEditLink.getType()), lecturerJson);
 			final Request request = new Request.Builder()
 					.url(lecturerEditLink.getHref())

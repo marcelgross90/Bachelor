@@ -1,6 +1,5 @@
 package de.fiw.fhws.lecturers.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,18 +16,16 @@ import android.widget.Toast;
 
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
-import com.owlike.genson.GensonBuilder;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import de.fiw.fhws.lecturers.util.FragmentHandler;
+import de.fiw.fhws.lecturers.util.GensonBuilder;
 import de.marcelgross.lecturer_lib.adapter.ChargeListAdapter;
 import de.marcelgross.lecturer_lib.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
@@ -40,10 +37,7 @@ import okhttp3.Response;
 
 public class ChargeListFragment extends Fragment implements ChargeListAdapter.OnChargeClickListener {
 
-	private final Genson genson = new GensonBuilder()
-			.useDateAsTimestamp(false)
-			.useDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.GERMANY))
-			.create();
+	private final Genson genson = new GensonBuilder().getDateFormater();
 	private ChargeListAdapter chargeListAdapter;
 	private ProgressBar progressBar;
 	private String url;
@@ -76,7 +70,7 @@ public class ChargeListFragment extends Fragment implements ChargeListAdapter.On
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		View view =  inflater.inflate(R.layout.fragment_charge_list, container, false);
+		View view = inflater.inflate(R.layout.fragment_charge_list, container, false);
 
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
@@ -143,7 +137,7 @@ public class ChargeListFragment extends Fragment implements ChargeListAdapter.On
 				.url(url)
 				.build();
 
-		OkHttpClient client =  OKHttpSingleton.getInstance(getActivity()).getClient();
+		OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override
@@ -162,7 +156,8 @@ public class ChargeListFragment extends Fragment implements ChargeListAdapter.On
 				if (!response.isSuccessful()) {
 					throw new IOException("Unexpected code " + response);
 				}
-				final List<Charge> charges = genson.deserialize(response.body().charStream(), new GenericType<List<Charge>>() {});
+				final List<Charge> charges = genson.deserialize(response.body().charStream(), new GenericType<List<Charge>>() {
+				});
 
 				Map<String, List<String>> headers = response.headers().toMultimap();
 				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));

@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.FragmentHandler;
+import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.OKHttpSingleton;
@@ -60,7 +60,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	}
 
 	private void initialNetworkRequest() {
-		OkHttpClient client = OKHttpSingleton.getInstance(getActivity()).getClient();
+		OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
 		Request request = new Request.Builder()
 				.url(getResources().getString(R.string.entry_url))
 				.build();
@@ -183,7 +183,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 				.url(url)
 				.build();
 
-		OkHttpClient client = OKHttpSingleton.getInstance(getActivity()).getClient();
+		OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override

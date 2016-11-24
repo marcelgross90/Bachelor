@@ -1,16 +1,17 @@
 package de.fiw.fhws.lecturers;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import static de.fiw.fhws.lecturers.FragmentHandler.startChargesListFragment;
+import de.fiw.fhws.lecturers.fragment.ChargeListFragment;
+import de.fiw.fhws.lecturers.util.FragmentHandler;
 
 public class ChargeActivity extends AppCompatActivity {
-
 
 	private FragmentManager fragmentManager;
 
@@ -46,8 +47,14 @@ public class ChargeActivity extends AppCompatActivity {
 			String url = intent.getStringExtra("url");
 			String mediaType = intent.getStringExtra("mediaType");
 
-			startChargesListFragment(fragmentManager, url, mediaType);
+			Fragment fragment = new ChargeListFragment();
+			Bundle bundle = new Bundle();
+			bundle.putString("url", url);
+			bundle.putString("mediaType", mediaType);
 
+			fragment.setArguments(bundle);
+
+			FragmentHandler.replaceFragment(fragmentManager, fragment);
 		}
 	}
 
@@ -70,7 +77,7 @@ public class ChargeActivity extends AppCompatActivity {
 
 	private void canBack() {
 		ActionBar actionBar = getSupportActionBar();
-		if( actionBar != null ) {
+		if (actionBar != null) {
 			actionBar.setDisplayHomeAsUpEnabled(
 					fragmentManager.getBackStackEntryCount() > 0
 			);

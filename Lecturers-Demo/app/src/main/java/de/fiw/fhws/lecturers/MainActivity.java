@@ -6,7 +6,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import static de.fiw.fhws.lecturers.FragmentHandler.startLecturerListFragment;
+import de.fiw.fhws.lecturers.fragment.LecturerListFragment;
+
+import static de.fiw.fhws.lecturers.util.FragmentHandler.replaceFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 		if( savedInstanceState == null ) {
-			startLecturerListFragment(fragmentManager);
+			replaceFragment(fragmentManager, new LecturerListFragment());
 		}
 	}
 

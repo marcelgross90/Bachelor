@@ -13,18 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.owlike.genson.Genson;
-import com.owlike.genson.GensonBuilder;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.FragmentHandler;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import de.fiw.fhws.lecturers.util.FragmentHandler;
+import de.fiw.fhws.lecturers.util.GensonBuilder;
 import de.marcelgross.lecturer_lib.customView.ChargeDetailView;
 import de.marcelgross.lecturer_lib.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
@@ -36,10 +34,7 @@ import okhttp3.Response;
 
 public class ChargeDetailFragment extends Fragment implements DeleteDialogFragment.DeleteDialogListener {
 
-	private final Genson genson = new GensonBuilder()
-			.useDateAsTimestamp(false)
-			.useDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.GERMANY))
-			.create();
+	private final Genson genson = new GensonBuilder().getDateFormater();
 	private Charge currentCharge;
 	private String chargeUrl;
 	private String mediaType;
@@ -142,7 +137,7 @@ public class ChargeDetailFragment extends Fragment implements DeleteDialogFragme
 				.url(chargeUrl)
 				.build();
 
-		OkHttpClient client = OKHttpSingleton.getInstance(getContext()).getClient();
+		OkHttpClient client = OKHttpSingleton.getCacheInstance(getContext()).getClient();
 
 		client.newCall(request).enqueue(new Callback() {
 			@Override
