@@ -51,7 +51,7 @@ public class AttributeInput extends TextInputLayout {
 		return this.attribute.getText().toString().trim();
 	}
 
-	public int parseTextToInputType(String inputTypeString) {
+	private int parseTextToInputType(String inputTypeString) {
 		switch (inputTypeString) {
 			case "text":
 				return InputType.TYPE_CLASS_TEXT;

@@ -39,18 +39,18 @@ public class DateTimeView extends TextView {
 		try {
 			Calendar calendar = Calendar.getInstance();
 
-			StringBuilder builder = new StringBuilder();
-			builder.append(calendar.get(Calendar.DAY_OF_MONTH));
-			builder.append(".");
-			builder.append(calendar.get(Calendar.MONTH));
-			builder.append(".");
-			builder.append(calendar.get(Calendar.YEAR));
-			builder.append(" ");
-			builder.append(calendar.get(Calendar.HOUR_OF_DAY));
-			builder.append(":");
-			builder.append(calendar.get(Calendar.MINUTE));
+			String date =
+					calendar.get(Calendar.DAY_OF_MONTH) +
+							"." +
+							calendar.get(Calendar.MONTH) +
+							"." +
+							calendar.get(Calendar.YEAR) +
+							" " +
+							calendar.get(Calendar.HOUR_OF_DAY) +
+							":" +
+							calendar.get(Calendar.MINUTE);
 
-			setText(builder.toString());
+			setText(date);
 		} finally {
 			typedArray.recycle();
 		}

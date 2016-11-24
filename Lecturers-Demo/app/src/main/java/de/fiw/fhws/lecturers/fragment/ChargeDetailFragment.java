@@ -103,7 +103,7 @@ public class ChargeDetailFragment extends Fragment implements DeleteDialogFragme
 		MenuItem editItem = menu.findItem(R.id.edit_item);
 
 		deleteItem.setVisible(deleteLink != null);
-		editItem.setVisible(editItem != null);
+		editItem.setVisible(updateLink != null);
 	}
 
 	@Override
