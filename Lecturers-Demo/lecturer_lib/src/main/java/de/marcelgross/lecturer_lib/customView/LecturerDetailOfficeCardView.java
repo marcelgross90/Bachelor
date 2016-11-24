@@ -8,14 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textView.AddressView;
-import de.marcelgross.lecturer_lib.customView.textView.RoomView;
+import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class LecturerDetailOfficeCardView extends CardView {
 
-	private RoomView roomView;
-	private AddressView addressView;
+	private AttributeView roomView;
+	private AttributeView addressView;
 
 	public LecturerDetailOfficeCardView(Context context) {
 		super(context);
@@ -39,8 +38,8 @@ public class LecturerDetailOfficeCardView extends CardView {
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerDetailOfficeCardView, defStyle, 0);
 		try {
 
-			roomView = (RoomView) findViewById(R.id.tvRoomValue);
-			addressView = (AddressView) findViewById(R.id.tvAddressValue);
+			roomView = (AttributeView) findViewById(R.id.tvRoomValue);
+			addressView = (AttributeView) findViewById(R.id.tvAddressValue);
 
 		} finally {
 			typedArray.recycle();

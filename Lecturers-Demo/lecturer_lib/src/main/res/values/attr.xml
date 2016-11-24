@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<declare-styleable name="TitleView">
-		<attr name="title" format="string" />
-	</declare-styleable>
-	<declare-styleable name="NameView">
-		<attr name="fullName" format="string" />
-	</declare-styleable>
-	<declare-styleable name="MailView">
-		<attr name="email" format="string" />
-	</declare-styleable>
-	<declare-styleable name="PhoneView">
-		<attr name="phoneNumber" format="string" />
-	</declare-styleable>
-	<declare-styleable name="AddressView">
-		<attr name="address" format="string" />
-	</declare-styleable>
-	<declare-styleable name="RoomView">
-		<attr name="roomNumber" format="string" />
-	</declare-styleable>
+	<declare-styleable name="AttributeView" />
+
 	<declare-styleable name="WelearnView">
 		<attr name="welearnAddress" format="string" />
 	</declare-styleable>

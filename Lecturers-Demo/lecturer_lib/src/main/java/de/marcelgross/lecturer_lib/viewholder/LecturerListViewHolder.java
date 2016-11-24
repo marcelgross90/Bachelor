@@ -8,10 +8,8 @@ import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
-import de.marcelgross.lecturer_lib.customView.textView.AddressView;
 import de.marcelgross.lecturer_lib.customView.LecturerCardView;
-import de.marcelgross.lecturer_lib.customView.textView.MailView;
-import de.marcelgross.lecturer_lib.customView.textView.PhoneView;
+import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
 import de.marcelgross.lecturer_lib.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
@@ -22,9 +20,9 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 	private final LecturerListAdapter.OnLecturerClickListener onLecturerClickListener;
 
 	private final LecturerCardView cardView;
-	private final MailView email;
-	private final PhoneView phone;
-	private final AddressView address;
+	private final AttributeView email;
+	private final AttributeView phone;
+	private final AttributeView address;
 
 	private final ProfileImageView profileImg;
 
@@ -55,9 +53,9 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 		this.onLecturerClickListener = onLecturerClickListener;
 		cardView = (LecturerCardView) itemView.findViewById(R.id.lecturer_card);
 
-		email = (MailView) itemView.findViewById(R.id.email);
-		phone = (PhoneView) itemView.findViewById(R.id.phone);
-		address = (AddressView) itemView.findViewById(R.id.address);
+		email = (AttributeView) itemView.findViewById(R.id.email);
+		phone = (AttributeView) itemView.findViewById(R.id.phone);
+		address = (AttributeView) itemView.findViewById(R.id.address);
 
 		profileImg = (ProfileImageView) itemView.findViewById(R.id.profileImg);
 	}

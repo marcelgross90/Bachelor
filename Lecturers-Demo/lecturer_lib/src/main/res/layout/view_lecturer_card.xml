@@ -32,7 +32,7 @@
 			android:layout_toRightOf="@+id/profileImg"
 			android:background="@color/colorPrimary"/>
 
-		<de.marcelgross.lecturer_lib.customView.textView.TitleView
+		<de.marcelgross.lecturer_lib.customView.textView.AttributeView
 			android:id="@+id/title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
 			android:layout_toEndOf="@+id/border"
 			android:layout_toRightOf="@+id/border"/>
 
-		<de.marcelgross.lecturer_lib.customView.textView.NameView
+		<de.marcelgross.lecturer_lib.customView.textView.AttributeView
 			android:id="@+id/name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
 			android:layout_toRightOf="@+id/border"
 			android:textSize="18sp"/>
 
-		<de.marcelgross.lecturer_lib.customView.textView.MailView
+		<de.marcelgross.lecturer_lib.customView.textView.AttributeView
 			android:id="@+id/email"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_email"/>
 
-		<de.marcelgross.lecturer_lib.customView.textView.PhoneView
+		<de.marcelgross.lecturer_lib.customView.textView.AttributeView
 			android:id="@+id/phone"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_phone"/>
 
-		<de.marcelgross.lecturer_lib.customView.textView.AddressView
+		<de.marcelgross.lecturer_lib.customView.textView.AttributeView
 			android:id="@+id/address"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_home"/>
 
-		<de.marcelgross.lecturer_lib.customView.textView.RoomView
+		<de.marcelgross.lecturer_lib.customView.textView.AttributeView
 			android:id="@+id/room"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

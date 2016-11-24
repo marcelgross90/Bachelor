@@ -41,7 +41,7 @@ public class ProfileImageView extends ImageView {
 
 	private void init(Context context, AttributeSet attrs, int defStyle) {
 
-		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PhoneView, defStyle, 0);
+		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ProfileImageView, defStyle, 0);
 		typedArray.recycle();
 	}
 

@@ -8,12 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textView.AddressView;
-import de.marcelgross.lecturer_lib.customView.textView.MailView;
-import de.marcelgross.lecturer_lib.customView.textView.NameView;
-import de.marcelgross.lecturer_lib.customView.textView.PhoneView;
-import de.marcelgross.lecturer_lib.customView.textView.RoomView;
-import de.marcelgross.lecturer_lib.customView.textView.TitleView;
+import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
 import de.marcelgross.lecturer_lib.customView.textView.WelearnView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
@@ -21,12 +16,12 @@ import de.marcelgross.lecturer_lib.model.Lecturer;
 public class LecturerCardView extends CardView {
 
 	private ProfileImageView imageView;
-	private TitleView titleView;
-	private NameView nameView;
-	private MailView mailView;
-	private PhoneView phoneView;
-	private RoomView roomView;
-	private AddressView addressView;
+	private AttributeView titleView;
+	private AttributeView nameView;
+	private AttributeView mailView;
+	private AttributeView phoneView;
+	private AttributeView roomView;
+	private AttributeView addressView;
 	private WelearnView welearnView;
 
 	public LecturerCardView(Context context) {
@@ -52,12 +47,12 @@ public class LecturerCardView extends CardView {
 		try {
 
 			imageView = (ProfileImageView) findViewById(R.id.profileImg);
-			titleView = (TitleView) findViewById(R.id.title);
-			nameView = (NameView) findViewById(R.id.name);
-			mailView = (MailView) findViewById(R.id.email);
-			phoneView = (PhoneView) findViewById(R.id.phone);
-			roomView = (RoomView) findViewById(R.id.room);
-			addressView = (AddressView) findViewById(R.id.address);
+			titleView = (AttributeView) findViewById(R.id.title);
+			nameView = (AttributeView) findViewById(R.id.name);
+			mailView = (AttributeView) findViewById(R.id.email);
+			phoneView = (AttributeView) findViewById(R.id.phone);
+			roomView = (AttributeView) findViewById(R.id.room);
+			addressView = (AttributeView) findViewById(R.id.address);
 			welearnView = (WelearnView) findViewById(R.id.welearn);
 
 		} finally {

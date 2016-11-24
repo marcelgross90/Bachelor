@@ -9,15 +9,14 @@ import android.view.View;
 import android.widget.Button;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.textView.MailView;
-import de.marcelgross.lecturer_lib.customView.textView.PhoneView;
+import de.marcelgross.lecturer_lib.customView.textView.AttributeView;
 import de.marcelgross.lecturer_lib.customView.textView.WelearnView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
 public class LecturerDetailContactCardView extends CardView {
 
-	private MailView mailView;
-	private PhoneView phoneView;
+	private AttributeView mailView;
+	private AttributeView phoneView;
 	private WelearnView welearnView;
 
 	public LecturerDetailContactCardView(Context context) {
@@ -42,8 +41,8 @@ public class LecturerDetailContactCardView extends CardView {
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerDetailContactCardView, defStyle, 0);
 		try {
 
-			mailView = (MailView) findViewById(R.id.tvEmailValue);
-			phoneView = (PhoneView) findViewById(R.id.tvPhoneValue);
+			mailView = (AttributeView) findViewById(R.id.tvEmailValue);
+			phoneView = (AttributeView) findViewById(R.id.tvPhoneValue);
 			welearnView = (WelearnView) findViewById(R.id.tvWebsiteValue);
 			Button chargesButton = (Button) findViewById(R.id.charges_btn);
 
