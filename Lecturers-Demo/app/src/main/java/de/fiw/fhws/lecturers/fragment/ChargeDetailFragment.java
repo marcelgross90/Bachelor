@@ -1,6 +1,5 @@
 package de.fiw.fhws.lecturers.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,23 +13,18 @@ import android.widget.Toast;
 
 import com.owlike.genson.Genson;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.network.OKHttpSingleton;
-import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import de.fiw.fhws.lecturers.network.NetworkCallback;
+import de.fiw.fhws.lecturers.network.NetworkClient;
+import de.fiw.fhws.lecturers.network.NetworkRequest;
+import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.fiw.fhws.lecturers.util.GensonBuilder;
 import de.marcelgross.lecturer_lib.customView.ChargeDetailView;
 import de.marcelgross.lecturer_lib.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class ChargeDetailFragment extends Fragment implements DeleteDialogFragment.DeleteDialogListener {
 
@@ -132,28 +126,17 @@ public class ChargeDetailFragment extends Fragment implements DeleteDialogFragme
 	}
 
 	private void loadCharge() {
-		final Request request = new Request.Builder()
-				.header("Accept", mediaType)
-				.url(chargeUrl)
-				.build();
-
-		OkHttpClient client = OKHttpSingleton.getCacheInstance(getContext()).getClient();
-
-		client.newCall(request).enqueue(new Callback() {
+		NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().acceptHeader(mediaType).url(chargeUrl));
+		client.sendRequest(new NetworkCallback() {
 			@Override
-			public void onFailure(Call call, IOException e) {
-				e.printStackTrace();
+			public void onFailure() {
 			}
 
 			@Override
-			public void onResponse(Call call, Response response) throws IOException {
-				if (!response.isSuccessful()) {
-					throw new IOException();
-				}
-				currentCharge = genson.deserialize(response.body().charStream(), Charge.class);
+			public void onSuccess(NetworkResponse response) {
+				currentCharge = genson.deserialize(response.getResponseReader(), Charge.class);
+				Map<String, Link> linkHeader =response.getLinkHeader();
 
-				Map<String, List<String>> headers = response.headers().toMultimap();
-				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
 				deleteLink = linkHeader.get(getActivity().getString(R.string.rel_type_delete_charge));
 				updateLink = linkHeader.get(getActivity().getString(R.string.rel_type_update_charge));
 
@@ -163,7 +146,6 @@ public class ChargeDetailFragment extends Fragment implements DeleteDialogFragme
 						setUp(currentCharge);
 					}
 				});
-
 			}
 		});
 	}

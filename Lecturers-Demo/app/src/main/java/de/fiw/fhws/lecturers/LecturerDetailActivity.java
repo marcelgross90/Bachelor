@@ -14,22 +14,16 @@ import android.widget.Toast;
 
 import com.owlike.genson.Genson;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.network.OKHttpSingleton;
+import de.fiw.fhws.lecturers.network.NetworkCallback;
+import de.fiw.fhws.lecturers.network.NetworkClient;
+import de.fiw.fhws.lecturers.network.NetworkRequest;
+import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.marcelgross.lecturer_lib.customView.LecturerDetailView;
 import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
-import de.fiw.fhws.lecturers.network.util.HeaderParser;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 
 public class LecturerDetailActivity extends AppCompatActivity implements View.OnClickListener, DeleteDialogFragment.DeleteDialogListener {
 	private LecturerDetailView lecturerDetailView;
@@ -121,36 +115,23 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 		String selfUrl = intent.getExtras().getString("selfUrl", "");
 		String mediaType = intent.getExtras().getString("mediaType", "");
 
-
-		final Request request = new Request.Builder()
-				.header("Accept", mediaType)
-				.url(selfUrl)
-				.build();
-
-		OkHttpClient client = OKHttpSingleton.getCacheInstance(this).getClient();
-
-		client.newCall(request).enqueue(new Callback() {
+		NetworkClient client = new NetworkClient(this, new NetworkRequest().acceptHeader(mediaType).url(selfUrl));
+		client.sendRequest(new NetworkCallback() {
 			@Override
-			public void onFailure(Call call, IOException e) {
-				e.printStackTrace();
+			public void onFailure() {
 			}
 
 			@Override
-			public void onResponse(Call call, final Response response) throws IOException {
-				if (!response.isSuccessful()) {
-					throw new IOException("Unexpected code " + response);
-				}
-				final Lecturer lecturer = genson.deserialize(response.body().charStream(), Lecturer.class);
-				currentLecturer = lecturer;
-				Map<String, List<String>> headers = response.headers().toMultimap();
-				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
+			public void onSuccess(NetworkResponse response) {
+				currentLecturer = genson.deserialize(response.getResponseReader(), Lecturer.class);
+				Map<String, Link> linkHeader = response.getLinkHeader();
 				deleteLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_delete_lecturer));
 				updateLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_update_lecturer));
 
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setUp(lecturer);
+						setUp(currentLecturer);
 					}
 				});
 			}

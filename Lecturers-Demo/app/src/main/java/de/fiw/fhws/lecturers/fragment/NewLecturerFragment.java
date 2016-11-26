@@ -12,20 +12,14 @@ import android.widget.Toast;
 
 import com.owlike.genson.Genson;
 
-import java.io.IOException;
-
+import de.fiw.fhws.lecturers.network.NetworkCallback;
+import de.fiw.fhws.lecturers.network.NetworkClient;
+import de.fiw.fhws.lecturers.network.NetworkRequest;
+import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.network.OKHttpSingleton;
 import de.marcelgross.lecturer_lib.customView.LecturerInputView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class NewLecturerFragment extends Fragment {
 
@@ -74,24 +68,15 @@ public class NewLecturerFragment extends Fragment {
 		if (lecturer != null) {
 			String lecturerJson = genson.serialize(lecturer);
 
-			OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
-			RequestBody body = RequestBody.create(MediaType.parse(mediaType), lecturerJson);
-			final Request request = new Request.Builder()
-					.url(url)
-					.post(body)
-					.build();
-
-			client.newCall(request).enqueue(new Callback() {
+			NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(url).post(lecturerJson, mediaType));
+			client.sendRequest(new NetworkCallback() {
 				@Override
-				public void onFailure(Call call, IOException e) {
-					e.printStackTrace();
+				public void onFailure() {
+
 				}
 
 				@Override
-				public void onResponse(Call call, Response response) throws IOException {
-					if (!response.isSuccessful()) {
-						throw new IOException("Unexpected code " + response);
-					}
+				public void onSuccess(NetworkResponse response) {
 					getActivity().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -99,10 +84,8 @@ public class NewLecturerFragment extends Fragment {
 							FragmentHandler.replaceFragmentPopBackStack(getFragmentManager(), new LecturerListFragment());
 						}
 					});
-
 				}
 			});
 		}
-
 	}
 }

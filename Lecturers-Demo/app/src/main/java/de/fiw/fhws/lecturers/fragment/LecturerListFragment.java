@@ -21,33 +21,27 @@ import android.widget.Toast;
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.fiw.fhws.lecturers.network.NetworkCallback;
+import de.fiw.fhws.lecturers.network.NetworkClient;
+import de.fiw.fhws.lecturers.network.NetworkRequest;
+import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.network.OKHttpSingleton;
-import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import de.fiw.fhws.lecturers.util.ScrollListener;
 import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
 import de.marcelgross.lecturer_lib.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class LecturerListFragment extends Fragment implements LecturerListAdapter.OnLecturerClickListener {
 
 	private final Genson genson = new Genson();
 	private Link allLecturersLink;
 	private LecturerListAdapter modulesAdapter;
-	private LinearLayoutManager modulesLayoutMgr;
 	private ProgressBar progressBar;
 	private String nextUrl;
 	private Link createNewLecturerLink;
@@ -60,14 +54,10 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	}
 
 	private void initialNetworkRequest() {
-		OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
-		Request request = new Request.Builder()
-				.url(getResources().getString(R.string.entry_url))
-				.build();
-
-		client.newCall(request).enqueue(new Callback() {
+		NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(getResources().getString(R.string.entry_url)));
+		client.sendRequest(new NetworkCallback() {
 			@Override
-			public void onFailure(Call call, IOException e) {
+			public void onFailure() {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -77,14 +67,10 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 			}
 
 			@Override
-			public void onResponse(Call call, Response response) throws IOException {
+			public void onSuccess(NetworkResponse response) {
 				Activity activity = getActivity();
-				Headers headers = response.headers();
-				List<String> linkHeaderList = headers.toMultimap().get("link");
-				Map<String, Link> linkHeader = new HashMap<>();
-				if (linkHeaderList != null && linkHeaderList.size() > 0)
-					linkHeader = HeaderParser.getLinks(linkHeaderList);
 
+				Map<String, Link> linkHeader = response.getLinkHeader();
 
 				if (linkHeader.size() > 0) {
 					allLecturersLink = linkHeader.get(activity.getResources().getString(R.string.rel_type_get_all_lecturers));
@@ -94,7 +80,6 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 				}
 			}
 		});
-
 	}
 
 	@Override
@@ -105,23 +90,18 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
 		RecyclerView modulesRecyclerView = (RecyclerView) view.findViewById(R.id.lecturer_recycler_view);
-		modulesLayoutMgr = new LinearLayoutManager(getContext());
+		LinearLayoutManager modulesLayoutMgr = new LinearLayoutManager(getContext());
 
 		modulesRecyclerView.setLayoutManager(modulesLayoutMgr);
 		modulesRecyclerView.setAdapter(modulesAdapter);
-		modulesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+		modulesRecyclerView.addOnScrollListener(new ScrollListener(modulesLayoutMgr, new ScrollListener.OnScrollListener() {
 			@Override
-			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-				super.onScrolled(recyclerView, dx, dy);
-				int visibleItems = recyclerView.getChildCount();
-				int totalItems = modulesLayoutMgr.getItemCount();
-				int firstVisible = modulesLayoutMgr.findFirstVisibleItemPosition();
-				if (totalItems - visibleItems <= firstVisible + 1
-						&& nextUrl != null && !nextUrl.isEmpty()) {
+			public void load() {
+				if (nextUrl != null && !nextUrl.isEmpty()) {
 					loadLecturers(nextUrl);
 				}
 			}
-		});
+		}));
 		return view;
 	}
 
@@ -178,29 +158,18 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	private void loadLecturers(String url) {
 		showProgressBar(true);
 
-		Request request = new Request.Builder()
-				.header("Accept", allLecturersLink.getType())
-				.url(url)
-				.build();
-
-		OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
-
-		client.newCall(request).enqueue(new Callback() {
+		NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(url).acceptHeader(allLecturersLink.getType()));
+		client.sendRequest(new NetworkCallback() {
 			@Override
-			public void onFailure(Call call, IOException e) {
-				e.printStackTrace();
+			public void onFailure() {
+
 			}
 
 			@Override
-			public void onResponse(Call call, final Response response) throws IOException {
-				if (!response.isSuccessful()) {
-					throw new IOException("Unexpected code " + response);
-				}
+			public void onSuccess(NetworkResponse response) {
+				final List<Lecturer> lecturers = genson.deserialize(response.getResponseReader(), new GenericType<List<Lecturer>>() {});
+				Map<String, Link> linkHeader = response.getLinkHeader();
 
-				final List<Lecturer> lecturers = genson.deserialize(response.body().charStream(), new GenericType<List<Lecturer>>() {
-				});
-				Map<String, List<String>> headers = response.headers().toMultimap();
-				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
 				Link nextLink = linkHeader.get(getActivity().getString(R.string.rel_type_next));
 				createNewLecturerLink = linkHeader.get(getActivity().getString(R.string.rel_type_create_new_lecturer));
 				if (nextLink != null) {

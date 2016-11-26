@@ -14,28 +14,21 @@ import android.widget.Toast;
 
 import com.owlike.genson.Genson;
 
-import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.network.OKHttpSingleton;
-import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import de.fiw.fhws.lecturers.network.NetworkCallback;
+import de.fiw.fhws.lecturers.network.NetworkClient;
+import de.fiw.fhws.lecturers.network.NetworkRequest;
+import de.fiw.fhws.lecturers.network.NetworkResponse;
+import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.fiw.fhws.lecturers.util.GensonBuilder;
 import de.marcelgross.lecturer_lib.customView.ChargeInputView;
 import de.marcelgross.lecturer_lib.customView.DateTimeView;
 import de.marcelgross.lecturer_lib.fragment.DateTimePickerFragment;
 import de.marcelgross.lecturer_lib.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class NewChargeFragment extends Fragment implements View.OnClickListener, DateTimePickerFragment.OnDateTimeSetListener {
 
@@ -60,7 +53,7 @@ public class NewChargeFragment extends Fragment implements View.OnClickListener,
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		View view =  inflater.inflate(R.layout.fragment_new_charge, container, false);
+		View view = inflater.inflate(R.layout.fragment_new_charge, container, false);
 
 		chargeInputView = (ChargeInputView) view.findViewById(R.id.input_view);
 		startDateView = (DateTimeView) view.findViewById(R.id.startDate);
@@ -116,28 +109,16 @@ public class NewChargeFragment extends Fragment implements View.OnClickListener,
 		if (charge != null) {
 			String chargeString = genson.serialize(charge);
 
-			RequestBody body = RequestBody.create(MediaType.parse(mediaType), chargeString);
-			Request request = new Request.Builder()
-					.url(url)
-					.post(body)
-					.build();
-
-			OkHttpClient client = OKHttpSingleton.getCacheInstance(getActivity()).getClient();
-
-			client.newCall(request).enqueue(new Callback() {
+			NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(url).post(chargeString, mediaType));
+			client.sendRequest(new NetworkCallback() {
 				@Override
-				public void onFailure(Call call, IOException e) {
-					e.printStackTrace();
+				public void onFailure() {
+
 				}
 
 				@Override
-				public void onResponse(Call call, Response response) throws IOException {
-					if (!response.isSuccessful()) {
-						throw  new IOException("Unexpected code " + response);
-					}
-
-					Map<String, List<String>> headers = response.headers().toMultimap();
-					Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
+				public void onSuccess(NetworkResponse response) {
+					Map<String, Link> linkHeader = response.getLinkHeader();
 					final Link allChargesLink = linkHeader.get(getActivity().getString(R.string.rel_type_get_all_charges));
 
 					getActivity().runOnUiThread(new Runnable() {
@@ -155,9 +136,6 @@ public class NewChargeFragment extends Fragment implements View.OnClickListener,
 					});
 				}
 			});
-
 		}
 	}
-
-
 }

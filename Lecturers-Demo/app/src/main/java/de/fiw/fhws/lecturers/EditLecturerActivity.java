@@ -12,22 +12,15 @@ import android.widget.Toast;
 
 import com.owlike.genson.Genson;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.network.OKHttpSingleton;
-import de.fiw.fhws.lecturers.network.util.HeaderParser;
+import de.fiw.fhws.lecturers.network.NetworkCallback;
+import de.fiw.fhws.lecturers.network.NetworkClient;
+import de.fiw.fhws.lecturers.network.NetworkRequest;
+import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.marcelgross.lecturer_lib.customView.LecturerInputView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class EditLecturerActivity extends AppCompatActivity {
 
@@ -95,28 +88,17 @@ public class EditLecturerActivity extends AppCompatActivity {
 	}
 
 	private void loadLecturer(String selfUrl) {
-		final Request request = new Request.Builder()
-				.header("Accept", mediaType)
-				.url(selfUrl)
-				.build();
-
-		OkHttpClient client = OKHttpSingleton.getCacheInstance(this).getClient();
-
-		client.newCall(request).enqueue(new Callback() {
+		NetworkClient client = new NetworkClient(this, new NetworkRequest().url(selfUrl).acceptHeader(mediaType));
+		client.sendRequest(new NetworkCallback() {
 			@Override
-			public void onFailure(Call call, IOException e) {
-				e.printStackTrace();
+			public void onFailure() {
+
 			}
 
 			@Override
-			public void onResponse(Call call, final Response response) throws IOException {
-				if (!response.isSuccessful()) {
-					throw new IOException("Unexpected code " + response);
-				}
-				final Lecturer lecturer = genson.deserialize(response.body().charStream(), Lecturer.class);
-
-				Map<String, List<String>> headers = response.headers().toMultimap();
-				Map<String, Link> linkHeader = HeaderParser.getLinks(headers.get("link"));
+			public void onSuccess(NetworkResponse response) {
+				final Lecturer lecturer = genson.deserialize(response.getResponseReader(), Lecturer.class);
+				Map<String, Link> linkHeader = response.getLinkHeader();
 				lecturerEditLink = linkHeader.get(EditLecturerActivity.this.getString(R.string.rel_type_update_lecturer));
 
 				runOnUiThread(new Runnable() {
@@ -148,24 +130,14 @@ public class EditLecturerActivity extends AppCompatActivity {
 		if (lecturer != null) {
 			String lecturerJson = genson.serialize(lecturer);
 
-			OkHttpClient client = OKHttpSingleton.getCacheInstance(this).getClient();
-			RequestBody body = RequestBody.create(MediaType.parse(lecturerEditLink.getType()), lecturerJson);
-			final Request request = new Request.Builder()
-					.url(lecturerEditLink.getHref())
-					.put(body)
-					.build();
-
-			client.newCall(request).enqueue(new Callback() {
+			NetworkClient client = new NetworkClient(this, new NetworkRequest().url(lecturerEditLink.getHref()).put(lecturerJson, lecturerEditLink.getType()));
+			client.sendRequest(new NetworkCallback() {
 				@Override
-				public void onFailure(Call call, IOException e) {
-					e.printStackTrace();
+				public void onFailure() {
 				}
 
 				@Override
-				public void onResponse(Call call, Response response) throws IOException {
-					if (!response.isSuccessful()) {
-						throw new IOException("Unexpected code " + response);
-					}
+				public void onSuccess(NetworkResponse response) {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -175,7 +147,6 @@ public class EditLecturerActivity extends AppCompatActivity {
 							finish();
 						}
 					});
-
 				}
 			});
 		}
