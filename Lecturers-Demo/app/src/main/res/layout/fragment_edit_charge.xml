@@ -4,7 +4,7 @@
 			 android:layout_height="match_parent"
 			 tools:context="de.fiw.fhws.lecturers.specific.fragment.EditChargeFragment">
 
-	<de.marcelgross.lecturer_lib.customView.ChargeInputView
+	<de.marcelgross.lecturer_lib.specific.customView.ChargeInputView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:id="@+id/input_view"/>

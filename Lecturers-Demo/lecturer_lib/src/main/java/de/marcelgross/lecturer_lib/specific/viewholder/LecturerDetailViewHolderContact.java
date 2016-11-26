@@ -1,13 +1,13 @@
-package de.marcelgross.lecturer_lib.viewholder;
+package de.marcelgross.lecturer_lib.specific.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.LecturerDetailContactCardView;
+import de.marcelgross.lecturer_lib.specific.customView.LecturerDetailContactCardView;
 import de.marcelgross.lecturer_lib.customView.AttributeView;
-import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 
 public class LecturerDetailViewHolderContact extends RecyclerView.ViewHolder {
 	private final LecturerDetailContactCardView lecturerDetailContactCardView;

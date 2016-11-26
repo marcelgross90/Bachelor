@@ -1,6 +1,6 @@
-<de.marcelgross.lecturer_lib.customView.LecturerInputView
+<de.marcelgross.lecturer_lib.specific.customView.LecturerInputView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/lecturer_input"
 	android:layout_height="match_parent"
 	android:layout_width="match_parent">
-</de.marcelgross.lecturer_lib.customView.LecturerInputView>
+</de.marcelgross.lecturer_lib.specific.customView.LecturerInputView>

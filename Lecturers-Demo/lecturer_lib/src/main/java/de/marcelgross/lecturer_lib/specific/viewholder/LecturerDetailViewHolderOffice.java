@@ -1,12 +1,12 @@
-package de.marcelgross.lecturer_lib.viewholder;
+package de.marcelgross.lecturer_lib.specific.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.LecturerDetailOfficeCardView;
+import de.marcelgross.lecturer_lib.specific.customView.LecturerDetailOfficeCardView;
 import de.marcelgross.lecturer_lib.customView.AttributeView;
-import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 
 
 

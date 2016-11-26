@@ -14,7 +14,7 @@ import de.fiw.fhws.lecturers.fragment.NewResourceFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
-import de.marcelgross.lecturer_lib.customView.ChargeInputView;
+import de.marcelgross.lecturer_lib.specific.customView.ChargeInputView;
 import de.marcelgross.lecturer_lib.customView.DateTimeView;
 import de.marcelgross.lecturer_lib.fragment.DateTimePickerFragment;
 import de.marcelgross.lecturer_lib.model.Link;

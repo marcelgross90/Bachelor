@@ -17,9 +17,9 @@ import de.fiw.fhws.lecturers.specific.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
-import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
+import de.marcelgross.lecturer_lib.specific.adapter.LecturerListAdapter;
 import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
-import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
 import de.marcelgross.lecturer_lib.model.Resource;
 

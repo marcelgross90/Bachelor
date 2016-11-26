@@ -4,7 +4,7 @@
 			 android:layout_height="match_parent"
 			 tools:context="de.fiw.fhws.lecturers.specific.fragment.ChargeDetailFragment">
 
-	<de.marcelgross.lecturer_lib.customView.ChargeDetailView
+	<de.marcelgross.lecturer_lib.specific.customView.ChargeDetailView
 		android:id="@+id/charge_detail_view"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>

@@ -1,4 +1,4 @@
-package de.marcelgross.lecturer_lib.customView;
+package de.marcelgross.lecturer_lib.specific.customView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.customView.AttributeView;
+import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 
 public class LecturerDetailContactCardView extends CardView {
 

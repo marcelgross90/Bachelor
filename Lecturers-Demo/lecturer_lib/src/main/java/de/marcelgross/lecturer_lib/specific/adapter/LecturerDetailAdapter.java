@@ -1,4 +1,4 @@
-package de.marcelgross.lecturer_lib.adapter;
+package de.marcelgross.lecturer_lib.specific.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.model.Lecturer;
-import de.marcelgross.lecturer_lib.viewholder.LecturerDetailViewHolderContact;
-import de.marcelgross.lecturer_lib.viewholder.LecturerDetailViewHolderOffice;
+import de.marcelgross.lecturer_lib.specific.model.Lecturer;
+import de.marcelgross.lecturer_lib.specific.viewholder.LecturerDetailViewHolderContact;
+import de.marcelgross.lecturer_lib.specific.viewholder.LecturerDetailViewHolderOffice;
 
 
 public class LecturerDetailAdapter extends RecyclerView.Adapter {

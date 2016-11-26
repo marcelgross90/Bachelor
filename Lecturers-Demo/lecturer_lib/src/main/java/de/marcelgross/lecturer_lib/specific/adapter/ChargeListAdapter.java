@@ -1,9 +1,10 @@
-package de.marcelgross.lecturer_lib.adapter;
+package de.marcelgross.lecturer_lib.specific.adapter;
 
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.viewholder.ChargeViewHolder;
+import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
+import de.marcelgross.lecturer_lib.specific.viewholder.ChargeViewHolder;
 
 public class ChargeListAdapter extends ResourceListAdapter<ChargeViewHolder> {
 

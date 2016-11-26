@@ -16,9 +16,9 @@ import de.fiw.fhws.lecturers.fragment.ResourceListFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
-import de.marcelgross.lecturer_lib.adapter.ChargeListAdapter;
+import de.marcelgross.lecturer_lib.specific.adapter.ChargeListAdapter;
 import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
-import de.marcelgross.lecturer_lib.model.Charge;
+import de.marcelgross.lecturer_lib.specific.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
 import de.marcelgross.lecturer_lib.model.Resource;
 

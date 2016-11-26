@@ -8,7 +8,7 @@ import de.fiw.fhws.lecturers.fragment.NewResourceFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.specific.LecturerDetailActivity;
-import de.marcelgross.lecturer_lib.customView.LecturerInputView;
+import de.marcelgross.lecturer_lib.specific.customView.LecturerInputView;
 
 public class NewLecturerFragment extends NewResourceFragment {
 	@Override

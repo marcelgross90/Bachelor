@@ -1,4 +1,7 @@
-package de.marcelgross.lecturer_lib.model;
+package de.marcelgross.lecturer_lib.specific.model;
+
+import de.marcelgross.lecturer_lib.model.Link;
+import de.marcelgross.lecturer_lib.model.Resource;
 
 @SuppressWarnings("unused")
 public class Lecturer implements Resource {

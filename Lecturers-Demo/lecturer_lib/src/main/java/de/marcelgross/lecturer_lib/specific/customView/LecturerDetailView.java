@@ -1,4 +1,4 @@
-package de.marcelgross.lecturer_lib.customView;
+package de.marcelgross.lecturer_lib.specific.customView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,8 +10,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.adapter.LecturerDetailAdapter;
-import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.specific.adapter.LecturerDetailAdapter;
+import de.marcelgross.lecturer_lib.customView.ProfileImageView;
+import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 
 public class LecturerDetailView extends LinearLayout {
 

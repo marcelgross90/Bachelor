@@ -1,4 +1,4 @@
-package de.marcelgross.lecturer_lib.customView;
+package de.marcelgross.lecturer_lib.specific.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,7 +9,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.model.Charge;
+import de.marcelgross.lecturer_lib.customView.AttributeInput;
+import de.marcelgross.lecturer_lib.customView.DateTimeView;
+import de.marcelgross.lecturer_lib.customView.ResourceInputView;
+import de.marcelgross.lecturer_lib.specific.model.Charge;
 import de.marcelgross.lecturer_lib.model.Resource;
 
 public class ChargeInputView extends ResourceInputView {

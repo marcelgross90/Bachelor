@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<de.marcelgross.lecturer_lib.customView.LecturerCardView
+<de.marcelgross.lecturer_lib.specific.customView.LecturerCardView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/lecturer_card"
 	android:layout_width="match_parent"

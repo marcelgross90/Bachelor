@@ -14,10 +14,10 @@ import de.fiw.fhws.lecturers.fragment.EditResourceFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
-import de.marcelgross.lecturer_lib.customView.ChargeInputView;
+import de.marcelgross.lecturer_lib.specific.customView.ChargeInputView;
 import de.marcelgross.lecturer_lib.customView.DateTimeView;
 import de.marcelgross.lecturer_lib.fragment.DateTimePickerFragment;
-import de.marcelgross.lecturer_lib.model.Charge;
+import de.marcelgross.lecturer_lib.specific.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
 
 public class EditChargeFragment extends EditResourceFragment implements View.OnClickListener, DateTimePickerFragment.OnDateTimeSetListener {

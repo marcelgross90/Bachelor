@@ -4,7 +4,7 @@
 			 android:layout_height="match_parent"
 			 tools:context="de.fiw.fhws.lecturers.specific.fragment.EditLecturerFragment">
 
-	<de.marcelgross.lecturer_lib.customView.LecturerInputView
+	<de.marcelgross.lecturer_lib.specific.customView.LecturerInputView
 		android:id="@+id/lecturer_input"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>

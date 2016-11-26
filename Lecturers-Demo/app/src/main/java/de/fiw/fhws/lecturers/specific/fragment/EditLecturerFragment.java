@@ -9,8 +9,8 @@ import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.fragment.EditResourceFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
-import de.marcelgross.lecturer_lib.customView.LecturerInputView;
-import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.specific.customView.LecturerInputView;
+import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
 
 public class EditLecturerFragment extends EditResourceFragment {

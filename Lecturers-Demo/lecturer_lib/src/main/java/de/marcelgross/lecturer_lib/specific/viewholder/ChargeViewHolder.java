@@ -1,12 +1,13 @@
-package de.marcelgross.lecturer_lib.viewholder;
+package de.marcelgross.lecturer_lib.specific.viewholder;
 
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
-import de.marcelgross.lecturer_lib.customView.ChargeCardView;
-import de.marcelgross.lecturer_lib.model.Charge;
+import de.marcelgross.lecturer_lib.specific.customView.ChargeCardView;
+import de.marcelgross.lecturer_lib.specific.model.Charge;
 import de.marcelgross.lecturer_lib.model.Resource;
+import de.marcelgross.lecturer_lib.viewholder.ResourceViewHolder;
 
 public class ChargeViewHolder extends ResourceViewHolder {
 

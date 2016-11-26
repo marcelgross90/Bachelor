@@ -1,7 +1,10 @@
-package de.marcelgross.lecturer_lib.model;
+package de.marcelgross.lecturer_lib.specific.model;
 
 
 import java.util.Date;
+
+import de.marcelgross.lecturer_lib.model.Link;
+import de.marcelgross.lecturer_lib.model.Resource;
 
 @SuppressWarnings("unused")
 public class Charge implements Resource {

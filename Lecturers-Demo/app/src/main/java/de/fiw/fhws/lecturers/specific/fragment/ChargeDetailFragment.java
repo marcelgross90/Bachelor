@@ -23,8 +23,8 @@ import de.fiw.fhws.lecturers.network.NetworkRequest;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.fiw.fhws.lecturers.util.GensonBuilder;
-import de.marcelgross.lecturer_lib.customView.ChargeDetailView;
-import de.marcelgross.lecturer_lib.model.Charge;
+import de.marcelgross.lecturer_lib.specific.customView.ChargeDetailView;
+import de.marcelgross.lecturer_lib.specific.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
 
 public class ChargeDetailFragment extends Fragment implements DeleteDialogFragment.DeleteDialogListener {

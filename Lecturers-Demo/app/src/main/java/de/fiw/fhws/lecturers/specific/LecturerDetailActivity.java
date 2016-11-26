@@ -23,8 +23,8 @@ import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkClient;
 import de.fiw.fhws.lecturers.network.NetworkRequest;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
-import de.marcelgross.lecturer_lib.customView.LecturerDetailView;
-import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.specific.customView.LecturerDetailView;
+import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
 
 public class LecturerDetailActivity extends AppCompatActivity implements View.OnClickListener, DeleteDialogFragment.DeleteDialogListener {
