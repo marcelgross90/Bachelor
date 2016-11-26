@@ -3,21 +3,21 @@ package de.marcelgross.lecturer_lib.viewholder;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
+import de.marcelgross.lecturer_lib.adapter.RessourceListAdapter;
 import de.marcelgross.lecturer_lib.customView.LecturerCardView;
 import de.marcelgross.lecturer_lib.customView.AttributeView;
 import de.marcelgross.lecturer_lib.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.model.Ressource;
 
-public class LecturerListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class LecturerListViewHolder extends RessourceViewHolder implements View.OnClickListener {
 
 	private Lecturer lecturer;
 	private final Context context;
-	private final LecturerListAdapter.OnLecturerClickListener onLecturerClickListener;
+	private final RessourceListAdapter.OnRessourceClickListener onLecturerClickListener;
 
 	private final LecturerCardView cardView;
 	private final AttributeView email;
@@ -51,7 +51,7 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 		}
 	}
 
-	public LecturerListViewHolder(View itemView, LecturerListAdapter.OnLecturerClickListener onLecturerClickListener) {
+	public LecturerListViewHolder(View itemView, RessourceListAdapter.OnRessourceClickListener onLecturerClickListener) {
 		super(itemView);
 		this.context = itemView.getContext();
 		this.onLecturerClickListener = onLecturerClickListener;
@@ -65,13 +65,16 @@ public class LecturerListViewHolder extends RecyclerView.ViewHolder implements V
 		profileImg = (ProfileImageView) itemView.findViewById(R.id.profileImg);
 	}
 
-	public void assignData(final Lecturer lecturer) {
+	@Override
+	public void assignData(final Ressource ressource) {
+		final Lecturer lecturer = (Lecturer) ressource;
 		this.lecturer = lecturer;
 		cardView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (onLecturerClickListener != null) {
-					onLecturerClickListener.onLecturerClick(lecturer, profileImg);
+					onLecturerClickListener.onResourceClickWithView(lecturer, profileImg);
+					onLecturerClickListener.onResourceClick(lecturer);
 				}
 			}
 		});

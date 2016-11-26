@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,11 +34,12 @@ import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.util.ScrollListener;
 import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
-import de.marcelgross.lecturer_lib.customView.ProfileImageView;
+import de.marcelgross.lecturer_lib.adapter.RessourceListAdapter;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
+import de.marcelgross.lecturer_lib.model.Ressource;
 
-public class LecturerListFragment extends Fragment implements LecturerListAdapter.OnLecturerClickListener {
+public class LecturerListFragment extends Fragment implements RessourceListAdapter.OnRessourceClickListener {
 
 	private final Genson genson = new Genson();
 	private Link allLecturersLink;
@@ -116,7 +118,8 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 	}
 
 	@Override
-	public void onLecturerClick(Lecturer lecturer, ProfileImageView view) {
+	public void onResourceClickWithView(Ressource ressource, View view) {
+		Lecturer lecturer = (Lecturer) ressource;
 		Intent intent = new Intent(getActivity(), LecturerDetailActivity.class);
 		intent.putExtra("selfUrl", lecturer.getSelf().getHref());
 		intent.putExtra("mediaType", lecturer.getSelf().getType());
@@ -130,6 +133,11 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 			getActivity().startActivity(intent);
 			getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
 		}
+	}
+
+	@Override
+	public void onResourceClick(Ressource ressource) {
+		//not needed here
 	}
 
 	@Override
@@ -168,6 +176,10 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 			@Override
 			public void onSuccess(NetworkResponse response) {
 				final List<Lecturer> lecturers = genson.deserialize(response.getResponseReader(), new GenericType<List<Lecturer>>() {});
+				final List<Ressource> ressources = new ArrayList<Ressource>();
+				for (Lecturer lecturer : lecturers) {
+					ressources.add(lecturer);
+				}
 				Map<String, Link> linkHeader = response.getLinkHeader();
 
 				Link nextLink = linkHeader.get(getActivity().getString(R.string.rel_type_next));
@@ -183,7 +195,7 @@ public class LecturerListFragment extends Fragment implements LecturerListAdapte
 					public void run() {
 						setHasOptionsMenu(createNewLecturerLink != null);
 						showProgressBar(false);
-						modulesAdapter.addLecturer(lecturers);
+						modulesAdapter.addRessource(ressources);
 					}
 				});
 			}

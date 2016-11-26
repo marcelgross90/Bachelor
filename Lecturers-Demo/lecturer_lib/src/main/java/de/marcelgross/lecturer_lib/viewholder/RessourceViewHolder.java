@@ -1,10 +1,16 @@
 package de.marcelgross.lecturer_lib.viewholder;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-/**
- * Created by marcelgross on 26.11.16.
- */
+import de.marcelgross.lecturer_lib.model.Ressource;
 
-public class RessourceViewHolder extends RecyclerView.ViewHolder {
+
+public abstract class RessourceViewHolder extends RecyclerView.ViewHolder {
+
+	public RessourceViewHolder(View itemView) {
+		super(itemView);
+	}
+
+	public abstract void assignData(final Ressource ressource);
 }

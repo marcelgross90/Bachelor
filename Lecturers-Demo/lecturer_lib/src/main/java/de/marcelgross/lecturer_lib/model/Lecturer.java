@@ -1,6 +1,6 @@
 package de.marcelgross.lecturer_lib.model;
 
-public class Lecturer {
+public class Lecturer implements Ressource {
 
 	private int id;
 	private String title;

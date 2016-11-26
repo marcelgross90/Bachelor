@@ -3,7 +3,7 @@ package de.marcelgross.lecturer_lib.model;
 
 import java.util.Date;
 
-public class Charge {
+public class Charge implements Ressource {
 
 	private int id;
 	private String title;

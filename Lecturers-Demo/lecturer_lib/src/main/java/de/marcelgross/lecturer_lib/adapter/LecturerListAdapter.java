@@ -13,44 +13,20 @@ import de.marcelgross.lecturer_lib.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.viewholder.LecturerListViewHolder;
 
-public class LecturerListAdapter extends RecyclerView.Adapter<LecturerListViewHolder> {
+public class LecturerListAdapter extends RessourceListAdapter<LecturerListViewHolder> {
 
-	private final List<Lecturer> lecturerList = new ArrayList<>();
-	private final OnLecturerClickListener onLecturerClickListener;
+	private final OnRessourceClickListener onRessourceClickListener;
 
-
-	public interface OnLecturerClickListener {
-		void onLecturerClick(Lecturer lecturer, ProfileImageView imageView);
+	public LecturerListAdapter(OnRessourceClickListener onRessourceClickListener) {
+		this.onRessourceClickListener = onRessourceClickListener;
 	}
 
-	public LecturerListAdapter(OnLecturerClickListener lecturerClickListener) {
-		this.onLecturerClickListener = lecturerClickListener;
-	}
-
-	public void addLecturer(List<Lecturer> newLecturers) {
-		for (Lecturer newLecturer : newLecturers) {
-			if (!this.lecturerList.contains(newLecturer)) {
-				this.lecturerList.add(newLecturer);
-			}
-		}
-		notifyDataSetChanged();
-	}
 
 	@Override
 	public LecturerListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View moduleCard = LayoutInflater
 				.from(parent.getContext())
 				.inflate(R.layout.card_lecturer, parent, false);
-		return new LecturerListViewHolder(moduleCard, onLecturerClickListener);
-	}
-
-	@Override
-	public void onBindViewHolder(LecturerListViewHolder holder, int position) {
-		holder.assignData(lecturerList.get(position));
-	}
-
-	@Override
-	public int getItemCount() {
-		return lecturerList.size();
+		return new LecturerListViewHolder(moduleCard, onRessourceClickListener);
 	}
 }
