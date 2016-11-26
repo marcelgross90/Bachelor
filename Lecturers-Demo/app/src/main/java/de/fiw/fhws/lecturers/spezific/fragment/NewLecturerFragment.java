@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.fragment;
+package de.fiw.fhws.lecturers.spezific.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +12,12 @@ import android.widget.Toast;
 
 import com.owlike.genson.Genson;
 
+import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkClient;
 import de.fiw.fhws.lecturers.network.NetworkRequest;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
-import de.fiw.fhws.lecturers.R;
 import de.marcelgross.lecturer_lib.customView.LecturerInputView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 
@@ -64,7 +64,7 @@ public class NewLecturerFragment extends Fragment {
 	}
 
 	private void postLecturer() {
-		Lecturer lecturer = lecturerInputView.getLecturer();
+		Lecturer lecturer = (Lecturer) lecturerInputView.getRessource();
 		if (lecturer != null) {
 			String lecturerJson = genson.serialize(lecturer);
 

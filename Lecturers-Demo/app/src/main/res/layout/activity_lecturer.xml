@@ -5,14 +5,13 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context=".EditLecturerActivity">
+	tools:context=".spezific.LecturerActivity">
 
 	<include layout="@layout/toolbar"/>
 
-	<de.marcelgross.lecturer_lib.customView.LecturerInputView
+	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:id="@+id/lecturer_input">
-	</de.marcelgross.lecturer_lib.customView.LecturerInputView>
+		android:id="@+id/content_container"/>
 
 </LinearLayout>

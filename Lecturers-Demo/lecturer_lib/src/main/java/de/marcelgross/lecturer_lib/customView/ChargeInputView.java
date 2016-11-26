@@ -1,10 +1,7 @@
 package de.marcelgross.lecturer_lib.customView;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,61 +10,42 @@ import java.util.Locale;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.model.Charge;
+import de.marcelgross.lecturer_lib.model.Ressource;
 
-public class ChargeInputView extends LinearLayout {
+public class ChargeInputView extends RessourceInputView {
+
+	private Charge currentCharge;
 
 	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY);
-	private final Context context;
-	private final Charge currentCharge;
 	private AttributeInput titleInput;
 	private DateTimeView startDateView;
 	private DateTimeView endDateView;
-	private Charge charge;
+	private Charge oldCharge;
 
 	public ChargeInputView(Context context) {
 		super(context);
-		this.context = context;
-		this.currentCharge = new Charge();
-		init(context, null, 0);
 	}
 
 	public ChargeInputView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.context = context;
-		this.currentCharge = new Charge();
-
-		init(context, attrs, 0);
 	}
 
 	public ChargeInputView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		this.context = context;
-		this.currentCharge = new Charge();
-		init(context, attrs, defStyleAttr);
 	}
 
-	private void init(Context context, AttributeSet attributeSet, int defStyle) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.addView(inflater.inflate(R.layout.view_charge_input, this, false));
 
-		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.ChargeInputView, defStyle, 0);
-		try {
-			titleInput = (AttributeInput) findViewById(R.id.title);
-			startDateView = (DateTimeView) findViewById(R.id.startDate);
-			endDateView = (DateTimeView) findViewById(R.id.endDate);
- 		} finally {
-			typedArray.recycle();
-		}
-	}
-
-	public void setCharge(Charge charge) {
-		this.charge = charge;
+	@Override
+	public void setRessource(Ressource ressource) {
+		Charge charge = (Charge) ressource;
+		this.oldCharge = charge;
 		titleInput.setText(charge.getTitle());
 		startDateView.setText(dateToString(charge.getFromDate()));
 		endDateView.setText(dateToString(charge.getToDate()));
 	}
 
-	public Charge getCharge() {
+	@Override
+	public Ressource getRessource() {
 		boolean error = false;
 		String titleString = titleInput.getText();
 		String startDateString = startDateView.getText().toString();
@@ -79,8 +57,11 @@ public class ChargeInputView extends LinearLayout {
 		}
 
 		if (!error) {
-			if (charge != null) {
-				currentCharge.setId(charge.getId());
+			if (currentCharge == null) {
+				currentCharge = new Charge();
+			}
+			if (oldCharge != null) {
+				currentCharge.setId(oldCharge.getId());
 			}
 			currentCharge.setTitle(titleString);
 			currentCharge.setFromDate(stringToDate(startDateString));
@@ -88,6 +69,23 @@ public class ChargeInputView extends LinearLayout {
 			return currentCharge;
 		}
 		return null;
+	}
+
+	@Override
+	protected void initializeViews() {
+		titleInput = (AttributeInput) findViewById(R.id.title);
+		startDateView = (DateTimeView) findViewById(R.id.startDate);
+		endDateView = (DateTimeView) findViewById(R.id.endDate);
+	}
+
+	@Override
+	protected int getLayout() {
+		return R.layout.view_charge_input;
+	}
+
+	@Override
+	protected int[] getStyleable() {
+		return R.styleable.ChargeInputView;
 	}
 
 	private String dateToString(Date date) {
@@ -99,7 +97,7 @@ public class ChargeInputView extends LinearLayout {
 			return simpleDateFormat.parse(date);
 		} catch (ParseException ex) {
 			ex.printStackTrace();
-			return  new Date();
+			return new Date();
 		}
 	}
 }

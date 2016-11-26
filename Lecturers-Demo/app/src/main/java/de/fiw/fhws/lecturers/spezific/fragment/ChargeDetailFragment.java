@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.fragment;
+package de.fiw.fhws.lecturers.spezific.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +16,7 @@ import com.owlike.genson.Genson;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.R;
+import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkClient;
 import de.fiw.fhws.lecturers.network.NetworkRequest;

@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.fragment;
+package de.fiw.fhws.lecturers.spezific.fragment;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.LecturerDetailActivity;
+import de.fiw.fhws.lecturers.fragment.RessourceListFragment;
+import de.fiw.fhws.lecturers.spezific.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;

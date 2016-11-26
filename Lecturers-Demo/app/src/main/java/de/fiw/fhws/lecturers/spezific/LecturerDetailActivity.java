@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers;
+package de.fiw.fhws.lecturers.spezific;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,12 +16,14 @@ import com.owlike.genson.Genson;
 
 import java.util.Map;
 
+import de.fiw.fhws.lecturers.MainActivity;
+import de.fiw.fhws.lecturers.R;
+import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkClient;
 import de.fiw.fhws.lecturers.network.NetworkRequest;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.marcelgross.lecturer_lib.customView.LecturerDetailView;
-import de.fiw.fhws.lecturers.fragment.DeleteDialogFragment;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
 
@@ -78,10 +80,10 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
 				return true;
 			case R.id.edit_item:
-				Intent intent = new Intent(LecturerDetailActivity.this, EditLecturerActivity.class);
+				Intent intent = new Intent(LecturerDetailActivity.this, LecturerActivity.class);
 				intent.putExtra("url", updateLink.getHref());
 				intent.putExtra("mediaType", updateLink.getType());
-				startActivityForResult(intent, 1);
+				startActivity(intent);
 				return true;
 			case R.id.delete_item:
 				Bundle bundle = new Bundle();
@@ -183,14 +185,6 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentLecturer.getUrlWelearn()));
 				startActivity(browserIntent);
 				break;
-		}
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == 1) {
-			loadLecturer();
 		}
 	}
 }

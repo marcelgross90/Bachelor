@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.ScrollView;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.model.Lecturer;
+import de.marcelgross.lecturer_lib.model.Ressource;
 
-public class LecturerInputView extends ScrollView {
+public class LecturerInputView extends RessourceInputView {
 
-	private final Context context;
-	private final Lecturer currentLecturer;
 	private AttributeInput titleInput;
 	private AttributeInput firstNameInput;
 	private AttributeInput lastNameInput;
@@ -24,51 +22,19 @@ public class LecturerInputView extends ScrollView {
 
 	public LecturerInputView(Context context) {
 		super(context);
-		this.context = context;
-		this.currentLecturer = new Lecturer();
-		init(context, null, 0);
 	}
 
 	public LecturerInputView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.context = context;
-		this.currentLecturer = new Lecturer();
-
-		init(context, attrs, 0);
 	}
 
 	public LecturerInputView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		this.context = context;
-		this.currentLecturer = new Lecturer();
-		init(context, attrs, defStyleAttr);
 	}
 
-	private void init(Context context, AttributeSet attributeSet, int defStyle) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.addView(inflater.inflate(R.layout.view_lecturer_input, this, false));
-
-		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerInputView, defStyle, 0);
-		try {
-			initializeViews();
-
- 		} finally {
-			typedArray.recycle();
-		}
-	}
-
-	private void initializeViews() {
-		titleInput = (AttributeInput) findViewById(R.id.title);
-		firstNameInput = (AttributeInput) findViewById(R.id.firstName);
-		lastNameInput = (AttributeInput) findViewById(R.id.lastName);
-		mailInput = (AttributeInput) findViewById(R.id.mail);
-		phoneInput = (AttributeInput) findViewById(R.id.phone);
-		roomInput = (AttributeInput) findViewById(R.id.room);
-		addressInput = (AttributeInput) findViewById(R.id.address);
-		welearnInput = (AttributeInput) findViewById(R.id.welearn);
-	}
-
-	public void setLecturer(Lecturer lecturer) {
+	@Override
+	public void setRessource(Ressource ressource) {
+		Lecturer lecturer = (Lecturer) ressource;
 		titleInput.setText(lecturer.getTitle());
 		firstNameInput.setText(lecturer.getFirstName());
 		lastNameInput.setText(lecturer.getLastName());
@@ -79,7 +45,8 @@ public class LecturerInputView extends ScrollView {
 		welearnInput.setText(lecturer.getUrlWelearn());
 	}
 
-	public Lecturer getLecturer() {
+	@Override
+	public Ressource getRessource() {
 		boolean error = false;
 		String titleString = titleInput.getText();
 		String firstNameString = firstNameInput.getText();
@@ -124,6 +91,7 @@ public class LecturerInputView extends ScrollView {
 		}
 
 		if (!error) {
+			Lecturer currentLecturer = new Lecturer();
 			currentLecturer.setTitle(titleString);
 			currentLecturer.setFirstName(firstNameString);
 			currentLecturer.setLastName(lastNameString);
@@ -132,8 +100,30 @@ public class LecturerInputView extends ScrollView {
 			currentLecturer.setAddress(addressString);
 			currentLecturer.setRoomNumber(roomString);
 			currentLecturer.setUrlWelearn(welearnString);
-			return  currentLecturer;
+			return currentLecturer;
 		}
 		return null;
+	}
+
+	@Override
+	protected void initializeViews() {
+		titleInput = (AttributeInput) findViewById(R.id.title);
+		firstNameInput = (AttributeInput) findViewById(R.id.firstName);
+		lastNameInput = (AttributeInput) findViewById(R.id.lastName);
+		mailInput = (AttributeInput) findViewById(R.id.mail);
+		phoneInput = (AttributeInput) findViewById(R.id.phone);
+		roomInput = (AttributeInput) findViewById(R.id.room);
+		addressInput = (AttributeInput) findViewById(R.id.address);
+		welearnInput = (AttributeInput) findViewById(R.id.welearn);
+	}
+
+	@Override
+	protected int getLayout() {
+		return R.layout.view_lecturer_input;
+	}
+
+	@Override
+	protected int[] getStyleable() {
+		return R.styleable.LecturerInputView;
 	}
 }

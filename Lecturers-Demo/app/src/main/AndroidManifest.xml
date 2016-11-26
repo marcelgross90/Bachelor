@@ -28,11 +28,11 @@
 					android:scheme="http"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".LecturerDetailActivity">
+		<activity android:name=".spezific.LecturerDetailActivity">
 		</activity>
-		<activity android:name=".EditLecturerActivity">
+		<activity android:name=".spezific.LecturerActivity">
 		</activity>
-		<activity android:name=".ChargeActivity">
+		<activity android:name=".spezific.ChargeActivity">
 		</activity>
 	</application>
 

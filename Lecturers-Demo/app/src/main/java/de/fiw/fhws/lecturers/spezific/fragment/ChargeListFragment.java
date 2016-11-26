@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.fragment;
+package de.fiw.fhws.lecturers.spezific.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.R;
+import de.fiw.fhws.lecturers.fragment.RessourceListFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;

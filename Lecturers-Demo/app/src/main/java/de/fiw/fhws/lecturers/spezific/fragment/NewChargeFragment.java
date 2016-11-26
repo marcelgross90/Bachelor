@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.fragment;
+package de.fiw.fhws.lecturers.spezific.fragment;
 
 
 import android.os.Bundle;
@@ -30,7 +30,7 @@ import de.marcelgross.lecturer_lib.fragment.DateTimePickerFragment;
 import de.marcelgross.lecturer_lib.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
 
-public class EditChargeFragment extends Fragment implements View.OnClickListener, DateTimePickerFragment.OnDateTimeSetListener {
+public class NewChargeFragment extends Fragment implements View.OnClickListener, DateTimePickerFragment.OnDateTimeSetListener {
 
 	private final Genson genson = new GensonBuilder().getDateFormater();
 	private ChargeInputView chargeInputView;
@@ -40,25 +40,20 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 
 	private String url;
 	private String mediaType;
-	private Link chargeEditLink;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Bundle bundle = getArguments();
+		this.url = bundle.getString("url");
+		this.mediaType = bundle.getString("mediaType");
 		setHasOptionsMenu(true);
-		if (savedInstanceState == null) {
-			Bundle bundle = getArguments();
-			url = bundle.getString("url", "");
-			mediaType = bundle.getString("mediaType", "");
-		}
-
-		loadCharge();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_edit_charge, container, false);
+		View view = inflater.inflate(R.layout.fragment_new_charge, container, false);
 
 		chargeInputView = (ChargeInputView) view.findViewById(R.id.input_view);
 		startDateView = (DateTimeView) view.findViewById(R.id.startDate);
@@ -91,7 +86,7 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 		this.state = view.getId();
 
 		DateTimePickerFragment dateTimePickerFragment = new DateTimePickerFragment();
-		dateTimePickerFragment.setTargetFragment(EditChargeFragment.this, 0);
+		dateTimePickerFragment.setTargetFragment(NewChargeFragment.this, 0);
 
 		dateTimePickerFragment.show(getFragmentManager(), "dateTime");
 
@@ -108,38 +103,13 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 		}
 	}
 
-	private void loadCharge() {
-		NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().acceptHeader(mediaType).url(url));
-		client.sendRequest(new NetworkCallback() {
-			@Override
-			public void onFailure() {
-
-			}
-
-			@Override
-			public void onSuccess(NetworkResponse response) {
-				final Charge charge = genson.deserialize(response.getResponseReader(), Charge.class);
-				Map<String, Link> linkHeader = response.getLinkHeader();
-
-				chargeEditLink = linkHeader.get(getActivity().getString(R.string.rel_type_update_charge));
-
-				getActivity().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						chargeInputView.setCharge(charge);
-					}
-				});
-			}
-		});
-	}
-
 	private void saveCharge() {
-		Charge charge = chargeInputView.getCharge();
+		Charge charge = (Charge) chargeInputView.getRessource();
 
 		if (charge != null) {
 			String chargeString = genson.serialize(charge);
 
-			NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(chargeEditLink.getHref()).put(chargeString, chargeEditLink.getType()));
+			NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(url).post(chargeString, mediaType));
 			client.sendRequest(new NetworkCallback() {
 				@Override
 				public void onFailure() {
@@ -148,18 +118,17 @@ public class EditChargeFragment extends Fragment implements View.OnClickListener
 
 				@Override
 				public void onSuccess(NetworkResponse response) {
-
 					Map<String, Link> linkHeader = response.getLinkHeader();
-					final Link selfLink = linkHeader.get(getActivity().getString(R.string.rel_type_self));
+					final Link allChargesLink = linkHeader.get(getActivity().getString(R.string.rel_type_get_all_charges));
 
 					getActivity().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							Toast.makeText(getActivity(), R.string.charge_updated, Toast.LENGTH_SHORT).show();
+							Toast.makeText(getActivity(), R.string.charge_saved, Toast.LENGTH_SHORT).show();
 							Bundle bundle = new Bundle();
-							bundle.putString("url", selfLink.getHref());
-							bundle.putString("mediaType", selfLink.getType());
-							Fragment fragment = new ChargeDetailFragment();
+							bundle.putString("url", allChargesLink.getHrefWithoutQueryParams());
+							bundle.putString("mediaType", allChargesLink.getType());
+							Fragment fragment = new ChargeListFragment();
 							fragment.setArguments(bundle);
 
 							FragmentHandler.replaceFragmentPopBackStack(getFragmentManager(), fragment);

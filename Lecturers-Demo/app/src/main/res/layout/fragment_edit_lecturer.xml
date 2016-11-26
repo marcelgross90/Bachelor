@@ -2,10 +2,10 @@
 			 xmlns:tools="http://schemas.android.com/tools"
 			 android:layout_width="match_parent"
 			 android:layout_height="match_parent"
-			 tools:context="de.fiw.fhws.lecturers.spezific.fragment.ChargeDetailFragment">
+			 tools:context="de.fiw.fhws.lecturers.spezific.fragment.EditLecturerFragment">
 
-	<de.marcelgross.lecturer_lib.customView.ChargeDetailView
-		android:id="@+id/charge_detail_view"
+	<de.marcelgross.lecturer_lib.customView.LecturerInputView
+		android:id="@+id/lecturer_input"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
