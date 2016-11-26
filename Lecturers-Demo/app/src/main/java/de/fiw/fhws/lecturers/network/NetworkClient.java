@@ -12,8 +12,8 @@ import okhttp3.Response;
 
 public class NetworkClient {
 
-	private OkHttpClient client;
-	private NetworkRequest request;
+	private final OkHttpClient client;
+	private final NetworkRequest request;
 
 	public NetworkClient(Context context, NetworkRequest request) {
 		this.client = OKHttpSingleton.getCacheInstance(context).getClient();

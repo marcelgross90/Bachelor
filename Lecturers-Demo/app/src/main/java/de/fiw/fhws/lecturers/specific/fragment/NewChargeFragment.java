@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.spezific.fragment;
+package de.fiw.fhws.lecturers.specific.fragment;
 
 
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.fragment.NewRessourceFragment;
+import de.fiw.fhws.lecturers.fragment.NewResourceFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
@@ -19,7 +19,7 @@ import de.marcelgross.lecturer_lib.customView.DateTimeView;
 import de.marcelgross.lecturer_lib.fragment.DateTimePickerFragment;
 import de.marcelgross.lecturer_lib.model.Link;
 
-public class NewChargeFragment extends NewRessourceFragment implements View.OnClickListener, DateTimePickerFragment.OnDateTimeSetListener {
+public class NewChargeFragment extends NewResourceFragment implements View.OnClickListener, DateTimePickerFragment.OnDateTimeSetListener {
 	private DateTimeView startDateView;
 	private DateTimeView endDateView;
 	private int state;

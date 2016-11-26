@@ -6,7 +6,7 @@ import okhttp3.RequestBody;
 
 public class NetworkRequest {
 
-    private Request.Builder requestBuilder;
+    private final Request.Builder requestBuilder;
 
     public NetworkRequest() {
         this.requestBuilder = new Request.Builder();

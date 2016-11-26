@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.spezific.fragment;
+package de.fiw.fhws.lecturers.specific.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,29 +12,29 @@ import java.util.List;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.fragment.RessourceListFragment;
+import de.fiw.fhws.lecturers.fragment.ResourceListFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.marcelgross.lecturer_lib.adapter.ChargeListAdapter;
-import de.marcelgross.lecturer_lib.adapter.RessourceListAdapter;
+import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
 import de.marcelgross.lecturer_lib.model.Charge;
 import de.marcelgross.lecturer_lib.model.Link;
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.model.Resource;
 
-public class ChargeListFragment extends RessourceListFragment {
+public class ChargeListFragment extends ResourceListFragment {
 
 	private String detailChargeTemplateUrl;
 	private ChargeListAdapter chargeListAdapter;
 
 	@Override
-	public void onResourceClickWithView(Ressource ressource, View view) {
+	public void onResourceClickWithView(Resource resource, View view) {
 		//not Needed
 	}
 
 	@Override
-	public void onResourceClick(Ressource ressource) {
-		Charge charge = (Charge) ressource;
+	public void onResourceClick(Resource resource) {
+		Charge charge = (Charge) resource;
 		Fragment fragment = new ChargeDetailFragment();
 		Bundle bundle = new Bundle();
 
@@ -63,15 +63,15 @@ public class ChargeListFragment extends RessourceListFragment {
 			public void onSuccess(NetworkResponse response) {
 				final List<Charge> charges = genson.deserialize(response.getResponseReader(), new GenericType<List<Charge>>() {
 				});
-				final List<Ressource> ressources = new ArrayList<>();
+				final List<Resource> resources = new ArrayList<>();
 				for (Charge charge : charges) {
-					ressources.add(charge);
+					resources.add(charge);
 				}
 				Map<String, Link> linkHeader = response.getLinkHeader();
 				Link nextLink = linkHeader.get(getActivity().getString(R.string.rel_type_next));
 				Link oneChargeOfLecturerLink = linkHeader.get(getActivity().getString(R.string.rel_type_get_one_charge_of_lecturer));
 
-				createNewRessourceLink = linkHeader.get(getActivity().getString(R.string.rel_type_create_charge_of_lecturer));
+				createNewResourceLink = linkHeader.get(getActivity().getString(R.string.rel_type_create_charge_of_lecturer));
 				if (nextLink != null) {
 					nextUrl = nextLink.getHref();
 				} else {
@@ -87,9 +87,9 @@ public class ChargeListFragment extends RessourceListFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setHasOptionsMenu(createNewRessourceLink != null);
+						setHasOptionsMenu(createNewResourceLink != null);
 						showProgressBar(false);
-						getAdapter().addRessource(ressources);
+						getAdapter().addResource(resources);
 					}
 				});
 			}
@@ -97,7 +97,7 @@ public class ChargeListFragment extends RessourceListFragment {
 	}
 
 	@Override
-	protected RessourceListAdapter getAdapter() {
+	protected ResourceListAdapter getAdapter() {
 		if (chargeListAdapter == null) {
 			chargeListAdapter = new ChargeListAdapter(ChargeListFragment.this);
 		}

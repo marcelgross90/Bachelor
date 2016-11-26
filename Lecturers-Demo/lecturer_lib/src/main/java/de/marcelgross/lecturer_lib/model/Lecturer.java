@@ -1,6 +1,7 @@
 package de.marcelgross.lecturer_lib.model;
 
-public class Lecturer implements Ressource {
+@SuppressWarnings("unused")
+public class Lecturer implements Resource {
 
 	private int id;
 	private String title;

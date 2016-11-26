@@ -1,5 +1,5 @@
 package de.marcelgross.lecturer_lib.model;
 
 
-public interface Ressource {
+public interface Resource {
 }

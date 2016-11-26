@@ -5,15 +5,16 @@ import android.support.v7.widget.RecyclerView;
 
 public class ScrollListener extends RecyclerView.OnScrollListener {
 
-	//offset when to trigger load
-	private int offset = 1;
-
 	public interface OnScrollListener {
 		void load();
 	}
 
-	private LinearLayoutManager linearLayoutManager;
-	private OnScrollListener listener;
+	//offset when to trigger load
+	@SuppressWarnings("FieldCanBeLocal")
+	private final int offset = 1;
+
+	private final LinearLayoutManager linearLayoutManager;
+	private final OnScrollListener listener;
 
 	public ScrollListener(LinearLayoutManager linearLayoutManager, OnScrollListener listener) {
 		this.linearLayoutManager = linearLayoutManager;

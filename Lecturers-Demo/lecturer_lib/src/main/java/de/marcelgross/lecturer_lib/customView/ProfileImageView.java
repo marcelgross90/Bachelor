@@ -51,12 +51,6 @@ public class ProfileImageView extends ImageView {
 		Picasso.with(context).load(profileImageUrl).resizeDimen(width, height).error(R.drawable.user_picture).into(this);
 	}
 
-	public void loadImage(Link profileImage) {
-		String profileImageUrl = getValidUrl(profileImage);
-
-		Picasso.with(context).load(profileImageUrl).error(R.drawable.user_picture).into(this);
-	}
-
 	public void loadCutImage(Link profileImage) {
 		String profileImageUrl = getValidUrl(profileImage);
 		Target target = new Target()

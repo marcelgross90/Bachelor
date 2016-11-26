@@ -17,16 +17,16 @@ import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkClient;
 import de.fiw.fhws.lecturers.network.NetworkRequest;
 import de.fiw.fhws.lecturers.util.GensonBuilder;
-import de.marcelgross.lecturer_lib.customView.RessourceInputView;
+import de.marcelgross.lecturer_lib.customView.ResourceInputView;
 import de.marcelgross.lecturer_lib.model.Link;
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.model.Resource;
 
 
-public abstract class EditRessourceFragment extends Fragment {
+public abstract class EditResourceFragment extends Fragment {
 
-	protected final Genson genson = new GensonBuilder().getDateFormater();
-	protected RessourceInputView inputView;
-	protected Link ressourceEditLink;
+	protected final Genson genson = new GensonBuilder().getDateFormatter();
+	protected ResourceInputView inputView;
+	protected Link resourceEditLink;
 	private String url;
 	private String mediaType;
 
@@ -40,7 +40,17 @@ public abstract class EditRessourceFragment extends Fragment {
 			mediaType = bundle.getString("mediaType", "");
 		}
 
-		loadRessource();
+		loadResource();
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+		View view = inflater.inflate(getLayout(), container, false);
+
+		initializeView(view);
+
+		return view;
 	}
 
 	@Override
@@ -52,7 +62,7 @@ public abstract class EditRessourceFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.saveItem:
-				saveRessource();
+				saveResource();
 				break;
 		}
 
@@ -60,28 +70,29 @@ public abstract class EditRessourceFragment extends Fragment {
 	}
 
 
-	private void loadRessource() {
+	private void loadResource() {
 		NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(url).acceptHeader(mediaType));
 		client.sendRequest(getLoadCallBack());
 	}
 
-	private void saveRessource() {
-		Ressource ressource = inputView.getRessource();
+	private void saveResource() {
+		Resource resource = inputView.getResource();
 
-		if (ressource != null) {
-			String ressourceString = genson.serialize(ressource);
+		if (resource != null) {
+			String resourceString = genson.serialize(resource);
 
-			NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(ressourceEditLink.getHref()).put(ressourceString, ressourceEditLink.getType()));
+			NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(resourceEditLink.getHref()).put(resourceString, resourceEditLink.getType()));
 			client.sendRequest(getSaveCallBack());
 		}
 
 	}
 
-	@Override
-	public abstract View onCreateView(LayoutInflater inflater, ViewGroup container,
-									  Bundle savedInstanceState);
+	protected abstract int getLayout();
+
+	protected abstract void initializeView(View view);
 
 	protected abstract NetworkCallback getLoadCallBack();
+
 	protected abstract NetworkCallback getSaveCallBack();
 
 }

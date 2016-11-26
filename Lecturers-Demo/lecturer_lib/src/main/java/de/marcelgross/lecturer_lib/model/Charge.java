@@ -3,7 +3,8 @@ package de.marcelgross.lecturer_lib.model;
 
 import java.util.Date;
 
-public class Charge implements Ressource {
+@SuppressWarnings("unused")
+public class Charge implements Resource {
 
 	private int id;
 	private String title;

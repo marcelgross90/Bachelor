@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.spezific.fragment.LecturerListFragment;
+import de.fiw.fhws.lecturers.specific.fragment.LecturerListFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkClient;
 import de.fiw.fhws.lecturers.network.NetworkRequest;

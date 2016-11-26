@@ -6,30 +6,26 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ScrollView;
 
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.model.Resource;
 
-/**
- * Created by marcelgross on 26.11.16.
- */
-
-public abstract class RessourceInputView extends ScrollView {
+public abstract class ResourceInputView extends ScrollView {
 
 	protected final Context context;
 
-	public RessourceInputView(Context context) {
+	public ResourceInputView(Context context) {
 		super(context);
 		this.context = context;
 		init(context, null, 0);
 	}
 
-	public RessourceInputView(Context context, AttributeSet attrs) {
+	public ResourceInputView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
 
 		init(context, attrs, 0);
 	}
 
-	public RessourceInputView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public ResourceInputView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		this.context = context;
 		init(context, attrs, defStyleAttr);
@@ -51,9 +47,9 @@ public abstract class RessourceInputView extends ScrollView {
 	}
 
 
-	public abstract void setRessource(Ressource ressource);
+	public abstract void setResource(Resource resource);
 
-	public abstract Ressource getRessource();
+	public abstract Resource getResource();
 
 	protected abstract void initializeViews();
 

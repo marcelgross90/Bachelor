@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.spezific.fragment;
+package de.fiw.fhws.lecturers.specific.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,7 +29,7 @@ import de.marcelgross.lecturer_lib.model.Link;
 
 public class ChargeDetailFragment extends Fragment implements DeleteDialogFragment.DeleteDialogListener {
 
-	private final Genson genson = new GensonBuilder().getDateFormater();
+	private final Genson genson = new GensonBuilder().getDateFormatter();
 	private Charge currentCharge;
 	private String chargeUrl;
 	private String mediaType;

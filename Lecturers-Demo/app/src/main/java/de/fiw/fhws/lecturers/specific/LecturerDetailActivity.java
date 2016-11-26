@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.spezific;
+package de.fiw.fhws.lecturers.specific;
 
 import android.content.Intent;
 import android.net.Uri;

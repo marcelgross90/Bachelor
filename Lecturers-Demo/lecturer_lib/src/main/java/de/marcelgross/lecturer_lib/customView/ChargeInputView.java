@@ -10,9 +10,9 @@ import java.util.Locale;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.model.Charge;
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.model.Resource;
 
-public class ChargeInputView extends RessourceInputView {
+public class ChargeInputView extends ResourceInputView {
 
 	private Charge currentCharge;
 
@@ -36,8 +36,8 @@ public class ChargeInputView extends RessourceInputView {
 
 
 	@Override
-	public void setRessource(Ressource ressource) {
-		Charge charge = (Charge) ressource;
+	public void setResource(Resource resource) {
+		Charge charge = (Charge) resource;
 		this.oldCharge = charge;
 		titleInput.setText(charge.getTitle());
 		startDateView.setText(dateToString(charge.getFromDate()));
@@ -45,7 +45,7 @@ public class ChargeInputView extends RessourceInputView {
 	}
 
 	@Override
-	public Ressource getRessource() {
+	public Resource getResource() {
 		boolean error = false;
 		String titleString = titleInput.getText();
 		String startDateString = startDateView.getText().toString();

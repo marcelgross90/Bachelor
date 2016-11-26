@@ -1,20 +1,16 @@
-package de.fiw.fhws.lecturers.spezific.fragment;
+package de.fiw.fhws.lecturers.specific.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.Toast;
 
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.fragment.NewRessourceFragment;
+import de.fiw.fhws.lecturers.fragment.NewResourceFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
-import de.fiw.fhws.lecturers.spezific.LecturerDetailActivity;
-import de.fiw.fhws.lecturers.util.FragmentHandler;
+import de.fiw.fhws.lecturers.specific.LecturerDetailActivity;
 import de.marcelgross.lecturer_lib.customView.LecturerInputView;
 
-public class NewLecturerFragment extends NewRessourceFragment {
+public class NewLecturerFragment extends NewResourceFragment {
 	@Override
 	protected int getLayout() {
 		return R.layout.fragment_lecturer_input;

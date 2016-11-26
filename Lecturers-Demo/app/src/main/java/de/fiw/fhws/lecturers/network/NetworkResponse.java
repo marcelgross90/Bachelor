@@ -10,8 +10,8 @@ import de.marcelgross.lecturer_lib.model.Link;
 
 public class NetworkResponse {
 
-    private Reader responseReader;
-    private Map<String,List<String>> header;
+    private final Reader responseReader;
+    private final Map<String,List<String>> header;
 
     public NetworkResponse(Reader responseReader, Map<String, List<String>> header) {
         this.responseReader = responseReader;

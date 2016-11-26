@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.spezific;
+package de.fiw.fhws.lecturers.specific;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,18 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.spezific.fragment.EditLecturerFragment;
+import de.fiw.fhws.lecturers.specific.fragment.EditLecturerFragment;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 
 public class LecturerActivity extends AppCompatActivity {
-
-
-	private Toolbar toolbar;
 
 	@Override
 	public void onBackPressed() {
@@ -53,7 +47,7 @@ public class LecturerActivity extends AppCompatActivity {
 	}
 
 	private void setUpToolbar() {
-		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		if (toolbar != null) {
 			setSupportActionBar(toolbar);
 		}

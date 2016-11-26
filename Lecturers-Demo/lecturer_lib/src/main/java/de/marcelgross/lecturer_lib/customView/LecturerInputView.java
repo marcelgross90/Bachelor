@@ -1,15 +1,13 @@
 package de.marcelgross.lecturer_lib.customView;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.model.Lecturer;
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.model.Resource;
 
-public class LecturerInputView extends RessourceInputView {
+public class LecturerInputView extends ResourceInputView {
 
 	private AttributeInput titleInput;
 	private AttributeInput firstNameInput;
@@ -33,8 +31,8 @@ public class LecturerInputView extends RessourceInputView {
 	}
 
 	@Override
-	public void setRessource(Ressource ressource) {
-		Lecturer lecturer = (Lecturer) ressource;
+	public void setResource(Resource resource) {
+		Lecturer lecturer = (Lecturer) resource;
 		titleInput.setText(lecturer.getTitle());
 		firstNameInput.setText(lecturer.getFirstName());
 		lastNameInput.setText(lecturer.getLastName());
@@ -46,7 +44,7 @@ public class LecturerInputView extends RessourceInputView {
 	}
 
 	@Override
-	public Ressource getRessource() {
+	public Resource getResource() {
 		boolean error = false;
 		String titleString = titleInput.getText();
 		String firstNameString = firstNameInput.getText();

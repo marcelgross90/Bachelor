@@ -22,18 +22,18 @@ import de.fiw.fhws.lecturers.network.NetworkRequest;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.fiw.fhws.lecturers.util.GensonBuilder;
 import de.fiw.fhws.lecturers.util.ScrollListener;
-import de.marcelgross.lecturer_lib.adapter.RessourceListAdapter;
+import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
 import de.marcelgross.lecturer_lib.model.Link;
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.model.Resource;
 
-public abstract class RessourceListFragment extends Fragment implements RessourceListAdapter.OnRessourceClickListener {
+public abstract class ResourceListFragment extends Fragment implements ResourceListAdapter.OnResourceClickListener {
 
-	protected final Genson genson = new GensonBuilder().getDateFormater();
+	protected final Genson genson = new GensonBuilder().getDateFormatter();
 	private ProgressBar progressBar;
 	private String url;
 	private String mediaType;
 	protected String nextUrl;
-	protected Link createNewRessourceLink;
+	protected Link createNewResourceLink;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,12 +46,12 @@ public abstract class RessourceListFragment extends Fragment implements Ressourc
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_lecturer_list, container, false);
+		View view = inflater.inflate(R.layout.fragment_resource_list, container, false);
 
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
 
-		RecyclerView modulesRecyclerView = (RecyclerView) view.findViewById(R.id.lecturer_recycler_view);
+		RecyclerView modulesRecyclerView = (RecyclerView) view.findViewById(R.id.resource_recycler_view);
 		LinearLayoutManager modulesLayoutMgr = new LinearLayoutManager(getContext());
 
 		modulesRecyclerView.setLayoutManager(modulesLayoutMgr);
@@ -60,20 +60,20 @@ public abstract class RessourceListFragment extends Fragment implements Ressourc
 			@Override
 			public void load() {
 				if (nextUrl != null && !nextUrl.isEmpty()) {
-					loadRessources(nextUrl);
+					loadResources(nextUrl);
 				}
 			}
 		}));
 
-		loadRessources(url);
+		loadResources(url);
 		return view;
 	}
 
 	@Override
-	public abstract void onResourceClickWithView(Ressource ressource, View view);
+	public abstract void onResourceClickWithView(Resource resource, View view);
 
 	@Override
-	public abstract void onResourceClick(Ressource ressource);
+	public abstract void onResourceClick(Resource resource);
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -85,9 +85,9 @@ public abstract class RessourceListFragment extends Fragment implements Ressourc
 		switch (item.getItemId()) {
 			case R.id.add:
 				Bundle bundle = new Bundle();
-				if (createNewRessourceLink != null) {
-					bundle.putString("url", createNewRessourceLink.getHref());
-					bundle.putString("mediaType", createNewRessourceLink.getType());
+				if (createNewResourceLink != null) {
+					bundle.putString("url", createNewResourceLink.getHref());
+					bundle.putString("mediaType", createNewResourceLink.getType());
 				}
 
 				Fragment fragment = getFragment();
@@ -109,7 +109,7 @@ public abstract class RessourceListFragment extends Fragment implements Ressourc
 		}
 	}
 
-	private void loadRessources(String url) {
+	private void loadResources(String url) {
 		showProgressBar(true);
 
 		NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(url).acceptHeader(mediaType));
@@ -117,6 +117,6 @@ public abstract class RessourceListFragment extends Fragment implements Ressourc
 	}
 
 	protected abstract NetworkCallback getCallBack();
-	protected abstract RessourceListAdapter getAdapter();
+	protected abstract ResourceListAdapter getAdapter();
 	protected abstract Fragment getFragment();
 }

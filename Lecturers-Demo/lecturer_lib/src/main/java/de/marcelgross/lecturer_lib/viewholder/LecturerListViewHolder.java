@@ -6,18 +6,18 @@ import android.net.Uri;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.adapter.RessourceListAdapter;
+import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
 import de.marcelgross.lecturer_lib.customView.LecturerCardView;
 import de.marcelgross.lecturer_lib.customView.AttributeView;
 import de.marcelgross.lecturer_lib.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.model.Lecturer;
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.model.Resource;
 
-public class LecturerListViewHolder extends RessourceViewHolder implements View.OnClickListener {
+public class LecturerListViewHolder extends ResourceViewHolder implements View.OnClickListener {
 
 	private Lecturer lecturer;
 	private final Context context;
-	private final RessourceListAdapter.OnRessourceClickListener onLecturerClickListener;
+	private final ResourceListAdapter.OnResourceClickListener onLecturerClickListener;
 
 	private final LecturerCardView cardView;
 	private final AttributeView email;
@@ -51,7 +51,7 @@ public class LecturerListViewHolder extends RessourceViewHolder implements View.
 		}
 	}
 
-	public LecturerListViewHolder(View itemView, RessourceListAdapter.OnRessourceClickListener onLecturerClickListener) {
+	public LecturerListViewHolder(View itemView, ResourceListAdapter.OnResourceClickListener onLecturerClickListener) {
 		super(itemView);
 		this.context = itemView.getContext();
 		this.onLecturerClickListener = onLecturerClickListener;
@@ -66,8 +66,8 @@ public class LecturerListViewHolder extends RessourceViewHolder implements View.
 	}
 
 	@Override
-	public void assignData(final Ressource ressource) {
-		final Lecturer lecturer = (Lecturer) ressource;
+	public void assignData(final Resource resource) {
+		final Lecturer lecturer = (Lecturer) resource;
 		this.lecturer = lecturer;
 		cardView.setOnClickListener(new View.OnClickListener() {
 			@Override

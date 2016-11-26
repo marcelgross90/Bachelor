@@ -3,6 +3,7 @@ package de.marcelgross.lecturer_lib.model;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class Link {
 
 	private String href;

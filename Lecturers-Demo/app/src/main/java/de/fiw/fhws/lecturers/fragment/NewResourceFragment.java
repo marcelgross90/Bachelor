@@ -16,13 +16,13 @@ import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkClient;
 import de.fiw.fhws.lecturers.network.NetworkRequest;
 import de.fiw.fhws.lecturers.util.GensonBuilder;
-import de.marcelgross.lecturer_lib.customView.RessourceInputView;
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.customView.ResourceInputView;
+import de.marcelgross.lecturer_lib.model.Resource;
 
-public abstract class NewRessourceFragment extends Fragment {
+public abstract class NewResourceFragment extends Fragment {
 
-	protected final Genson genson = new GensonBuilder().getDateFormater();
-	protected RessourceInputView inputView;
+	protected ResourceInputView inputView;
+	private final Genson genson = new GensonBuilder().getDateFormatter();
 	private String url;
 	private String mediaType;
 
@@ -54,17 +54,17 @@ public abstract class NewRessourceFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.saveItem:
-				saveRessource();
+				saveResource();
 				break;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void saveRessource() {
-		Ressource ressource = inputView.getRessource();
-		if (ressource != null) {
-			String lecturerJson = genson.serialize(ressource);
+	private void saveResource() {
+		Resource resource = inputView.getResource();
+		if (resource != null) {
+			String lecturerJson = genson.serialize(resource);
 
 			NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(url).post(lecturerJson, mediaType));
 			client.sendRequest(getCallback());

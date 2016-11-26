@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.spezific.fragment;
+package de.fiw.fhws.lecturers.specific.fragment;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -12,24 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.fiw.fhws.lecturers.fragment.RessourceListFragment;
-import de.fiw.fhws.lecturers.spezific.LecturerDetailActivity;
+import de.fiw.fhws.lecturers.fragment.ResourceListFragment;
+import de.fiw.fhws.lecturers.specific.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
 import de.marcelgross.lecturer_lib.adapter.LecturerListAdapter;
-import de.marcelgross.lecturer_lib.adapter.RessourceListAdapter;
+import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
 import de.marcelgross.lecturer_lib.model.Lecturer;
 import de.marcelgross.lecturer_lib.model.Link;
-import de.marcelgross.lecturer_lib.model.Ressource;
+import de.marcelgross.lecturer_lib.model.Resource;
 
-public class LecturerListFragment extends RessourceListFragment {
+public class LecturerListFragment extends ResourceListFragment {
 
 	private LecturerListAdapter lecturerListAdapter;
 
 	@Override
-	public void onResourceClickWithView(Ressource ressource, View view) {
-		Lecturer lecturer = (Lecturer) ressource;
+	public void onResourceClickWithView(Resource resource, View view) {
+		Lecturer lecturer = (Lecturer) resource;
 		Intent intent = new Intent(getActivity(), LecturerDetailActivity.class);
 		intent.putExtra("selfUrl", lecturer.getSelf().getHref());
 		intent.putExtra("mediaType", lecturer.getSelf().getType());
@@ -46,7 +46,7 @@ public class LecturerListFragment extends RessourceListFragment {
 	}
 
 	@Override
-	public void onResourceClick(Ressource ressource) {
+	public void onResourceClick(Resource resource) {
 		//not needed here
 	}
 
@@ -62,14 +62,14 @@ public class LecturerListFragment extends RessourceListFragment {
 			public void onSuccess(NetworkResponse response) {
 				final List<Lecturer> lecturers = genson.deserialize(response.getResponseReader(), new GenericType<List<Lecturer>>() {
 				});
-				final List<Ressource> ressources = new ArrayList<>();
+				final List<Resource> resources = new ArrayList<>();
 				for (Lecturer lecturer : lecturers) {
-					ressources.add(lecturer);
+					resources.add(lecturer);
 				}
 				Map<String, Link> linkHeader = response.getLinkHeader();
 
 				Link nextLink = linkHeader.get(getActivity().getString(R.string.rel_type_next));
-				createNewRessourceLink = linkHeader.get(getActivity().getString(R.string.rel_type_create_new_lecturer));
+				createNewResourceLink = linkHeader.get(getActivity().getString(R.string.rel_type_create_new_lecturer));
 				if (nextLink != null) {
 					nextUrl = nextLink.getHref();
 				} else {
@@ -79,9 +79,9 @@ public class LecturerListFragment extends RessourceListFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setHasOptionsMenu(createNewRessourceLink != null);
+						setHasOptionsMenu(createNewResourceLink != null);
 						showProgressBar(false);
-						getAdapter().addRessource(ressources);
+						getAdapter().addResource(resources);
 					}
 				});
 			}
@@ -89,7 +89,7 @@ public class LecturerListFragment extends RessourceListFragment {
 	}
 
 	@Override
-	protected RessourceListAdapter getAdapter() {
+	protected ResourceListAdapter getAdapter() {
 		if (lecturerListAdapter == null) {
 			lecturerListAdapter = new LecturerListAdapter(LecturerListFragment.this);
 		}

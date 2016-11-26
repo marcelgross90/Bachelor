@@ -1,4 +1,4 @@
-package de.fiw.fhws.lecturers.spezific;
+package de.fiw.fhws.lecturers.specific;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import de.fiw.fhws.lecturers.R;
-import de.fiw.fhws.lecturers.spezific.fragment.ChargeListFragment;
+import de.fiw.fhws.lecturers.specific.fragment.ChargeListFragment;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 
 public class ChargeActivity extends AppCompatActivity {
