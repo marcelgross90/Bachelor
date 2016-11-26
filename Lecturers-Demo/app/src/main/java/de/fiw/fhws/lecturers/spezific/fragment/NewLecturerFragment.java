@@ -1,91 +1,50 @@
 package de.fiw.fhws.lecturers.spezific.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.owlike.genson.Genson;
-
 import de.fiw.fhws.lecturers.R;
+import de.fiw.fhws.lecturers.fragment.NewRessourceFragment;
 import de.fiw.fhws.lecturers.network.NetworkCallback;
-import de.fiw.fhws.lecturers.network.NetworkClient;
-import de.fiw.fhws.lecturers.network.NetworkRequest;
 import de.fiw.fhws.lecturers.network.NetworkResponse;
+import de.fiw.fhws.lecturers.spezific.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.util.FragmentHandler;
 import de.marcelgross.lecturer_lib.customView.LecturerInputView;
-import de.marcelgross.lecturer_lib.model.Lecturer;
 
-public class NewLecturerFragment extends Fragment {
-
-	private final Genson genson = new Genson();
-	private String url;
-	private String mediaType;
-	private LecturerInputView lecturerInputView;
-
+public class NewLecturerFragment extends NewRessourceFragment {
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Bundle bundle = getArguments();
-		this.url = bundle.getString("url");
-		this.mediaType = bundle.getString("mediaType");
-		setHasOptionsMenu(true);
+	protected int getLayout() {
+		return R.layout.fragment_lecturer_input;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_lecturer_input, container, false);
-
-		lecturerInputView = (LecturerInputView) view.findViewById(R.id.lecturer_input);
-
-		return view;
+	protected void initializeView(View view) {
+		inputView = (LecturerInputView) view.findViewById(R.id.lecturer_input);
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.save_menu, menu);
-	}
+	protected NetworkCallback getCallback() {
+		return new NetworkCallback() {
+			@Override
+			public void onFailure() {
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.saveItem:
-				postLecturer();
-				break;
-		}
+			}
 
-		return super.onOptionsItemSelected(item);
-	}
-
-	private void postLecturer() {
-		Lecturer lecturer = (Lecturer) lecturerInputView.getRessource();
-		if (lecturer != null) {
-			String lecturerJson = genson.serialize(lecturer);
-
-			NetworkClient client = new NetworkClient(getActivity(), new NetworkRequest().url(url).post(lecturerJson, mediaType));
-			client.sendRequest(new NetworkCallback() {
-				@Override
-				public void onFailure() {
-
-				}
-
-				@Override
-				public void onSuccess(NetworkResponse response) {
-					getActivity().runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							Toast.makeText(getActivity(), R.string.lecturer_saved, Toast.LENGTH_SHORT).show();
-							FragmentHandler.replaceFragmentPopBackStack(getFragmentManager(), new LecturerListFragment());
-						}
-					});
-				}
-			});
-		}
+			@Override
+			public void onSuccess(final NetworkResponse response) {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Intent intent = new Intent(getActivity(), LecturerDetailActivity.class);
+						intent.putExtra("selfUrl", response.getHeader().get("location").get(0));
+						getActivity().startActivity(intent);
+						getFragmentManager().popBackStack();
+					}
+				});
+			}
+		};
 	}
 }
