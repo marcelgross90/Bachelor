@@ -1,1 +1,40 @@
-\chapter{Grundlagen}
+\chapter{Grundlagen}\label{ch:basics}
+\section{\acf{rest}}\label{sec:rest}
+
+
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+		semithick]
+		\tikzstyle{every state}=[fill=none,text=black]
+		
+		\node[initial,state] (A) [minimum width=3cm]             {Dispatcher};
+		\node[state]         (B) [right of=A, minimum width=2cm] {Collection};
+		\node[state]         (D) [below of=B, minimum width=2cm] {Create};
+		\node[state]         (C) [right of=B, minimum width=2cm] {Single};
+		\node[state]         (E) [above of=C, minimum width=2cm] {Delete};
+		\node[state]		 (F) [below of=C, minimum width=2cm] {Update};
+		
+		\path 
+		(A) edge             (B)
+		(B) edge [bend left] (C)
+			edge [bend left] (D)
+		(C)	edge 			 (E)
+			edge [bend left] (B)
+			edge [bend left] (F)
+		(D) edge [bend left] (B)
+		(E) edge   			 (B)
+		(F) edge [bend left] (C);
+		
+		\end{tikzpicture}
+	\end{center}
+\end{figure}
+
+\section{Android}\label{sec:android}
+\subsection{Custom Views}
+Noch mehr Text
+
+
+\section{Generatoren}\label{sec:generators}
+\subsection{\acf{gemara}}\label{sec:gemara}

@@ -1,5 +1,7 @@
 \documentclass[12pt,oneside,a4paper,parskip]{scrbook}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{csquotes}
 \usepackage[ngerman]{babel}
 \usepackage{floatflt} 
@@ -26,9 +28,11 @@
 \usepackage{longtable}  
 \usepackage{setspace}
 \usepackage{booktabs}
-\usepackage[style=numeric]{biblatex}
+\usepackage[style=numeric, backend=biber]{biblatex}
 \bibliography{literatur2}
 \usepackage[nolist]{acronym}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
 
 %%%%%%%%%%%%%%%%%%%
 %% definitions
@@ -138,7 +142,7 @@ pdfkeywords={Keywords}
 \begin{document}
 
 \begin{acronym}[Bash]
-	\acro{gemara}[GeMARA]{GEnerierung von Mobilen Applikationen basierend auf Rest Architekturen}
+	\acro{gemara}[GeMARA]{GEnerierung von Mobilen Applikationen basierend auf REST Architekturen}
 	\acro{rest}[REST]{REpresentational State Transfer}
 	\acro{ui}[UI]{User Interface}
 	\acro{dsl}[DSL]{domänenspezifische Sprache}
@@ -230,8 +234,7 @@ TODO
 %\addcontentsline{toc}{chapter}{Listings}				
 
 \printbibliography
-\addcontentsline{toc}{chapter}{Literatur}				
-
+\addcontentsline{toc}{chapter}{Literatur}
 %%%%%%%%%%%%%%%%%%%
 %% declaration on oath
 %%%%%%%%%%%%%%%%%%%
