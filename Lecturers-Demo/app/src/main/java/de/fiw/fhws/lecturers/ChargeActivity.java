@@ -39,12 +39,6 @@ public class ChargeActivity extends ResourceActivity {
 	}
 
 	@Override
-	protected int getLayout() {
-		return R.layout.activity_charge;
-	}
-
-
-	@Override
 	protected void setUpToolbar() {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		if (toolbar != null) {

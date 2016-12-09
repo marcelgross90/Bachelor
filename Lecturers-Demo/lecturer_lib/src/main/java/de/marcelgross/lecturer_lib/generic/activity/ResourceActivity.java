@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.generic.util.FragmentHandler;
 
 public abstract class ResourceActivity extends AppCompatActivity {
@@ -13,8 +14,6 @@ public abstract class ResourceActivity extends AppCompatActivity {
 	protected FragmentManager fragmentManager;
 
 	protected abstract Fragment handleIntentAndPrepareFragment(Intent intent);
-
-	protected abstract int getLayout();
 
 	protected abstract void setUpToolbar();
 
@@ -28,7 +27,7 @@ public abstract class ResourceActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(getLayout());
+		setContentView(R.layout.activity_main);
 
 		fragmentManager = getSupportFragmentManager();
 

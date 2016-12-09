@@ -30,11 +30,6 @@ public class LecturerActivity extends ResourceActivity {
 	}
 
 	@Override
-	protected int getLayout() {
-		return R.layout.activity_lecturer;
-	}
-
-	@Override
 	protected void setUpToolbar() {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		if (toolbar != null) {
