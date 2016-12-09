@@ -1,12 +1,5 @@
 <resources>
 	<string name="app_name">Lecturers</string>
-	<string name="first_name">Firstname</string>
-	<string name="last_name">Lastname</string>
-
-
-
-	<string name="edit">Edit</string>
-	<string name="delete">Delete</string>
 	<string name="lecturer_updated">Lecturer updated!</string>
 	<string name="charge_updated">Charge updated!</string>
 	<string name="lecturer_saved">Lecturer saved!</string>
@@ -16,5 +9,4 @@
 	<string name="load__charges_error">Could not load charges</string>
 	<string name="lecturer_delete_error">Could not delete lecturer</string>
 	<string name="charge_delete_error">Could not delete charge</string>
-
 </resources>

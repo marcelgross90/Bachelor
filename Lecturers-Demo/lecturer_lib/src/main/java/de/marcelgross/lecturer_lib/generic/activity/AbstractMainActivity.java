@@ -17,7 +17,7 @@ import de.marcelgross.lecturer_lib.generic.network.NetworkClient;
 import de.marcelgross.lecturer_lib.generic.network.NetworkRequest;
 import de.marcelgross.lecturer_lib.generic.network.NetworkResponse;
 
-import static de.marcelgross.lecturer_lib.generic.util.AbstractFragmentHandler.replaceFragment;
+import static de.marcelgross.lecturer_lib.generic.util.FragmentHandler.replaceFragment;
 
 
 public abstract class AbstractMainActivity extends AppCompatActivity {

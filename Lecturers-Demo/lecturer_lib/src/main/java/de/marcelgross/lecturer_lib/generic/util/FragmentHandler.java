@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import de.marcelgross.lecturer_lib.R;
 
 
-public class AbstractFragmentHandler {
+public class FragmentHandler {
 
 	public static void replaceFragment(FragmentManager fm, Fragment fragment) {
 		fm.beginTransaction()

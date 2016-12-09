@@ -3,127 +3,79 @@ package de.fiw.fhws.lecturers;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
-import com.owlike.genson.Genson;
 
 import java.util.Map;
 
-import de.marcelgross.lecturer_lib.generic.fragment.DeleteDialogFragment;
+import de.marcelgross.lecturer_lib.generic.activity.ResourceDetailActivity;
+import de.marcelgross.lecturer_lib.generic.model.Link;
 import de.marcelgross.lecturer_lib.generic.network.NetworkCallback;
-import de.marcelgross.lecturer_lib.generic.network.NetworkClient;
-import de.marcelgross.lecturer_lib.generic.network.NetworkRequest;
 import de.marcelgross.lecturer_lib.generic.network.NetworkResponse;
 import de.marcelgross.lecturer_lib.specific.customView.LecturerDetailView;
 import de.marcelgross.lecturer_lib.specific.model.Lecturer;
-import de.marcelgross.lecturer_lib.generic.model.Link;
 
-public class LecturerDetailActivity extends AppCompatActivity implements View.OnClickListener, DeleteDialogFragment.DeleteDialogListener {
-	private LecturerDetailView lecturerDetailView;
-	private final Genson genson = new Genson();
-	private Link deleteLink;
-	private Link updateLink;
-	private Toolbar toolbar;
-	private Lecturer currentLecturer;
+public class LecturerDetailActivity extends ResourceDetailActivity implements View.OnClickListener {
 
 	@Override
-	public void onDialogClosed(boolean successfullyDeleted) {
-		if (successfullyDeleted) {
-			Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
-			finish();
-		} else {
-			Toast.makeText(this, R.string.lecturer_delete_error, Toast.LENGTH_SHORT).show();
-		}
+	protected Intent getIntentForClose() {
+		return new Intent(this, MainActivity.class);
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_lecturer_detail);
+	protected int getDeleteErrorMessage() {
+		return R.string.lecturer_delete_error;
+	}
 
-		lecturerDetailView = (LecturerDetailView) findViewById(R.id.detail_view);
+	@Override
+	protected int getLayout() {
+		return R.layout.activity_lecturer_detail;
+	}
+
+	@Override
+	protected void initializeView() {
+		resourceDetailView = (LecturerDetailView) findViewById(R.id.detail_view);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-		setUpToolbar();
-
-		loadLecturer();
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.detail_menu, menu);
-		MenuItem deleteItem = menu.findItem(R.id.delete_item);
-		MenuItem updateItem = menu.findItem(R.id.edit_item);
-		deleteItem.setVisible(deleteLink != null);
-		updateItem.setVisible(updateLink != null);
-
-		return super.onCreateOptionsMenu(menu);
-
+	protected int getEnterAnim() {
+		return R.anim.fade_out;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				onBackPressed();
-				overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
-				return true;
-			case R.id.edit_item:
-				Intent intent = new Intent(LecturerDetailActivity.this, LecturerActivity.class);
-				intent.putExtra("url", updateLink.getHref());
-				intent.putExtra("mediaType", updateLink.getType());
-				startActivity(intent);
-				return true;
-			case R.id.delete_item:
-				Bundle bundle = new Bundle();
-				bundle.putString("url", deleteLink.getHref());
-				bundle.putString("name", currentLecturer.getFirstName() + " " + currentLecturer.getLastName());
-				DeleteDialogFragment deleteDialogFragment = new DeleteDialogFragment();
-				deleteDialogFragment.setArguments(bundle);
-				deleteDialogFragment.show(getSupportFragmentManager(), null);
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
+	protected int getExitAnim() {
+		return R.anim.fade_in;
 	}
 
-	private void setUpToolbar() {
-		if (toolbar != null) {
-			setSupportActionBar(toolbar);
-		}
-		ActionBar actionBar = getSupportActionBar();
-
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-
-		String fullName = getIntent().getExtras().getString("fullName");
-		setTitle(fullName);
+	@Override
+	protected Intent getIntentForEdit() {
+		return new Intent(LecturerDetailActivity.this, LecturerActivity.class);
 	}
 
-	private void loadLecturer() {
-		Intent intent = getIntent();
-		String selfUrl = intent.getExtras().getString("selfUrl", "");
-		String mediaType = intent.getExtras().getString("mediaType", "");
+	@Override
+	protected Bundle prepareBundle() {
+		Lecturer lecturer = (Lecturer) currentResource;
+		Bundle bundle = new Bundle();
+		bundle.putString("name", lecturer.getFirstName() + " " + lecturer.getLastName());
+		return bundle;
+	}
 
-		NetworkClient client = new NetworkClient(this, new NetworkRequest().acceptHeader(mediaType).url(selfUrl));
-		client.sendRequest(new NetworkCallback() {
+	@Override
+	protected String extractTitleFromIntent(Intent intent) {
+		return getIntent().getExtras().getString("fullName");
+	}
+
+	@Override
+	protected NetworkCallback getCallback() {
+		return new NetworkCallback() {
 			@Override
 			public void onFailure() {
 			}
 
 			@Override
 			public void onSuccess(NetworkResponse response) {
-				currentLecturer = genson.deserialize(response.getResponseReader(), Lecturer.class);
+				currentResource = genson.deserialize(response.getResponseReader(), Lecturer.class);
 				Map<String, Link> linkHeader = response.getLinkHeader();
 				deleteLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_delete_lecturer));
 				updateLink = linkHeader.get(LecturerDetailActivity.this.getString(R.string.rel_type_update_lecturer));
@@ -131,20 +83,21 @@ public class LecturerDetailActivity extends AppCompatActivity implements View.On
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setUp(currentLecturer);
+						setUp((Lecturer) currentResource);
 					}
 				});
 			}
-		});
+		};
 	}
 
 	private void setUp(Lecturer lecturer) {
 		invalidateOptionsMenu();
-		lecturerDetailView.setUpView(lecturer, this);
+		((LecturerDetailView) resourceDetailView).setUpView(lecturer, this);
 	}
 
 	@Override
 	public void onClick(View view) {
+		Lecturer currentLecturer = (Lecturer) currentResource;
 		switch (view.getId()) {
 			case R.id.tvEmailValue:
 				Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + currentLecturer.getEmail()));

@@ -13,7 +13,7 @@ import de.fiw.fhws.lecturers.R;
 import de.marcelgross.lecturer_lib.generic.fragment.EditResourceFragment;
 import de.marcelgross.lecturer_lib.generic.network.NetworkCallback;
 import de.marcelgross.lecturer_lib.generic.network.NetworkResponse;
-import de.marcelgross.lecturer_lib.generic.util.AbstractFragmentHandler;
+import de.marcelgross.lecturer_lib.generic.util.FragmentHandler;
 import de.marcelgross.lecturer_lib.specific.customView.ChargeInputView;
 import de.marcelgross.lecturer_lib.generic.customView.DateTimeView;
 import de.marcelgross.lecturer_lib.generic.fragment.DateTimePickerFragment;
@@ -91,7 +91,7 @@ public class EditChargeFragment extends EditResourceFragment implements View.OnC
 						Fragment fragment = new ChargeDetailFragment();
 						fragment.setArguments(bundle);
 
-						AbstractFragmentHandler.replaceFragmentPopBackStack(getFragmentManager(), fragment);
+						FragmentHandler.replaceFragmentPopBackStack(getFragmentManager(), fragment);
 					}
 				});
 			}

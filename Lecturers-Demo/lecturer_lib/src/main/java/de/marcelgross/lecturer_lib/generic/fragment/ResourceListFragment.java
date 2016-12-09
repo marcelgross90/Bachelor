@@ -19,7 +19,7 @@ import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.generic.network.NetworkCallback;
 import de.marcelgross.lecturer_lib.generic.network.NetworkClient;
 import de.marcelgross.lecturer_lib.generic.network.NetworkRequest;
-import de.marcelgross.lecturer_lib.generic.util.AbstractFragmentHandler;
+import de.marcelgross.lecturer_lib.generic.util.FragmentHandler;
 import de.marcelgross.lecturer_lib.generic.util.GensonBuilder;
 import de.marcelgross.lecturer_lib.generic.util.ScrollListener;
 import de.marcelgross.lecturer_lib.generic.adapter.ResourceListAdapter;
@@ -91,7 +91,7 @@ public abstract class ResourceListFragment extends Fragment implements ResourceL
 
 			Fragment fragment = getFragment();
 			fragment.setArguments(bundle);
-			AbstractFragmentHandler.replaceFragment(getFragmentManager(), fragment);
+			FragmentHandler.replaceFragment(getFragmentManager(), fragment);
 
 		}
 

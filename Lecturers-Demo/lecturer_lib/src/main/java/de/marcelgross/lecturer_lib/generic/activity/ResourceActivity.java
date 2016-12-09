@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import de.marcelgross.lecturer_lib.generic.util.AbstractFragmentHandler;
+import de.marcelgross.lecturer_lib.generic.util.FragmentHandler;
 
 public abstract class ResourceActivity extends AppCompatActivity {
 
@@ -40,7 +40,7 @@ public abstract class ResourceActivity extends AppCompatActivity {
 			Fragment fragment = handleIntentAndPrepareFragment(intent);
 
 
-			AbstractFragmentHandler.replaceFragment(fragmentManager, fragment);
+			FragmentHandler.replaceFragment(fragmentManager, fragment);
 		}
 	}
 }
