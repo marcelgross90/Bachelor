@@ -6,7 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context="de.fiw.fhws.lecturers.specific.ChargeActivity">
+	tools:context="de.fiw.fhws.lecturers.ChargeActivity">
 
 	<include layout="@layout/toolbar"/>
 

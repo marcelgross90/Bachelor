@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.customView.AttributeInput;
-import de.marcelgross.lecturer_lib.customView.ResourceInputView;
+import de.marcelgross.lecturer_lib.generic.customView.AttributeInput;
+import de.marcelgross.lecturer_lib.generic.customView.ResourceInputView;
 import de.marcelgross.lecturer_lib.specific.model.Lecturer;
-import de.marcelgross.lecturer_lib.model.Resource;
+import de.marcelgross.lecturer_lib.generic.model.Resource;
 
 public class LecturerInputView extends ResourceInputView {
 

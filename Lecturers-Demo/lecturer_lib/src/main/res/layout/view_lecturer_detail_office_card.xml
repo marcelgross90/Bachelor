@@ -48,7 +48,7 @@
 				android:id="@+id/tvRoomCaption"
 				android:layout_weight="2" />
 
-			<de.marcelgross.lecturer_lib.customView.AttributeView
+			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:id="@+id/tvRoomValue"
@@ -71,7 +71,7 @@
 				android:id="@+id/tvAddressCaption"
 				android:layout_weight="2" />
 
-			<de.marcelgross.lecturer_lib.customView.AttributeView
+			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:id="@+id/tvAddressValue"

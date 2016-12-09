@@ -10,68 +10,68 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
-		<de.marcelgross.lecturer_lib.customView.AttributeInput
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeInput
 			android:id="@+id/title"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			custom:hintText="@string/title"
 			custom:inputType="text">
-		</de.marcelgross.lecturer_lib.customView.AttributeInput>
+		</de.marcelgross.lecturer_lib.generic.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeInput
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeInput
 			android:id="@+id/firstName"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			custom:hintText="@string/first_name"
 			custom:inputType="text">
-		</de.marcelgross.lecturer_lib.customView.AttributeInput>
+		</de.marcelgross.lecturer_lib.generic.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeInput
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeInput
 			android:id="@+id/lastName"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			custom:hintText="@string/last_name"
 			custom:inputType="text">
-		</de.marcelgross.lecturer_lib.customView.AttributeInput>
+		</de.marcelgross.lecturer_lib.generic.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeInput
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeInput
 			android:id="@+id/mail"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			custom:hintText="@string/email"
 			custom:inputType="mail">
-		</de.marcelgross.lecturer_lib.customView.AttributeInput>
+		</de.marcelgross.lecturer_lib.generic.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeInput
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeInput
 			android:id="@+id/phone"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			custom:hintText="@string/phone_number"
 			custom:inputType="phone">
-		</de.marcelgross.lecturer_lib.customView.AttributeInput>
+		</de.marcelgross.lecturer_lib.generic.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeInput
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeInput
 			android:id="@+id/address"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			custom:hintText="@string/address"
 			custom:inputType="text">
-		</de.marcelgross.lecturer_lib.customView.AttributeInput>
+		</de.marcelgross.lecturer_lib.generic.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeInput
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeInput
 			android:id="@+id/room"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			custom:hintText="@string/room"
 			custom:inputType="text">
-		</de.marcelgross.lecturer_lib.customView.AttributeInput>
+		</de.marcelgross.lecturer_lib.generic.customView.AttributeInput>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeInput
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeInput
 			android:id="@+id/welearn"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			custom:hintText="@string/welearn"
 			custom:inputType="text">
-		</de.marcelgross.lecturer_lib.customView.AttributeInput>
+		</de.marcelgross.lecturer_lib.generic.customView.AttributeInput>
 	</LinearLayout>
 </ScrollView>

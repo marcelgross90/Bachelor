@@ -16,7 +16,7 @@
 		android:layout_below="@+id/toolbar"
 		android:orientation="horizontal">
 
-		<de.marcelgross.lecturer_lib.customView.ProfileImageView
+		<de.marcelgross.lecturer_lib.generic.customView.ProfileImageView
 			android:id="@+id/ivLecturerPicture"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"

@@ -3,11 +3,11 @@ package de.marcelgross.lecturer_lib.specific.viewholder;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
+import de.marcelgross.lecturer_lib.generic.adapter.ResourceListAdapter;
 import de.marcelgross.lecturer_lib.specific.customView.ChargeCardView;
 import de.marcelgross.lecturer_lib.specific.model.Charge;
-import de.marcelgross.lecturer_lib.model.Resource;
-import de.marcelgross.lecturer_lib.viewholder.ResourceViewHolder;
+import de.marcelgross.lecturer_lib.generic.model.Resource;
+import de.marcelgross.lecturer_lib.generic.viewholder.ResourceViewHolder;
 
 public class ChargeViewHolder extends ResourceViewHolder {
 

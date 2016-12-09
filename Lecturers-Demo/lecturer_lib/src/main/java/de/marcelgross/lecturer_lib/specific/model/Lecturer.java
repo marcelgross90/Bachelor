@@ -1,7 +1,7 @@
 package de.marcelgross.lecturer_lib.specific.model;
 
-import de.marcelgross.lecturer_lib.model.Link;
-import de.marcelgross.lecturer_lib.model.Resource;
+import de.marcelgross.lecturer_lib.generic.model.Link;
+import de.marcelgross.lecturer_lib.generic.model.Resource;
 
 @SuppressWarnings("unused")
 public class Lecturer implements Resource {

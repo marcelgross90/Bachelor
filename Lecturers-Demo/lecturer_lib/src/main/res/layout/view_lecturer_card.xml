@@ -9,7 +9,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<de.marcelgross.lecturer_lib.customView.ProfileImageView
+		<de.marcelgross.lecturer_lib.generic.customView.ProfileImageView
 			android:id="@+id/profileImg"
 			android:contentDescription="@string/profile_picture"
 			android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
 			android:layout_toRightOf="@+id/profileImg"
 			android:background="@color/colorPrimary"/>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:id="@+id/title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
 			android:layout_toEndOf="@+id/border"
 			android:layout_toRightOf="@+id/border"/>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:id="@+id/name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
 			android:layout_toRightOf="@+id/border"
 			android:textSize="18sp"/>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:id="@+id/email"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_email"/>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:id="@+id/phone"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_phone"/>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:id="@+id/address"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_home"/>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:id="@+id/room"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
 			android:drawablePadding="@dimen/spacing_small"
 			android:drawableStart="@drawable/ic_location"/>
 
-		<de.marcelgross.lecturer_lib.customView.AttributeView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:id="@+id/welearn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

@@ -6,13 +6,13 @@ import android.net.Uri;
 import android.view.View;
 
 import de.marcelgross.lecturer_lib.R;
-import de.marcelgross.lecturer_lib.adapter.ResourceListAdapter;
+import de.marcelgross.lecturer_lib.generic.adapter.ResourceListAdapter;
 import de.marcelgross.lecturer_lib.specific.customView.LecturerCardView;
-import de.marcelgross.lecturer_lib.customView.AttributeView;
-import de.marcelgross.lecturer_lib.customView.ProfileImageView;
+import de.marcelgross.lecturer_lib.generic.customView.AttributeView;
+import de.marcelgross.lecturer_lib.generic.customView.ProfileImageView;
 import de.marcelgross.lecturer_lib.specific.model.Lecturer;
-import de.marcelgross.lecturer_lib.model.Resource;
-import de.marcelgross.lecturer_lib.viewholder.ResourceViewHolder;
+import de.marcelgross.lecturer_lib.generic.model.Resource;
+import de.marcelgross.lecturer_lib.generic.viewholder.ResourceViewHolder;
 
 public class LecturerListViewHolder extends ResourceViewHolder implements View.OnClickListener {
 

@@ -2,8 +2,7 @@
 	<string name="app_name">Lecturers</string>
 	<string name="first_name">Firstname</string>
 	<string name="last_name">Lastname</string>
-	<string name="add">Add</string>
-	<string name="save">Save</string>
+
 
 
 	<string name="edit">Edit</string>
@@ -12,10 +11,6 @@
 	<string name="charge_updated">Charge updated!</string>
 	<string name="lecturer_saved">Lecturer saved!</string>
 	<string name="charge_saved">Charge saved!</string>
-
-	<string name="delete_dialog_title">Delete %s?</string>
-	<string name="ok">OK</string>
-	<string name="cancel">Cancel</string>
 
 	<string name="load_lecturer_error">Could not load lecturers</string>
 	<string name="load__charges_error">Could not load charges</string>

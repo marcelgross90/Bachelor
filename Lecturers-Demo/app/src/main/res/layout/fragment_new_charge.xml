@@ -2,7 +2,7 @@
 			 xmlns:tools="http://schemas.android.com/tools"
 			 android:layout_width="match_parent"
 			 android:layout_height="match_parent"
-			 tools:context="de.fiw.fhws.lecturers.specific.fragment.NewChargeFragment">
+			 tools:context=".fragment.NewChargeFragment">
 
 	<de.marcelgross.lecturer_lib.specific.customView.ChargeInputView
 		android:id="@+id/input_view"

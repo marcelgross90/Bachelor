@@ -2,7 +2,7 @@
 			 xmlns:tools="http://schemas.android.com/tools"
 			 android:layout_width="match_parent"
 			 android:layout_height="match_parent"
-			 tools:context="de.fiw.fhws.lecturers.specific.fragment.EditLecturerFragment">
+			 tools:context=".fragment.EditLecturerFragment">
 
 	<de.marcelgross.lecturer_lib.specific.customView.LecturerInputView
 		android:id="@+id/lecturer_input"

@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.specific.customView.LecturerDetailContactCardView;
-import de.marcelgross.lecturer_lib.customView.AttributeView;
+import de.marcelgross.lecturer_lib.generic.customView.AttributeView;
 import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 
 public class LecturerDetailViewHolderContact extends RecyclerView.ViewHolder {
