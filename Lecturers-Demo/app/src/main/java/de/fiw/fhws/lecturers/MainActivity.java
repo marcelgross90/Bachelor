@@ -13,4 +13,8 @@ public class MainActivity extends AbstractMainActivity {
 	}
 
 
+	@Override
+	protected int getLoadErrorMessage() {
+		return R.string.load_lecturer_error;
+	}
 }

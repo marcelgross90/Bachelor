@@ -54,7 +54,7 @@ public class ChargeListFragment extends ResourceListFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						Toast.makeText(getActivity(), R.string.load__charges_error, Toast.LENGTH_SHORT).show();
+						Toast.makeText(getActivity(), R.string.load_charges_error, Toast.LENGTH_SHORT).show();
 					}
 				});
 			}

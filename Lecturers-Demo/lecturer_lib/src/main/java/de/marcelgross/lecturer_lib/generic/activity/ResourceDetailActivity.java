@@ -70,7 +70,7 @@ public abstract class ResourceDetailActivity extends AppCompatActivity implement
 
 		setUpToolbar();
 
-		loadLecturer();
+		loadResource();
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public abstract class ResourceDetailActivity extends AppCompatActivity implement
 		setTitle(extractTitleFromIntent(getIntent()));
 	}
 
-	private void loadLecturer() {
+	private void loadResource() {
 		Intent intent = getIntent();
 		String selfUrl = intent.getExtras().getString("selfUrl", "");
 		String mediaType = intent.getExtras().getString("mediaType", "");

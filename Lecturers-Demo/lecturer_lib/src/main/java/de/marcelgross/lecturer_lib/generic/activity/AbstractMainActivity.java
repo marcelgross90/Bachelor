@@ -23,6 +23,7 @@ import static de.marcelgross.lecturer_lib.generic.util.FragmentHandler.replaceFr
 public abstract class AbstractMainActivity extends AppCompatActivity {
 
 	protected abstract Fragment getStartFragment();
+	protected abstract int getLoadErrorMessage();
 
 	private FragmentManager fragmentManager;
 
@@ -64,7 +65,7 @@ public abstract class AbstractMainActivity extends AppCompatActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						Toast.makeText(AbstractMainActivity.this, R.string.load_lecturer_error, Toast.LENGTH_SHORT).show();
+						Toast.makeText(AbstractMainActivity.this, getLoadErrorMessage(), Toast.LENGTH_SHORT).show();
 					}
 				});
 			}
@@ -74,10 +75,10 @@ public abstract class AbstractMainActivity extends AppCompatActivity {
 
 				Map<String, Link> linkHeader = response.getLinkHeader();
 
-				Link allLecturersLink = linkHeader.get(getResources().getString(R.string.rel_type_get_all_lecturers));
+				Link allResourcesLink = linkHeader.get(getResources().getString(R.string.rel_type_get_all_lecturers));
 				Bundle bundle = new Bundle();
-				bundle.putString("url", allLecturersLink.getHrefWithoutQueryParams());
-				bundle.putString("mediaType", allLecturersLink.getType());
+				bundle.putString("url", allResourcesLink.getHrefWithoutQueryParams());
+				bundle.putString("mediaType", allResourcesLink.getType());
 				Fragment fragment = getStartFragment();
 				fragment.setArguments(bundle);
 				replaceFragment(fragmentManager, fragment);

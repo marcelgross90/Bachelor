@@ -40,7 +40,7 @@
 	<string name="cancel">Cancel</string>
 
 	<string name="load_lecturer_error">Could not load lecturers</string>
-	<string name="load__charges_error">Could not load charges</string>
+	<string name="load_charges_error">Could not load charges</string>
 	<string name="lecturer_delete_error">Could not delete lecturer</string>
 	<string name="charge_delete_error">Could not delete charge</string>
 
