@@ -5,10 +5,9 @@
 		<attr name="hintText" format="integer"/>
 		<attr name="inputType" format="string"/>
 	</declare-styleable>
+	<declare-styleable name="DateTimeView"/>
 
 	<declare-styleable name="ProfileImageView"/>
-
-	<declare-styleable name="DateTimeView"/>
 
 	<declare-styleable name="LecturerCardView" />
 	<declare-styleable name="ChargeCardView"/>

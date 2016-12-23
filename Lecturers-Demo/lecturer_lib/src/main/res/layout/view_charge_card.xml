@@ -9,7 +9,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/spacing_medium">
 
-		<TextView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/card_caption_charge"
@@ -27,7 +27,7 @@
 			android:layout_marginRight="@dimen/spacing_medium" />
 
 
-		<TextView
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
 			android:layout_below="@+id/separator"
 			android:text="@string/card_caption_charge"
 			android:layout_width="match_parent"
