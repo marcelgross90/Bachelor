@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.Toast;
 
 import com.owlike.genson.GenericType;
 
@@ -55,7 +56,12 @@ public class LecturerListFragment extends ResourceListFragment {
 		return new NetworkCallback() {
 			@Override
 			public void onFailure() {
-
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getActivity(), R.string.load_lecturer_error, Toast.LENGTH_SHORT).show();
+					}
+				});
 			}
 
 			@Override

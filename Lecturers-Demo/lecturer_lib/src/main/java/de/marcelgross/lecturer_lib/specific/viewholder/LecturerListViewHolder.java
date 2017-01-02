@@ -16,17 +16,17 @@ import de.marcelgross.lecturer_lib.generic.viewholder.ResourceViewHolder;
 
 public class LecturerListViewHolder extends ResourceViewHolder implements View.OnClickListener {
 
-	private Lecturer lecturer;
-	private final Context context;
+	private final LecturerCardView cardView;
 	private final ResourceListAdapter.OnResourceClickListener onLecturerClickListener;
 
-	private final LecturerCardView cardView;
+	private final ProfileImageView profileImg;
+
+	private Lecturer lecturer;
+	private final Context context;
 	private final AttributeView email;
 	private final AttributeView phone;
 	private final AttributeView address;
 	private final AttributeView welearn;
-
-	private final ProfileImageView profileImg;
 
 	@Override
 	public void onClick(View view) {
@@ -54,22 +54,22 @@ public class LecturerListViewHolder extends ResourceViewHolder implements View.O
 
 	public LecturerListViewHolder(View itemView, ResourceListAdapter.OnResourceClickListener onLecturerClickListener) {
 		super(itemView);
-		this.context = itemView.getContext();
 		this.onLecturerClickListener = onLecturerClickListener;
 		cardView = (LecturerCardView) itemView.findViewById(R.id.lecturer_card);
 
+		profileImg = (ProfileImageView) itemView.findViewById(R.id.profileImg);
+
+		this.context = itemView.getContext();
 		email = (AttributeView) itemView.findViewById(R.id.email);
 		phone = (AttributeView) itemView.findViewById(R.id.phone);
 		address = (AttributeView) itemView.findViewById(R.id.address);
 		welearn = (AttributeView) itemView.findViewById(R.id.welearn);
 
-		profileImg = (ProfileImageView) itemView.findViewById(R.id.profileImg);
 	}
 
 	@Override
 	public void assignData(final Resource resource) {
 		final Lecturer lecturer = (Lecturer) resource;
-		this.lecturer = lecturer;
 		cardView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -82,6 +82,7 @@ public class LecturerListViewHolder extends ResourceViewHolder implements View.O
 
 		cardView.setUpView(lecturer);
 
+		this.lecturer = lecturer;
 		email.setOnClickListener(this);
 		phone.setOnClickListener(this);
 		address.setOnClickListener(this);
