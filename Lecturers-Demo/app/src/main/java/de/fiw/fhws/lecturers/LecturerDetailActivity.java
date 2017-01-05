@@ -113,7 +113,7 @@ public class LecturerDetailActivity extends ResourceDetailActivity implements Vi
 
 			case R.id.tvWebsiteValue:
 				Intent intent2 = new Intent(Intent.ACTION_VIEW);
-				intent2.setData(Uri.parse(currentLecturer.getUrlWelearn()));
+				intent2.setData(Uri.parse(currentLecturer.getHomepage().getHref()));
 				startActivity(intent2);
 				break;
 
@@ -133,7 +133,7 @@ public class LecturerDetailActivity extends ResourceDetailActivity implements Vi
 				break;
 
 			case R.id.welearn:
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentLecturer.getUrlWelearn()));
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentLecturer.getHomepage().getHref()));
 				startActivity(browserIntent);
 				break;
 		}

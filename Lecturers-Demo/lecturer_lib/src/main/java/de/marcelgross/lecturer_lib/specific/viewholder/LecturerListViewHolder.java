@@ -47,7 +47,7 @@ public class LecturerListViewHolder extends ResourceViewHolder implements View.O
 			context.startActivity(mapIntent);
 
 		} else if (i == R.id.welearn) {
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(lecturer.getUrlWelearn()));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(lecturer.getHomepage().getHref()));
 			context.startActivity(browserIntent);
 		}
 	}

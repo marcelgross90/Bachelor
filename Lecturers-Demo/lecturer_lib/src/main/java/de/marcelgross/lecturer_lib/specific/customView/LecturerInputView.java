@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.generic.customView.AttributeInput;
 import de.marcelgross.lecturer_lib.generic.customView.ResourceInputView;
+import de.marcelgross.lecturer_lib.generic.model.Link;
 import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 import de.marcelgross.lecturer_lib.generic.model.Resource;
 
@@ -42,7 +43,7 @@ public class LecturerInputView extends ResourceInputView {
 		phoneInput.setText(lecturer.getPhone());
 		roomInput.setText(lecturer.getRoomNumber());
 		addressInput.setText(lecturer.getAddress());
-		welearnInput.setText(lecturer.getUrlWelearn());
+		welearnInput.setText(lecturer.getHomepage().getHref());
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class LecturerInputView extends ResourceInputView {
 		String phoneNumberString = phoneInput.getText();
 		String addressString = addressInput.getText();
 		String roomString = roomInput.getText();
-		String welearnString = welearnInput.getText();
+		String homepageString = welearnInput.getText();
 
 		if (titleString.isEmpty()) {
 			titleInput.setError(context.getString(R.string.title_missing));
@@ -85,7 +86,7 @@ public class LecturerInputView extends ResourceInputView {
 			roomInput.setError(context.getString(R.string.room_missing));
 			error = true;
 		}
-		if (welearnString.isEmpty()) {
+		if (homepageString.isEmpty()) {
 			welearnInput.setError(context.getString(R.string.welearn_missing));
 			error = true;
 		}
@@ -99,7 +100,8 @@ public class LecturerInputView extends ResourceInputView {
 			currentLecturer.setPhone(phoneNumberString);
 			currentLecturer.setAddress(addressString);
 			currentLecturer.setRoomNumber(roomString);
-			currentLecturer.setUrlWelearn(welearnString);
+			Link homepage = new Link(homepageString, "homepage", "text/html");
+			currentLecturer.setHomepage(homepage);
 			return currentLecturer;
 		}
 		return null;

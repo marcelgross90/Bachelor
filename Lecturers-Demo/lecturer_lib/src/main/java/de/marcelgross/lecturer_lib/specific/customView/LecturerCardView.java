@@ -82,7 +82,7 @@ public class LecturerCardView extends ResourceCardView {
 		} else {
 			phoneView.setVisibility(View.VISIBLE);
 		}
-		if (lecturer.getUrlWelearn().trim().isEmpty()) {
+		if (lecturer.getHomepage() == null) {
 			welearnView.setVisibility(View.GONE);
 		} else {
 			welearnView.setVisibility(View.VISIBLE);

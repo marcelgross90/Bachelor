@@ -14,7 +14,7 @@ public class Lecturer implements Resource {
 	private String phone;
 	private String roomNumber;
 	private String address;
-	private String urlWelearn;
+	private Link homepage;
 	private Link profileImageUrl;
 	private Link self;
 	private Link chargeUrl;
@@ -23,7 +23,7 @@ public class Lecturer implements Resource {
 		//for genson
 	}
 
-	public Lecturer(int id, String title, String firstName, String lastName, String email, String phone, String roomNumber, String address, String urlWelearn, Link profileImageUrl, Link self, Link chargeUrl) {
+	public Lecturer(int id, String title, String firstName, String lastName, String email, String phone, String roomNumber, String address, Link homepage, Link profileImageUrl, Link self, Link chargeUrl) {
 		this.id = id;
 		this.title = title;
 		this.firstName = firstName;
@@ -32,7 +32,7 @@ public class Lecturer implements Resource {
 		this.phone = phone;
 		this.roomNumber = roomNumber;
 		this.address = address;
-		this.urlWelearn = urlWelearn;
+		this.homepage = homepage;
 		this.profileImageUrl = profileImageUrl;
 		this.self = self;
 		this.chargeUrl = chargeUrl;
@@ -102,12 +102,12 @@ public class Lecturer implements Resource {
 		this.address = address;
 	}
 
-	public String getUrlWelearn() {
-		return urlWelearn;
+	public Link getHomepage() {
+		return homepage;
 	}
 
-	public void setUrlWelearn(String urlWelearn) {
-		this.urlWelearn = urlWelearn;
+	public void setHomepage(Link homepage) {
+		this.homepage = homepage;
 	}
 
 	public Link getProfileImageUrl() {
@@ -153,7 +153,7 @@ public class Lecturer implements Resource {
 			return false;
 		if (address != null ? !address.equals(lecturer.address) : lecturer.address != null)
 			return false;
-		if (urlWelearn != null ? !urlWelearn.equals(lecturer.urlWelearn) : lecturer.urlWelearn != null)
+		if (homepage != null ? !homepage.equals(lecturer.homepage) : lecturer.homepage != null)
 			return false;
 		if (profileImageUrl != null ? !profileImageUrl.equals(lecturer.profileImageUrl) : lecturer.profileImageUrl != null)
 			return false;
@@ -172,7 +172,7 @@ public class Lecturer implements Resource {
 		result = 31 * result + (phone != null ? phone.hashCode() : 0);
 		result = 31 * result + (roomNumber != null ? roomNumber.hashCode() : 0);
 		result = 31 * result + (address != null ? address.hashCode() : 0);
-		result = 31 * result + (urlWelearn != null ? urlWelearn.hashCode() : 0);
+		result = 31 * result + (homepage != null ? homepage.hashCode() : 0);
 		result = 31 * result + (profileImageUrl != null ? profileImageUrl.hashCode() : 0);
 		result = 31 * result + (self != null ? self.hashCode() : 0);
 		result = 31 * result + (chargeUrl != null ? chargeUrl.hashCode() : 0);
