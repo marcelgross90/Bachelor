@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 
 import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.specific.model.Lecturer;
-import de.marcelgross.lecturer_lib.specific.viewholder.LecturerDetailViewHolderContact;
-import de.marcelgross.lecturer_lib.specific.viewholder.LecturerDetailViewHolderOffice;
+import de.marcelgross.lecturer_lib.specific.viewholder.LecturerDetailViewHolder;
 
 
 public class LecturerDetailAdapter extends RecyclerView.Adapter {
@@ -29,14 +28,9 @@ public class LecturerDetailAdapter extends RecyclerView.Adapter {
 		RecyclerView.ViewHolder result = null;
 
 		if (viewType == 0) {
-			int layout = R.layout.card_lecturer_detail_office;
+			int layout = R.layout.card_lecturer_detail;
 			View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
-			result = new LecturerDetailViewHolderOffice(v, listener);
-		} else if (viewType == 1) {
-			int layout = R.layout.card_lecturer_detail_contact;
-
-			View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
-			result = new LecturerDetailViewHolderContact(v, listener);
+			result = new LecturerDetailViewHolder(v, listener);
 		}
 		return result;
 	}
@@ -44,18 +38,14 @@ public class LecturerDetailAdapter extends RecyclerView.Adapter {
 	@Override
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		if (position == 0) {
-			LecturerDetailViewHolderOffice viewHolder = (LecturerDetailViewHolderOffice) holder;
+			LecturerDetailViewHolder viewHolder = (LecturerDetailViewHolder) holder;
 			viewHolder.assignData(lecturer);
-		} else if (position == 1) {
-			LecturerDetailViewHolderContact viewHolder = (LecturerDetailViewHolderContact) holder;
-			if (viewHolder != null)
-				viewHolder.assignLecturer(lecturer);
 		}
 	}
 
 	@Override
 	public int getItemCount() {
-		return 2;
+		return 1;
 	}
 
 	@Override

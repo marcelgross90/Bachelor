@@ -14,8 +14,7 @@
 
 	<declare-styleable name="ChargeDetailView" />
 	<declare-styleable name="LecturerDetailView" />
-	<declare-styleable name="LecturerDetailContactCardView"/>
-	<declare-styleable name="LecturerDetailOfficeCardView"/>
+	<declare-styleable name="LecturerDetailCardView"/>
 
 	<declare-styleable name="LecturerInputView" />
 	<declare-styleable name="ChargeInputView" />

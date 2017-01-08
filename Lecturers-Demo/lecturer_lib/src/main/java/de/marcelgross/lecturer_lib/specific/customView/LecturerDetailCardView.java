@@ -11,35 +11,41 @@ import de.marcelgross.lecturer_lib.R;
 import de.marcelgross.lecturer_lib.generic.customView.AttributeView;
 import de.marcelgross.lecturer_lib.specific.model.Lecturer;
 
-public class LecturerDetailOfficeCardView extends CardView {
+public class LecturerDetailCardView extends CardView {
 
 	private AttributeView roomView;
 	private AttributeView addressView;
+	private AttributeView mailView;
+	private AttributeView phoneView;
+	private AttributeView welearnView;
 
-	public LecturerDetailOfficeCardView(Context context) {
+	public LecturerDetailCardView(Context context) {
 		super(context);
 		init(context, null, 0);
 	}
 
-	public LecturerDetailOfficeCardView(Context context, AttributeSet attrs) {
+	public LecturerDetailCardView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context, attrs, 0);
 	}
 
-	public LecturerDetailOfficeCardView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public LecturerDetailCardView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		init(context, attrs, defStyleAttr);
 	}
 
 	private void init(Context context, AttributeSet attributeSet, int defStyle) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.addView(inflater.inflate(R.layout.view_lecturer_detail_office_card, this, false));
+		this.addView(inflater.inflate(R.layout.view_lecturer_detail_card, this, false));
 
-		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerDetailOfficeCardView, defStyle, 0);
+		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LecturerDetailCardView, defStyle, 0);
 		try {
 
 			roomView = (AttributeView) findViewById(R.id.tvRoomValue);
 			addressView = (AttributeView) findViewById(R.id.tvAddressValue);
+			mailView = (AttributeView) findViewById(R.id.tvEmailValue);
+			phoneView = (AttributeView) findViewById(R.id.tvPhoneValue);
+			welearnView = (AttributeView) findViewById(R.id.tvWebsiteValue);
 
 		} finally {
 			typedArray.recycle();
@@ -50,6 +56,9 @@ public class LecturerDetailOfficeCardView extends CardView {
 		hideUnnecessaryViews(lecturer);
 		roomView.setText(lecturer.getRoomNumber());
 		addressView.setText(lecturer.getAddress());
+		mailView.setText(lecturer.getEmail());
+		phoneView.setText(lecturer.getPhone());
+		welearnView.setText(getResources().getText(R.string.welearn));
 	}
 
 	private void hideUnnecessaryViews(Lecturer lecturer) {
@@ -57,6 +66,16 @@ public class LecturerDetailOfficeCardView extends CardView {
 			roomView.setVisibility(View.GONE);
 		} else {
 			roomView.setVisibility(View.VISIBLE);
+		}
+		if (lecturer.getPhone().trim().isEmpty()) {
+			phoneView.setVisibility(View.GONE);
+		} else {
+			phoneView.setVisibility(View.VISIBLE);
+		}
+		if (lecturer.getHomepage() == null) {
+			welearnView.setVisibility(View.GONE);
+		} else {
+			welearnView.setVisibility(View.VISIBLE);
 		}
 	}
 }

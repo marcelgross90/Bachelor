@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.marcelgross.lecturer_lib.generic.fragment.ResourceListFragment;
 import de.fiw.fhws.lecturers.LecturerDetailActivity;
 import de.fiw.fhws.lecturers.R;
+import de.marcelgross.lecturer_lib.generic.adapter.ResourceListAdapter;
+import de.marcelgross.lecturer_lib.generic.fragment.ResourceListFragment;
+import de.marcelgross.lecturer_lib.generic.model.Link;
+import de.marcelgross.lecturer_lib.generic.model.Resource;
 import de.marcelgross.lecturer_lib.generic.network.NetworkCallback;
 import de.marcelgross.lecturer_lib.generic.network.NetworkResponse;
 import de.marcelgross.lecturer_lib.specific.adapter.LecturerListAdapter;
-import de.marcelgross.lecturer_lib.generic.adapter.ResourceListAdapter;
 import de.marcelgross.lecturer_lib.specific.model.Lecturer;
-import de.marcelgross.lecturer_lib.generic.model.Link;
-import de.marcelgross.lecturer_lib.generic.model.Resource;
 
 public class LecturerListFragment extends ResourceListFragment {
 
