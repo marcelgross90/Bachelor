@@ -36,7 +36,7 @@ public class LecturerListFragment extends ResourceListFragment {
 		intent.putExtra("mediaType", lecturer.getSelf().getType());
 		intent.putExtra("fullName", lecturer.getFirstName() + " " + lecturer.getLastName());
 
-		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			ActivityOptions options = ActivityOptions
 					.makeSceneTransitionAnimation(getActivity(), view, "pic");
 			getActivity().startActivity(intent, options.toBundle());

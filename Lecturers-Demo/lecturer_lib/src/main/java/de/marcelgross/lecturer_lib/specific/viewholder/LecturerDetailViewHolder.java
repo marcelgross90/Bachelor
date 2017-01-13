@@ -17,7 +17,7 @@ public class LecturerDetailViewHolder extends RecyclerView.ViewHolder {
 	public LecturerDetailViewHolder(View itemView, View.OnClickListener listener) {
 		super(itemView);
 
-		this.lecturerDetailCardView = (LecturerDetailCardView) itemView.findViewById(R.id.office_card);
+		this.lecturerDetailCardView = (LecturerDetailCardView) itemView.findViewById(R.id.lecturer_detail_card);
 		AttributeView address = (AttributeView) itemView.findViewById(R.id.tvAddressValue);
 		AttributeView email = (AttributeView) itemView.findViewById(R.id.tvEmailValue);
 		AttributeView phone = (AttributeView) itemView.findViewById(R.id.tvPhoneValue);
