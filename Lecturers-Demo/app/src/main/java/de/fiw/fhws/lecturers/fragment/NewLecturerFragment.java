@@ -13,7 +13,7 @@ import de.marcelgross.lecturer_lib.specific.customView.LecturerInputView;
 public class NewLecturerFragment extends NewResourceFragment {
 	@Override
 	protected int getLayout() {
-		return R.layout.fragment_lecturer_input;
+		return R.layout.fragment_new_lecturer;
 	}
 
 	@Override
