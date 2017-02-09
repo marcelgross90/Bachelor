@@ -1,5 +1,6 @@
 <resources>
 	<string name="app_name">lecturer_lib</string>
+
 	<string name="welearn">welearn</string>
 	<string name="title">Title</string>
 	<string name="first_name">Firstname</string>
@@ -8,6 +9,8 @@
 	<string name="phone_number">Phone Number</string>
 	<string name="address">Address</string>
 	<string name="room">Room</string>
+	<string name="profile_picture">Profile picture</string>
+
 
 	<string name="card_caption_contact">Contact</string>
 	<string name="card_caption_email">E-Mail</string>
@@ -17,7 +20,6 @@
 	<string name="card_caption_room">Room</string>
 	<string name="card_caption_address">Address</string>
 	<string name="card_caption_charge">Charge</string>
-	<string name="profile_picture">Profile picture</string>
 	<string name="show_charges">Show charges</string>
 
 	<string name="title_missing">Title is missing!</string>
@@ -28,8 +30,6 @@
 	<string name="address_missing">Address is missing!</string>
 	<string name="room_missing">Roomnumber is missing!</string>
 	<string name="welearn_missing">Welearn-Address is missing!</string>
-	<string name="lecturer_updated">Lecturer updated!</string>
-	<string name="lecturer_saved">Lecturer saved!</string>
 
 	<string name="full_name">Fullname</string>
 	<string name="start_date">Start Date</string>
@@ -43,6 +43,11 @@
 	<string name="load_charges_error">Could not load charges</string>
 	<string name="lecturer_delete_error">Could not delete lecturer</string>
 	<string name="charge_delete_error">Could not delete charge</string>
+
+	<string name="lecturer_updated">Lecturer updated!</string>
+	<string name="charge_updated">Charge updated!</string>
+	<string name="lecturer_saved">Lecturer saved!</string>
+	<string name="charge_saved">Charge saved!</string>
 
 	<string name="add">Add</string>
 	<string name="save">Save</string>
