@@ -1,98 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-									xmlns:app="http://schemas.android.com/apk/res-auto"
-									style="@style/cardView"
-									app:cardPreventCornerOverlap="false">
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/relativeLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-	<RelativeLayout
-		android:id="@+id/relativeLayout"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+	<de.marcelgross.lecturer_lib.generic.customView.ProfileImageView
+		android:id="@+id/profileImg"
+		android:layout_width="wrap_content"
+		android:layout_height="@dimen/picture_height"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true"
+		android:layout_alignParentTop="true"
+		android:contentDescription="@string/profile_picture"
+		android:minWidth="@dimen/picture_width"
+		/>
 
-		<de.marcelgross.lecturer_lib.generic.customView.ProfileImageView
-			android:id="@+id/profileImg"
-			android:contentDescription="@string/profile_picture"
+	<View
+		android:id="@+id/border"
+		android:layout_width="@dimen/spacing_small"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/profileImg"
+		android:layout_alignTop="@+id/profileImg"
+		android:layout_marginEnd="@dimen/spacing_small"
+		android:layout_marginRight="@dimen/spacing_small"
+		android:layout_toEndOf="@+id/profileImg"
+		android:layout_toRightOf="@+id/profileImg"
+		android:background="@color/colorPrimary"/>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_toEndOf="@+id/border"
+		android:layout_toRightOf="@+id/border"
+		android:orientation="vertical">
+
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
+			android:id="@+id/title"
 			android:layout_width="wrap_content"
-			android:layout_height="@dimen/picture_height"
-			android:layout_alignParentLeft="true"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentTop="true"
-			android:minWidth="@dimen/picture_width"
-			/>
+			android:layout_height="wrap_content"/>
 
-		<View
-			android:id="@+id/border"
-			android:layout_width="@dimen/spacing_small"
-			android:layout_height="wrap_content"
-			android:layout_alignBottom="@+id/profileImg"
-			android:layout_alignTop="@+id/profileImg"
-			android:layout_marginEnd="@dimen/spacing_small"
-			android:layout_marginRight="@dimen/spacing_small"
-			android:layout_toEndOf="@+id/profileImg"
-			android:layout_toRightOf="@+id/profileImg"
-			android:background="@color/colorPrimary"/>
-
-		<LinearLayout
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
+			android:id="@+id/name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:layout_alignParentTop="true"
-			android:layout_toEndOf="@+id/border"
-			android:layout_toRightOf="@+id/border">
+			android:textSize="18sp"/>
 
-			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
-				android:id="@+id/title"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"/>
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
+			android:id="@+id/email"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@drawable/ic_email"
+			android:drawablePadding="@dimen/spacing_small"
+			android:drawableStart="@drawable/ic_email"/>
 
-			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
-				android:id="@+id/name"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="18sp"/>
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
+			android:id="@+id/phone"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@drawable/ic_phone"
+			android:drawablePadding="@dimen/spacing_small"
+			android:drawableStart="@drawable/ic_phone"/>
 
-			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
-				android:id="@+id/email"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:drawableLeft="@drawable/ic_email"
-				android:drawablePadding="@dimen/spacing_small"
-				android:drawableStart="@drawable/ic_email"/>
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
+			android:id="@+id/address"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@drawable/ic_home"
+			android:drawablePadding="@dimen/spacing_small"
+			android:drawableStart="@drawable/ic_home"/>
 
-			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
-				android:id="@+id/phone"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:drawableLeft="@drawable/ic_phone"
-				android:drawablePadding="@dimen/spacing_small"
-				android:drawableStart="@drawable/ic_phone"/>
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
+			android:id="@+id/room"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@drawable/ic_location"
+			android:drawablePadding="@dimen/spacing_small"
+			android:drawableStart="@drawable/ic_location"/>
 
-			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
-				android:id="@+id/address"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:drawableLeft="@drawable/ic_home"
-				android:drawablePadding="@dimen/spacing_small"
-				android:drawableStart="@drawable/ic_home"/>
+		<de.marcelgross.lecturer_lib.generic.customView.AttributeView
+			android:id="@+id/welearn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@drawable/ic_open_in_browser"
+			android:drawablePadding="@dimen/spacing_small"
+			android:drawableStart="@drawable/ic_open_in_browser"/>
 
-			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
-				android:id="@+id/room"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:drawableLeft="@drawable/ic_location"
-				android:drawablePadding="@dimen/spacing_small"
-				android:drawableStart="@drawable/ic_location"/>
+	</LinearLayout>
 
-			<de.marcelgross.lecturer_lib.generic.customView.AttributeView
-				android:id="@+id/welearn"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:drawableLeft="@drawable/ic_open_in_browser"
-				android:drawablePadding="@dimen/spacing_small"
-				android:drawableStart="@drawable/ic_open_in_browser"/>
-
-		</LinearLayout>
-
-	</RelativeLayout>
-
-</android.support.v7.widget.CardView>
+</RelativeLayout>
