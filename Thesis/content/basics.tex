@@ -1,6 +1,6 @@
 \chapter{Grundlagen}\label{ch:basics}
 \section{\acf{rest}}\label{sec:rest}
-In dem generierten Projekt, sollen alle benötigten Inforamtionen mittels \ac{rest} von dem zugehörigen, generierten Backend geladen werden. 
+In dem generierten Projekt, sollen alle benötigten Daten mittels \ac{rest} von dem zugehörigen, generierten Backend geladen werden. 
 
 \ac{rest} \cite{rest_fielding} ist ein Programmierparadigma, welches sich auf folgende Prinzipien stützt:
 
@@ -22,7 +22,7 @@ Der Architekt einer \ac{rest}-konformen \acf{api} überlegt sich im vorraus, wie
 Als ein State kann beispielsweise das Anzeigen aller Lecturer in einer Campus-Applikation angesehen werden.
 Die Transition hingegen ist zum Beispiel ein Link im Link-Header der Antwort, oder ein Attribut, der empfangen Ressource. 
 
-Wird das \ac{api} mit Hilfe eines endlichen Automaten entwickelt, kann diese dem Client-Entwickler als Anleitung zum erstellen seines Clients dienen. Er benötigt lediglich einen \acf{url}, welche auf den initialen State des endlichen Automaten führt. Dieser liefert dann alle, zu diesem Zeitpunkt möglichen, Transitionen zurück. Mit Hilfe dieser Transaktionen, kann sich der Entwickler dann zum nächsten State bewegen. Auch dieser State liefert alle möglichen weiteren Transaktionen zurück. 
+Wird das \ac{api} mit Hilfe eines endlichen Automaten entwickelt, kann diese dem Client-Entwickler als Anleitung zum erstellen seines Clients dienen. Er benötigt lediglich einen \acf{url}, welcher auf den initialen State des endlichen Automaten führt. Dieser liefert dann alle, zu diesem Zeitpunkt möglichen, Transitionen zurück. Mit Hilfe dieser Transitionen, kann sich der Entwickler dann zum nächsten State bewegen. Auch dieser State liefert neben den Ressourcen, alle möglichen weiteren Transaktionen zurück. 
 Wenn der Entwickler sich so durch die States bewegt, bekommt er die benötigten Informationen zum Aufbau und Ablauf der Applikation.
 
 Die Abbildung \ref{finite_state_machine} zeigt einen solchen Automaten. Der Einstiegspunkt ist der State \enquote{Dispatcher} dieser liefert die Tansition zum State \enquote{Collection} zurück. Dieser State, verfügt über alle Informationen die benötigt werden um eine Collection der betroffenen Ressource anzuzeigen, weiterhin verfügt er auch das Wissen, über die beiden nächsten Transitionen zu den States \enquote{Create} und \enquote{Single}. Wie der Name des States annehmen lässt, wird der State \enquote{Create} benötigt um eine neue Ressource anzulegen. Von diesem State aus kann die Anwendung nur zurück zum State \enquote{Collection}. Der State \enquote{Single} enthält alle benötigten Daten um eine einzelne Ressource anzuzeigen. Vom hier kann die Anwendung zum State \enquote{Update} oder \enquote{Delete} wechseln. Der State \enquote{Update} ermöglicht es die Ressource zu bearbeiten. Von hier kann der Nutzer der Anwendung nur zum State \enquote{Single} zurückkehren. Der State \enquote{Delete} löscht die aktuelle Ressource und liefert die Transition zum State \enquote{Collection} zurück. 
@@ -59,6 +59,9 @@ Dieses Beispiel verdeutlich nocheinmal bildlich, das der Entwickler nur den Eins
 \end{figure}
 
 \section{Android}\label{sec:android}
+Android ist eine auf Linux basierende Software-Plattform, welches als Betriebsystem für mobile Endgeräte genutzt wird. Das System wird als Open Source Projekt von der Open Handset Alliance entwickelt \cite{open_handset_alliance}.
+
+Programme für diese Plattfrom nennt man Applikationen oder kurz Apps. Eine App stellt alle nötigen Sourcen bereit, zum Beispiel den Programmcode, Layout und Grafiken, die benötigt werden, um diese App auf einem Android-Endgerät auszuführen.
 \subsection{Custom Views}
 Noch mehr Text
 
