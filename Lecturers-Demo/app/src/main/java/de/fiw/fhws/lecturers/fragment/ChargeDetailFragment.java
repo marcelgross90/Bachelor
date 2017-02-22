@@ -41,7 +41,7 @@ public class ChargeDetailFragment extends DetailResourceFragment {
 		Charge charge = (Charge) currentResource;
 		Bundle bundle = new Bundle();
 		bundle.putString("name", charge.getTitle());
-		return null;
+		return bundle;
 	}
 
 	@Override

@@ -10,14 +10,14 @@ import java.util.Date;
 import java.util.Map;
 
 import de.fiw.fhws.lecturers.R;
+import de.marcelgross.lecturer_lib.generic.customView.DateTimeView;
+import de.marcelgross.lecturer_lib.generic.fragment.DateTimePickerFragment;
 import de.marcelgross.lecturer_lib.generic.fragment.NewResourceFragment;
+import de.marcelgross.lecturer_lib.generic.model.Link;
 import de.marcelgross.lecturer_lib.generic.network.NetworkCallback;
 import de.marcelgross.lecturer_lib.generic.network.NetworkResponse;
 import de.marcelgross.lecturer_lib.generic.util.FragmentHandler;
 import de.marcelgross.lecturer_lib.specific.customView.ChargeInputView;
-import de.marcelgross.lecturer_lib.generic.customView.DateTimeView;
-import de.marcelgross.lecturer_lib.generic.fragment.DateTimePickerFragment;
-import de.marcelgross.lecturer_lib.generic.model.Link;
 
 public class NewChargeFragment extends NewResourceFragment implements View.OnClickListener, DateTimePickerFragment.OnDateTimeSetListener {
 	private DateTimeView startDateView;

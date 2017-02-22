@@ -1,12 +1,7 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			 xmlns:tools="http://schemas.android.com/tools"
-			 android:layout_width="match_parent"
-			 android:layout_height="match_parent"
-			 tools:context=".fragment.ChargeDetailFragment">
+<de.marcelgross.lecturer_lib.specific.customView.ChargeDetailView
+	android:id="@+id/charge_detail_view"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"/>
 
-	<de.marcelgross.lecturer_lib.specific.customView.ChargeDetailView
-		android:id="@+id/charge_detail_view"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
 
-</FrameLayout>
