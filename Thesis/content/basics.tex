@@ -173,5 +173,21 @@ public void setPerson(Person person) {
 
 Mit Hilfe dieser Methode wird die Nutztung der PersonCardView vereinfacht. Im Adapter der RecyclerView wird jetzt nicht mehr jedes einezelne Widget definiert und mit Informationen befüllt. Sondern nur noch die PersonCardView und mit der \enquote{setPerson} - Methode kann die komplette Karte mit den Daten einer Peron mit nur einem Methodenaufruf befüllt werden.
 
-\section{Generatoren}\label{sec:generators}
+\section{Software-Generatoren}\label{sec:generators}
+
+Mit Software-Generatoren, ist es möglich Software generieren zu lassen. Dafür wird die Problemstellung der realen Welt so beschrieben, dass der Generator dies versteht, interpretieren und Programmcode erzeugen kann.
+
+\subsection{\acf{dsl}}\label{sec:dsl}
+Die Grundlage, um ein Model für einen Generator zu beschreiben ist die \acl{dsl}.
+Eine \acs{dsl} ist eine Programmiersprache, welche auf die Probleme einer bestimmten Domäne ausgelegt ist \cite{dslHudak}. Dadurch dass diese Sprachen auf ein ganz bestimmtes Problem zugeschnitten sind, sind \acl{dsl} in ihrer Ausdrucksfähigkeit beschränkter als herkömmliche Programmiersprachen wie beispielsweise Java, C++ oder C\# Eine \acl{dsl} wird dafür entwickelt ein konkretes Problem so effizient wie möglich zu lösen, ohne die komplexen Strukturen des Programmcodes kennen zu müssen.
+
+Bekannte \aclp{dsl} sind: \ac{sql}, Make und \acf{html}.
+
+Die domänenspezifischen Sprachen lassen sich in zwei Kategorien einteilen die internen und die externen \acsp{dsl}.
+
+\subsubsection{Interne \acsp{dsl}} \label{sec:intern}
+
+
+\subsubsection{Externe \acsp{dsl}} \label{sec:extern}
+
 \subsection{\acf{gemara}}\label{sec:gemara}
