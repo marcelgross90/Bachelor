@@ -186,8 +186,42 @@ Bekannte \aclp{dsl} sind: \ac{sql}, Make und \acf{html}.
 Die domänenspezifischen Sprachen lassen sich in zwei Kategorien einteilen die internen und die externen \acsp{dsl}.
 
 \subsubsection{Interne \acsp{dsl}} \label{sec:intern}
+Eine interne \acs{dsl} wird auch embedded \acs{dsl} genannt, weil sie keine eigene Syntax und Grammatik entwickelt. Sie bedienen sich der Hostsprache. Das heißt sie nutzen die selbe Programmiersprache, in welcher auch das Resultat sein wird.
 
+Jedoch wird die verwendete Hostsprache eingeschränkt, so nutzt die \acl{dsl} nur eine Teilmenge der Möglichkeiten \cite{dsl}. Die Nutztung von internen \acsp{dsl} sind zum Beispiel: Es muss kein neuer Compiler und Parser geschrieben werden. Auch gibt es bereits integrierte Entwicklungsumgebungen (IDEs). Außerdem muss der Programmierer keine neue Sprache lernen, um die \acl{dsl} zu nutzen, sollte er die verwendete Hostsprache bereits kennen. 
 
 \subsubsection{Externe \acsp{dsl}} \label{sec:extern}
 
+Anders als die internen \acsp{dsl} besitzen die externen \acsp{dsl} eine eigene Syntax. Dies macht die Entwicklung einer solchen \acl{dsl} sehr viel aufwändiger, da nun ein eigener Parser und Compiler mitentwickelt werden muss \cite{dsl}. Jedoch bringt diese eigene Syntax auch den Vorteil, dass die Sprache nicht auf die Besonderheiten einer Hostsprache eingeschränkt ist. So können Anforderungen an die Domäne bereits beim schreiben des Compilers mitvalidert werden.
+
 \subsection{\acf{gemara}}\label{sec:gemara}
+
+Das Projekt \acs{gemara} beinhaltet ein Reihe von Software-Generatoren, deren Ziel es ist mobile und verteilte Applikationen basierent auf dem \acs{rest} Architekturstil generieren zu lassen. Dafür wurde eine interne \acs{dsl} entwickelt, mit dessen Hilfe sowohl clientseitige als auch serverseitige Applikationen beschrieben werden können.
+
+Im Moment (Stand Februar 2017) ist es möglich ein WAR-Artefakt für einen Tomcat-Webserver generieren zu lassen. Dieses erzeugte Projekt kann auf eine relationelle MYSQL-Datenbank oder einer dokumentenbasierten CouchDB zugreifen. Desweiteren ist ein Generator zur Erzeugung von Android-Applikationen sowie ein Generator für Polymer Webkomponenten in der Entwicklung.
+
+\subsubsection{Aufbau von \acs{gemara}}
+
+\acs{gemara} ist modular aufgebaut, jedes der einzelnen Module erfüllt einen eindeutig definierten Zweck.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.86\textwidth]{images/gemara.png}
+		\caption{Aufbau von \acs{gemara}}
+		\label{fig:gemara}
+	\end{center}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{Ratcliff} definiert ein Enfield-Model, mit Hilfe einer Fluent \acs{api}.
+	\item \textbf{Yeading} definiert eine Repräsentation eines Enfield-Models, mit \acf{yaml} oder \acf{json}, welches dann in nach Ratcliff übersetzt werden.
+	\item \textbf{Enfield} liefert das Meta-Model, welches für die Beschreibung der gewünschten Appliktion benötigt wird.
+	\item \textbf{Norbury} stellt für Server-seitige Applikationen den Plattform Code bereit.
+	\item \textbf{Dalston} ist ein Software-Generator, welcher den Server-seitgen Code in Java generiert.
+	\item \textbf{Welling} ist ein Software-Generator, welcher Android Applikationen generiert.
+	\item \textbf{Purley} ist ein Software-Generator, welcher Polymer Webkomponenten generiert. 
+\end{itemize}
+
+Diese Arbeit behandelt das Design und die Entwicklung von \textbf{Welling}.
+
+
