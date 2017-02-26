@@ -1,4 +1,62 @@
 \chapter{Lösung}
+Dieses Kapitel befasst sich mit den Möglichkeiten und Lösungsansätze, zu den Problemstellungen aus Kapitel \ref{ch:problem}. Anhand von Beispielen wird verdeutlicht, wie gewisse Anforderungen umgesetzt werden.
+
+\section{Meta-Model}
+Nach der Anforderungsanalyse, wurden alle relevanten Informationen erkannt und zusammen gestellt. Diese Zusammenstellung an Daten, welche die Applikation beschreiben wird Meta-Model genannt.
+
+\subsection{Kompatiplität mit \acs{gemara} und andern möglichen Clients}
+
+Um die Kompatiblität mit \acf{gemara} zu waren, wurde das Enfield Meta-Model untersucht. Mit Hilfe dieser Untersuchung konnte festgestellt werden, an welcher Stelle zusätzliche Informationen für die Clients am sinnvollsten eingebaut werden können. So das diese den Ablauf der Applikation gut beschreiben und an den benötigten Stellen alle relevanten Informationen für den Software-Generator zur Verfügung stellt.
+
+Die Abbildung \ref{fig:enfield-model} zeigt die vereinfachte Model-Klasse des Enfield-Meta-Models. 
+In dieser Klasse sind bereits die wichtigsten Informationen wie zum Beispiel der Name der Applikation, oder unter welchem Package diese zu finden ist. Neben diesen grundsätzlichen Informationen liefert die Model-Klasse auch den Startpunkt des endlichen Automaten, welcher die Anwendung beschreibt. Dieser Startpunkt ist der \enquote{GetDispatcherState}. Dieses Objekt besitzt das Attribut \enquote{transitions}. Dieses Attribut beschreibt, welche States auf den Dispatcher-State folgen können. Jeder dieser folgenden States, besitzt widerum eine Collection mit Tansistionen, die auf die nachfolgenden States verweisen. So wird mit Hilfe der Transitionen und der States der endliche Automat der Anwendung beschrieben. Der Generator kann diese Beschreibung nutzen, um zu entscheiden in welcher Reihenfolge, welche Klassen generiert werden müssen.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.86\textwidth]{images/Enfield-Meta-Model.png}
+		\caption{Vereinfachter Aufbau des Enfield-Meta-Models}
+		\label{fig:enfield-model}
+	\end{center}
+\end{figure}
+
+Um jetzt zusätzlich benötigten Informationen für die Android Applikation in dieses bestehende Modell einzubauen, gibt es zwei Möglichkeiten.
+
+\subsection{Eigenes Android-Meta-Model}
+
+Es besteht die Möglichkeit die Model-Klasse um ein Attribut \enquote{Android-Meta-Model} zu erweitern.
+Die Abbildung \ref{fig:android-model} stellt zeigt schemenhaft ein Beispiel wie ein Android-Meta-Model ausehen könnte. Auffällig hierbei ist das viele Informationen, die das Enfield-Model bereits liefern würde, hier nocheinmal explizit beschrieben werden muss. Ein Beispiel wären die Transitionen, zwischen den Fragmenten beziehungsweise zwischen den Activities. 
+
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.86\textwidth]{images/Android-Meta-Model.png}
+		\caption{Möglicher Aufbau eines Android-Meta-Models}
+		\label{fig:android-model}
+	\end{center}
+\end{figure}
+
+Der Nutzer des Software-Generators, muss also ziemlich viel über den Ablauf und die Funktionsweiße einer Android-Anwendung wissen, um diesen Generator sinnvoll verwenden zu können.
+Dabei bleibt zusätzlich noch die Möglichkeit, das der Nutzer eigens geschriebene Metohden in das Model einpflegen kann. John Abou-Jaoudeh at al., haben in ihrer Arbeit \enquote{A High-Level Modeling Language for Efficent Design, Implementation, and Testing of Android Applications} ein Meta-Model entwickelt, welches genau solche Features unterstützt \cite{abou2015high}.
+
+Der Vorteil einer solchen Erweiterung des Enfield-Models ist, das alle benötigten Daten für die Android Anwendung an einer Stelle zu finden sind. Auch hat der Nutzer die Möglichkeit an manchen Stellen eigene Methoden einzufügen und somit ist er in der Lage das Verhalten der App weiter zu individualisieren.
+
+Jedoch überwiegen in diesem Fall die Nachteile. Ein Nachteil dieses Vorgehens ist, die reduntante Beschreibung des Programm-Ablaufes. Einmal im Android-Meta-Model und einmal im Enfield-Meta-Model. Bei jeder Änderung gilt dies zu berücksichtigen. 
+Der nächste Nachteil ist der Nutzter des muss sich in der Entwicklung von Android Anwendungen auskennen. Er muss genau das Zusammenspiel von ViewHoldern, Adaptern, Fragments und Activities kennen. Er muss wissen wie diese ineinandergreifen und wann welche Aktionen ausgelöst werden müssen. Weiterhin sollte er ein Grundsätzliches Verständnis für das \acf{mvc} Pattern besitzen, welches bei der Entwicklung von Android Applikationen anwendung findet.
+Ein weiterer Nachteil ist die Beschränkung des Models auf Android. Wird das Enfield-Model um ein Android-Meta-Model erweitert, so muss dieses für jeden einzelen Client geschehen. Soll der Generator um beispielsweise um Polymer-Webkomponente oder einer iOS-Anwendung erweitert werden, so müsste für jede einzelne Art von Client, das Enfield-Model mit einem Entsprechenden Meta-Model erweitert werden.
+
+\subsection{Allgemeine Erweiterungen des Enfield-Models an entsprechender Stelle}
+
+\section{Software-Generator}
+
+
+
+
+
+
+
+
+
+
 
 \begin{lstlisting}[label=lst:java,
 				   language=java,
