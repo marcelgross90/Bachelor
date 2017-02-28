@@ -11,7 +11,7 @@ Das Smartphone ist heutzugtage der stete Begleiter eines Menschen. \enquote{Zwei
 \end{figure}
 
 Umso wichtiger ist es das die Softwareentwicklung diesen Trend ernst nimmt. Der ehemalige Google-Chef Eric Schmidt sagte bereits 2010: \enquote{Googles Devise heißt jetzt \enquote{Mobile first}}. 
-Diese Devise wird von vielen Unternehmen verfolgt, das ist der Grund weswegen in den einzelnen Stores heutzutage so viele Apps angeboten werden. Bei Android im Playstore sind es im Oktober 2016 ca. 2,4 Millionen Apps \cite{play_store}, bei Apple im App Store sind es ca. 2 Millionen Apps (Stand Juni 2016) \cite{app_store}. Neben Googles Android und Apples IOs gibt es noch andere Betriebssysteme, beispielsweise Microsofts Windows Phone oder Blackberrys Blackberrys OS. Jedoch bestimmen die beiden erstgenannten Systeme den Markt (Abbildung \ref{fig:os_fig}).
+Diese Devise wird von vielen Unternehmen verfolgt, das ist der Grund weswegen in den einzelnen Stores heutzutage so viele Apps angeboten werden. Bei Android im Playstore sind es im Oktober 2016 ca. 2,4 Millionen Apps \cite{play_store}, bei Apple im App Store sind es ca. 2 Millionen Apps (Stand Juni 2016) \cite{app_store}. Neben Googles Android und Apples iOs gibt es noch andere Betriebssysteme, beispielsweise Microsofts Windows Phone oder Blackberrys Blackberrys OS. Jedoch bestimmen die beiden erstgenannten Systeme den Markt (Abbildung \ref{fig:os_fig}).
 
 \begin{figure}[H]
 	\begin{center}
@@ -23,25 +23,25 @@ Diese Devise wird von vielen Unternehmen verfolgt, das ist der Grund weswegen in
 
 Jede dieser Applikationen wurden einzeln für sich entwickelt und implementiert. Bei jedem Update zum Beispiel des Systems, müssen alle Anwendungen gewartet und überarbeitet werden, um die volle Funktionalität zu gewährleisten.
 
-Würden einige Applikationen jedoch genauer analysiert werden, wäre das Ergbniss, dass in jeder dieser Anwendungen Codepassagen vorhanden sind, welche einen ähnlichen beziehungsweise den selben Zweck erfüllen. Werden diese Stellen im Programmcode abstrahiert, gibt es die Möglichkeit diese generieren zu lassen. Um Code generieren zu lassen, benötigt man so genannte Code-Generatoren. 
+Würden einige Applikationen jedoch genauer analysiert werden, wäre das Ergebnis, dass in jeder dieser Anwendungen Codepassagen vorhanden sind, welche einen ähnlichen beziehungsweise den selben Zweck erfüllen. Werden diese Stellen im Programmcode abstrahiert, gibt es die Möglichkeit diese generieren zu lassen. Um Code generieren zu lassen, benötigt man so genannte Code-Generatoren. 
 
 Im Bereich der Backend-Entwicklung gibt es bereits verschiedene Projekte die sich damit befassen. Ein Beispiel wäre der \enquote{CRUD Admin Generator} \cite{generators}. Die Hochschule für angewandte Wissenschaften Würzburg-Schweinfurt entwickelt  unter der Leitung von Prof. Dr. Peter Braun auch einen Code-Generator unter dem Namen: \ac{gemara}. Mit Hilfe solcher Generatoren für den Bereich von Mobilen Applikationen, könnte der Entwicklungs- und Wartungsaufwand reduziert werden. 
 
 Führt ein Systemupdate dazu, dass die Implementierung von verschiedenen Anforderungen nicht weiter funktionsfähig ist, muss dies nur einmalig an der entsprechenden Stelle im Code-Generator geändert werden und nicht in jeder Applikation einzeln. 
 
 \section{Motivation}\label{sec:motivation}
-Im Rahmen des Projektes \ac{gemara} gab es bereits Arbeiten, welche sich mit dem Thema der Generierung von Android Aktivities beschäftigt. Die dabei entstandenen Lösungen, reslultierten darin, das dass generieren von Aktivities zu Problemen führt. Deshalb beschäftigt sich diese Ausarbeitung damit, nicht eine komplette Aktivity zu erzeugen, sondern sogenannte Komponenten.
+Im Rahmen des Projektes \ac{gemara} gab es bereits Arbeiten, welche sich mit dem Thema der Generierung von Android Aktivities beschäftigt. Die dabei entstandenen Lösungen, resultieren darin, das dass generieren von Aktivities zu Problemen führt. Deshalb beschäftigt sich diese Ausarbeitung damit, nicht eine komplette Aktivity zu erzeugen, sondern sogenannte Komponenten.
 
 Eine Komponente, ist im wesentlichen eine kleine Anwendung für sich, welche nur eine einzige Aufgabe erfüllt. Dies könnte zum Beispiel das Anzeigen eines Dozenten in einer Campus-Applikation sein.
 
 Aus den erzeugten Komponenten, kann eine Art \enquote{Bausatz} entstehen. Mit dessen Hilfe der Entwickler seine Applikation zusammen bauen kann. Dabei wird ihm freie Wahl gelassen, wie der Aufbau seiner Anwendung aussieht, er bedient sich nur an gegebener Stelle an den Komponenten. Dadurch reduziert sich der Entwicklungsaufwand für ihn.
 
-Bewegen wir uns in der Domaine einer Hochschule, so kann eine Bibliotek mit den erzeugten Komponenten allen Studierenden zur Verfügung gestellt werden. Dadurch wäre jeder dieser Studierenden in der Lage eine persönliche Campus-Applikation zu entwickeln. Durch die einzelnen Komponenten kann dann sichergestellt werden, dass grundsätzliche Funktionalität bereits gewährleistet ist.
+Bewegen wir uns in der Domain einer Hochschule, so kann eine Bibliothek mit den erzeugten Komponenten allen Studierenden zur Verfügung gestellt werden. Dadurch wäre jeder dieser Studierenden in der Lage eine persönliche Campus-Applikation zu entwickeln. Durch die einzelnen Komponenten kann dann sichergestellt werden, dass grundsätzliche Funktionalität bereits gewährleistet ist.
 
 \section{Zielsetzung}\label{sec:target}
 Ziel dieser Ausarbeitung liegt darin, dass der Leser ein grundsätzliches Verständnis für die Entwicklung von Android-Applikationen beziehungsweise Android-Bibliotheken vermittelt bekommt. Weiterhin soll das Wissen über Datenkommunikation mittels \ac{rest} vertieft werden. Hierbei wird ein Schwerpunkt auf das Hypermedia-Prinzip gelegt. 
 
-Neben diesen spezifischen Anforderungen, soll ein Verständnis für der Implementierung von Generatoren entstehen. Dafür muss der Entwickler entscheiden können, was von der Implementierung als statischer Code angesehen werden kann und welcher generisch ist. Dieses Verständnis ist wichtig, um die Komplexität der Generatoren zu reduzieren. Da die statischen Anteile jedesmal identisch sind.
+Neben diesen spezifischen Anforderungen, soll ein Verständnis für der Implementierung von Generatoren entstehen. Dafür muss der Entwickler entscheiden können, was von der Implementierung als statischer Code angesehen werden kann und welcher generisch ist. Dieses Verständnis ist wichtig, um die Komplexität der Generatoren zu reduzieren. Da die statischen Anteile jedes mal identisch sind.
 
 Auch soll auf die Frage eingegangen werden, ob man das \ac{ui}, welches ebenfalls generiert wird, auch generisch gestalten kann. Das bedeutet, dass nicht nur die Informationen, welche angezeigt werden sollen beschreibt. Sondern auch wie diese angezeigt werden sollen.
 

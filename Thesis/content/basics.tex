@@ -17,7 +17,7 @@ In dem generierten Projekt, sollen alle benötigten Daten mittels \ac{rest} von 
 \subsection{\acf{hateoas}}\label{sec:hateoas}
 \ac{hateoas} fällt unter das Prinzip Uniform Interface. Es beschreibt, wie mit Hilfe eines endlichen Automaten eine \ac{rest}-Architektur entworfen werden kann.
 
-Der Architekt einer \ac{rest}-konformen \acf{api} überlegt sich im vorraus, wie der Applikation-Fluss in der späteren Anwendung aussehen soll. Dafür definiert er verschiedene States und welche Transitionen zum nächsten State führen.
+Der Architekt einer \ac{rest}-konformen \acf{api} überlegt sich im voraus, wie der Applikation-Fluss in der späteren Anwendung aussehen soll. Dafür definiert er verschiedene States und welche Transitionen zum nächsten State führen.
 
 Als ein State kann beispielsweise das Anzeigen aller Lecturer in einer Campus-Applikation angesehen werden.
 Die Transition hingegen ist zum Beispiel ein Link im Link-Header der Antwort, oder ein Attribut, der empfangen Ressource. 
@@ -26,7 +26,7 @@ Wird das \ac{api} mit Hilfe eines endlichen Automaten entwickelt, kann diese dem
 Wenn der Entwickler sich so durch die States bewegt, bekommt er die benötigten Informationen zum Aufbau und Ablauf der Applikation.
 
 Die Abbildung \ref{finite_state_machine} zeigt einen solchen Automaten. Der Einstiegspunkt ist der State \enquote{Dispatcher} dieser liefert die Tansition zum State \enquote{Collection} zurück. Dieser State, verfügt über alle Informationen die benötigt werden um eine Collection der betroffenen Ressource anzuzeigen, weiterhin verfügt er auch das Wissen, über die beiden nächsten Transitionen zu den States \enquote{Create} und \enquote{Single}. Wie der Name des States annehmen lässt, wird der State \enquote{Create} benötigt um eine neue Ressource anzulegen. Von diesem State aus kann die Anwendung nur zurück zum State \enquote{Collection}. Der State \enquote{Single} enthält alle benötigten Daten um eine einzelne Ressource anzuzeigen. Vom hier kann die Anwendung zum State \enquote{Update} oder \enquote{Delete} wechseln. Der State \enquote{Update} ermöglicht es die Ressource zu bearbeiten. Von hier kann der Nutzer der Anwendung nur zum State \enquote{Single} zurückkehren. Der State \enquote{Delete} löscht die aktuelle Ressource und liefert die Transition zum State \enquote{Collection} zurück. 
-Dieses Beispiel verdeutlich nocheinmal bildlich, das der Entwickler nur den Einstiegspunkt \enquote{Dispatcher} kennen muss. Die Anwendung liefert selbst alle benötigten Informationen um die Daten für die Anwendung nachzuladen.
+Dieses Beispiel verdeutlicht noch einmal bildlich, das der Entwickler nur den Einstiegspunkt \enquote{Dispatcher} kennen muss. Die Anwendung liefert selbst alle benötigten Informationen um die Daten für die Anwendung nachzuladen.
 
 \begin{figure}[H]
 	\begin{center}
@@ -59,11 +59,11 @@ Dieses Beispiel verdeutlich nocheinmal bildlich, das der Entwickler nur den Eins
 \end{figure}
 
 \section{Android}\label{sec:android}
-Die Software-Plattform Android basiert auf Linux und wird als Betriebsystem für mobile Endgeräte verwendet.
-Das System wird als Open Source Projekt von der Open Handset Alliance entwickelt \cite{open_handset_alliance}. Dabei ist ein Ziel, die Schaffung eines offenen Standarts für mobile Endgeräte.
+Die Software-Plattform Android basiert auf Linux und wird als Betriebssystem für mobile Endgeräte verwendet.
+Das System wird als Open Source Projekt von der Open Handset Alliance entwickelt \cite{open_handset_alliance}. Dabei ist ein Ziel, die Schaffung eines offenen Standards für mobile Endgeräte.
 Die Entwicklung ist nicht abgeschlossen, die aktuelle Version ist 7.0 Nougat (Stand Feb. 2017).
 
-Programme für diese Plattfrom nennt man Applikationen oder kurz Apps. Eine App stellt alle nötigen Sourcen bereit, zum Beispiel den Programmcode, Layout und Grafiken, die benötigt werden, um diese App auf einem Android-Endgerät auszuführen.
+Programme für diese Plattform nennt man Applikation oder kurz App. Eine App stellt alle nötigen Sourcen bereit, zum Beispiel den Programmcode, Layout und Grafiken, die benötigt werden, um diese App auf einem Android-Endgerät auszuführen.
 
 \subsection{Custom Views}
 Mit Hilfe von Widgets und Layouts können Views definiert werden. Diese Views stellen dann die gewünschte Information auf dem Display dar. Die bekanntesten Widgets sind: TextView, Button und EditText. Die Anordnung dieser Widgets erfolgt dann mit einem Layout. Es gibt hierbei verschiendene Layouts zur Auswahl. Beispielsweise das LinearLayout, mit horizontaler oder vertikaler Orientierung. Ein weiteres Beispiel ist das RelativeLayout.
@@ -126,7 +126,7 @@ caption=Aufbau der PersonCardView mit Hilfe einer XML-Datei]
 
 \subsubsection{Erzeugen einer PersonCardView Klasse}
 
-Hierfür wird eine neue Java-Klasse erzeugt, welche von CardView erbt. Es kann auch direkt von der View-Klasse geerbt werden und anschließend mithilfe der Methode \enquote{onDraw}, welche überschrieben werden muss, den gewünschten Inhalt anzueigen. Sei es nun Text, Formen oder Benutzereingaben.
+Hierfür wird eine neue Java-Klasse erzeugt, welche von CardView erbt. Es kann auch direkt von der View-Klasse geerbt werden und anschließend mithilfe der Methode \enquote{onDraw}, welche überschrieben werden muss, den gewünschten Inhalt anzuzeigen Sei es nun Text, Formen oder Benutzereingaben.
 In diesem Fall entspricht die CardView weitestgehend bereits den Anforderungen, so das diese genutzt wird.
 Die Vererbungsstruktur bringt mit sich, das die Konstruktoren der CardView implementiert werden müssen.
 Die Anzahl dieser Konstruktoren hängt von der Minimum SDK-Versions des Projekts ab. Dieses Projekt nutzt das Minimum Level 12 somit müssen drei Konstrukotoren überschrieben werden. Ab einen Level von 21, sind es vier, da ein weiteres Attribut zur View hinzugefügt wurde.
@@ -156,7 +156,7 @@ public PersonCardView(Context context, AttributeSet attrs, int defStyleAttr) {
 \end{lstlisting}
 
 Innerhalb der \enquote{init}-Methode wird definiert, was die View anzeigen beziehungsweise was sie tun soll. 
-In diesem Beispiel werden die verwendeten Widgets initialisiert. Besässe die PersonCardView noch eigene Attribute, so würden diese im AttributeSet übergeben und könnten daraus in ein TypedArray geschrieben werden. Dieses TypedArray muss am Ende \enquote{recycled} werden, damit es für einen späteren Aufruf wieder zur Verfügung steht.
+In diesem Beispiel werden die verwendeten Widgets initialisiert. Besäße die PersonCardView noch eigene Attribute, so würden diese im AttributeSet übergeben und könnten daraus in ein TypedArray geschrieben werden. Dieses TypedArray muss am Ende \enquote{recycled} werden, damit es für einen späteren Aufruf wieder zur Verfügung steht.
 
 Jetzt wird die PersonCardView um eine Methode \enquote{setPerson} erweitert. Diese ist angelehnt an die Methode \enquote{setText} der TextView. Sie ermöglicht das der PersonCardView ein Objekt Person übergeben wird und füllt dann die entsprechenden Widgets mit den dazugehörigen übergebenen Daten.
 
@@ -171,7 +171,7 @@ public void setPerson(Person person) {
 }
 \end{lstlisting}
 
-Mit Hilfe dieser Methode wird die Nutztung der PersonCardView vereinfacht. Im Adapter der RecyclerView wird jetzt nicht mehr jedes einezelne Widget definiert und mit Informationen befüllt. Sondern nur noch die PersonCardView und mit der \enquote{setPerson} - Methode kann die komplette Karte mit den Daten einer Peron mit nur einem Methodenaufruf befüllt werden.
+Mit Hilfe dieser Methode wird die Nutztung der PersonCardView vereinfacht. Im Adapter der RecyclerView wird jetzt nicht mehr jedes einzelne Widget definiert und mit Informationen befüllt. Sondern nur noch die PersonCardView und mit der \enquote{setPerson} - Methode kann die komplette Karte mit den Daten einer Person mit nur einem Methodenaufruf befüllt werden.
 
 \section{Software-Generatoren}\label{sec:generators}
 
@@ -188,17 +188,17 @@ Die domänenspezifischen Sprachen lassen sich in zwei Kategorien einteilen die i
 \subsubsection{Interne \acsp{dsl}} \label{sec:intern}
 Eine interne \acs{dsl} wird auch embedded \acs{dsl} genannt, weil sie keine eigene Syntax und Grammatik entwickelt. Sie bedienen sich der Hostsprache. Das heißt sie nutzen die selbe Programmiersprache, in welcher auch das Resultat sein wird.
 
-Jedoch wird die verwendete Hostsprache eingeschränkt, so nutzt die \acl{dsl} nur eine Teilmenge der Möglichkeiten \cite{dsl}. Die Nutztung von internen \acsp{dsl} sind zum Beispiel: Es muss kein neuer Compiler und Parser geschrieben werden. Auch gibt es bereits integrierte Entwicklungsumgebungen (IDEs). Außerdem muss der Programmierer keine neue Sprache lernen, um die \acl{dsl} zu nutzen, sollte er die verwendete Hostsprache bereits kennen. 
+Jedoch wird die verwendete Hostsprache eingeschränkt, so nutzt die \acl{dsl} nur eine Teilmenge der Möglichkeiten \cite{dsl}. Die Nutzung von internen \acsp{dsl} sind zum Beispiel: Es muss kein neuer Compiler und Parser geschrieben werden. Auch gibt es bereits integrierte Entwicklungsumgebungen (IDEs). Außerdem muss der Programmierer keine neue Sprache lernen, um die \acl{dsl} zu nutzen, sollte er die verwendete Hostsprache bereits kennen. 
 
 \subsubsection{Externe \acsp{dsl}} \label{sec:extern}
 
-Anders als die internen \acsp{dsl} besitzen die externen \acsp{dsl} eine eigene Syntax. Dies macht die Entwicklung einer solchen \acl{dsl} sehr viel aufwändiger, da nun ein eigener Parser und Compiler mitentwickelt werden muss \cite{dsl}. Jedoch bringt diese eigene Syntax auch den Vorteil, dass die Sprache nicht auf die Besonderheiten einer Hostsprache eingeschränkt ist. So können Anforderungen an die Domäne bereits beim schreiben des Compilers mitvalidert werden.
+Anders als die internen \acsp{dsl} besitzen die externen \acsp{dsl} eine eigene Syntax. Dies macht die Entwicklung einer solchen \acl{dsl} sehr viel aufwändiger, da nun ein eigener Parser und Compiler mitentwickelt werden muss \cite{dsl}. Jedoch bringt diese eigene Syntax auch den Vorteil, dass die Sprache nicht auf die Besonderheiten einer Hostsprache eingeschränkt ist. So können Anforderungen an die Domäne bereits beim schreiben des Compilers mit validiert werden.
 
 \subsection{\acf{gemara}}\label{sec:gemara}
 
 Das Projekt \acs{gemara} beinhaltet ein Reihe von Software-Generatoren, deren Ziel es ist mobile und verteilte Applikationen basierent auf dem \acs{rest} Architekturstil generieren zu lassen. Dafür wurde eine interne \acs{dsl} entwickelt, mit dessen Hilfe sowohl clientseitige als auch serverseitige Applikationen beschrieben werden können.
 
-Im Moment (Stand Februar 2017) ist es möglich ein WAR-Artefakt für einen Tomcat-Webserver generieren zu lassen. Dieses erzeugte Projekt kann auf eine relationelle MYSQL-Datenbank oder einer dokumentenbasierten CouchDB zugreifen. Desweiteren ist ein Generator zur Erzeugung von Android-Applikationen sowie ein Generator für Polymer Webkomponenten in der Entwicklung.
+Im Moment (Stand Februar 2017) ist es möglich ein WAR-Artefakt für einen Tomcat-Webserver generieren zu lassen. Dieses erzeugte Projekt kann auf eine relationale MYSQL-Datenbank oder einer dokumentenbasierten CouchDB zugreifen. Des weiteren ist ein Generator zur Erzeugung von Android-Applikationen sowie ein Generator für Polymer Webkomponenten in der Entwicklung.
 
 \subsubsection{Aufbau von \acs{gemara}}
 
@@ -217,7 +217,7 @@ Im Moment (Stand Februar 2017) ist es möglich ein WAR-Artefakt für einen Tomca
 	\item \textbf{Yeading} definiert eine Repräsentation eines Enfield-Models, mit \acf{yaml} oder \acf{json}, welches dann in nach Ratcliff übersetzt werden.
 	\item \textbf{Enfield} liefert das Meta-Model, welches für die Beschreibung der gewünschten Appliktion benötigt wird.
 	\item \textbf{Norbury} stellt für Server-seitige Applikationen den Plattform Code bereit.
-	\item \textbf{Dalston} ist ein Software-Generator, welcher den Server-seitgen Code in Java generiert.
+	\item \textbf{Dalston} ist ein Software-Generator, welcher den Server-seitigen Code in Java generiert.
 	\item \textbf{Welling} ist ein Software-Generator, welcher Android Applikationen generiert.
 	\item \textbf{Purley} ist ein Software-Generator, welcher Polymer Webkomponenten generiert. 
 \end{itemize}
