@@ -72,6 +72,8 @@ Nachdem identifiziert wurde, an welchen Stellen das Enfield-Model erweitert werd
 
 Die Analyse in dieser Arbeit beschränken sich auf die Clients Android und Polymere-Webkomponente. Bei beiden wird das \acf{ui} nach den Guidelines,des von Google entwickelten Material Design, erstellt \cite{material}. Diese Guidelines schreiben bereits viele nötigen Informationen für die Oberflächengestaltung vor. So wird beispielsweise definiert, das Einträge in einer Liste, als Karte dargestellt werden sollen. Abstände und Icons werden ebenfalls festgelegt.
 
+\subsubsection{CardView}
+
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=0.86\textwidth]{images/card.png}
@@ -80,13 +82,10 @@ Die Analyse in dieser Arbeit beschränken sich auf die Clients Android und Polym
 	\end{center}
 \end{figure}
 
-
-Die  \acf{json} Repräsentation unter Listing \ref{lst:braun_json} beschreibt das Beispiel aus Abbildung \ref{fig:card}.
-
 \begin{lstlisting}[label=lst:braun_json,
 language=json,
 firstnumber=1,
-caption=Demo Daten eines Lecturers für die Darstellung gemäß Abbildung \ref{fig:card}]	
+caption=Demo Daten eines Dozenten]	
 ...			   
 {
 	"address": "Sanderheinrichsleitenweg 20 97074 Wuerzburg",
@@ -121,12 +120,210 @@ caption=Demo Daten eines Lecturers für die Darstellung gemäß Abbildung \ref{f
 ...
 \end{lstlisting}
 
+Die  \acf{json} Repräsentation unter Listing \ref{lst:braun_json} beschreibt das Beispiel aus Abbildung \ref{fig:card}.
+Jetzt gilt es zu überlegen, wie die Attribute des \ac{json} Objekts aufzubereiten sind, dass diese die Karte des Dozenten widerspiegeln. 
+
+In erster Linie muss entschieden werden, welche der gelieferten Informationen sollen in der Liste für jeden einzelnen Dozenten angezeigt werden. Ist es sinnvoll ist Informationen zu gruppieren? Hier beispielsweise die Attribute \enquote{firstName} und \enquote{lastName}, diese sollen in einer Zeile angezeigt werden. Ist bekannt welche Informationen eine Karte enthalten soll, so muss auch noch die Reihenfolge der einzelnen Attribute der Karte bestimmt werden.
+Neben der Reihenfolge gibt es noch die Möglichkeit das die Schriftgröße oder die Schriftfarbe der einzelnen Attribute unterschiedlich sein können. Auch müssen die Standardicons den einzelnen Attribute zuweisen werden. Auch sollte es die möglich sein einzelnen Attribute bestimmte Aktionen zuzuweisen. So sollte beispielsweise beim Klick auf eine Homepage auch diese im Browser geöffnet werden, oder beim Klick auf die Adresse sollte die Applikation Maps öffnen und die angeklickte Adresse dort anzeigen. Gibt es ein Attribut mit dem Hyperlink zu einer Website, sollte es möglich sein einen Text anzugeben, der anstelle des Hyperlinks angezeigt wird. 
+
+Besitzt die Karte ein Bild, so sollte der Nutzer die Möglichkeit besitzen zu entscheiden ob er dieses gerne auf der linken oder der rechten Seite der Karte haben möchte.
+
+\subsubsection{DetailView}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics{images/detail.png}
+		\caption{Beispiel einer DetailView eines Dozenten nach Material Design Guidelines}
+		\label{fig:detail}
+	\end{center}
+\end{figure}
+
+Die zur Verfügung  stehenden Daten sind die gleichen, welche unter Listing \ref{lst:braun_json} einzusehen sind.
+
+Analog wie bei der CardView stellen Sich auch bei der DetailView, welche Daten alle dargestellt werden sollen. Hier jedoch gibt es zusätzlich zu der horizontalen Gruppierung (Beispiel mit den Vornamen und Nachnamen), auch noch eine vertikale Gruppierung, die im weiteren auch Kategorisierung genannt wird. In der detaillierten Ansicht eines Dozenten gibt es die Möglichkeit die Attribute zu kategorisieren und jeder Kategorie mit einem Namen zu versehen. Für die Gestaltung und Anordnung sowie mögliche Klick-Aktionen müssen die selben Anforderungen wie bei der CardView berücksichtigt werden. 
+
+Jedoch muss die DetailView wissen, welches Attribut den Titel der View darstellt, da dieser in der AppBar erscheinen wird. In diesem Beispiel ist es der Name des Dozenten. Anders als bei der CardView gibt es hier nicht die Möglichkeit zu bestimmen wo das Bild dargestellt werden soll. Ist ein Bild vorhanden, so wird dieses in der Collapsing-Toolbar dargestellt \cite{collapsing}. Andernfalls wird kein Bild angezeigt.
+
+\subsubsection{InputView}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics{images/input.png}
+		\caption{Beispiel einer View zum Anlegen eines Dozenten}
+		\label{fig:input}
+	\end{center}
+\end{figure}
+
+Für das neu Anlegen eines Dozenten oder auch zum bearbeiten muss entschieden werden, welche Attribute zum Anlegen benötigt werden. Auch hier ist es notwendig die Reihenfolge zu bestimmen. Jedoch kommen in dieser View für jedes Attribut noch die Möglichkeit hinzu ein Hint-Text anzugeben. Dieser Text beschreibt, was in der Android View EditText als Beschreibung für das bestimmte Attribut steht. Weiter sollte es die Möglichkeit geben, jedem Feld eine Nachricht mitzugeben, welche Angezeigt wird, wenn das Feld beispielsweise leer gelassen wird. Oder eine weitere Nachricht, wenn das Eingegebene nicht dem Erwarteten entspricht. Zum Beispiel wurde in das Feld für die E-Mail die Telefonnummer eingegeben. Oder es wurde ein regulärer Ausdruck mitgegeben und das Eingegebene entspricht nicht den Anforderungen, welche durch den regulären Ausdruck definiert wurden.
+
+\subsubsection{Programmablauf und Klick-Aktionen}
+
+Da das Enfield-Model bereits einen endlichen Automaten beschreibt, welcher den Programmablauf widerspiegelt, ist es nicht notwendig, diesen Ablauf noch einmal genauer zu definieren. Da der bereits definierte Ablauf übernommen wird.
+
+Auch die Klick-Aktionen, das Geschehen, welches durch einen Klick auf ein bestimmtes Attribut ausgeführt werden soll, beschränkt sich auf Android Standard Aktionen. Beispielsweise das wechseln zu den Maps, zu einem E-Mail Client, dem Browser oder zum Anrufsmenü. Jede deser Aktion ergibt sich aus den Typen der Attribute, weswegen diese auch nicht weiter definiert werden müssen.
+
+\subsection{Design der View-Meta-Modelle}
+
+In den letzten Abschnitten der Arbeit wurde aufgezählt, was das Meta-Model alles Abdecken muss und das sowohl Android- als auch Polymer-seitig. In diesem Kapitel wird ein Meta-Model vorgestellt, welches die erwähnten Eigenschaften abdeckt.
 
 
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.86\textwidth]{images/metamodel.png}
+		\caption{Aufbau der Views zur Erweiterung des Enfield-Models}
+		\label{fig:meta-model}
+	\end{center}
+\end{figure}
 
+Die Abbildung \ref{fig:meta-model} zeigt den Aufbau der Objekte, mit welchem das Enfield-Model erweitert wird. Die drei Views CardView, DetailView und InputView sind alles Instanzen von AbstraktResourceView. Jede der View, weiß welche Ressource sie darstellen soll. Dies passiert über die Zuordnung mit Hilfe des Ressourcennamens. Die drei Views, lassen sich in zwei Kategorien einteilen: Views, welche Informationen anzeigen und Views welche zur Eingabe von Informationen benötigt werden.
+So gehören CardView und DetailView zur anzeigenden Views und die InputView zur zweiten Kategorie. 
 
+\subsubsection{Anzeigende Views}
+Diese View-Typen haben die Aufgabe in einer Liste alle Attribute zu halten, welche in der entsprechenden View angezeigt werden sollen. Dabei bestimmt die Reihenfolge, in welcher die Attribute in dieser Liste sind auch die Anordnung in der Oberfläche. Ist das erste Item in der Liste der Name, so wird dieser ganz oben in der View angezeigt.
+Bei der DetailView jedoch gibt es nicht eine Liste mit den Attributen, sondern eine Liste mit Kategorien. Diese Kategorien, besitzen 
+einen Namen und eine Liste mit den Attributen ihrer Kategorie. Die Darstellungsreihenfolge der Kategorien und deren Attribute ist analog zu der der CardView. Weiter besitzt die DetailView das Attribute \enquote{image}, dieses Attribut wird hier aus der Liste der Attribute herausgezogen, da dieses Attribut bestimmt, ob die View eine Collapsing-Toolbar besitzen wird oder nicht. Wiederum haben beide Views das Attribut \enquote{titleOfResource} dieses bestimmt welches Attribut unserer Ressource beispielsweise in der Toolbar angezeigt wird.
 
+Auf die Polymer-spezifischen Attribute wird in dieser Arbeit nicht weiter eingegangen.
 
+Mit Hilfe der Listen, Titelattributen und dem Bildattribut kann das Erscheinungsbild einer View schon ziemlich gut beschrieben werden. Jetzt bleibt fehlt noch die Möglichkeit, die Schriftgrößen, Schriftfarben, Klick-Aktionen und so weiter zu definieren.
+Außerdem ist es bis jetzt nur möglich einfache Attribute anzuzeigen, eine horizontale Gruppierung ist noch nicht möglich. Um diese Anforderungen zu erfüllen, werden nicht Attribute in den Listen gespeichert sondern Ausprägungen von ResourceViewAttributen. 
+
+Es gibt zwei Ausprägungen: ein SingleResourceViewAttribute und ein GroupedResourceViewAttribute.  Das SingleResourceViewAttribute ist für einfache Attribute, mit diesem ist es beispielsweise möglich den Titel eines Dozenten anzuzeigen. Das GroupedresourceViewAttribute ermöglicht die horizontale Gruppierung. Beide Objekte, bestimmen jedoch nicht die Design-spezifischen Eigenschaften des Attributs. Hierfür besitzen beide Attribut-Typen das Attribut DisplayViewAttribute.
+
+Bei der SingleResourceViewAttribute ist diese Instanz von einem AbstractViewAttribute das einzige Attribut, beim GroupedResourceViewAttribute wiederum gibt es eine Liste von diesen DisplayViewAttributen, welche dann die anzuzeigenden Informationen widerspiegeln. Weitergehend besitzt diese Attribut-Art auch noch ein DisplayViewAttribute, welches die neu entstandene Gruppierung beschreiben soll.
+
+Ein DisplayViewAttribute besitzt nun die Möglichkeit, die Schriftgröße und -farbe zu definieren. Die angegebene Farbe muss eine Farbe in hexadezimaler Darstellung sein, wird keine Farbe mitgegeben, wird die Default-Farbe der Anwendung genommen. In der Regel ist diese Schwarz.  Die Schriftgröße wiederum ist auf 3 Stufen beschränkt. Es gibt die Möglichkeit den Text in klein, normal und groß darzustellen. Per default ist normal eingestellt. Aus der Oberklasse AbstractViewAttribute besitzt das DisplayViewAttribute noch die Attribute \enquote{attributeName}, dieses muss exakt so heißen wie in der Definition der Ressource beschrieben.
+Mit dem \enquote{attributeLabel} kann angegeben werden, wie dieses Attribut in der View angezeigt werden soll. Die Abbildung \ref{fig:detail} zeigt die Verwendung von den Labels, vor beispielsweise der E-Mailadresse des Dozenten steht \enquote{E-Mail}, dieser String entspricht dem Label des Attributes. Muss angeben werden von welchem Typ das aktuell beschriebene Attribut ist.
+Dies geschickt mit dem Attribut AttributeType. Es gibt folgende mögliche Typen: HOME, MAIL, LOCATION, PICTURE, PHONE\_ NUMBER, TEXT, URL, DATE, SUBRESOURCE. Jeder Typ bestimmt die Eigenschaften des Attributes. Über diesen wird bestimmt welches Icon in der Karte vor dem entsprechenden Attribut angezeigt werden. Auch bestimmt er welche Aktion bei Klick ausgeführt werden soll. So wird bei einem Klick auf ein Attribut vom Typ LOCATION versucht die Anwendung Maps zu öffnen und den angezeigten Standort dort anzuzeigen. Ist das Attribute vom Typ SUBRESOURCE so wird für dieses Attribut ein Button angezeigt, dieser ermöglicht es dann zu der entsprechenden Subressource zu wechseln. Diese Klick-Aktionen müssen jedoch mit dem Attribut \enquote{clickActionAndroid} erst aktiviert werden.
+
+Manche Typen bringen noch ein paar andere Besonderheiten mit sich. So muss man beispielsweise bei einem URL-Attribut noch eine Beschreibung mitgeben, welche anstelle der Hyperlinks angezeigt werden soll. Bei einem Bild kann man beispielsweise noch bestimmen, ob dieses links oder rechts dargestellt werden soll. 
+
+In Listing \ref{lst:detailview_impl} ist zu sehen, wie eine DetailView definiert wird.
+
+\begin{lstlisting}[label=lst:detailview_impl,
+language=java,
+firstnumber=1,
+caption=Erstellung einer DetailView]				   
+...
+DetailView detailView;
+
+try {
+List<Category> categories = new ArrayList<>();
+
+DisplayViewAttribute nameAttribute = new DisplayViewAttribute("name", ViewAttribute.AttributeType.TEXT);
+GroupResourceViewAttribute name = new GroupResourceViewAttribute(nameAttribute, getViewTitleAttributes());
+
+categories.add(new Category("Office", getOfficeResourceViewAttributes()));
+categories.add(new Category("Contact", getContactResourceViewAttributes()));
+categories.add(new Category("Charges", getChangeResourceViewAttributes()));
+
+detailView = new DetailView("Lecturer", name, categories);
+detailView.setImage(getImage());
+} catch (DisplayViewException ex) {
+detailView = null;
+}
+...
+private static List<ResourceViewAttribute> getOfficeResourceViewAttributes() {
+List<ResourceViewAttribute> officeAttributes = new ArrayList<>();
+
+DisplayViewAttribute addressAttribute = new DisplayViewAttribute("address", ViewAttribute.AttributeType.LOCATION);
+addressAttribute.setAttributeLabel("Address");
+addressAttribute.setClickActionAndroid(true);
+SingleResourceViewAttribute address = new SingleResourceViewAttribute(addressAttribute);
+officeAttributes.add(address);
+
+DisplayViewAttribute roomAttribute = new DisplayViewAttribute("roomNumber", ViewAttribute.AttributeType.TEXT);
+roomAttribute.setAttributeLabel("Room");
+roomAttribute.setClickActionAndroid(true);
+SingleResourceViewAttribute room = new SingleResourceViewAttribute(roomAttribute);
+officeAttributes.add(room);
+
+return officeAttributes;
+}
+...
+\end{lstlisting}
+
+\subsubsection{Eingebende Views}
+
+Bei der InputView gibt es wieder eine Liste, welche dieses mal InputViewAttribute mit der Oberklasse AbstractViewAttribute hält. Diese Liste bestimmt analog zu den anzeigenden Views die darzustellende Reihenfolge der Attribute. 
+
+Neben dem \enquote{attributeName} der wieder exakt dem Namen aus der Ressourcendefiniton entsprechen muss, besitzt das InputViewAttribute auch die Möglichkeit zu bestimmen, welcher Typ das aktuelle Attribut besitzt. Jedoch haben die Typen hier eine Andere Bedeutung als bei dem anderen View-Typ. So wird beispielsweise bei dem Type DATE kein EditText angezeigt, sondern der Nutzer hat die Möglichkeit das Datum über das DatePicker-Widget von Android einzugeben. 
+
+Es ist jedoch für den Android-Client nicht möglich Bilder zu Ressourcen hinzuzufügen, oder diese zu Bearbeiten. Wird eine Subressource nicht in einer InputView der Oberressource bearbeitet oder neu angelegt. Dies ist dann in der entsprechenden View der Subressource möglich. Die anderen Typen beschränken das EditText-Widget auf die angegebenen Typen. So wird bei einem Klick auf ein PHONE\_NUMBER-Feld die Tastatur im Zahlenmodus ausgefahren und so weiter.
+
+Einem InputViewAttribute muss zusätzlich ein \enquote{hintText} mitgegeben werden, der im EditText des Attributs beschreibt, was in diesem Feld erwartet wird. Mit dem String \enquote{missingText} kann dem Attribut mitgegeben werden, welche Nachricht dem Nutzer angezeigt wird, falls er versucht zu speichern ohne das entsprechende Feld auszufüllen. Mit der Kombination von \enquote{checkPattern} und \enquote{errorText} bekommt der Nutzer des Generators die Validierung des eingegebenen Attributes noch weiter zu verfeinern und auch dem Nutzer der Applikation ein Feedback zu geben, falls eine falsche Eingabe getätigt wurde.
+
+Die Definition einer InputView wird in Listing \ref{lst:inputview_impl} dargestellt.
+
+\begin{lstlisting}[label=lst:inputview_impl,
+language=java,
+firstnumber=1,
+caption=Erstellung einer InputView]				   
+...
+List<InputViewAttribute> inputViewAttributes = new ArrayList<>();
+
+InputViewAttribute title = new InputViewAttribute("title", ViewAttribute.AttributeType.TEXT, "Title", "Title is missing!");
+title.setAttributeLabel("Title");
+inputViewAttributes.add(title);
+
+InputViewAttribute firstName = new InputViewAttribute("firstName", ViewAttribute.AttributeType.TEXT, "FirstName",
+"Firstname is missing!");
+firstName.setAttributeLabel("Firstname");
+inputViewAttributes.add(firstName);
+
+InputViewAttribute lastName = new InputViewAttribute("lastName", ViewAttribute.AttributeType.TEXT, "Lastname",
+"LastName is missing!");
+lastName.setAttributeLabel("Lastname");
+inputViewAttributes.add(lastName);
+
+InputViewAttribute mail = new InputViewAttribute("email", ViewAttribute.AttributeType.MAIL, "E-Mail", "E-Mail is missing!");
+mail.setAttributeLabel("E-Mail");
+inputViewAttributes.add(mail);
+
+InputViewAttribute phone = new InputViewAttribute("phone", ViewAttribute.AttributeType.PHONE_NUMBER, "Phone Number",
+"Phone number is missing!");
+phone.setAttributeLabel("Phone Number");
+inputViewAttributes.add(phone);
+
+InputViewAttribute address = new InputViewAttribute("address", ViewAttribute.AttributeType.TEXT, "Address", "Address is missing!");
+address.setAttributeLabel("Address");
+inputViewAttributes.add(address);
+
+InputViewAttribute room = new InputViewAttribute("roomNumber", ViewAttribute.AttributeType.TEXT, "Room", "Room is missing!");
+room.setAttributeLabel("Room");
+inputViewAttributes.add(room);
+
+InputViewAttribute weLearn = new InputViewAttribute("homepage", ViewAttribute.AttributeType.URL, "welearn",
+"welearn URL is missing!");
+weLearn.setAttributeLabel("welearn");
+inputViewAttributes.add(weLearn);
+
+InputView inputView;
+try {
+inputView = new InputView("Lecturer", inputViewAttributes);
+} catch (InputViewException ex) {
+inputView = null;
+}
+...
+\end{lstlisting}
+
+\subsection{Analyse und Design von allgemeinen Daten für eine Anwendung}
+
+Dieses Kapitel behandelt die Informationen, welche eine Applikation neben den View-Beschreibungen zusätzlich benötigt, aber diese vom Kontext her nicht in einer der Views beschrieben werden können.
+
+Ein Beispiel für eine solche Information wäre der \acf{url} für den Einstieg. Die Applikation benötigt diesen um zu wissen, unter welcher Adresse sich die anzuzeigenden Informationen zu finden sind. Ein weiteres Beispiel sind die Grundfarben der Applikation. Das Material Design gibt drei benötigte Grundfarben vor: \enquote{colorPrimary}, \enquote{colorprimaryDark} und \enquote{colorAccent} diese Grundfarben wird um die Farbe für den Toolbar-Text erweitert.
+
+Mit dem Wissen, konnte eine Erweiterung des Enfield-Models designed werden, welches in Abbildung \ref{fig:appspecifics} dargestellt ist.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.86\textwidth]{images/appspecifics.png}
+		\caption{Aufbau des AppSpecifics-Objekt  zur Erweiterung des Enfield-Models}
+		\label{fig:appspecifics}
+	\end{center}
+\end{figure}
+
+ Über die Map \enquote{additionalInformation} können zusätzlich weitere allgemeine Informationen an den Generator, zur Erzeugung der Anwendung, weitergegeben werden .
 
 \section{Software-Generator}
 
