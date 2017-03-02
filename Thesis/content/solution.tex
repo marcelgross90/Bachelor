@@ -327,12 +327,148 @@ Mit dem Wissen, konnte eine Erweiterung des Enfield-Models designed werden, welc
 
 \section{Software-Generator}
 
+Nachdem das Meta-Model nun klar ist, geht dieses Kapitel der Ausarbeitung auf die Funktionsweise des Generators ein. 
+Es wird dargelegt wie der Generator aufgebaut ist und teilweise darauf eingegangen wieso dieser Weg der Generation gewählt wurde. Des weiteren wird das Java \acf{api} JavaPoet kurz vorgestellt \cite{poet}.
+
+\subsection{JavaPoet}
+JavaPoet ist ein Java \ac{api}, welches ermöglicht Java-Klassen zu generieren \cite{poet}. Hierfür wird die zu generierende Klasse programmiert. Mit Hilfe von nur ein paar Schlüsselwörtern ist es recht einfach möglich Klassen, Interfaces oder Methoden zu generieren. 
+
+Da der größte Teil des Generators Java-Klassen erzeugen muss, ist dieses \ac{api} bestens für diesen Zweck geeignet. Sie erspart die aufwändige String-Manipulation. Durch die Nutzung wird auch bei der Ausführung des Programmes sichergestellt, das gültige Konventionen und Regeln eingehalten werden. So ist der grundsätzliche korrekte Aufbau einer Java-Klasse bereits sichergestellt.
+
+Listing \ref{lst:poet} zeigt ein einfaches Beispiel zur Generierung einer Hello-World-Klasse und Listing \ref{lst:poet_result} zeigt das Ergebnis nach der Ausführung des Beispieles.
+
+\begin{lstlisting}[label=lst:poet,
+language=java,
+firstnumber=1,
+caption=Beispiel für die Generation einer Hallo-World-Klasse \cite{poet}]				   
+MethodSpec main = MethodSpec.methodBuilder("main")
+	.addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+	.returns(void.class)
+	.addParameter(String[].class, "args")
+	.addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!")
+	.build();
+
+TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
+	.addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+	.addMethod(main)
+	.build();
+
+JavaFile javaFile = JavaFile.builder("com.example.helloworld", helloWorld)
+	.build();
+\end{lstlisting}
+
+\begin{lstlisting}[label=lst:poet_result,
+language=java,
+firstnumber=1,
+caption=Ergebnis der Generation von Listing \ref{lst:poet} \cite{poet}]				   
+package com.example.helloworld;
+
+public final class HelloWorld {
+	public static void main(String[] args) {
+		System.out.println("Hello, JavaPoet!");
+	}
+}
+\end{lstlisting}
+
+\subsection{Generierung anderer Daten-Typen}
+
+Neben Java-Klassen besitzt der Sourcecode einer Android Applikation auch XML-Dateien und Gradle-Dateien. Für diese Typen muss eine andere Möglichkeit der Generierung gewählt werden. Hierfür liefert \acf{gemara} mit der Klasse GeneratedFile eine Möglichkeit. Diese Klasse liefert die die beiden Methoden \enquote{append(String contet)} und \enquote{appendln(String content)}. Welche es ermöglichen jedes beliebige textbasiertes File-Format zu generieren. Ein GeneratedFile Objekt erzeugt eine Datei, welcher mit den beiden erwähnten Methoden Strings hinzugefügt werden können, dies ermöglicht es jede beliebige Textstruktur zu erzeugen. Jedoch liefert diese Klasse keinerlei Validierung, die Datei wird generiert egal ob die Struktur gültig ist oder nicht.
+
+So würde Listing \ref{lst:append} eine Datei \enquote{test.xml} im Verzeichnis \enquote{\\generated} erzeugen. Diese erzeuge Datei wird in Listing \ref{list:append_result} dargestellt.
+
+\begin{lstlisting}[label=lst:append,
+language=java,
+firstnumber=1,
+caption=Beispiel eine GeneratedFile-Instanz zur Erzeugung einer XML-Datei]				   
+public class FileGenerator extends GeneratedFile {
+
+	@Override
+	public void generate() {
+		appendln("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+		appendln("<menu xmlns:android=\"http://schemas.android.com/apk/res/android\" xmlns:app=\"http://schemas.android.com/apk/res-auto\">");
+		appendln("<item android:id=\"@+id/saveItem\"");
+		appendln("android:title=\"@string/save\"");
+		appendln("app:showAsAction=\"always\"\\>");
+		appendln("<\\menu>");
+	}
+
+	@Override
+	protected String getFileName() {
+		return "test.xml";
+	}
+
+	@Override
+	protected String getDirectoryName() {
+		return "/generated";
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[label=lst:append_result,
+language=xml,
+firstnumber=1,
+caption=Beispiel für einen Quelltext]				   
+<?xml version="1.0" encoding="utf-8"?>
+	<menu xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto">
+		<item android:id="@+id/saveItem"
+			android:title="@string/save"
+			android:icon="@drawable/ic_done"
+			app:showAsAction="always"/>
+	</menu>
+\end{lstlisting}
+
+\subsection{Aufbau der zu generierenden Applikation}
+
+Um den Generator möglichst zu vereinfachen, ist es hilfreich, eine Referenzimplementierung der gewünschten Applikation mit all ihren Funktionen und Anforderungen zu entwickeln. Bei einer anschließenden Quellcode-Analyse sollte darauf geachtet werden, die einzelnen Klassen soweit zu abstrahieren, das eine Einteilung in generischen und spezifischen Quellcode erfolgen kann. Der generische Quellcode ist einfacher zu generieren, da dieser statisch ist und sich für alle folgenden Implementierungen nicht verändert. Es können auch Überlegungen angestrebt werden, diese generischen Klassen einfach im Generator abzulegen und bei Bedarf zu kopieren. Diese Methode wurde verworfen, da sich andernfalls jedes mal die kopierten Klassen via String-Manipulation bearbeitet werden müssten. Die minimale Änderung welche jedes mal getroffen werden müsste, wäre das Anpassen der Package Anweisung am Anfang der Java-Klassen und die Anpassung der Import-Anweisungen. Eine weitere Überlegung wäre es, diese Klassen in eine Android Bibliothek auszulagern, und diese dann in jede Anwendung zu importieren. Auch von dieser Möglichkeit wurde in der ersten Version abgesehen, da die Applikation bereits aus zwei Komponenten besteht. Der Applikation an sich und einer Bibliothek, welche die Android-Komponenten für die Anwendung enthält. Um die Komplexität zu reduzieren werden die benötigten generischen Klassen als Teil der eingebunden Bibliothek jedes mal aufs neue generiert.
+
+Die Referenzimplementierung für diese Arbeit beinhaltet folgende Features:
+\begin{center}
+	\begin{tabular}{p{0.4\textwidth}|p{0.4\textwidth}}
+		\textbf{Ressource: Dozent} & \textbf{Ressource: Amt} \\ \hline
+		\begin{itemize}
+			\item Anzeige einer Liste mit Dozenten
+			\item Anlegen neuer Dozenten
+			\item Anzeigen eines Dozenten in Detail
+			\item Bearbeiten eines Dozenten
+			\item Löschen eines Dozenten
+		\end{itemize}
+		&
+		\begin{itemize}
+			\item Anzeigen einer Liste von Ämtern eines Dozenten
+			\item Anlegen neuer Ämter für einen Dozent
+			\item Anzeigen eines Amtes eines Dozenten
+			\item Bearbeiten eines Amtes eines Dozenten
+			\item Löschen eines Amtes eines Dozenten
+		\end{itemize}
+		\\
+	\end{tabular}
+\end{center}
+
+Der Aufbau der Referenzimplementierung wird in Abbildung \ref{fig:lecturer} dargestellt. Das Schaubild verdeutlicht das Verhältnis von generischen (weiße Kästen) und spezifischen (rote Kästen) Klassen. Die Anzahl der gleichbleibenden Klassen ist mit etwa 60 Prozent bereits höher als der Anteil an spezifischen Klassen. Je höher der Anteil dieser unveränderlichen Klassen, desto geringer wird die Komplexität des Generators. Da der Aufwand eine spezifische Klasse zu erzeugen mehr Logik benötigt, als eine Klasse, welche immer gleich bleibt.
+
+Daneben zeigt die Abbildung \ref{fig:lecturer} auch noch die Aufteilung der Klassen in Klassen der Applikation (gestrichelte Kästen) und Klassen der Bibliothek (solide Kästen). Die Applikation an sich besteht nur aus ein paar wenigen Fragmenten und Aktivities, welche alle projektspezifisch sind. Der komplette generische Quellcode befindet sich in der Bibliothek. Des weiteren befinden sich dort auch die spezifischen Komponenten, beispielsweise der \enquote{LecturerInputView}. Diese Komponente, kann in den Fragmenten zur Bearbeitung oder Neuanlage eines Dozenten dann mit wenigen Zeilen Programmcode verwendet werden.
+
+Diese Art der Aufteilung ermöglicht es das ein Applikation Entwickler sich die Komponente, für das Anzeigen, Bearbeiten, Löschen und der Neuanlage generieren lassen kann. Diese Komponenten jedoch beliebig in seiner eigenen Applikation verwenden kann.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{images/Lecturer.png}
+		\caption{Aufbau der Referenzimplementierung}
+		\label{fig:lecturer}
+	\end{center}
+\end{figure}
+
+\subsection{Aufbau des Generators}
 
 
-
-
-
-
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{images/Welling.png}
+		\caption{Aufbau des Android-Generators Welling}
+		\label{fig:welling}
+	\end{center}
+\end{figure}
 
 
 
