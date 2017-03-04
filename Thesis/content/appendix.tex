@@ -1,0 +1,109 @@
+\chapter{Anhang}
+
+\newpage
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth, angle=90]{images/Lecturer.png}
+		\caption{Aufbau der Referenzimplementierung}
+		\label{fig:lecturer}
+	\end{center}
+\end{figure}
+
+\newpage
+
+\begin{lstlisting}[label=lst:detailview_impl,
+language=java,
+firstnumber=1,
+caption=Erstellung einer DetailView.]				   
+...
+DetailView detailView;
+
+try {
+List<Category> categories = new ArrayList<>();
+
+DisplayViewAttribute nameAttribute = new DisplayViewAttribute("name", ViewAttribute.AttributeType.TEXT);
+GroupResourceViewAttribute name = new GroupResourceViewAttribute(nameAttribute, getViewTitleAttributes());
+
+categories.add(new Category("Office", getOfficeResourceViewAttributes()));
+categories.add(new Category("Contact", getContactResourceViewAttributes()));
+categories.add(new Category("Charges", getChangeResourceViewAttributes()));
+
+detailView = new DetailView("Lecturer", name, categories);
+detailView.setImage(getImage());
+} catch (DisplayViewException ex) {
+detailView = null;
+}
+...
+private static List<ResourceViewAttribute> getOfficeResourceViewAttributes() {
+List<ResourceViewAttribute> officeAttributes = new ArrayList<>();
+
+DisplayViewAttribute addressAttribute = new DisplayViewAttribute("address", ViewAttribute.AttributeType.LOCATION);
+addressAttribute.setAttributeLabel("Address");
+addressAttribute.setClickActionAndroid(true);
+SingleResourceViewAttribute address = new SingleResourceViewAttribute(addressAttribute);
+officeAttributes.add(address);
+
+DisplayViewAttribute roomAttribute = new DisplayViewAttribute("roomNumber", ViewAttribute.AttributeType.TEXT);
+roomAttribute.setAttributeLabel("Room");
+roomAttribute.setClickActionAndroid(true);
+SingleResourceViewAttribute room = new SingleResourceViewAttribute(roomAttribute);
+officeAttributes.add(room);
+
+return officeAttributes;
+}
+...
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[label=lst:inputview_impl,
+language=java,
+firstnumber=1,
+caption=Erstellung einer InputView.]				   
+...
+List<InputViewAttribute> inputViewAttributes = new ArrayList<>();
+
+InputViewAttribute title = new InputViewAttribute("title", ViewAttribute.AttributeType.TEXT, "Title", "Title is missing!");
+title.setAttributeLabel("Title");
+inputViewAttributes.add(title);
+
+InputViewAttribute firstName = new InputViewAttribute("firstName", ViewAttribute.AttributeType.TEXT, "FirstName",
+"Firstname is missing!");
+firstName.setAttributeLabel("Firstname");
+inputViewAttributes.add(firstName);
+
+InputViewAttribute lastName = new InputViewAttribute("lastName", ViewAttribute.AttributeType.TEXT, "Lastname",
+"LastName is missing!");
+lastName.setAttributeLabel("Lastname");
+inputViewAttributes.add(lastName);
+
+InputViewAttribute mail = new InputViewAttribute("email", ViewAttribute.AttributeType.MAIL, "E-Mail", "E-Mail is missing!");
+mail.setAttributeLabel("E-Mail");
+inputViewAttributes.add(mail);
+
+InputViewAttribute phone = new InputViewAttribute("phone", ViewAttribute.AttributeType.PHONE_NUMBER, "Phone Number",
+"Phone number is missing!");
+phone.setAttributeLabel("Phone Number");
+inputViewAttributes.add(phone);
+
+InputViewAttribute address = new InputViewAttribute("address", ViewAttribute.AttributeType.TEXT, "Address", "Address is missing!");
+address.setAttributeLabel("Address");
+inputViewAttributes.add(address);
+
+InputViewAttribute room = new InputViewAttribute("roomNumber", ViewAttribute.AttributeType.TEXT, "Room", "Room is missing!");
+room.setAttributeLabel("Room");
+inputViewAttributes.add(room);
+
+InputViewAttribute weLearn = new InputViewAttribute("homepage", ViewAttribute.AttributeType.URL, "welearn",
+"welearn URL is missing!");
+weLearn.setAttributeLabel("welearn");
+inputViewAttributes.add(weLearn);
+
+InputView inputView;
+try {
+inputView = new InputView("Lecturer", inputViewAttributes);
+} catch (InputViewException ex) {
+inputView = null;
+}
+...
+\end{lstlisting}

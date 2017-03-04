@@ -2,20 +2,9 @@
 \section{\acf{rest}}\label{sec:rest}
 In dem generierten Projekt, sollen alle benötigten Daten mittels \ac{rest} von dem zugehörigen, generierten Backend geladen werden. 
 
-\ac{rest} \cite{rest_fielding} ist ein Programmierparadigma, welches sich auf folgende Prinzipien stützt:
+\ac{rest} \cite{rest_fielding} ist ein Programmierparadigma, welches sich auf folgende Prinzipien stützt: Client-Server, Zustandslose Kommunikation, Caching, Uniform Inferface Layered System und dem optionalen Prinzip Code-on-Demand.
 
-
-\begin{enumerate}
-	\item  Client-Server
-	\item  Zustandslose Kommunikation
-	\item  Caching
-	\item  Uniform Interface
-	\item  Layered System
-	\item  Code-on-Demand (optional)
-\end{enumerate}
-
-\subsection{\acf{hateoas}}\label{sec:hateoas}
-\ac{hateoas} fällt unter das Prinzip Uniform Interface. Es beschreibt, wie mit Hilfe eines endlichen Automaten eine \ac{rest}-Architektur entworfen werden kann.
+Diese Arbeit berücksichtigt vor allem \acf{hateoas} welches unter das Prinzip Uniform Interface fällt. Es beschreibt, wie mit Hilfe eines endlichen Automaten eine \ac{rest}-Architektur entworfen werden kann.
 
 Der Architekt einer \ac{rest}-konformen \acf{api} überlegt sich im voraus, wie der Applikation-Fluss in der späteren Anwendung aussehen soll. Dafür definiert er verschiedene States und welche Transitionen zum nächsten State führen.
 
@@ -25,10 +14,10 @@ Die Transition hingegen ist zum Beispiel ein Link im Link-Header der Antwort, od
 Wird das \ac{api} mit Hilfe eines endlichen Automaten entwickelt, kann diese dem Client-Entwickler als Anleitung zum erstellen seines Clients dienen. Er benötigt lediglich einen \acf{url}, welcher auf den initialen State des endlichen Automaten führt. Dieser liefert dann alle, zu diesem Zeitpunkt möglichen, Transitionen zurück. Mit Hilfe dieser Transitionen, kann sich der Entwickler dann zum nächsten State bewegen. Auch dieser State liefert neben den Ressourcen, alle möglichen weiteren Transaktionen zurück. 
 Wenn der Entwickler sich so durch die States bewegt, bekommt er die benötigten Informationen zum Aufbau und Ablauf der Applikation.
 
-Die Abbildung \ref{finite_state_machine} zeigt einen solchen Automaten. Der Einstiegspunkt ist der State \enquote{Dispatcher} dieser liefert die Tansition zum State \enquote{Collection} zurück. Dieser State, verfügt über alle Informationen die benötigt werden um eine Collection der betroffenen Ressource anzuzeigen, weiterhin verfügt er auch das Wissen, über die beiden nächsten Transitionen zu den States \enquote{Create} und \enquote{Single}. Wie der Name des States annehmen lässt, wird der State \enquote{Create} benötigt um eine neue Ressource anzulegen. Von diesem State aus kann die Anwendung nur zurück zum State \enquote{Collection}. Der State \enquote{Single} enthält alle benötigten Daten um eine einzelne Ressource anzuzeigen. Vom hier kann die Anwendung zum State \enquote{Update} oder \enquote{Delete} wechseln. Der State \enquote{Update} ermöglicht es die Ressource zu bearbeiten. Von hier kann der Nutzer der Anwendung nur zum State \enquote{Single} zurückkehren. Der State \enquote{Delete} löscht die aktuelle Ressource und liefert die Transition zum State \enquote{Collection} zurück. 
+Die Abbildung \ref{fig:finite_state_machine} zeigt einen solchen Automaten. Der Einstiegspunkt ist der State \enquote{Dispatcher} dieser liefert die Tansition zum State \enquote{Collection} zurück. Dieser State, verfügt über alle Informationen die benötigt werden um eine Collection der betroffenen Ressource anzuzeigen, weiterhin verfügt er auch das Wissen, über die beiden nächsten Transitionen zu den States \enquote{Create} und \enquote{Single}. Wie der Name des States annehmen lässt, wird der State \enquote{Create} benötigt um eine neue Ressource anzulegen. Von diesem State aus kann die Anwendung nur zurück zum State \enquote{Collection}. Der State \enquote{Single} enthält alle benötigten Daten um eine einzelne Ressource anzuzeigen. Vom hier kann die Anwendung zum State \enquote{Update} oder \enquote{Delete} wechseln. Der State \enquote{Update} ermöglicht es die Ressource zu bearbeiten. Von hier kann der Nutzer der Anwendung nur zum State \enquote{Single} zurückkehren. Der State \enquote{Delete} löscht die aktuelle Ressource und liefert die Transition zum State \enquote{Collection} zurück. 
 Dieses Beispiel verdeutlicht noch einmal bildlich, das der Entwickler nur den Einstiegspunkt \enquote{Dispatcher} kennen muss. Die Anwendung liefert selbst alle benötigten Informationen um die Daten für die Anwendung nachzuladen.
 
-\begin{figure}[H]
+\begin{figure}[H] \label{fig:finite_state_machine}
 	\begin{center}
 		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
 		semithick]
@@ -58,28 +47,28 @@ Dieses Beispiel verdeutlicht noch einmal bildlich, das der Entwickler nur den Ei
 	\end{center}
 \end{figure}
 
-\section{Android}\label{sec:android}
+\section{Entwicklung von Android CustomViews}\label{sec:custom_view}
 Die Software-Plattform Android basiert auf Linux und wird als Betriebssystem für mobile Endgeräte verwendet.
 Das System wird als Open Source Projekt von der Open Handset Alliance entwickelt \cite{open_handset_alliance}. Dabei ist ein Ziel, die Schaffung eines offenen Standards für mobile Endgeräte.
 Die Entwicklung ist nicht abgeschlossen, die aktuelle Version ist 7.0 Nougat (Stand Feb. 2017).
 
 Programme für diese Plattform nennt man Applikation oder kurz App. Eine App stellt alle nötigen Sourcen bereit, zum Beispiel den Programmcode, Layout und Grafiken, die benötigt werden, um diese App auf einem Android-Endgerät auszuführen.
 
-\subsection{Custom Views}
 Mit Hilfe von Widgets und Layouts können Views definiert werden. Diese Views stellen dann die gewünschte Information auf dem Display dar. Die bekanntesten Widgets sind: TextView, Button und EditText. Die Anordnung dieser Widgets erfolgt dann mit einem Layout. Es gibt hierbei verschiendene Layouts zur Auswahl. Beispielsweise das LinearLayout, mit horizontaler oder vertikaler Orientierung. Ein weiteres Beispiel ist das RelativeLayout.
 
 Reichen die Standart-Layouts und -Widgets nicht aus, gibt es noch die Möglichkeit eigene zu entwickeln. Dies ermöglicht diese Views um Attribute und Methoden zu erweitern. Diese können dann sowohl in der Layout-XML als auch im Programm-Code angesprochen werden.
 
 Ausgehend davon das eine Applikation eine Liste von Personen mit Hilfe einer RecyclerView anzeigen soll, gibt es die Möglichkeit eine CardView zu erzeugen, welche eine einzelne Person darstellt. Diese CardView kann in einem XML-Layout wie allgemein bekannt definiert werden. Um die View dann mit den entsprechenden Informationen zu befüllen werden im Adapter der ListView dann die einzelnen Attribute einzeln angesprochen und mit den erforderlichen Details befüllt.
 
-Alternativ besteht die Möglichkeit eine Custom-View zu erzeugen, in diesem Fall eine PersonCardView.
-Hierfür sind folgende Schritte notwendig:
+Alternativ besteht die Möglichkeit eine CustomView zu erzeugen, in diesem Fall eine PersonCardView.
+Hierfür sind folgende Schritte notwendig: Registrieren der CustomViews, Definieren des Aufbaus der CustonView erzeugen einer CustomView Klasse.
 
-\subsubsection{Registrieren der Custom-View}
-Zur Erzeugung und Registrierung von Custom-Views wird eine Datei \enquote{attrs.xml} benötigt. Diese wird liegt im Ordner \enquote{values} im Verzeichnis \enquote{res}. 
-In dieser XML-Datei werden im \enquote{resoruces}-Bereich die einzelnen Custom-Views aufgelistet. Es besteht die Möglichkeit diesen Views zusätzlich Attribute zuzuweisen. Ein Attribut besteht dabei immer aus einem Namen und einem Format. Dieses Format definiert den erwarteten Eingabewert. Es gibt folgende definierte Formate: string, integer, boolean oder color. 
+\subsection{Registrieren der CustomView}
+Zur Erzeugung und Registrierung von CustomViews wird eine Datei \enquote{attrs.xml} benötigt. Diese wird liegt im Ordner \enquote{values} im Verzeichnis \enquote{res}. 
+In dieser XML-Datei werden im \enquote{resoruces}-Bereich die einzelnen CustomViews aufgelistet. Es besteht die Möglichkeit diesen Views zusätzlich Attribute zuzuweisen. Ein Attribut besteht dabei immer aus einem Namen und einem Format. Dieses Format definiert den erwarteten Eingabewert. Es gibt folgende definierte Formate: string, integer, boolean oder color. 
 Formate können kombiniert werden. Beispielsweise das Attribut \enquote{backgroundColor} könnte so definiert werden format=\enquote{color|string}. Listing \ref{lst:attrs} zeigt den Aufbau einer \enquote{attrs.xml}-Datei.
 
+\newpage
 \begin{lstlisting}[label=lst:attrs,
 language=xml,
 firstnumber=1,
@@ -94,9 +83,9 @@ caption=Aufbau einer \enquote{attrs.xml} - Datei]
 </resources>
 \end{lstlisting}
 
-\subsubsection{Definieren des Aufbaus der PersonCardView}
+\subsection{Definieren des Aufbaus der CustomView}
 
-Da die PersonCardView eine Custom-View ist, welche aus verschiedenen Widgets zusammengesetzt wurde, müssen diese auch definiert werden. Dies geschieht wie gewohnt mit Hilfe einer XML-Datei, mit einer Ausnahme. Die Root-View ist in diesem Fall keine CardView sondern ein beliebiges anderes Layout. Da die PersonCardView von CardView erbt und somit bereits eine CardView ist.
+Da die PersonCardView eine CustomView ist, welche aus verschiedenen Widgets zusammengesetzt wurde, müssen diese auch definiert werden. Dies geschieht wie gewohnt mit Hilfe einer XML-Datei, mit einer Ausnahme. Die Root-View ist in diesem Fall keine CardView sondern ein beliebiges anderes Layout. Da die PersonCardView von CardView erbt und somit bereits eine CardView ist.
 
 \begin{lstlisting}[label=lst:personCardViewXml,
 language=xml,
@@ -124,7 +113,7 @@ caption=Aufbau der PersonCardView mit Hilfe einer XML-Datei]
 </RelativeLayout>
 \end{lstlisting}
 
-\subsubsection{Erzeugen einer PersonCardView Klasse}
+\subsection{Erzeugen einer CustomView Klasse}
 
 Hierfür wird eine neue Java-Klasse erzeugt, welche von CardView erbt. Es kann auch direkt von der View-Klasse geerbt werden und anschließend mithilfe der Methode \enquote{onDraw}, welche überschrieben werden muss, den gewünschten Inhalt anzuzeigen Sei es nun Text, Formen oder Benutzereingaben.
 In diesem Fall entspricht die CardView weitestgehend bereits den Anforderungen, so das diese genutzt wird.
@@ -158,12 +147,13 @@ public PersonCardView(Context context, AttributeSet attrs, int defStyleAttr) {
 Innerhalb der \enquote{init}-Methode wird definiert, was die View anzeigen beziehungsweise was sie tun soll. 
 In diesem Beispiel werden die verwendeten Widgets initialisiert. Besäße die PersonCardView noch eigene Attribute, so würden diese im AttributeSet übergeben und könnten daraus in ein TypedArray geschrieben werden. Dieses TypedArray muss am Ende \enquote{recycled} werden, damit es für einen späteren Aufruf wieder zur Verfügung steht.
 
+\newpage
 Jetzt wird die PersonCardView um eine Methode \enquote{setPerson} erweitert. Diese ist angelehnt an die Methode \enquote{setText} der TextView. Sie ermöglicht das der PersonCardView ein Objekt Person übergeben wird und füllt dann die entsprechenden Widgets mit den dazugehörigen übergebenen Daten.
 
 \begin{lstlisting}[label=lst:setPerson,
 language=java,
 firstnumber=1,
-caption=\enquote{setPerson} - Methode aus der PersonCardView]				   
+caption=\textit{setPerson} - Methode aus der PersonCardView.]				   
 public void setPerson(Person person) {
 	this.firstName.setText(person.getFirstName());
 	this.lastName.setText(person.getLastName());	
@@ -186,7 +176,7 @@ Bekannte \aclp{dsl} sind: \ac{sql}, Make und \acf{html}.
 Die domänenspezifischen Sprachen lassen sich in zwei Kategorien einteilen die internen und die externen \acsp{dsl}.
 
 \subsubsection{Interne \acsp{dsl}} \label{sec:intern}
-Eine interne \acs{dsl} wird auch embedded \acs{dsl} genannt, weil sie keine eigene Syntax und Grammatik entwickelt. Sie bedienen sich der Hostsprache. Das heißt sie nutzen die selbe Programmiersprache, in welcher auch das Resultat sein wird.
+Eine interne \acs{dsl} wird auch embdded \acs{dsl} genannt, weil sie keine eigene Syntax und Grammatik entwickelt. Sie bedienen sich der Hostsprache. Das heißt sie nutzen die selbe Programmiersprache, in welcher auch das Resultat sein wird.
 
 Jedoch wird die verwendete Hostsprache eingeschränkt, so nutzt die \acl{dsl} nur eine Teilmenge der Möglichkeiten \cite{dsl}. Die Nutzung von internen \acsp{dsl} sind zum Beispiel: Es muss kein neuer Compiler und Parser geschrieben werden. Auch gibt es bereits integrierte Entwicklungsumgebungen (IDEs). Außerdem muss der Programmierer keine neue Sprache lernen, um die \acl{dsl} zu nutzen, sollte er die verwendete Hostsprache bereits kennen. 
 

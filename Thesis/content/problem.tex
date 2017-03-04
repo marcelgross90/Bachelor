@@ -14,26 +14,20 @@ Dürfen bestehende Personen bearbeiten werden können?
 
 Die letzten Fragen bezogen sich auf mögliche Funktionalitäten der Anwendung. Im letzten Bereich, gibt es noch Fragen, bezüglich des Ablaufes in einer Applikation. Welche View kommt nach welcher Aktion, wie sieht der Flow innerhalb einer Applikation aus.
 
+\newpage
 Die oben genannten Fragen sind nur Beispiele für Überlegungen welche betrieben werden müssen um eine Android Anwendung zu entwickeln, das unterscheidet sich nicht vom normalen Entwicklungsprozess einer Anwendung.
 Die große Frage hinter den aufgezählten Problemstellungen ist, wie können diese Anforderungen soweit abstrahiert werden, das diese Möglichst einfach mit einer \acf{dsl} beschrieben werden können.
 
 Wurde ein geeignetes Meta-Model gefunden, so bleibt noch der Aspekt, dass der Software-Generator als Modul von \acf{gemara} entwickelt werden soll. \acs{gemara} bringt ein bereits bestehende Meta-Model und wiederum eigene Anforderungen mit sich. Durch den auf \acf{rest}, basierenden Architekturstil bringt es beispielsweise die Anforderung mit, dass eine Anwendung mit Hilfe eines endlichen Automaten designed werden soll. Das bedeutet, dass die States und Transitionen des endlichen Automaten den Ablauf in der Applikaition vorgeben.
 Es wäre außerdem noch wünschenswert, dass die Erweiterung des Meta-Models nicht ausschließlich für Android Applikationen, sondern für jegliche Client Anwendungen genutzt werden kann.
 
-Aus den oben erörterten Fragen und Problemstellungen, welche nur beispielhaft und nicht komplett sind, lassen sich nun folgende Kategorien ableiten.
-
-\begin{itemize}
-	\item Beschreibung des \acl{ui}.
-	\item Beschreibung der Aktionen bei Klick.
-	\item Beschreibung der Architektur und des Ablaufs innerhalb der Applikation.
-	\item Kompatibilität mit \acs{gemara} und andern möglichen Clients. 
-\end{itemize}
+Aus den oben erörterten Fragen und Problemstellungen, welche nur beispielhaft und nicht komplett sind, lassen sich nun folgende Kategorien ableiten: die Beschreibung des \acl{ui}, die Beschreibung der Aktionen bei Klick, die Beschreibung der Architektur und des Ablaufs innerhalb der Applikation und die Kompatibilität mit \acs{gemara} und andern möglichen Clients. 
 
 Diese müssen für das Design und die Entwicklung eines Software-Generators für Android Applikationen Beachtung finden.
 
 \section{Design des Software-Generators}
 
-Dieses Kapitel zeigt Probleme und Fragestellungen rund um den Generator an sich auf. Selbst wenn ein ein geeignetes Meta-Model besteht, heißt dass noch nicht, dass es auch einen funktionierenden Software-Generator gibt. Es gibt noch zu viele offene Punkte, wobei der Einfachste lautet: Muss alles generiert werden, oder gibt es Dateien, welche kopiert werden können? Macht es Sinn, die Android Anwendung vorher soweit zu abstrahieren, das es möglichst wenig spezifischen Code und viel generischen Code gibt? Wie wird der Generator gesteuert, können die Dateien einfach so generiert werden, oder gibt es Abhängigkeiten untereinander? Was gibt es beim generieren von Klassen zu beachten? Beispielsweise müssen Activies in der \enquote{AndroidManifest.xml} registriert werden oder Strings sollten in einer \enquote{strings.xml} stehen und im Programmcode sollte nur mit Ids darauf referenziert werden.
+Dieses Kapitel zeigt Probleme und Fragestellungen rund um den Generator an sich auf. Selbst wenn ein ein geeignetes Meta-Model besteht, heißt dass noch nicht, dass es auch einen funktionierenden Software-Generator gibt. Es gibt noch zu viele offene Punkte, wobei der Einfachste lautet: Muss alles generiert werden, oder gibt es Dateien, welche kopiert werden können? Macht es Sinn, die Android Anwendung vorher soweit zu abstrahieren, das es möglichst wenig spezifischen Code und viel generischen Code gibt? Wie wird der Generator gesteuert, können die Dateien einfach so generiert werden, oder gibt es Abhängigkeiten untereinander? Was gibt es beim generieren von Klassen zu beachten? Beispielsweise müssen Activies in der \textit{AndroidManifest.xml} registriert werden oder Strings sollten in einer \textit{strings.xml} stehen und im Programmcode sollte nur mit Ids darauf referenziert werden.
 
 Der Ablauf, wie wann was generiert wird muss teilweise im Meta-Model und teilweise im Generator selbst festgelegt werden. Da stellt sich wieder die Frage, was wird wo geregelt? 
 
