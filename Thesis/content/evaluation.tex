@@ -1,27 +1,12 @@
 \chapter{Evaluierung anhand einer Beispielanwendung}
-Dieses Kapitel befasst sich mit den Vorteilen und Nachteilen des Generierens einer Android Applikation, nach dem in dieser Arbeit vorgestellten Methode. Als Beispielanwendung wird die Referenzimplementierung etwas genauer vorgestellt und diese anschließend mit Hilfe des Generators erzeugt.
-
-\section{Vorstellung der Beispielanwendung}
-
-Die Beispielanwendung soll dem Nutzer die Möglichkeit geben, die Dozenten der Fakultät Informatik der FHWS, und deren Ämter einzusehen, einen neuen Dozenten anzulegen, einen existierenden Dozenten zu bearbeiten oder zu löschen. Neben den Dozenten, soll es weiterhin möglich sein die Ämter eines Dozenten einzusehen, zu bearbeiten, neu anzulegen oder zu löschen.
-
-Die Abbildung \ref{fig:api} zeigt das \textit{\acf{api}}, welches für die Beispielanwendung benötigt wird. Dieses\textit{ \ac{api}} spiegelt alle Funktionen und den Ablauf innerhalb der Applikation wieder. Die Beispielanwendung wird auf diesem Funktionsumfang beschränkt sein.
-
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[width=\textwidth]{images/api.png}
-		\caption{Darstellung des \textit{\ac{api}} der Beispielanwendung.}
-		\label{fig:api}
-	\end{center}
-\end{figure}
+Dieses Kapitel befasst sich mit Pro und Contra des Generierens einer Android Applikation, nach dem in dieser Arbeit vorgestellten Methode.
+Hierfür wird die Erstellung und die Benutzung des \textit{Meta-Modells} genauer beschrieben, dabei werden die Vorteile und Nachteile des Modells dargestellt. Anschließend wird die Komplexität der Anwendung genauer betrachtet und die Zeitaufwände für die Entwicklung und Wartung des Generators erörtert.
 
 \section{Erstellung und Nutzung des Meta-Modells}
 
 Im Vergleich zum Umfang der Entwicklung einer kompletten Anwendung, reduziert die Nutzung des Generators den Aufwand erheblich. Die im Anhang befindlichen Listings \ref{lst:detailview_impl}, \ref{lst:inputview_impl} und \ref{lst:cardview_impl} zeigen den kompletten Aufwand der Beschreibung der Anwendung. Auch wenn diese nur ein Teil der benötigten Informationen sind, kann der Rest vernachlässigt werden. Der zusätzlich benötigte Teil ist die Kernbeschreibung der Generierung des \textit{Backends}, so ist dieser semantisch stark diesem Bereich zugeordnet und dort essentiell. Durch diesen Umstand werden diese Informationen als gegeben betrachtet.
 
 Die Fehleranfälligkeit bei der Nutzung des \textit{Meta-Modells} im Gegensatz zur Entwicklung einer kompletten Anwendung ist wesentlich geringer. Die Erzeugung des \textit{Meta-Modells} ist sehr viel eingeschränkter in seinen Möglichkeiten, dadurch wird die Möglichkeit, Fehler zu machen bedeutend reduziert. Das \textit{Meta-Modell} liefert in gewisser weise einen Plan, wie etwas beschrieben werden muss. Bei der Eigenentwicklung einer Anwendung ist der Entwickler viel freier in der gesamten Handhabe, was das Fehlerpotenzial erhöht.
-
-\newpage
 
 Jedoch bringt diese Einschränkung durchaus auch Nachteile mit sich. So ist es im Moment beispielsweise nur möglich einer Ressource ein oder kein Bild zuzuweisen. Auch kann der Nutzer lediglich bestimmen, ob dieses Bild in der Karte einer Ressource, in der Liste mit allen Ressourcen dieser Art, auf der linken oder rechten Seite angezeigt werden soll. Für die Detail-Ansicht hat der Nutzer des Generators keine Möglichkeit zu bestimmen wie das Bild angezeigt werden soll.
 Auch bleibt zur Anzeige der Informationen einer Ressource lediglich die Möglichkeit diese in Listenform darzustellen. Sprich er kann nur die Reihenfolge und eine Mögliche Gruppierung bestimmen und in der Detail-Ansicht müssen diese Informationen zusätzlich in Kategorien gruppiert sein. 
@@ -34,8 +19,6 @@ Der gesamte Generator ist in seiner Entwicklung sehr zeitaufwändig. Durch das A
 
 Der Aufwand für die Wartung des Generators ist auch ziemlich hoch. Da Android sich ständig weiterentwickelt und eine Umstellung auf das \textit{OpenJDK} erfolgen soll \cite{jdk}, ist es anzunehmen, das sich in Zukunft auch die Art und Weiße der Android Programmierung ändern wird. Sollte dies der Fall sein, dann müssten im kompletten Generator Anpassungen gemacht werden. Diese sind sehr zeitaufwändig, da der Generator, wie Abbildung \ref{fig:welling} verdeutlicht, sehr komplex ist.
 
-Auch ist die Komplexität der erzeugten Applikation sehr hoch. Um die Komplexität des Generators zu reduzieren, wurde das mit der Komplexität der Applikation bezahlt. Auch das Vorgehen, dass nicht eine Anwendung im üblichen Sinn erzeugt wird, sondern das Komponenten in einer Bibliothek erzeugt werden, steigert den Umfang der Applikation. Bei hardware-schwächeren Endgeräten, könnte dieser Umstand zu Problemen mit der Performance führen. 
+Auch ist die Komplexität der erzeugten Applikation sehr hoch. Um die Komplexität des Generators zu reduzieren, wurde das mit der Komplexität der Applikation bezahlt. Diese Komplexität rührt daher, dass zur Einteilung in spezifische und generische Codebereiche, der vorhandene Programmcode so weit wie möglich abstrahiert wurde. Diese Abstraktion führt dazu das die Anzahl der benötigten Klassen mindestens verdoppelt, da man davon ausgehen kann, das zu jeder spezifischen Klasse mindestens eine generische Klasse erzeugt werden muss. Es können zwar einige abstrakten Klassen von mehreren spezifischen Klassen benutzt werden, jedoch ist in diesem Beispiel diese Wiederverwendung vernachlässigbar. Da die Anzahl der mehrfach benutzen abstrakten Klassen gegenüber dem direkten Vergleich von spezifischen zu generischen Klassen kaum ins Gewicht fällt. Mit der Anzahl der Klassen, haben sich auch die Abhängigkeiten innerhalb der Klassen erhöht. Dadurch ist beispielsweise die Fehleranalyse vor allem während der Entwicklung sehr aufwändig. Auch das Vorgehen, dass nicht eine Anwendung im üblichen Sinn erzeugt wird, sondern das Komponenten in einer Bibliothek erzeugt werden, steigert den Umfang der Applikation. Bei hardware-schwächeren Endgeräten, könnte dieser Umstand zu Problemen mit der Performance führen. Diese Performanceprobleme entstehen durch die größere Verschachtlung einzelner \textit{View}-Klassen. Die \textit{View}-Klasse wir oft ohne das Bewusstsein, um deren Komplexität verwendet. Diese Klasse hat die Aufgabe den anzuzeigenden Inhalt soweit aufzubereiten um ihn auf dem Display anzuzeigen. Verschachtelt man diese Klasse, wird der Rechenaufwand für das Endgerät bedeutend erhöht. Aus diesem Grund sind flache \textit{View}-Strukturen vorzuziehen. Deshalb benötigt das Endgerät mehr Rechenleistung um die Anwendung ohne Ruckler darzustellen.
 
-Dadurch das die Anwendung weitestgehend abstrahiert wurde, blieb eine größere Verschachtlung einzelner \textit{View}-Klassen nicht aus. Deshalb benötigt das Endgerät mehr Rechenleistung um die Anwendung ohne Ruckler darzustellen.
-
-Gegen den großen zeitlichen Aufwand spricht die Einsparung von Zeit beim Generieren neuer Applikationen. Die Beschreibung eines Meta-Modells mit allen benötigten Angaben und Informationen, welches die Erzeugung einer Backend-Anwendung inkludiert, benötigt nur noch ungefähr eine Stunde. 
+Gegen den großen zeitlichen Aufwand spricht die Einsparung von Zeit beim Generieren neuer Applikationen. Die Beschreibung eines \textit{Meta-Modells} mit allen benötigten Angaben und Informationen, welches die Erzeugung einer Backend-Anwendung inkludiert, benötigt nur noch ungefähr eine Stunde. 

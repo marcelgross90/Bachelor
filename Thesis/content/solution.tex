@@ -46,10 +46,12 @@ Ein weiterer Nachteil ist die Beschränkung des Modells auf Android. Wird das \t
 
 \subsection{Allgemeine Erweiterungen des \textit{Enfield-Modell}s}
 
-In dieser Arbeit wurde sich für die Variante entschieden, das \textit{Enfield-Modell} an ihren \textit{SingleResourceViews} zu erweitern.
-Wird diese Klasse um die  Attribute, welche benötigt werden erweitert, so erhält der Generator die nötigen Informationen immer zur rechten Zeit.
+In dieser Arbeit wurde sich für die Variante entschieden, das \textit{Enfield-Modell} an geeigneter Stelle zu erweitern.
+Diese Stelle befindet sich in den einzelnen \textit{States}. Jede Instanz des \textit{AbstractState} besitzt ein Attribut \textit{SingleResourceView}. Diese Klasse wird um die  Attribute, welche benötigt werden erweitert. In der Abbildung \ref{fig:enfield-model-extended} ist der vereinfachte Aufbau des \textit{AbstractStates} und einer \textit{SingleResourceView} zu sehen.
 
 Wird beispielsweise eine Instanz eines \textit{GetPrimarySingleResourceByIdStates} erzeugt, und dessen \textit{SingleResourceView} enthält alle notwendigen Informationen, um die \textit{View} in der Android Anwendung zu beschreiben. Kann der Generator mit Hilfe der \textit{Transitionen} über die \textit{States} iterieren und verfügt an jedem \textit{State} über alle benötigten Informationen, um den aktuellen \textit{State} in der Anwendung generieren zu lassen.
+
+\newpage
 
 Bei dieser Methode befinden sich alle \textit{State}-spezifischen Daten direkt am \textit{State}. Jedoch gibt es neben diesen spezifischen Daten auch Daten, welche die komplette Applikation betreffen. Hierfür muss das \textit{Enfield-Modell} noch an einer andern Stelle erweitert werden. 
 Es erscheint sinnvoll die Erweiterung direkt in der Modell-Klasse vorzunehmen. So kann der Generator schon am Anfang auf diese Daten zugreifen und diese verarbeiten.
@@ -193,8 +195,6 @@ Es gibt zwei Ausprägungsarten: \textit{SingleResourceViewAttribute} und \textit
 
 Bei der \textit{SingleResourceViewAttribute} ist diese Instanz von einem \textit{AbstractViewAttribute} das einzige Attribut, beim \textit{GroupedResourceViewAttribute} wiederum gibt es eine Liste von diesen \textit{DisplayViewAttributen}, welche dann die anzuzeigenden Informationen widerspiegeln. Weitergehend besitzt das \textit{GroupedResourceViewAttribute} auch noch ein \textit{DisplayViewAttribute}, welches die neu entstandene Gruppierung beschreiben soll.
 
-\newpage
-
 Ein \textit{DisplayViewAttribute} besitzt nun die Möglichkeit, Schriftgröße und -farbe zu definieren. Die angegebene Farbe muss eine in hexadezimaler Darstellung angegeben werden, wird keine Farbe mitgegeben, wird die Defaultfarbe der Anwendung genommen. In der Regel ist diese Schwarz.  Die Schriftgröße wiederum ist auf 3 Stufen beschränkt. Es gibt die Möglichkeit den Text in klein, normal und groß darzustellen. Per default ist normal eingestellt. Aus der Oberklasse \textit{AbstractViewAttribute} besitzt das \textit{DisplayViewAttribute} noch die Attribute \textit{attributeName}, dieses muss exakt so heißen wie in der Definition der Ressource.
 Mit dem \textit{attributeLabel} kann angegeben werden, wie dieses Attribut in der \textit{View} angezeigt werden soll. Die Abbildung \ref{fig:detail} zeigt die Verwendung von den Labels, vor beispielsweise der E-Mailadresse des Dozenten steht \textit{E-Mail}, dieser String entspricht dem Label des Attributes. Weiterhin muss angeben werden von welchem Typ das aktuell beschriebene Attribut ist.
 Dies geschickt mit dem Attribut \textit{AttributeType}. Es gibt folgende mögliche Typen: \textit{HOME}, \textit{MAIL}, \textit{LOCATION}, \textit{PICTURE}, \textit{PHONE\_NUMBER}, \textit{TEXT}, \textit{URL}, \textit{DATE}, \textit{SUBRESOURCE}. Jeder Typ bestimmt die Eigenschaften des Attributes. Über diesen wird bestimmt welches Icon in der Karte vor dem entsprechenden Attribut angezeigt wird oder welche Aktion bei Klick ausgeführt werden soll. So wird bei einem Klick auf ein Attribut vom Typ \textit{LOCATION} versucht die Anwendung \textit{Maps} zu öffnen und den angezeigten Standort dort anzuzeigen. Ist das Attribute vom Typ \textit{SUBRESOURCE} so wird für dieses Attribut ein \textit{Button} angezeigt, dieser ermöglicht es dann zu der entsprechenden Subressource zu wechseln. Diese Klick-Aktionen müssen jedoch mit dem Attribut \textit{clickActionAndroid} erst aktiviert werden.
@@ -280,8 +280,6 @@ public final class HelloWorld {
 
 Neben Java-Klassen besitzt der Quellcode einer Android Applikation auch \textit{XML}-Dateien und \textit{Gradle}-Dateien. Für diese Typen muss eine andere Möglichkeit der Generierung gewählt werden. Hierfür liefert \acf{gemara} mit der Klasse \textit{GeneratedFile} eine Möglichkeit. Diese Klasse besitzt die beiden Methoden \textit{append(String contet)} und \textit{appendln(String content)}. Welche es ermöglichen jedes beliebige textbasiertes File-Format zu generieren. Ein \textit{GeneratedFile} Objekt erzeugt eine Datei, welcher mit den beiden erwähnten Methoden Strings hinzugefügt werden können. Dies ermöglicht es jede beliebige Textstruktur zu erzeugen. Jedoch liefert diese Klasse keinerlei Validierung, die Datei wird generiert egal ob die Struktur gültig ist oder nicht.
 
-\newpage
-
 Listing \ref{lst:append} erzeugt eine in Listing \ref{lst:append_result} dargestellte Datei \textit{test.xml} unter dem Verzeichnis \textit{generated}.
 \begin{lstlisting}[label=lst:append,
 language=java,
@@ -311,6 +309,8 @@ public class FileGenerator extends GeneratedFile {
 }
 \end{lstlisting}
 
+\newpage
+
 \begin{lstlisting}[label=lst:append_result,
 language=xml,
 firstnumber=1,
@@ -326,37 +326,12 @@ caption=Erzeugte \textit{XML}-Datei durch den Quellcode von Listing \ref{lst:app
 \end{lstlisting}
 
 \subsection{Aufbau der zu generierenden Applikation}
+Um eine Android Applikation generieren zulassen müssen nicht alle Klassen, generiert werden. Es können auch Überlegungen angestrebt werden, generischen Klassen einfach im Generator abzulegen und bei Bedarf zu kopieren. Diese Methode wurde verworfen, da andernfalls jedes mal die kopierten Klassen via String-Manipulation bearbeitet werden müssten. Die minimale Änderung welche jedes mal getroffen werden müsste, wäre das Anpassen der \textit{Package} Anweisung am Anfang der Java-Klassen und die der \textit{Import}-Anweisungen. Eine weitere Überlegung wäre es, diese Klassen in eine Android Bibliothek auszulagern, und diese dann in jede Anwendung zu importieren. Auch von dieser Möglichkeit wurde in der ersten Version abgesehen, da die Applikation bereits aus zwei Komponenten besteht. Der Applikation an sich und einer Bibliothek, welche die Android-Komponenten für die Anwendung enthält. Um die Komplexität zu reduzieren werden die benötigten generischen Klassen als Teil der eingebunden Bibliothek jedes mal aufs neue generiert.
 
-Um einen Generator zu entwickeln, ist es hilfreich, eine Referenzimplementierung der gewünschten Applikation mit all ihren Funktionen und Anforderungen zu entwickeln. Bei einer anschließenden Quellcode-Analyse sollte darauf geachtet werden, dass die einzelnen Klassen weitestgehend abstrahiert sind und eine Einteilung in generischen und spezifischen Quellcode erfolgen kann. Der generische Quellcode ist einfacher zu generieren, da dieser statisch ist und sich für alle folgenden Implementierungen nicht verändert. Es können auch Überlegungen angestrebt werden, diese generischen Klassen einfach im Generator abzulegen und bei Bedarf zu kopieren. Diese Methode wurde verworfen, da andernfalls jedes mal die kopierten Klassen via String-Manipulation bearbeitet werden müssten. Die minimale Änderung welche jedes mal getroffen werden müsste, wäre das Anpassen der \textit{Package} Anweisung am Anfang der Java-Klassen und die der \textit{Import}-Anweisungen. Eine weitere Überlegung wäre es, diese Klassen in eine Android Bibliothek auszulagern, und diese dann in jede Anwendung zu importieren. Auch von dieser Möglichkeit wurde in der ersten Version abgesehen, da die Applikation bereits aus zwei Komponenten besteht. Der Applikation an sich und einer Bibliothek, welche die Android-Komponenten für die Anwendung enthält. Um die Komplexität zu reduzieren werden die benötigten generischen Klassen als Teil der eingebunden Bibliothek jedes mal aufs neue generiert.
+%todo problem mit bild aus dem anhang
+Der Aufbau und der Funktionsumfang der Referenzimplementierung wird in Kapitel \ref{sec:ref_impl} vorgestellt. Das Schaubild \ref{fig:lecturer_structure} aus dem Anhang verdeutlicht das Verhältnis von generischen (weiße Kästen) und spezifischen (rote Kästen) Klassen. Die Anzahl der gleichbleibenden Klassen ist mit etwa 60 Prozent bereits höher als der Anteil an spezifischen Klassen. Je höher der Anteil dieser unveränderlichen Klassen, desto geringer wird die Komplexität des Generators. Da der Aufwand eine spezifische Klasse zu erzeugen mehr Logik benötigt, als eine Klasse, welche immer gleich bleibt.
 
-Die Referenzimplementierung für diese Arbeit beinhaltet folgende Features:
-\begin{center}
-	\begin{tabular}{p{0.4\textwidth}|p{0.4\textwidth}}
-		\textbf{Ressource: Dozent} & \textbf{Ressource: Amt} \\ \hline
-		\begin{itemize}
-			\item Anzeige einer Liste mit Dozenten
-			\item Anlegen neuer Dozenten
-			\item Anzeigen eines Dozenten in Detail
-			\item Bearbeiten eines Dozenten
-			\item Löschen eines Dozenten
-		\end{itemize}
-		&
-		\begin{itemize}
-			\item Anzeigen einer Liste von Ämtern eines Dozenten
-			\item Anlegen neuer Ämter für einen Dozent
-			\item Anzeigen eines Amtes eines Dozenten
-			\item Bearbeiten eines Amtes eines Dozenten
-			\item Löschen eines Amtes eines Dozenten
-		\end{itemize}
-		\\
-	\end{tabular}
-\end{center}
-
-\newpage
-
-Der Aufbau der Referenzimplementierung wird in Abbildung \ref{fig:lecturer} dargestellt. Das Schaubild verdeutlicht das Verhältnis von generischen (weiße Kästen) und spezifischen (rote Kästen) Klassen. Die Anzahl der gleichbleibenden Klassen ist mit etwa 60 Prozent bereits höher als der Anteil an spezifischen Klassen. Je höher der Anteil dieser unveränderlichen Klassen, desto geringer wird die Komplexität des Generators. Da der Aufwand eine spezifische Klasse zu erzeugen mehr Logik benötigt, als eine Klasse, welche immer gleich bleibt.
-
-Daneben zeigt die Abbildung \ref{fig:lecturer} aus dem Anhang, auch noch die Aufteilung der Klassen in Klassen der Applikation (gestrichelte Kästen) und Klassen der Bibliothek (solide Kästen). Die Applikation an sich besteht nur aus ein paar wenigen \textit{Fragmenten} und \textit{Aktivities}, welche alle projektspezifisch sind. Der komplette generische Quellcode befindet sich in der Bibliothek. Des weiteren befinden sich dort auch die spezifischen Komponenten, beispielsweise der \textit{LecturerInputView}. Diese Komponente, kann in den Fragmenten zur Bearbeitung oder Neuanlage eines Dozenten dann mit wenigen Zeilen Programmcode verwendet werden.
+Daneben zeigt die Abbildung, auch noch die Aufteilung der Klassen in Klassen der Applikation (gestrichelte Kästen) und Klassen der Bibliothek (solide Kästen). Die Applikation an sich besteht nur aus ein paar wenigen \textit{Fragmenten} und \textit{Aktivities}, welche alle projektspezifisch sind. Der komplette generische Quellcode befindet sich in der Bibliothek. Des weiteren befinden sich dort auch die spezifischen Komponenten, beispielsweise der \textit{LecturerInputView}. Diese Komponente, kann in den Fragmenten zur Bearbeitung oder Neuanlage eines Dozenten dann mit wenigen Zeilen Programmcode verwendet werden.
 
 Diese Art der Aufteilung ermöglicht es das ein Applikation Entwickler sich die Komponente, für das Anzeigen, Bearbeiten, Löschen und der Neuanlage generieren lassen kann. Diese Komponenten jedoch beliebig in seiner eigenen Applikation verwenden kann.
 
@@ -409,6 +384,7 @@ Neben dem Kopieren, werden sowohl für die Applikation, Bibliothek als auch für
 
 In der Sektion der Vorbereitung für die Applikation, werden Dateien erzeugt, die jede Applikation benötigt unabhängig von ihrem Aufbau oder den Features. Es wird beispielsweise die \textit{MainActivity} erzeugt, oder die \textit{XML}-Dateien, welche für die \textit{Transitions-Animationen} verantwortlich sind. Auch die \textit{styles.xml} wird erzeugt. Am Schluss werden noch die \textit{mipmap}-Ordner an dir richtige Stelle kopiert.
 
+%ref{fig:lecturer}
 Der Bereich, welcher die Bibliothek initialisiert, ist der Größte. Er generiert alle generell benötigten Klassen. Darunter fallen die Klassen der Netzwerkkommunikation, die Klasse für das Link-Objekt sowie das Interface \textit{Resource}. Es werden des weiteren auch die größten Teile der in der Abbildung \ref{fig:lecturer} abgebildeten generischen Klassen erzeugt. Auch werden die grundsätzlichen \textit{CustomViews} bereits erzeugt. Dazu gehören auch die benötigten \textit{XML}-Dateien. So kann für die Bibliothek beispielsweise das Manifest bereits erzeugt werden, da hier keine \textit{Activities} registriert werden müssen. Nach dem Ausführen des \textit{PrepareLibGenerators} steht, das Grundgerüst der Bibliothek. Diese enthält nun alle bereits vorab erzeugbaren und benötigten Dateien, welche unabhängig von der gewünschten Funktion der Applikation benötigt werden. 
 
 Dieser gesamte Teilbereich des Projekts befasst sich damit ein Grundgerüst für die komplette Android Applikation zu erzeugen und vorab bereits alle benötigten Dateien aufzubereiten. Die generierten Klassen haben jedoch noch keinerlei Programmlogik, die den spezifischen Ablauf der zu generierenden Anwendung steuert.

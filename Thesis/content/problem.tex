@@ -1,34 +1,135 @@
 \chapter{Problemstellung} \label{ch:problem}
-\section{Meta-Modell und Android Applikation spezifisches}
-Bei der Generierung von Android Applikationen müssen Besonderheiten berücksichtigen. Angefangen bei den einfachsten Möglichkeiten zur Darstellung von Schrift. In welcher Farbe oder Größe sollte sie dargestellt werden? 
-Wie soll eine \textit{View} an sich aufgebaut sein? Wie sind die zu repräsentierenden Daten aufbereitet?
-Soll der Vorname eine Zeile über dem Nachnamen stehen? Oder soll es genau umgekehrt sein? Es gibt auch noch die Möglichkeit der Kombination. Vorname und Nachname beziehungsweise Nachname und Vorname in einer Zeile. 
+In diesem Kapitel wird die Referenzanwendung für diese Arbeit vorgestellt. Es wird darauf eingegangen, das das benötigte \textit{\acf{api}} mit Hilfe von \acf{gemara} generiert wurde und wie das dazu benötigte \textit{Enfield-Meta-Modell} aussieht. Nach der Vorstellung des Modells wird auch das erzeugte \textit{\acf{api}} dargestellt. Anschließend werden die Problemstellungen in Bezug auf die Kompatibilität des zu entwickelnden Software-Generators mit \ac{gemara}, dem Aufbau und Design der Android Anwendung sowie des Design des Software-Generators selbst eingegangen.
 
-Was soll dargestellt werden? Gehen wir vom Beispiel Person aus, soll nur der komplette Name dargestellt werden oder nur ein Teil des Namens? Was ist mit dem Geburtstag oder dem Wohnort? Gibt es zu der Person ein Profilbild? Was passiert wenn nicht alle Personen ein Profilbild haben, aber es soll ein Profilbild angezeigt werden? 
-Das sind ein Teil der Fragen, die sich rein auf das \acf{ui} beziehen. Es gibt aber noch weitere Fragen die gestellt werden müssen. Soll es die Möglichkeit geben, das Aktionen beim Klick auf beispielsweise die Telefonnummer, E-Mail oder Homepage einer Person, ausgeführt werden?
+\section{Vorstellung der Referenzanwendung}
+Die Beispielanwendung soll dem Nutzer die Möglichkeit geben, die Dozenten der Fakultät Informatik der FHWS, und deren Ämter einzusehen, einen neuen Dozenten anzulegen, einen existierenden Dozenten zu bearbeiten oder zu löschen. Neben den Dozenten, soll es weiterhin möglich sein die Ämter eines Dozenten einzusehen, zu bearbeiten, neu anzulegen oder zu löschen.
 
-Oder noch elementarer, welche Ansichten soll es überhaupt geben? Listen von Personen, Detailansichten und so weiter. 
-Soll es die Möglichkeit geben neue Personen anzulegen, wenn ja was sind Pflichtangaben zu einer Person?
-Dürfen bestehende Personen bearbeiten werden können?
+\subsection{Android Applikation}\label{sec:ref_impl}
+Um einen Generator zu entwickeln, ist es hilfreich, eine Referenzimplementierung der gewünschten Applikation mit all ihren Funktionen und Anforderungen zu entwickeln. Bei einer anschließenden Quellcode-Analyse sollte darauf geachtet werden, dass die einzelnen Klassen weitestgehend abstrahiert sind und eine Einteilung in generischen und spezifischen Quellcode erfolgen kann. Der generische Quellcode ist einfacher zu generieren, da dieser statisch ist und sich für alle folgenden Implementierungen nicht verändert. 
 
-Die letzten Fragen bezogen sich auf mögliche Funktionalitäten der Anwendung. Im nächsten Bereich, gibt es noch Fragen, bezüglich des Ablaufes in einer Applikation. Welche View kommt nach welcher Aktion, wie sieht der Ablauf innerhalb einer Applikation aus.
+Für die Realisierung der gewünschten Funktion werden folgende \textit{Views} benögt: eine \textit{RecyclerView}, welche alle Dozenten in jeweils einer eigenen \textit{CardView} darstellen, eine \textit{DetailView} diese zeigt einen einzelnen Dozenten und all seine Informationen, jeweils eine \textit{InputView} zur Erzeugung eines neuen Dozenten beziehungsweise zum bearbeiten eines existierenden Dozenten, eine \textit{RecyclerView}, welche die Ämter eines Dozenten anzeigt, die Detail-Ansicht eines Amtes sowie wiederum jeweils eine \textit{View} zum bearbeiten beziehungsweise zur Neuanlage eines Amtes.
+
+\subsection{\textit{Enfield-Meta-Modell} der Referenzimplementierung} \label{sec:enfield_intro}
+Dieses Kapitel befasst sich mit dem benötigten \textit{Enfield-Meta-Modell}. Dafür werden Quellcode-Beispiele aufgezeigt und auf deren Besonderheiten eingegangen. In diesem Kapitel wird nicht das ganze Modell vorgestellt, nur die wichtigsten Aspekte daraus. Das komplette Modell kann im Anhang unter Listing \ref{lst:enfield_model} eingesehen werden.
+
+In Listing \ref{lst:constructor_enfield} wird die Initialisierung des \textit{Enfield-Modells} dargestellt. Zusätzlich werden die Attribute \textit{producerName}, \textit{packagePrefix} und der Name des Projektes festgelegt.
+
+\begin{lstlisting}[label=lst:constructor_enfield,
+language=java,
+firstnumber=1,
+caption=Initialisierung des \textit{Enfield-Meta-Modells}.]	
+public MyEnfieldModel() {
+	this.metaModel = new Model();
+
+	this.metaModel.setProducerName("fhws");
+	this.metaModel.setPackagePrefix("de.fhws.applab.gemara");
+	this.metaModel.setProjectName("Lecturer");
+}
+\end{lstlisting}
+
+Das Listing \ref{lst:lecturer_res} zeigt wie eine Ressource angelegt wird, welche einen Dozenten darstellen sollen. Der Ressource wird einen Namen zugewiesen und bekommt einen \textit{MediaType}. Außerdem werden alle Attribute in dem sie benannt und einen Datentyp zugewiesen bekommen definiert.
+ Da eines der Attribute eines Dozenten seine Ämter sind, welche als Subressource der \textit{SingleResource Lecturer} dargestellt ist, ist es wichtig, dass das \textit{Enfield-Modell} ebenfalls eine \textit{SingleResource} für diese Ämter besitzt. Dies wird hier durch den Methodenaufruf \textit{createSingleResourceCharge()} sichergestellt.
 
 \newpage
-Die oben genannten Fragen sind nur Beispiele für Überlegungen welche betrieben werden müssen um eine Android Anwendung zu entwickeln, das unterscheidet sich nicht vom normalen Entwicklungsprozess einer Anwendung.
-Die große Frage hinter den aufgezählten Problemstellungen ist, wie können diese Anforderungen soweit abstrahiert werden, dass diese möglichst einfach mit einer \acf{dsl} beschrieben werden können.
 
-Wurde ein geeignetes Meta-Modell gefunden, so bleibt noch der Aspekt, dass der Software-Generator als Modul von \acf{gemara} entwickelt werden soll. \acs{gemara} bringt ein bereits bestehende Meta-Modell und wiederum eigene Anforderungen mit sich. Durch den auf \acf{rest}, basierenden Architekturstil bringt es beispielsweise die Anforderung mit, dass eine Anwendung mit Hilfe eines endlichen Automaten designet werden soll. Das bedeutet, dass die States und Transitionen des endlichen Automaten den Ablauf in der Applikation vorgeben.
-Es wäre außerdem noch wünschenswert, dass die Erweiterung des Meta-Modells nicht ausschließlich für Android Applikationen, sondern für jegliche Client Anwendungen genutzt werden kann.
+\begin{lstlisting}[label=lst:lecturer_res,
+language=java,
+firstnumber=1,
+caption=Erzeugung der \textit{SingleResource} \textit{Lecturer}. ]
+this.metaModel.addSingleResource("Lecturer");
 
-Aus den oben erörterten Fragen und Problemstellungen, welche nur beispielhaft und nicht komplett sind, lassen sich nun folgende Kategorien ableiten: Beschreibung des \acl{ui}, Beschreibung der Aktionen bei Klick, Beschreibung der Architektur und des Ablaufs innerhalb der Applikation sowie die Kompatibilität mit \acs{gemara} und andern möglichen Clients. 
+this.lecturerResource = this.metaModel.getSingleResource("Lecturer");
 
-Diese müssen für das Design und die Entwicklung eines Software-Generators für Android Applikationen Beachtung finden.
+this.lecturerResource.setModel(this.metaModel);
+this.lecturerResource.setResourceName("Lecturer");
+this.lecturerResource.setMediaType(
+	"application/vnd.fhws-lecturer.default+json");
+
+final SimpleAttribute title = new SimpleAttribute("title", SimpleDatatype.STRING);
+...
+final SimpleAttribute roomNumber = new SimpleAttribute("roomNumber", SimpleDatatype.STRING);
+final SimpleAttribute homepage = new SimpleAttribute("homepage", SimpleDatatype.LINK);
+
+createSingleResourceCharge();
+final ResourceCollectionAttribute charge = new ResourceCollectionAttribute("chargeUrl", this.chargeResource);
+
+this.lecturerResource.addAttribute(title);
+...
+this.lecturerResource.addAttribute(charge);
+
+addImageAttributeForLecturerResource();
+\end{lstlisting}
+
+Sind alle benötigten Ressourcen im Modell definiert, wird der \textit{endliche Automat} beschrieben angefangen mit dem \textit{DispatcherState} (\ref{lst:dispatcher_impl}). Dieser bekommt einen Namen, und wird als \textit{DispatcherState} dem Modell hinzugefügt.
+
+\begin{lstlisting}[label=lst:dispatcher_impl,
+language=java,
+firstnumber=1,
+caption=Erzeugung des \textit{DispatcherStates}. ]
+final GetDispatcherState dispatcherState = new GetDispatcherState();
+dispatcherState.setName("Dispatcher");
+dispatcherState.setModel(this.metaModel);
+this.metaModel.setDispatcherState(dispatcherState);
+this.dispatcherState = dispatcherState;
+\end{lstlisting}
+
+\newpage
+
+Beispielhaft für alle nachfolgenden \textit{States} zeigt Listing \ref{lst:getState_impl} wie der \textit{State GetAllLecturers} erzeugt wird.
+Auch dieser \textit{State} bekommt einen Namen, daneben wird ihm die Ressource zugewiesen, welche er bedienen soll. Neben diesen Eigenschaften, werden dem \textit{State} alle \textit{Transitionen} hinzugefügt. In diesem Fall wird zusätzlich dem \textit{DispatcherState} die Information übergeben, das der \textit{GetAllLecturers State} sein \textit{Folgestate} ist. Alle weiteren \textit{States} werden analog definiert (siehe Listing \ref{lst:enfield_model}).
+
+\begin{lstlisting}[label=lst:getState_impl,
+language=java,
+firstnumber=1,
+caption=Erzeugung des \textit{GetAllLecturers States}. ]
+final GetPrimaryCollectionResourceByQueryState getAllLecturersCollectionState = new GetPrimaryCollectionResourceByQueryState();
+getAllLecturersCollectionState.setName("GetAllLecturers");
+getAllLecturersCollectionState.setModel(this.metaModel);
+getAllLecturersCollectionState.setResourceType(this.lecturerResource);
+
+this.dispatcherState.addTransition(new ActionTransition(getAllLecturersCollectionState, "getAllLecturers"));
+getAllLecturersCollectionState.addTransition(this.getLecturerByIdState);
+
+this.metaModel.addState(getAllLecturersCollectionState.getName(), getAllLecturersCollectionState);
+
+this.getCollectionOfLecturersState = getAllLecturersCollectionState;
+\end{lstlisting}
+ 
+\subsection{Vorstellung des \textit{\ac{api}} der Referenzanwendung}
+Mit Hilfe des zuvor beschriebenen \textit{Enfield-Meta-Modell} wird ein \textit{\acf{api}} generiert, welche in diesem Kapitel vorgestellt wird.
+Die Abbildung \ref{fig:api} zeigt das \textit{\acf{api}}, welches für die Beispielanwendung benötigt wird. Dieses\textit{ \ac{api}} entspricht einem \textit{endlichen Automaten} und spiegelt alle Funktionen der Applikation wieder.  
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{images/api.png}
+		\caption{Darstellung des \textit{\ac{api}} der Beispielanwendung.}
+		\label{fig:api}
+	\end{center}
+\end{figure}
+
+\section{Kompatibilität mit \ac{gemara}}
+Die Herausforderung an den zu entwickelnden Software-Generator liegt darin, das dieser Kompatibel mit dem Software-Generator \acf{gemara} sein soll. Dieser Generator besitzt mit Enfield ein bestehendes \textit{Meta-Modell}. Dieses Modell soll erweitert werden, das es alle benötigten Informationen für die Android Anwendung besitzt. 
+ 
+In Kapitel \ref{sec:enfield_intro} wurde beschrieben, wie Enfield den Aufbau eines \textit{Backends} mit Hilfe eines \textit{endlichen Automaten} realisiert. Dieses Wissen über das Modell muss verwendet werden, um zu analysieren, ob diese Aufbaubeschreibung kompatibel für die Generation von Android Anwendungen ist. Sollte die Kompatibilität gewährleistet sein, so muss die beste Stelle gefunden werden, an dem die Beschreibung der Android Anwendung Sinn macht. Für den Fall das die vorgegebene Möglichkeit zum beschreiben des Aufbaus nicht benutzt werden kann, so muss eine eigene Struktur für den Aufbau der Anwendung entwickelt werden. Diese muss dann ebenfalls an eine geeignete Stelle in das \textit{Enfield-Meta-Modell} eingebaut werden.
+
+\newpage
+
+Da Enfield primär für die Generierung von Anwendungen im \textit{Backend}-Bereich entwickelt wurde, in welchem die Gestaltung von \acf{ui} eine eher untergeordnete Rolle spielen, muss die Erweiterung auch dieses Feature realisieren. Neben all diesen Erweiterungen muss auch sichergestellt werden, das das \textit{Meta-Modell} auch weiterhin für das generieren von \textit{Backends} genutzt werden kann. Idealerweise, ohne die Überarbeitung der bereits entwickelten Software-Generatoren. 
+
+\section{Aufbau und Design der Android Applikation}
+Im letzten Kapitel wurde auf die Kompatibilität mit \ac{gemara} eingegangen, in diesem Kapitel soll jetzt die Problematik der Android Applikation an sich eingegangen werden. Hierfür werden die Bereiche: Aufbau der \textit{Views}, Darstellung von Schrift, und Aktionen bei Klick genauer betrachtet. Um ein \textit{Meta-Modell} für Android Anwendungen zu entwickeln, muss der Designer untersuchen, welche Eigenschaften dieses Modell besitzen soll. Diese Eigenschaften spiegeln die Möglichkeiten wieder, die Android Anwendung zu beschreiben. Für das Extrahieren dieser Eigenschaften, ist ein guter Ansatz, eine Referenzimplementierung zu entwickeln. Diese Referenz dient fortan als Beispiel. Weiterhin stellt sie das als erstes zu erreichende Ziel dar. Alle Bemühungen sollten darauf hinauslaufen, eine Applikation generieren zu lassen, welche die Referenzimplementierung gleicht.
+
+Schon beim Entwickeln der Referenz muss sich der Entwickler Gedanken darüber machen, welche \textit{Views} die Anwendung besitzen soll. Diese \textit{Views} entscheiden auch über die Funktionalitäten, welche der Entwickler den Nutzern zur Verfügung stellen will. So wird bereits bei der Planung und Entwicklung der Applikation beschrieben welche Features realisiert werden. Dieser Funktionsumfang beschreibt ob der Nutzer Listen- und Detailansichten zur Verfügung hat und ob er Datensätze löschen, neu anlegen beziehungsweise bearbeiten darf. Mit der Entscheidung, dass es eine Möglichkeit zur Neuanlage und Bearbeitung von Datensätzen geben soll, muss zusätzlich festgelegt werden, welche Attribute des Datensatzes bearbeitet werden dürfen und welche minimal notwendig sind.
+
+Ist bekannt welche \textit{Views} realisiert werden, muss über den Aufbau der einzelnen \textit{Views} entschieden werden. Es müssen Entscheidungen über die Anordnung der darzustellenden Informationen innerhalb einer \textit{View} getroffen werden. Diese Entscheidungen beinhalten neben der Strukturierung und Darstellung textueller Informationen auch Überlegungen zum Erscheinungsbild. Zum Erscheinungsbild gehören Eigenschaften wie Schriftgröße oder Schriftfarbe. Ist eine \textit{View} fertig designet, steht fest, in welcher Reihenfolge gegebene Informationen angezeigt werden. Ob Informationen wie Vorname und Nachname zusammengefasst werden. Auch hat der Entwickler entschieden ob alle existierenden Daten in der entsprechenden Ansicht relevant sind oder ob darauf verzichtet werden kann.  Auch ist klar wo und wie möglicherweise existierende Bilder dargestellt werden sollen.
+
+Neben diesen auf das \textit{\acf{ui}} bezogenen Kriterien müssen auch Entscheidungen darüber gefällt werden, ob diese angezeigten Informationen ausschließlich informative Details sind oder ob diese interaktiv sind. Das heißt soll der Benutzer der Android Applikation die Möglichkeit haben weitere Funktionen durch das anklicken einer dieser Felder auszuführen. Mögliche Aktionen wären beispielsweise das Öffnen der Anwendung \textit{Maps} beim Klick auf eine Adresse oder das öffnen eines Webbrowsers beim anklicken eines Hyperlinks. 
+
+All diese Entscheidungen, welche über den Aufbau und dem Design der Android Applikation entscheiden, sind für einen Generator wichtig. Dieser benötigt all diese Informationen um diese in der zu generierende Anwendung zu realisieren. Hierfür muss ein \textit{Meta-Modell} entwickelt werden, welches alle der oben genanten Beschreibungen im Bezug zur Android Applikation widerspiegelt. Das Modell muss alle Informationen über die Anzahl und Arten der \textit{Views}, deren Aufbau und die exakte Darstellung von Schrift, Bildern und möglichen Funktionen, welche bei Klick ausgeführt werden sollen besitzen.
 
 \section{Design des Software-Generators}
+In diesem Kapitel soll auf die Problematik des designen eines Software-Generators eingegangen werden. Ein funktionsfähiger Software-Generator benötigt neben einem geeigneten \textit{Meta-Modell} einen sinnvollen Aufbau. Der Aufbau bestimmt im Zusammenspiel mit dem \textit{Meta-Modell} an welcher Stelle im zeitlichen Verlauf, welche Klassen der Android Applikation generiert werden. Das ist wichtig, da für eine Anwendung die ausschließlich eine Liste darstellen soll, keine Klassen für beispielsweise die Neuanlage von Datensätzen generiert werden sollen. 
+Auch gibt es in Android Applikationen Abhängigkeiten zwischen verschiedenen Klassen, so müssen beispielsweise alle genutzten \textit{Activities} in der sogenannten \textit{AndroidMainfest.xml} registriert werden. Oder alle verwendeten Strings, sollten nicht im Programmcode stehen, sondern diese sollten ausgelagert in einer \textit{strings.xml} zu finden sein. Im Programmcode werden diese Strings dann mit Identifikatoren referenziert. Der Generator muss in der Lage sein diese Abhängigkeiten in der Applikation darzustellen. 
 
-Dieses Kapitel führt Probleme und Fragestellungen rund um den Generator an sich auf. Selbst wenn ein geeignetes Meta-Modell besteht, heißt dass nicht, dass es auch einen funktionierenden Software-Generator gibt. Es gibt noch zu viele offene Punkte, wobei der Einfachste lautet: Muss alles generiert werden, oder gibt es Dateien, welche kopiert werden können? Macht es Sinn, die Android Anwendung vorher soweit zu abstrahieren, das es möglichst wenig spezifischen Code und viel generischen Code gibt? Wie wird der Generator gesteuert, können die Dateien einfach so generiert werden, oder gibt es Abhängigkeiten untereinander? Was gibt es beim generieren von Klassen zu beachten? Beispielsweise müssen Activities in der \textit{AndroidManifest.xml} registriert werden oder Strings sollten in einer \textit{strings.xml} stehen und im Programmcode sollte nur mit Ids darauf referenziert werden.
+Eine Android Applikation besteht neben Java- und XML-Klassen zusätzlich noch aus \textit{Gradle}-Dateien und \textit{\acfp{jar}}. es macht durchaus Sinn nicht alle Dateien zu generieren. Bei machen der Dateien ist es besser diese an die entsprechende Stelle zu kopieren.
 
-Der Ablauf, wie wann was generiert wird muss teilweise im Meta-Modell und teilweise im Generator selbst festgelegt werden. Da stellt sich wieder die Frage, was wird wo geregelt? 
-
-Für Android Applikationen werden die verschiedensten Arten von Dateien benötigt. Angefangen mit Java-Klassen und XML-Dateien über Gradle-Dateien und \acfp{jar}.
-Das wiederum wirft die Frage auf wie können die einzelnen Datei-Typen generiert und oder kopiert werden?
