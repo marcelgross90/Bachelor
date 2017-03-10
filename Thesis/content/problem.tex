@@ -1,35 +1,34 @@
 \chapter{Problemstellung} \label{ch:problem}
-\section{Meta-Model und Android Applikation spezifisches}
-Bei der Generierung von Android Applikations gibt es vieles zu berücksichtigen. Angefangen bei den einfachsten Möglichkeiten zur Darstellung von Schrift. In welcher Farbe oder Größe sollte sie dargestellt werden. 
+\section{Meta-Modell und Android Applikation spezifisches}
+Bei der Generierung von Android Applikationen müssen Besonderheiten berücksichtigen. Angefangen bei den einfachsten Möglichkeiten zur Darstellung von Schrift. In welcher Farbe oder Größe sollte sie dargestellt werden? 
+Wie soll eine \textit{View} an sich aufgebaut sein? Wie sind die zu repräsentierenden Daten aufbereitet?
+Soll der Vorname eine Zeile über dem Nachnamen stehen? Oder soll es genau umgekehrt sein? Es gibt auch noch die Möglichkeit der Kombination. Vorname und Nachname beziehungsweise Nachname und Vorname in einer Zeile. 
 
-Wie soll eine View an sich aufgebaut sein? Wie sind die zu repräsentierenden Daten aufbereitet?
-Soll der Vorname eine Zeile über dem Nachnamen stehen? Oder soll es genau umgekehrt sein? Es gibt auch noch die Möglichkeit der Kombination. Vorname und Nachname in einer Zeile, oder Nachname und Vorname in einer Zeile. 
-
-Was soll überhaupt dargestellt werden? Gehen wir vom Beispiel Person aus, soll nur der komplette Name dargestellt werden oder nur ein Teil des Namens. Was ist mit dem Geburtstag oder dem Wohnort. Gibt es zu der Person ein Profilbild? Was passiert wenn nicht alle Personen ein Profilbild haben, aber es soll ein Profilbild angezeigt werden? 
-Das sind ein Teil der Fragen, die sich rein auf das \acf{ui} beziehen. Es gibt aber noch weiter Fragen die gestellt werden müssen. Soll es die Möglichkeit geben, das Aktionen beim Klick auf die Telefonnummer, E-Mail oder Homepage einer Person klickt ausgefüht werden?
+Was soll dargestellt werden? Gehen wir vom Beispiel Person aus, soll nur der komplette Name dargestellt werden oder nur ein Teil des Namens? Was ist mit dem Geburtstag oder dem Wohnort? Gibt es zu der Person ein Profilbild? Was passiert wenn nicht alle Personen ein Profilbild haben, aber es soll ein Profilbild angezeigt werden? 
+Das sind ein Teil der Fragen, die sich rein auf das \acf{ui} beziehen. Es gibt aber noch weitere Fragen die gestellt werden müssen. Soll es die Möglichkeit geben, das Aktionen beim Klick auf beispielsweise die Telefonnummer, E-Mail oder Homepage einer Person, ausgeführt werden?
 
 Oder noch elementarer, welche Ansichten soll es überhaupt geben? Listen von Personen, Detailansichten und so weiter. 
 Soll es die Möglichkeit geben neue Personen anzulegen, wenn ja was sind Pflichtangaben zu einer Person?
 Dürfen bestehende Personen bearbeiten werden können?
 
-Die letzten Fragen bezogen sich auf mögliche Funktionalitäten der Anwendung. Im letzten Bereich, gibt es noch Fragen, bezüglich des Ablaufes in einer Applikation. Welche View kommt nach welcher Aktion, wie sieht der Flow innerhalb einer Applikation aus.
+Die letzten Fragen bezogen sich auf mögliche Funktionalitäten der Anwendung. Im nächsten Bereich, gibt es noch Fragen, bezüglich des Ablaufes in einer Applikation. Welche View kommt nach welcher Aktion, wie sieht der Ablauf innerhalb einer Applikation aus.
 
 \newpage
 Die oben genannten Fragen sind nur Beispiele für Überlegungen welche betrieben werden müssen um eine Android Anwendung zu entwickeln, das unterscheidet sich nicht vom normalen Entwicklungsprozess einer Anwendung.
-Die große Frage hinter den aufgezählten Problemstellungen ist, wie können diese Anforderungen soweit abstrahiert werden, das diese Möglichst einfach mit einer \acf{dsl} beschrieben werden können.
+Die große Frage hinter den aufgezählten Problemstellungen ist, wie können diese Anforderungen soweit abstrahiert werden, dass diese möglichst einfach mit einer \acf{dsl} beschrieben werden können.
 
-Wurde ein geeignetes Meta-Model gefunden, so bleibt noch der Aspekt, dass der Software-Generator als Modul von \acf{gemara} entwickelt werden soll. \acs{gemara} bringt ein bereits bestehende Meta-Model und wiederum eigene Anforderungen mit sich. Durch den auf \acf{rest}, basierenden Architekturstil bringt es beispielsweise die Anforderung mit, dass eine Anwendung mit Hilfe eines endlichen Automaten designed werden soll. Das bedeutet, dass die States und Transitionen des endlichen Automaten den Ablauf in der Applikaition vorgeben.
-Es wäre außerdem noch wünschenswert, dass die Erweiterung des Meta-Models nicht ausschließlich für Android Applikationen, sondern für jegliche Client Anwendungen genutzt werden kann.
+Wurde ein geeignetes Meta-Modell gefunden, so bleibt noch der Aspekt, dass der Software-Generator als Modul von \acf{gemara} entwickelt werden soll. \acs{gemara} bringt ein bereits bestehende Meta-Modell und wiederum eigene Anforderungen mit sich. Durch den auf \acf{rest}, basierenden Architekturstil bringt es beispielsweise die Anforderung mit, dass eine Anwendung mit Hilfe eines endlichen Automaten designet werden soll. Das bedeutet, dass die States und Transitionen des endlichen Automaten den Ablauf in der Applikation vorgeben.
+Es wäre außerdem noch wünschenswert, dass die Erweiterung des Meta-Modells nicht ausschließlich für Android Applikationen, sondern für jegliche Client Anwendungen genutzt werden kann.
 
-Aus den oben erörterten Fragen und Problemstellungen, welche nur beispielhaft und nicht komplett sind, lassen sich nun folgende Kategorien ableiten: die Beschreibung des \acl{ui}, die Beschreibung der Aktionen bei Klick, die Beschreibung der Architektur und des Ablaufs innerhalb der Applikation und die Kompatibilität mit \acs{gemara} und andern möglichen Clients. 
+Aus den oben erörterten Fragen und Problemstellungen, welche nur beispielhaft und nicht komplett sind, lassen sich nun folgende Kategorien ableiten: Beschreibung des \acl{ui}, Beschreibung der Aktionen bei Klick, Beschreibung der Architektur und des Ablaufs innerhalb der Applikation sowie die Kompatibilität mit \acs{gemara} und andern möglichen Clients. 
 
 Diese müssen für das Design und die Entwicklung eines Software-Generators für Android Applikationen Beachtung finden.
 
 \section{Design des Software-Generators}
 
-Dieses Kapitel zeigt Probleme und Fragestellungen rund um den Generator an sich auf. Selbst wenn ein ein geeignetes Meta-Model besteht, heißt dass noch nicht, dass es auch einen funktionierenden Software-Generator gibt. Es gibt noch zu viele offene Punkte, wobei der Einfachste lautet: Muss alles generiert werden, oder gibt es Dateien, welche kopiert werden können? Macht es Sinn, die Android Anwendung vorher soweit zu abstrahieren, das es möglichst wenig spezifischen Code und viel generischen Code gibt? Wie wird der Generator gesteuert, können die Dateien einfach so generiert werden, oder gibt es Abhängigkeiten untereinander? Was gibt es beim generieren von Klassen zu beachten? Beispielsweise müssen Activies in der \textit{AndroidManifest.xml} registriert werden oder Strings sollten in einer \textit{strings.xml} stehen und im Programmcode sollte nur mit Ids darauf referenziert werden.
+Dieses Kapitel führt Probleme und Fragestellungen rund um den Generator an sich auf. Selbst wenn ein geeignetes Meta-Modell besteht, heißt dass nicht, dass es auch einen funktionierenden Software-Generator gibt. Es gibt noch zu viele offene Punkte, wobei der Einfachste lautet: Muss alles generiert werden, oder gibt es Dateien, welche kopiert werden können? Macht es Sinn, die Android Anwendung vorher soweit zu abstrahieren, das es möglichst wenig spezifischen Code und viel generischen Code gibt? Wie wird der Generator gesteuert, können die Dateien einfach so generiert werden, oder gibt es Abhängigkeiten untereinander? Was gibt es beim generieren von Klassen zu beachten? Beispielsweise müssen Activities in der \textit{AndroidManifest.xml} registriert werden oder Strings sollten in einer \textit{strings.xml} stehen und im Programmcode sollte nur mit Ids darauf referenziert werden.
 
-Der Ablauf, wie wann was generiert wird muss teilweise im Meta-Model und teilweise im Generator selbst festgelegt werden. Da stellt sich wieder die Frage, was wird wo geregelt? 
+Der Ablauf, wie wann was generiert wird muss teilweise im Meta-Modell und teilweise im Generator selbst festgelegt werden. Da stellt sich wieder die Frage, was wird wo geregelt? 
 
 Für Android Applikationen werden die verschiedensten Arten von Dateien benötigt. Angefangen mit Java-Klassen und XML-Dateien über Gradle-Dateien und \acfp{jar}.
 Das wiederum wirft die Frage auf wie können die einzelnen Datei-Typen generiert und oder kopiert werden?

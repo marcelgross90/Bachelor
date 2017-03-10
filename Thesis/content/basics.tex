@@ -1,20 +1,18 @@
 \chapter{Grundlagen}\label{ch:basics}
 \section{\acf{rest}}\label{sec:rest}
-In dem generierten Projekt, sollen alle benötigten Daten mittels \ac{rest} von dem zugehörigen, generierten Backend geladen werden. 
+In dem generierten Projekt, sollen alle benötigten Daten mittels \textit{\ac{rest}} von dem zugehörigen, generierten \textit{Backend} geladen werden. 
 
-\ac{rest} \cite{rest_fielding} ist ein Programmierparadigma, welches sich auf folgende Prinzipien stützt: Client-Server, Zustandslose Kommunikation, Caching, Uniform Inferface Layered System und dem optionalen Prinzip Code-on-Demand.
+ \textit{\ac{rest}} \cite{rest_fielding} ist ein Programmierparadigma, welches sich auf folgende Prinzipien stützt: \textit{Client-Server}, \textit{Zustandslose Kommunikation}, \textit{Caching}, \textit{Uniform Inferface}, \textit{Layered System} und dem optionalen Prinzip \textit{Code-on-Demand}.
+Diese Arbeit berücksichtigt vor allem \textit{\acf{hateoas}} welches unter das Prinzip \textit{Uniform Interface} fällt. Es beschreibt, wie mit Hilfe eines \textit{endlichen Automaten} eine \textit{\ac{rest}-Architektur} entworfen werden kann.
+Der Architekt einer \textit{\ac{rest}}-konformen \textit{\acf{api}} überlegt sich im voraus, wie der Applikation-Fluss in der späteren Anwendung aussehen soll. Dafür definiert er verschiedene \textit{States} und welche \textit{Transitionen} zum nächsten \textit{State} führen.
 
-Diese Arbeit berücksichtigt vor allem \acf{hateoas} welches unter das Prinzip Uniform Interface fällt. Es beschreibt, wie mit Hilfe eines endlichen Automaten eine \ac{rest}-Architektur entworfen werden kann.
+Als ein \textit{State} kann beispielsweise das Anzeigen aller Lecturer in einer Campus-Applikation angesehen werden.
+Die \textit{Transition} hingegen ist zum Beispiel ein \textit{Link} im \textit{Link-Header} der Antwort, oder ein Attribut, der empfangen Ressource. 
 
-Der Architekt einer \ac{rest}-konformen \acf{api} überlegt sich im voraus, wie der Applikation-Fluss in der späteren Anwendung aussehen soll. Dafür definiert er verschiedene States und welche Transitionen zum nächsten State führen.
+Wird das \textit{\ac{api}} mit Hilfe eines \textit{endlichen Automaten} entwickelt, kann diese dem \textit{Client}-Entwickler als Anleitung zum erstellen des \textit{Clients} dienen. Er benötigt diesbezüglich einen \acf{url}, welcher auf den initialen \textit{State} des \textit{endlichen Automaten} führt. Dieser liefert dann alle, zu diesem Zeitpunkt möglichen, \textit{Transitionen} zurück. Mit Hilfe dieser \textit{Transitionen}, kann sich der Entwickler dann zum nächsten \textit{State} bewegen. Auch dieser \textit{State} liefert neben den Ressourcen, alle möglichen weiteren \textit{Transitionen} zurück. 
+Wenn der Entwickler sich so durch die \textit{States} bewegt, bekommt er die benötigten Informationen zum Aufbau und Ablauf der Applikation.
 
-Als ein State kann beispielsweise das Anzeigen aller Lecturer in einer Campus-Applikation angesehen werden.
-Die Transition hingegen ist zum Beispiel ein Link im Link-Header der Antwort, oder ein Attribut, der empfangen Ressource. 
-
-Wird das \ac{api} mit Hilfe eines endlichen Automaten entwickelt, kann diese dem Client-Entwickler als Anleitung zum erstellen seines Clients dienen. Er benötigt lediglich einen \acf{url}, welcher auf den initialen State des endlichen Automaten führt. Dieser liefert dann alle, zu diesem Zeitpunkt möglichen, Transitionen zurück. Mit Hilfe dieser Transitionen, kann sich der Entwickler dann zum nächsten State bewegen. Auch dieser State liefert neben den Ressourcen, alle möglichen weiteren Transaktionen zurück. 
-Wenn der Entwickler sich so durch die States bewegt, bekommt er die benötigten Informationen zum Aufbau und Ablauf der Applikation.
-
-Die Abbildung \ref{fig:finite_state_machine} zeigt einen solchen Automaten. Der Einstiegspunkt ist der State \enquote{Dispatcher} dieser liefert die Tansition zum State \enquote{Collection} zurück. Dieser State, verfügt über alle Informationen die benötigt werden um eine Collection der betroffenen Ressource anzuzeigen, weiterhin verfügt er auch das Wissen, über die beiden nächsten Transitionen zu den States \enquote{Create} und \enquote{Single}. Wie der Name des States annehmen lässt, wird der State \enquote{Create} benötigt um eine neue Ressource anzulegen. Von diesem State aus kann die Anwendung nur zurück zum State \enquote{Collection}. Der State \enquote{Single} enthält alle benötigten Daten um eine einzelne Ressource anzuzeigen. Vom hier kann die Anwendung zum State \enquote{Update} oder \enquote{Delete} wechseln. Der State \enquote{Update} ermöglicht es die Ressource zu bearbeiten. Von hier kann der Nutzer der Anwendung nur zum State \enquote{Single} zurückkehren. Der State \enquote{Delete} löscht die aktuelle Ressource und liefert die Transition zum State \enquote{Collection} zurück. 
+Die Abbildung \ref{fig:finite_state_machine} zeigt einen solchen Automaten. Der Einstiegspunkt ist der \textit{State} \enquote{Dispatcher} dieser liefert die \textit{Transition} zum \textit{State} \enquote{Collection} zurück. Dieser \textit{State}, verfügt über alle Informationen die benötigt werden um eine Collection der betroffenen Ressource anzuzeigen, weiterhin verfügt er auch das Wissen, über die beiden nächsten \textit{Transitionen} zu den \textit{State}s \enquote{Create} und \enquote{Single}. Wie der Name des \textit{States} annehmen lässt, wird der \textit{State} \enquote{Create} benötigt um eine neue Ressource anzulegen. Von diesem \textit{State} aus kann die Anwendung nur zurück zum \textit{State} \enquote{Collection}. Der \textit{State} \enquote{Single} enthält alle benötigten Daten um eine einzelne Ressource anzuzeigen. Vom hier kann die Anwendung zum \textit{State} \enquote{Update} oder \enquote{Delete} wechseln. Der \textit{State} \enquote{Update} ermöglicht es die Ressource zu bearbeiten. Von hier kann der Nutzer der Anwendung nur zum \textit{State} \enquote{Single} zurückkehren. Der \textit{State} \enquote{Delete} löscht die aktuelle Ressource und liefert die \textit{Transition} zum \textit{State} \enquote{Collection} zurück. 
 Dieses Beispiel verdeutlicht noch einmal bildlich, das der Entwickler nur den Einstiegspunkt \enquote{Dispatcher} kennen muss. Die Anwendung liefert selbst alle benötigten Informationen um die Daten für die Anwendung nachzuladen.
 
 \begin{figure}[H] \label{fig:finite_state_machine}
@@ -23,56 +21,54 @@ Dieses Beispiel verdeutlicht noch einmal bildlich, das der Entwickler nur den Ei
 		semithick]
 		\tikzstyle{every state}=[fill=none,text=black]
 		
-		\node[initial,state] (A) [minimum width=3cm]             {Dispatcher};
-		\node[state]         (B) [right of=A, minimum width=2cm] {Collection};
-		\node[state]         (D) [below of=B, minimum width=2cm] {Create};
-		\node[state]         (C) [right of=B, minimum width=2cm] {Single};
-		\node[state]         (E) [above of=C, minimum width=2cm] {Delete};
+		\node[initial,state] (A) [minimum width=3cm]       {Dispatcher};
+		\node[state]     (B) [right of=A, minimum width=2cm] {Collection};
+		\node[state]     (D) [below of=B, minimum width=2cm] {Create};
+		\node[state]     (C) [right of=B, minimum width=2cm] {Single};
+		\node[state]     (E) [above of=C, minimum width=2cm] {Delete};
 		\node[state]		 (F) [below of=C, minimum width=2cm] {Update};
 		
 		\path 
-		(A) edge             (B)
+		(A) edge       (B)
 		(B) edge [bend left] (C)
 			edge [bend left] (D)
 		(C)	edge 			 (E)
 			edge [bend left] (B)
 			edge [bend left] (F)
 		(D) edge [bend left] (B)
-		(E) edge   			 (B)
+		(E) edge  			 (B)
 		(F) edge [bend left] (C);
 		
 		\end{tikzpicture}
-			\caption[Aufbau eines \acl{rest}-\acl{api} mit Hilfe eines endlichen Automaten.]{Aufbau eines \ac{rest}-\ac{api} mit Hilfe eines endlichen Automaten.}
+			\caption[Aufbau eines \acl{rest}-\acl{api} mit Hilfe eines \textit{endlichen Automaten}.]{Aufbau eines \textit{\ac{rest}-\ac{api}} mit Hilfe eines \textit{endlichen Automaten}.}
 		\label{fig:finite_state_machine}
 	\end{center}
 \end{figure}
 
 \section{Entwicklung von Android CustomViews}\label{sec:custom_view}
 Die Software-Plattform Android basiert auf Linux und wird als Betriebssystem für mobile Endgeräte verwendet.
-Das System wird als Open Source Projekt von der Open Handset Alliance entwickelt \cite{open_handset_alliance}. Dabei ist ein Ziel, die Schaffung eines offenen Standards für mobile Endgeräte.
+Das System wird als \textit{Open Source} Projekt von der Open Handset Alliance entwickelt \cite{open_handset_alliance}. Dabei ist ein Ziel, die Schaffung eines offenen Standards für mobile Endgeräte.
 Die Entwicklung ist nicht abgeschlossen, die aktuelle Version ist 7.0 Nougat (Stand Feb. 2017).
 
-Programme für diese Plattform nennt man Applikation oder kurz App. Eine App stellt alle nötigen Sourcen bereit, zum Beispiel den Programmcode, Layout und Grafiken, die benötigt werden, um diese App auf einem Android-Endgerät auszuführen.
+Programme für diese Plattform nennt man Applikation oder kurz App. Eine App stellt alle nötigen Sourcen bereit, zum Beispiel den Programmcode, \textit{Layout} und Grafiken, die benötigt werden, um diese App auf einem Android-Endgerät auszuführen.
+Mit Hilfe von \textit{Widgets} und \textit{Layouts} können \textit{Views} definiert werden. Diese \textit{Views} stellen dann die gewünschte Information auf dem Display dar. Die bekanntesten \textit{Widgets} sind: \textit{TextView}, \textit{Button} und \textit{EditText}. Die Anordnung dieser \textit{Widgets} erfolgt dann mit einem \textit{Layout}. Es gibt hierbei verschiendene \textit{Layouts} zur Auswahl. Beispielsweise das \textit{LinearLayout}, mit horizontaler oder vertikaler Orientierung. Ein weiteres Beispiel ist das \textit{RelativeLayout}.
 
-Mit Hilfe von Widgets und Layouts können Views definiert werden. Diese Views stellen dann die gewünschte Information auf dem Display dar. Die bekanntesten Widgets sind: TextView, Button und EditText. Die Anordnung dieser Widgets erfolgt dann mit einem Layout. Es gibt hierbei verschiendene Layouts zur Auswahl. Beispielsweise das LinearLayout, mit horizontaler oder vertikaler Orientierung. Ein weiteres Beispiel ist das RelativeLayout.
+Reichen die Standart-\textit{Layouts} und -\textit{Widgets} nicht aus, gibt es noch die Möglichkeit eigene zu entwickeln. Dies ermöglicht diese \textit{Views} um Attribute und Methoden zu erweitern. Diese können dann sowohl in der \textit{Layout-XML} als auch im Programm-Code angesprochen werden.
 
-Reichen die Standart-Layouts und -Widgets nicht aus, gibt es noch die Möglichkeit eigene zu entwickeln. Dies ermöglicht diese Views um Attribute und Methoden zu erweitern. Diese können dann sowohl in der Layout-XML als auch im Programm-Code angesprochen werden.
-
-Ausgehend davon das eine Applikation eine Liste von Personen mit Hilfe einer RecyclerView anzeigen soll, gibt es die Möglichkeit eine CardView zu erzeugen, welche eine einzelne Person darstellt. Diese CardView kann in einem XML-Layout wie allgemein bekannt definiert werden. Um die View dann mit den entsprechenden Informationen zu befüllen werden im Adapter der ListView dann die einzelnen Attribute einzeln angesprochen und mit den erforderlichen Details befüllt.
-
-Alternativ besteht die Möglichkeit eine CustomView zu erzeugen, in diesem Fall eine PersonCardView.
-Hierfür sind folgende Schritte notwendig: Registrieren der CustomViews, Definieren des Aufbaus der CustonView erzeugen einer CustomView Klasse.
+Ausgehend davon das eine Applikation eine Liste von Personen mit Hilfe einer \textit{RecyclerView} anzeigen soll, gibt es die Möglichkeit eine \textit{CardView} zu erzeugen, welche eine einzelne Person darstellt. Diese \textit{CardView} kann in einem \textit{XML-Layout} wie allgemein bekannt definiert werden. Um die \textit{View} dann mit den entsprechenden Informationen zu befüllen werden im \textit{Adapter} der \textit{RecyclerView} dann die einzelnen Attribute einzeln angesprochen und mit den erforderlichen Details befüllt.
+Alternativ besteht die Möglichkeit eine \textit{CustomView} zu erzeugen, in diesem Fall eine \textit{PersonCardView}.
+Hierfür sind folgende Schritte notwendig: Registrieren der \textit{CustomViews}, Definieren des Aufbaus der \textit{CustonView} erzeugen einer \textit{CustomView} Klasse.
 
 \subsection{Registrieren der CustomView}
-Zur Erzeugung und Registrierung von CustomViews wird eine Datei \enquote{attrs.xml} benötigt. Diese wird liegt im Ordner \enquote{values} im Verzeichnis \enquote{res}. 
-In dieser XML-Datei werden im \enquote{resoruces}-Bereich die einzelnen CustomViews aufgelistet. Es besteht die Möglichkeit diesen Views zusätzlich Attribute zuzuweisen. Ein Attribut besteht dabei immer aus einem Namen und einem Format. Dieses Format definiert den erwarteten Eingabewert. Es gibt folgende definierte Formate: string, integer, boolean oder color. 
-Formate können kombiniert werden. Beispielsweise das Attribut \enquote{backgroundColor} könnte so definiert werden format=\enquote{color|string}. Listing \ref{lst:attrs} zeigt den Aufbau einer \enquote{attrs.xml}-Datei.
+Zur Erzeugung und Registrierung von \textit{CustomViews} wird eine Datei \enquote{attrs.xml} benötigt. Diese wird liegt im Ordner \enquote{values} im Verzeichnis \enquote{res}. 
+In dieser \textit{XML}-Datei werden im \enquote{resoruces}-Bereich die einzelnen \textit{CustomViews} aufgelistet. Es besteht die Möglichkeit diesen \textit{Views} zusätzlich Attribute zuzuweisen. Ein Attribut besteht dabei immer aus einem Namen und einem Format. Dieses Format definiert den erwarteten Eingabewert. Es gibt folgende definierte Formate: \textit{string}, \textit{integer}, \textit{boolean} oder \textit{color}. 
+Formate können kombiniert werden. Beispielsweise das Attribut \enquote{backgroundColor} könnte so definiert werden \textit{format=\enquote{color|string}}. Listing \ref{lst:attrs} zeigt den Aufbau einer \enquote{attrs.xml}-Datei.
 
 \newpage
 \begin{lstlisting}[label=lst:attrs,
 language=xml,
 firstnumber=1,
-caption=Aufbau einer \enquote{attrs.xml} - Datei]				   
+caption=Aufbau einer \textit{attrs.xml} - Datei]				  
 <resources>
 	<declare-styleable name="AttributeInput">
 		<attr name="hintText" format="integer"/>
@@ -85,12 +81,12 @@ caption=Aufbau einer \enquote{attrs.xml} - Datei]
 
 \subsection{Definieren des Aufbaus der CustomView}
 
-Da die PersonCardView eine CustomView ist, welche aus verschiedenen Widgets zusammengesetzt wurde, müssen diese auch definiert werden. Dies geschieht wie gewohnt mit Hilfe einer XML-Datei, mit einer Ausnahme. Die Root-View ist in diesem Fall keine CardView sondern ein beliebiges anderes Layout. Da die PersonCardView von CardView erbt und somit bereits eine CardView ist.
+Da die \textit{PersonCardView} eine \textit{CustomView} ist, welche aus verschiedenen \textit{Widgets} zusammengesetzt wurde, müssen diese auch definiert werden. Dies geschieht wie gewohnt mit Hilfe einer \textit{XML-Datei}, mit einer Ausnahme. \textit{Die Root-View} ist in diesem Fall keine \textit{CardView} sondern ein beliebiges anderes \textit{Layout}. Da die \textit{PersonCardView} von \textit{CardView} erbt und somit bereits eine \textit{CardView} ist.
 
 \begin{lstlisting}[label=lst:personCardViewXml,
 language=xml,
 firstnumber=1,
-caption=Aufbau der PersonCardView mit Hilfe einer XML-Datei]				   
+caption=Aufbau der \textit{PersonCardView} mit Hilfe einer \textit{XML}-Datei]				  
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/relativeLayout"
 	android:layout_width="match_parent"
@@ -115,15 +111,15 @@ caption=Aufbau der PersonCardView mit Hilfe einer XML-Datei]
 
 \subsection{Erzeugen einer CustomView Klasse}
 
-Hierfür wird eine neue Java-Klasse erzeugt, welche von CardView erbt. Es kann auch direkt von der View-Klasse geerbt werden und anschließend mithilfe der Methode \enquote{onDraw}, welche überschrieben werden muss, den gewünschten Inhalt anzuzeigen Sei es nun Text, Formen oder Benutzereingaben.
-In diesem Fall entspricht die CardView weitestgehend bereits den Anforderungen, so das diese genutzt wird.
-Die Vererbungsstruktur bringt mit sich, das die Konstruktoren der CardView implementiert werden müssen.
-Die Anzahl dieser Konstruktoren hängt von der Minimum SDK-Versions des Projekts ab. Dieses Projekt nutzt das Minimum Level 12 somit müssen drei Konstrukotoren überschrieben werden. Ab einen Level von 21, sind es vier, da ein weiteres Attribut zur View hinzugefügt wurde.
+Hierfür wird eine neue Java-Klasse erzeugt, welche von \textit{CardView} erbt. Es kann auch direkt von der \textit{View}-Klasse geerbt werden und anschließend mithilfe der Methode \textit{onDraw}, welche überschrieben werden muss, den gewünschten Inhalt anzuzeigen Sei es nun Text, Formen oder Benutzereingaben.
+In diesem Fall entspricht die \textit{CardView} weitestgehend bereits den Anforderungen, so das diese genutzt wird.
+Die Vererbungsstruktur bringt mit sich, das die \textit{Konstruktoren} der \textit{CardView} implementiert werden müssen.
+Die Anzahl dieser \textit{Konstruktoren} hängt von der Minimum \textit{SDK}-Versions des Projekts ab. Dieses Projekt nutzt das Minimum Level 12 somit müssen drei \textit{Konstruktoren} überschrieben werden. Ab einen Level von 21, sind es vier, da ein weiteres Attribut zur \textit{View} hinzugefügt wurde.
 
 \begin{lstlisting}[label=lst:personCardView,
 language=java,
 firstnumber=1,
-caption=Konstruktoren der PersonCardView]				   
+caption=\textit{Konstruktoren} der \textit{PersonCardView}]				  
 public class PersonCardView extends CardView {
 
 public PersonCardView(Context context) {
@@ -144,16 +140,16 @@ public PersonCardView(Context context, AttributeSet attrs, int defStyleAttr) {
 }
 \end{lstlisting}
 
-Innerhalb der \enquote{init}-Methode wird definiert, was die View anzeigen beziehungsweise was sie tun soll. 
-In diesem Beispiel werden die verwendeten Widgets initialisiert. Besäße die PersonCardView noch eigene Attribute, so würden diese im AttributeSet übergeben und könnten daraus in ein TypedArray geschrieben werden. Dieses TypedArray muss am Ende \enquote{recycled} werden, damit es für einen späteren Aufruf wieder zur Verfügung steht.
+Innerhalb der \textit{init}-Methode wird definiert, was die \textit{View} anzeigen beziehungsweise was sie tun soll. 
+In diesem Beispiel werden die verwendeten \textit{Widgets} initialisiert. Besäße die \textit{PersonCardView} noch eigene Attribute, so würden diese im \textit{AttributeSet} übergeben und könnten daraus in ein \textit{TypedArray} geschrieben werden. Dieses \textit{TypedArray} muss am Ende \textit{recycled} werden, damit es für einen späteren Aufruf wieder zur Verfügung steht.
 
 \newpage
-Jetzt wird die PersonCardView um eine Methode \enquote{setPerson} erweitert. Diese ist angelehnt an die Methode \enquote{setText} der TextView. Sie ermöglicht das der PersonCardView ein Objekt Person übergeben wird und füllt dann die entsprechenden Widgets mit den dazugehörigen übergebenen Daten.
+Jetzt wird die \textit{PersonCardView} um eine Methode \textit{setPerson} erweitert. Diese ist angelehnt an die Methode \textit{setText} der \textit{TextView}. Sie ermöglicht das der \textit{PersonCardView} ein Objekt Person übergeben wird und füllt dann die entsprechenden \textit{Widgets} mit den dazugehörigen übergebenen Daten.
 
 \begin{lstlisting}[label=lst:setPerson,
 language=java,
 firstnumber=1,
-caption=\textit{setPerson} - Methode aus der PersonCardView.]				   
+caption=\textit{setPerson} - Methode aus der \textit{PersonCardView}.]				  
 public void setPerson(Person person) {
 	this.firstName.setText(person.getFirstName());
 	this.lastName.setText(person.getLastName());	
@@ -161,34 +157,32 @@ public void setPerson(Person person) {
 }
 \end{lstlisting}
 
-Mit Hilfe dieser Methode wird die Nutztung der PersonCardView vereinfacht. Im Adapter der RecyclerView wird jetzt nicht mehr jedes einzelne Widget definiert und mit Informationen befüllt. Sondern nur noch die PersonCardView und mit der \enquote{setPerson} - Methode kann die komplette Karte mit den Daten einer Person mit nur einem Methodenaufruf befüllt werden.
+Mit Hilfe dieser Methode wird die Nutztung der \textit{PersonCardView} vereinfacht. Im \textit{Adapter} der \textit{RecyclerView} wird jetzt nicht mehr jedes einzelne \textit{Widget} definiert und mit Informationen befüllt. Sondern nur noch die \textit{PersonCardView} und mit der \textit{setPerson} - Methode kann die komplette Karte mit den Daten einer Person mit nur einem Methodenaufruf befüllt werden.
 
 \section{Software-Generatoren}\label{sec:generators}
 
 Mit Software-Generatoren, ist es möglich Software generieren zu lassen. Dafür wird die Problemstellung der realen Welt so beschrieben, dass der Generator dies versteht, interpretieren und Programmcode erzeugen kann.
 
 \subsection{\acf{dsl}}\label{sec:dsl}
-Die Grundlage, um ein Model für einen Generator zu beschreiben ist die \acl{dsl}.
-Eine \acs{dsl} ist eine Programmiersprache, welche auf die Probleme einer bestimmten Domäne ausgelegt ist \cite{dslHudak}. Dadurch dass diese Sprachen auf ein ganz bestimmtes Problem zugeschnitten sind, sind \acl{dsl} in ihrer Ausdrucksfähigkeit beschränkter als herkömmliche Programmiersprachen wie beispielsweise Java, C++ oder C\# Eine \acl{dsl} wird dafür entwickelt ein konkretes Problem so effizient wie möglich zu lösen, ohne die komplexen Strukturen des Programmcodes kennen zu müssen.
+Die Grundlage, um ein Model für einen Generator zu beschreiben ist die \textit{\acl{dsl}}.
+Eine \textit{\acs{dsl}} ist eine Programmiersprache, welche auf die Probleme einer bestimmten Domäne ausgelegt ist \cite{dslHudak}. Dadurch dass diese Sprachen auf ein ganz bestimmtes Problem zugeschnitten sind, sind \textit{\acl{dsl}} in ihrer Ausdrucksfähigkeit beschränkter als herkömmliche Programmiersprachen wie beispielsweise Java, C++ oder C\# Eine \textit{\acl{dsl}} wird dafür entwickelt ein konkretes Problem so effizient wie möglich zu lösen, ohne die komplexen Strukturen des Programmcodes kennen zu müssen.
+Bekannte \textit{\aclp{dsl}} sind: \textit{\ac{sql}}, \textit{Make} und \textit{\acf{html}}.
 
-Bekannte \aclp{dsl} sind: \ac{sql}, Make und \acf{html}.
-
-Die domänenspezifischen Sprachen lassen sich in zwei Kategorien einteilen die internen und die externen \acsp{dsl}.
+Die \textit{domänenspezifischen Sprachen} lassen sich in zwei Kategorien einteilen die \textit{internen} und die \textit{externen \acsp{dsl}}.
 
 \subsubsection{Interne \acsp{dsl}} \label{sec:intern}
-Eine interne \acs{dsl} wird auch embdded \acs{dsl} genannt, weil sie keine eigene Syntax und Grammatik entwickelt. Sie bedienen sich der Hostsprache. Das heißt sie nutzen die selbe Programmiersprache, in welcher auch das Resultat sein wird.
-
-Jedoch wird die verwendete Hostsprache eingeschränkt, so nutzt die \acl{dsl} nur eine Teilmenge der Möglichkeiten \cite{dsl}. Die Nutzung von internen \acsp{dsl} sind zum Beispiel: Es muss kein neuer Compiler und Parser geschrieben werden. Auch gibt es bereits integrierte Entwicklungsumgebungen (IDEs). Außerdem muss der Programmierer keine neue Sprache lernen, um die \acl{dsl} zu nutzen, sollte er die verwendete Hostsprache bereits kennen. 
+Eine interne \textit{\acs{dsl}} wird auch \textit{embdded \acs{dsl}} genannt, weil sie keine eigene \textit{Syntax} und \textit{Grammatik} entwickelt. Sie bedienen sich der \textit{Hostsprache}. Das heißt sie nutzen die selbe Programmiersprache, in welcher auch das Resultat sein wird.
+Jedoch wird die verwendete \textit{Hostsprache} eingeschränkt, so nutzt die \textit{\acl{dsl}} nur eine Teilmenge der Möglichkeiten \cite{dsl}. Die Nutzung von \textit{internen \acsp{dsl}} sind zum Beispiel: Es muss kein neuer \textit{Compiler} und \textit{Parser} geschrieben werden. Auch gibt es bereits integrierte Entwicklungsumgebungen (IDEs). Außerdem muss der Programmierer keine neue Sprache lernen, um die \textit{acl{dsl}} zu nutzen, sollte er die verwendete \textit{Hostsprache} bereits kennen. 
 
 \subsubsection{Externe \acsp{dsl}} \label{sec:extern}
 
-Anders als die internen \acsp{dsl} besitzen die externen \acsp{dsl} eine eigene Syntax. Dies macht die Entwicklung einer solchen \acl{dsl} sehr viel aufwändiger, da nun ein eigener Parser und Compiler mitentwickelt werden muss \cite{dsl}. Jedoch bringt diese eigene Syntax auch den Vorteil, dass die Sprache nicht auf die Besonderheiten einer Hostsprache eingeschränkt ist. So können Anforderungen an die Domäne bereits beim schreiben des Compilers mit validiert werden.
+Anders als die \textit{internen \acsp{dsl}} besitzen \textit{externen \acsp{dsl}} eine eigene Syntax. Dies macht die Entwicklung einer solchen \textit{\acl{dsl}} sehr viel aufwändiger, da nun ein eigener \textit{Parser} und \textit{Compiler} mitentwickelt werden muss \cite{dsl}. Jedoch bringt diese eigene \textit{Syntax} auch den Vorteil, dass die Sprache nicht auf die Besonderheiten einer \textit{Hostsprache} eingeschränkt ist. So können Anforderungen an die Domäne bereits beim schreiben des \textit{Compilers} mit validiert werden.
 
 \subsection{\acf{gemara}}\label{sec:gemara}
 
-Das Projekt \acs{gemara} beinhaltet ein Reihe von Software-Generatoren, deren Ziel es ist mobile und verteilte Applikationen basierent auf dem \acs{rest} Architekturstil generieren zu lassen. Dafür wurde eine interne \acs{dsl} entwickelt, mit dessen Hilfe sowohl clientseitige als auch serverseitige Applikationen beschrieben werden können.
+Das Projekt \acs{gemara} beinhaltet ein Reihe von Software-Generatoren, deren Ziel es ist mobile und verteilte Applikationen basierent auf dem \textit{\acs{rest}} Architekturstil generieren zu lassen. Dafür wurde eine \textit{interne \acs{dsl}} entwickelt, mit dessen Hilfe sowohl \textit{Client}-seitige als auch \textit{Server}-seitige Applikationen beschrieben werden können.
 
-Im Moment (Stand Februar 2017) ist es möglich ein WAR-Artefakt für einen Tomcat-Webserver generieren zu lassen. Dieses erzeugte Projekt kann auf eine relationale MYSQL-Datenbank oder einer dokumentenbasierten CouchDB zugreifen. Des weiteren ist ein Generator zur Erzeugung von Android-Applikationen sowie ein Generator für Polymer Webkomponenten in der Entwicklung.
+Im Moment (Stand Februar 2017) ist es möglich ein \textit{WAR-Artefakt} für einen \textit{Tomcat-Webserver} generieren zu lassen. Dieses erzeugte Projekt kann auf eine \textit{relationale MYSQL-Datenbank} oder einer \textit{dokumentenbasierten CouchDB} zugreifen. Des weiteren ist ein Generator zur Erzeugung von Android-Applikationen sowie ein Generator für Polymer Webkomponenten in der Entwicklung.
 
 \subsubsection{Aufbau von \acs{gemara}}
 
@@ -203,11 +197,11 @@ Im Moment (Stand Februar 2017) ist es möglich ein WAR-Artefakt für einen Tomca
 \end{figure}
 
 \begin{itemize}
-	\item \textbf{Ratcliff} definiert ein Enfield-Model, mit Hilfe einer Fluent \acs{api}.
-	\item \textbf{Yeading} definiert eine Repräsentation eines Enfield-Models, mit \acf{yaml} oder \acf{json}, welches dann in nach Ratcliff übersetzt werden.
-	\item \textbf{Enfield} liefert das Meta-Model, welches für die Beschreibung der gewünschten Appliktion benötigt wird.
-	\item \textbf{Norbury} stellt für Server-seitige Applikationen den Plattform Code bereit.
-	\item \textbf{Dalston} ist ein Software-Generator, welcher den Server-seitigen Code in Java generiert.
+	\item \textbf{Ratcliff} definiert ein Enfield-Model, mit Hilfe einer \textit{Fluent \acs{api}}.
+	\item \textbf{Yeading} definiert eine Repräsentation eines Enfield-Models, mit \textit{\acf{yaml}} oder \textit{\acf{json}}, welches dann in nach Ratcliff übersetzt werden.
+	\item \textbf{Enfield} liefert das \textit{Meta-Model}, welches für die Beschreibung der gewünschten Appliktion benötigt wird.
+	\item \textbf{Norbury} stellt für \textit{Server}-seitige Applikationen den Plattform Code bereit.
+	\item \textbf{Dalston} ist ein Software-Generator, welcher den \textit{Server}-seitigen Code in Java generiert.
 	\item \textbf{Welling} ist ein Software-Generator, welcher Android Applikationen generiert.
 	\item \textbf{Purley} ist ein Software-Generator, welcher Polymer Webkomponenten generiert. 
 \end{itemize}

@@ -1,42 +1,41 @@
 \chapter{Evaluierung anhand einer Beispielanwendung}
-Dieses Kapitel befasst sich mit den Vorteilen und Nachteilen der Generieren einer Android Applikation nach dem in dieser Arbeit vorgestellten Methode. Als Beispielanwendung wird die Referenzimplementierung etwas genauer vorgestellt und diese anschließend mit Hilfe des Generators erzeugt.
+Dieses Kapitel befasst sich mit den Vorteilen und Nachteilen des Generierens einer Android Applikation, nach dem in dieser Arbeit vorgestellten Methode. Als Beispielanwendung wird die Referenzimplementierung etwas genauer vorgestellt und diese anschließend mit Hilfe des Generators erzeugt.
 
 \section{Vorstellung der Beispielanwendung}
 
-Die Beispielanwendung soll dem Nutzer die Möglichkeit geben, die Dozenten, der Fakultät Informatik der FHWS, und deren Ämter einzusehen, einen neuen Dozenten anzulegen, einen existierenden Dozenten zu bearbeiten oder zu löschen. Neben den Dozenten, soll es weiterhin möglich sein die Ämter eines Dozenten einzusehen, zu bearbeiten, neu anzulegen oder zu löschen.
+Die Beispielanwendung soll dem Nutzer die Möglichkeit geben, die Dozenten der Fakultät Informatik der FHWS, und deren Ämter einzusehen, einen neuen Dozenten anzulegen, einen existierenden Dozenten zu bearbeiten oder zu löschen. Neben den Dozenten, soll es weiterhin möglich sein die Ämter eines Dozenten einzusehen, zu bearbeiten, neu anzulegen oder zu löschen.
 
-Die Abbildung \ref{fig:api} zeigt das \acf{api}, welches für die Beispielanwendung benötigt wird. Dieses \ac{api} spiegelt alle Funktionen und den Ablauf innerhalb der Applikation wieder. Die Beispielanwendung wird auf diesem Funktionsumfang beschränkt sein, es werden weder mehr noch weniger Funktionen abgedeckt.
+Die Abbildung \ref{fig:api} zeigt das \textit{\acf{api}}, welches für die Beispielanwendung benötigt wird. Dieses\textit{ \ac{api}} spiegelt alle Funktionen und den Ablauf innerhalb der Applikation wieder. Die Beispielanwendung wird auf diesem Funktionsumfang beschränkt sein.
 
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=\textwidth]{images/api.png}
-		\caption{Darstellung des \ac{api} der Beispielanwendung.}
+		\caption{Darstellung des \textit{\ac{api}} der Beispielanwendung.}
 		\label{fig:api}
 	\end{center}
 \end{figure}
 
 \section{Erstellung und Nutzung des Meta-Modells}
 
-Im Vergleich zum Umfang der Entwicklung einer kompletten Anwendung, reduziert die Nutzung des Generators den Aufwand erheblich. Die im Anhang befindlichen Listings \ref{lst:detailview_impl}, \ref{lst:inputview_impl} und \ref{lst:cardview_impl} zeigen den kompletten Aufwand der Beschreibung der Anwendung. Auch wenn das nur ein Teil der benötigten Informationen ist, kann der Rest vernachlässigt werden, da dieser übergreifend ist. Der zusätzlich benötigte Teil ist die Kernbeschreibung der Generierung des Backends, so ist dieser semantisch stark diesem Bereich zugeordnet und dort essentiell.
+Im Vergleich zum Umfang der Entwicklung einer kompletten Anwendung, reduziert die Nutzung des Generators den Aufwand erheblich. Die im Anhang befindlichen Listings \ref{lst:detailview_impl}, \ref{lst:inputview_impl} und \ref{lst:cardview_impl} zeigen den kompletten Aufwand der Beschreibung der Anwendung. Auch wenn diese nur ein Teil der benötigten Informationen sind, kann der Rest vernachlässigt werden. Der zusätzlich benötigte Teil ist die Kernbeschreibung der Generierung des \textit{Backends}, so ist dieser semantisch stark diesem Bereich zugeordnet und dort essentiell. Durch diesen Umstand werden diese Informationen als gegeben betrachtet.
 
-Die Fehleranfälligkeit bei der Nutzung des Meta-Modells im Gegensatz zur Entwicklung einer kompletten Anwendung ist wesentlich geringer. Die Erzeugung des Meta-Modells ist sehr viel eingeschränkter in seinen Möglichkeiten, dadurch wird die Möglichkeit, Fehler zu machen bedeutend reduziert. Das Meta-Modell liefert in gewisser weise einen Plan, wie etwas beschrieben werden muss. Bei der Eigenentwicklung einer Anwendung ist der Entwickler viel freier in der gesamten Handhabe, was das Fehlerpotenzial erhöht.
+Die Fehleranfälligkeit bei der Nutzung des \textit{Meta-Modells} im Gegensatz zur Entwicklung einer kompletten Anwendung ist wesentlich geringer. Die Erzeugung des \textit{Meta-Modells} ist sehr viel eingeschränkter in seinen Möglichkeiten, dadurch wird die Möglichkeit, Fehler zu machen bedeutend reduziert. Das \textit{Meta-Modell} liefert in gewisser weise einen Plan, wie etwas beschrieben werden muss. Bei der Eigenentwicklung einer Anwendung ist der Entwickler viel freier in der gesamten Handhabe, was das Fehlerpotenzial erhöht.
 
 \newpage
 
 Jedoch bringt diese Einschränkung durchaus auch Nachteile mit sich. So ist es im Moment beispielsweise nur möglich einer Ressource ein oder kein Bild zuzuweisen. Auch kann der Nutzer lediglich bestimmen, ob dieses Bild in der Karte einer Ressource, in der Liste mit allen Ressourcen dieser Art, auf der linken oder rechten Seite angezeigt werden soll. Für die Detail-Ansicht hat der Nutzer des Generators keine Möglichkeit zu bestimmen wie das Bild angezeigt werden soll.
-
 Auch bleibt zur Anzeige der Informationen einer Ressource lediglich die Möglichkeit diese in Listenform darzustellen. Sprich er kann nur die Reihenfolge und eine Mögliche Gruppierung bestimmen und in der Detail-Ansicht müssen diese Informationen zusätzlich in Kategorien gruppiert sein. 
 
-In der aktuellen Version kann der Benutzer des Generators keine eigene Funktionen mit dem Klick auf eine Funktion ausführen, sondern ausschließlich ein Subset von vordefinierten Funktionen. Das gleiche gilt auch für die Icons, welche in der Karte vor den einzelnen Attributen sichtbar sind. Es gibt im Moment keine Möglichkeit dort eigene Icons anzeigen zu lassen.
+In der aktuellen Version kann der Benutzer des Generators keine eigene Funktionen mit dem Klick auf ein Attribut ausführen, sondern ausschließlich ein Subset von vordefinierten Funktionen. Das gleiche gilt auch für die Icons, welche in der Karte vor den einzelnen Attributen sichtbar sind. Es gibt im Moment keine Möglichkeit dort eigene Icons anzeigen zu lassen.
 
 \section{Zeitaufwände und Komplexität}
 
-Der gesamte Generator ist in seiner Entwicklung sehr zeitaufwändig. Durch das Analysieren der Anforderungen und des entwickeln einer \acf{dsl}, ist dieser Zeitaufwand nur dann gerechtfertigt, wenn mithilfe des Generators viele Anwendungen generiert werden sollen. Die Neuentwicklung einer Android-Applikation mit dem oben beschriebenen Funktionsumfang bedarf einen ungefähren Zeitaufwand von ca. drei Arbeitstagen. Wobei der Zeitaufwand für den Generator ca. zwei bis zweieinhalb Monate beträgt.
+Der gesamte Generator ist in seiner Entwicklung sehr zeitaufwändig. Durch das Analysieren der Anforderungen und des entwickeln einer \textit{\acf{dsl}}, ist dieser Zeitaufwand nur dann gerechtfertigt, wenn mithilfe des Generators viele Anwendungen generiert werden können. Die Neuentwicklung einer Android-Applikation mit dem oben beschriebenen Funktionsumfang bedarf einen ungefähren Zeitaufwand von ca. drei Arbeitstagen. Wobei der Zeitaufwand für den Generator ca. zwei bis zweieinhalb Monate beträgt.
 
-Der Aufwand für die Wartung des Generators ist auch ziemlich hoch. Da Android sich ständig weiterentwickelt und eine Umstellung auf das OpenJDK erfolgen soll \cite{jdk}, ist es anzunehmen, das sich in Zukunft auch die Art und Weiße der Android Programmierung ändern wird. Sollte dies der Fall sein, dann müssten im kompletten Generator Anpassungen gemacht werden, diese Anpassungen werden sehr zeitaufwändig sein, da der Generator wie Abbildung \ref{fig:welling} verdeutlicht sehr komplex ist.
+Der Aufwand für die Wartung des Generators ist auch ziemlich hoch. Da Android sich ständig weiterentwickelt und eine Umstellung auf das \textit{OpenJDK} erfolgen soll \cite{jdk}, ist es anzunehmen, das sich in Zukunft auch die Art und Weiße der Android Programmierung ändern wird. Sollte dies der Fall sein, dann müssten im kompletten Generator Anpassungen gemacht werden. Diese sind sehr zeitaufwändig, da der Generator, wie Abbildung \ref{fig:welling} verdeutlicht, sehr komplex ist.
 
 Auch ist die Komplexität der erzeugten Applikation sehr hoch. Um die Komplexität des Generators zu reduzieren, wurde das mit der Komplexität der Applikation bezahlt. Auch das Vorgehen, dass nicht eine Anwendung im üblichen Sinn erzeugt wird, sondern das Komponenten in einer Bibliothek erzeugt werden, steigert den Umfang der Applikation. Bei hardware-schwächeren Endgeräten, könnte dieser Umstand zu Problemen mit der Performance führen. 
 
-Dadurch das die Anwendung weitestgehend abstrahiert wurde, blieb eine größere Verschachtlung einzelner View-Klassen nicht aus. Durch diese erhöhte Verschachtlung benötigt das Endgerät mehr Rechenleistung um die Anwendung ohne Ruckler darzustellen.
+Dadurch das die Anwendung weitestgehend abstrahiert wurde, blieb eine größere Verschachtlung einzelner \textit{View}-Klassen nicht aus. Deshalb benötigt das Endgerät mehr Rechenleistung um die Anwendung ohne Ruckler darzustellen.
 
 Gegen den großen zeitlichen Aufwand spricht die Einsparung von Zeit beim Generieren neuer Applikationen. Die Beschreibung eines Meta-Modells mit allen benötigten Angaben und Informationen, welches die Erzeugung einer Backend-Anwendung inkludiert, benötigt nur noch ungefähr eine Stunde. 

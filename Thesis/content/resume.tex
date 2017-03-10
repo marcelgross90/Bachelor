@@ -1,30 +1,28 @@
 \chapter{Zusammenfassung}
-
+\section{Zusammenfassung}
 Im Rahmen dieser Arbeit wurde ein Generator für Android Applikationen als Teilprojekt des Generators \acf{gemara} entwickelt.
 Ein Ziel dabei war dem Leser die grundsätzliche Problematik bei der Entwicklung von Software-Generatoren näher zu bringen.
-Es wurde erklärt weswegen ein Generator ein Meta-Modell benötigt, und mögliche Modelle vorgestellt. 
+Es wurde erklärt weswegen ein Generator ein \textit{Meta-Modell} benötigt, und mögliche Modelle vorgestellt. 
 
-Bei der Vorstellung der Meta-Modelle wurde aufgezeigt, welche Vorteile und Nachteile das jeweilige Modell besitzt. So wurde bei dem Android-spezifischen Modell gezeigt, dass dieses flexibler im Bereich der Funktionalitäten und des Ablaufes innerhalb der Anwendung ist. Jedoch ist es nicht oder nur schwer möglich dieses Modell für einen anderen Client mitzuverwenden. Bei der Vorstellung des universellen Modells wurden die bei der Analyse angewendeten Fragen aufgezeigt. Die Verdeutlichen sollen, was bei der Entwicklung von Meta-Modellen alles berücksichtigt werden muss.
+Bei der Vorstellung der \textit{Meta-Modelle} wurde aufgezeigt, welche Vorteile und Nachteile das jeweilige Modell besitzt. So wurde bei dem Android-spezifischen Modell gezeigt, dass dieses flexibler im Bereich der Funktionalitäten und des Ablaufes innerhalb der Anwendung ist. Jedoch ist es nicht oder nur schwer möglich dieses Modell für einen anderen \textit{Client} mitzuverwenden. Bei der Vorstellung des universellen Modells wurden die bei der Analyse angewendeten Fragen aufgezeigt. Die Verdeutlichen sollen, was bei der Entwicklung von \textit{Meta-Modellen} alles berücksichtigt werden muss.
 
-Es wurde darauf eingegangen, dass das gegebene Enfield-Meta-Modell nicht an einer Stelle, sondern an den entsprechenden Stellen in den States erweitert wird. Dies hat zum Vorteil das der Generator durch das iterieren über die States mit Hilfe der Transitionen, eine Art Fahrplan der Applikation besitzt und zur passenden Stelle alle relevanten Informationen zur Verfügung hat.
+Es wurde darauf eingegangen, dass das gegebene \textit{Enfield-Meta-Modell} nicht an einer Stelle, sondern an den entsprechenden Stellen in den \textit{States} erweitert wird. Dies hat zum Vorteil das der Generator durch das iterieren über die \textit{States} mit Hilfe der Transitionen, eine Art Fahrplan der Applikation besitzt und zur passenden Stelle alle relevanten Informationen zur Verfügung hat.
 
-Anhand von Codebeispielen wurde gezeigt, wie die Views modelliert werden müssen und wie das Ergebnis aussieht. Besonders wurde darauf eingegangen, welche Möglichkeiten der Benutzer des Generators besitzt, um die Views zu gestalten. Zu den Gestaltungsmöglichkeiten der Oberfläche wurde außerdem aufgezeigt welche möglichen Interaktionen bei einem Klick ausgelöst werden können.
+Anhand von Codebeispielen wurde gezeigt, wie die \textit{Views} modelliert werden müssen und wie das Ergebnis aussieht. Besonders wurde darauf eingegangen, welche Möglichkeiten der Benutzer des Generators besitzt, um die \textit{Views} zu gestalten. Zu den Gestaltungsmöglichkeiten der Oberfläche wurde außerdem aufgezeigt welche möglichen Interaktionen bei einem Klick ausgelöst werden können.
 
-Auch wurde dem Leser näher gebracht, wie der Generator für eine Android Applikation funktioniert. Es wurde das Java \acf{api} \textit{JavaPoet} vorgestellt, mit wessen Hilfe die Java-Klassen erzeugt werden können. Daneben wurde auch aufgezeigt wie die anderen Dateien erzeugt werden können. 
-
+Auch wurde dem Leser näher gebracht, wie der Generator für eine Android Applikation funktioniert. Es wurde das Java \textit{\acf{api}} \textit{JavaPoet} vorgestellt, mit wessen Hilfe die Java-Klassen erzeugt werden können. Daneben wurde auch aufgezeigt wie die anderen Dateien erzeugt werden können. 
 Neben dem reinen Erzeugen wurde der Ablauf im Generator vorgestellt. Es wurde gezeigt das sich dieser in drei Bereiche gliedert.
 Jeder dieser Bereiche wurde vorgestellt und auf seine Besonderheiten hingewiesen. Dadurch sollte ein Verständnis über die Funktionsweise vermittelt werden.  
 
-\chapter{Ausblick}
+\section{Ausblick}
 
-In diesem Kapitel sollen Ideen und Mögliche Erweiterungen es Meta-Modells sowie des Software-Generators für Android Applikationen erwähnt werden.
+Im letzten Kapitel der Ausarbeitung sollen Ideen und mögliche Erweiterungen es Meta-Modells sowie des Software-Generators für Android Applikationen vorgestellt werden.
 
-In der ersten Version des Generators ist es bisher nur möglich eine Ressource als Primärressource zu definieren. Jedoch würde es die Möglichkeit geben, mehrere Ressourcen zu definieren und in der Applikation mit Hilfe eines Navigation-Drawers zwischen diesen umzuschalten. Der Grundstein dafür ist bereits in dieser Version gelegt worden. Neben den drei in dieser Arbeit beschriebenen ResourceViews wurde bereits eine vierte View im Meta-Modell eingefügt. Die NavigationDrawerRessourceView mit deren Hilfe der Drawer in der Applikation beschrieben werden könnte.
+In der ersten Version des Generators ist es bisher nur möglich eine Ressource als \textit{Primärressource} zu definieren. Jedoch würde es die Möglichkeit geben, mehrere Ressourcen zu definieren und in der Applikation mit Hilfe eines \textit{Navigation-Drawers} zwischen diesen umzuschalten. Der Grundstein dafür ist bereits in dieser Version gelegt worden. Neben den drei, in dieser Arbeit beschriebenen, \textit{ResourceViews} wurde bereits eine vierte \textit{View} im \textit{Meta-Modell} eingefügt. Die \textit{NavigationDrawerRessourceView} mit deren Hilfe der \textit{Drawer} in der Applikation beschrieben werden könnte.
 
-Außerdem sind im Moment die Views auf ein Bild beschränkt, in einer späteren Version,  könnte diese Begrenzung  aufgehoben werden und dadurch einer Ressource mehrere Bilder als Attribute zugeteilt werden. Dafür müsste jedoch auch das Modell dahingehend erweitert werden, das der Generator weiß, welches Bild als Titelbild verwendet wird. Dieses würde dann weiterhin in der CollapsingToolbar der Detail-Ansicht angezeigt werden. Da die CollapsingToolbar ein Style-Element von Material Design ist, sollte dieses so beibehalten werden. Jedoch müsste überlegt werden wie die zusätzlichen Bilder angezeigt werden sollen.
+Außerdem sind im Moment die \textit{Views} auf ein Bild beschränkt, in einer späteren Version,  könnte diese Begrenzung  aufgehoben werden und dadurch einer Ressource mehrere Bilder als Attribute zugeteilt werden. Dafür müsste jedoch auch das Modell dahingehend erweitert werden, das der Generator weiß, welches Bild als Titelbild verwendet wird. Dieses würde dann weiterhin in der \textit{CollapsingToolbar} der Detailansicht angezeigt werden. Da die \textit{CollapsingToolbar} ein Style-Element von Material Design ist, sollte dieses so beibehalten werden. Jedoch müsste überlegt werden wie die zusätzlichen Bilder angezeigt werden sollen.
 
-Auch wurde in der Ausarbeitung darauf eingegangen, das einem Attribut in einer InputResourceView ein \textit{checkPattern} sowie ein \textit{errorText} mitgegeben werden kann. Jedoch werden aktuell diese Eigenschaften nicht zur Validierung der Eingabe herangezogen. Auch könnte neben der Ergänzung um diese Checks noch angegeben werden ob es optionale Eingabefelder gibt. Im Moment müssen alle angegebenen Felder befüllt werden.
+Auch wurde in der Ausarbeitung darauf eingegangen, das einem Attribut in einer \textit{InputResourceView} ein \textit{checkPattern} sowie ein \textit{errorText} mitgegeben werden kann. Jedoch werden aktuell diese Eigenschaften nicht zur Validierung der Eingabe herangezogen. Zusätzlich könnten für die Checks noch angegeben werden ob es optionale Eingabefelder gibt. Im Moment müssen alle angegebenen Felder befüllt werden.
 
-Da es für Android-Anwendungen eher unüblich ist Bilder zu einer Ressource durch das Hochladen dieser hinzuzufügen, wurde im ersten Entwurf auf dieses Feature verzichtet. In Zukunft wäre es jedoch denkbar, diese Möglichkeit zu unterstützten. 
-
+Da es für Android-Anwendungen eher unüblich ist Bilder zu einer Ressource, durch das Hochladen dieses, hinzuzufügen, wurde im ersten Entwurf auf das Feature verzichtet. In Zukunft wäre es jedoch denkbar, diese Möglichkeit zu unterstützten. 
 Ein weitere nützliche Erweiterung wäre die Suche nach einer bestimmten Ressource. Dieses Feature war zwar Anfangs bereits angedacht, wurde jedoch erst einmal wegen einer geringeren Priorität hinten angestellt.
