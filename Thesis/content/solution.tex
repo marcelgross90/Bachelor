@@ -1,7 +1,7 @@
 \chapter{Lösung}
 Dieses Kapitel befasst sich mit den Möglichkeiten und den Lösungsansätzen, zu den Problemstellungen aus Kapitel \ref{ch:problem}. Anhand von Beispielen wird verdeutlicht, wie gewisse Anforderungen umgesetzt werden könnten.
 
-\section{Meta-Modell}
+\section{\textit{Meta-Modell}}
 Nach der Anforderungsanalyse, wurden alle relevanten Informationen erkannt und zusammen gestellt. Diese Zusammenstellung an Daten, welche die Applikation beschreiben wird \textit{Meta-Modell} genannt.
 
 \subsection{Kompatibilität mit \acs{gemara} und andern möglichen Clients}
@@ -21,7 +21,7 @@ In dieser Klasse sind bereits die wichtigsten Informationen wie zum Beispiel der
 
 Um jetzt zusätzlich benötigten Informationen für die Android Applikation in dieses bestehende Modell einzubauen, gibt es zwei Möglichkeiten.
 
-\subsection{Eigenes Android-Meta-Modell}
+\subsection{Eigenes \textit{Android-Meta-Modell}}
 
 Es besteht die Möglichkeit die Modell-Klasse um ein Attribut \textit{Android-Meta-Modell} zu erweitern.
 Die Abbildung \ref{fig:android-model} zeigt schemenhaft ein Beispiel wie ein \textit{Android-Meta-Modell} aussehen könnte. Auffällig hierbei ist, das viele Informationen, die das \textit{Enfield-Modell} bereits liefern würde, noch einmal explizit beschrieben werden müssen. Ein Beispiel wären die \textit{Transitionen}, zwischen den \textit{Fragmenten} beziehungsweise zwischen den \textit{Activities}. 
@@ -44,7 +44,7 @@ Jedoch überwiegen in diesem Fall die Nachteile. Ein Nachteil dieses Vorgehens i
 Der nächste Nachteil ist der, der Nutzer des Software-Generators muss sich in der Entwicklung von Android Anwendungen auskennen. Er muss genau das Zusammenspiel von \textit{ViewHoldern}, \textit{Adaptern}, \textit{Fragments} und \textit{Activities} kennen. Er muss wissen wie diese ineinandergreifen und wann welche Aktionen ausgelöst werden müssen. Weiterhin sollte er ein grundsätzliches Verständnis für das \textit{\acf{mvc} Pattern} besitzen, welches bei der Entwicklung von Android Applikationen Anwendung findet.
 Ein weiterer Nachteil ist die Beschränkung des Modells auf Android. Wird das \textit{Enfield-Modell} um ein \textit{Android-Meta-Modell} erweitert, so muss dieses für jeden einzelnen \textit{Client} geschehen. Soll der Generator beispielsweise um Polymer-Webkomponente oder einer iOS-Anwendung erweitert werden, so müsste für jede einzelne Art von \textit{Client}, das \textit{Enfield-Modell} mit einem Entsprechenden \textit{Meta-Modell} erweitert werden.
 
-\subsection{Allgemeine Erweiterungen des \textit{Enfield-Modell}s}
+\subsection{Allgemeine Erweiterungen des \textit{Enfield-Modells}}
 
 In dieser Arbeit wurde sich für die Variante entschieden, das \textit{Enfield-Modell} an geeigneter Stelle zu erweitern.
 Diese Stelle befindet sich in den einzelnen \textit{States}. Jede Instanz des \textit{AbstractState} besitzt ein Attribut \textit{SingleResourceView}. Diese Klasse wird um die  Attribute, welche benötigt werden erweitert. In der Abbildung \ref{fig:enfield-model-extended} ist der vereinfachte Aufbau des \textit{AbstractStates} und einer \textit{SingleResourceView} zu sehen.
@@ -69,7 +69,7 @@ Die Abbildung \ref{fig:enfield-model-extended} zeigt das \textit{Enfield-Modell}
 Der Nachteil dieser Methode ist, das die Informationen an mehr als einer Stelle im \textit{Enfield-Modell} zu finden sind. Sollten die Informationen zu den \textit{Clients} verändert werden, so sind Änderungen an der \textit{SingleResourceView}-Klasse und in der Modell-Klasse nötig. Die Vorteile wurden jedoch oben schon einmal erwähnt. Der Generator kann das Modell als Fahrplan nutzen und weiß genau wann er welche Klassen für die Android Anwendung erzeugen muss. Er kann auch mit Hilfe der \textit{Transitionen} bestimmen wie der Verlauf innerhalb der Anwendung gestaltet ist.
 
 \newpage
-\subsection{Analyse der benötigten Dateien für das Meta-Modell}
+\subsection{Analyse der benötigten Dateien für das \textit{Meta-Modell}}
 
 Nachdem identifiziert wurde, an welchen Stellen das \textit{Enfield-Modell} erweitert werden soll, muss noch analysiert werden, welche Informationen an diesen Stellen zur Verfügung gestellt werden müssen. Bei dieser Analyse muss auch ein Augenmerk darauf gelegt werden, wie man die Informationen so aufbereitet, dass diese nicht nur eine Android-Applikation, sondern auch mögliche andere \textit{Clients} unterstützen.
 
@@ -132,7 +132,7 @@ Neben der Reihenfolge gibt es noch die Möglichkeit Schriftgröße oder Schriftf
 
 Besitzt die Karte ein Bild, so sollte der Nutzer die Möglichkeit besitzen zu entscheiden ob dieses auf der linken oder rechten Seite der Karte dargestellt werden soll.
 
-\subsubsection{DetailView}
+\subsubsection{\textit{DetailView}}
 
 \begin{figure}[H]
 	\begin{center}
@@ -165,7 +165,7 @@ Da das \textit{Enfield-Modell} bereits einen \textit{endlichen Automaten} beschr
 
 Auch die Aktionen welche durch einen Klick auf ein bestimmtes Attribut ausgeführt werden soll, beschränkt sich auf Android Standardaktionen. Beispielsweise das wechseln zu den \textit{Maps}, zu einem \textit{E-Mail Client}, dem \textit{Browser} oder zum \textit{Anrufsmenü}. Jede dieser Aktion ergibt sich aus den Typen der Attribute, weswegen diese auch nicht weiter definiert werden müssen.
 
-\subsection{Design der View-Meta-Modelle} \label{sec:resourceViews}
+\subsection{Design der \textit{View-Meta-Modelle}} \label{sec:resourceViews}
 
 In den letzten Abschnitten der Arbeit wurde aufgezählt, was das \textit{Meta-Modell} sowohl Android- als auch Polymer-seitig abdecken muss. In diesem Kapitel wird ein \textit{Meta-Modell} vorgestellt, welches die erwähnten Eigenschaften abdeckt.
 
@@ -181,7 +181,7 @@ In den letzten Abschnitten der Arbeit wurde aufgezählt, was das \textit{Meta-Mo
 Die Abbildung \ref{fig:meta-model} zeigt den Aufbau der Objekte, mit welchem das \textit{Enfield-Modell} erweitert wird. Die drei \textit{Views}: \textit{CardView}, \textit{DetailView} und \textit{InputView} sind alles Instanzen von \textit{AbstraktResourceView}. Jede der \textit{View}, weiß, durch die Zuordnung mit Hilfe des Ressourcennamens, welche Ressource sie darstellen soll. Die drei \textit{Views}, lassen sich in zwei Kategorien einteilen: \textit{Views}, welche Informationen anzeigen und \textit{Views} welche zur Eingabe von Informationen benötigt werden.
 So gehören \textit{CardView} und \textit{DetailView} zu den anzeigenden \textit{Views} und die \textit{InputView} zur zweiten Kategorie. 
 
-\subsubsection{Anzeigende Views}
+\subsubsection{Anzeigende \textit{Views}}
 Diese \textit{View}-Typen haben die Aufgabe eine Liste aller Attribute zu halten, welche in der entsprechenden \textit{View} angezeigt werden sollen. Dabei bestimmt die Reihenfolge, in welcher die Attribute in dieser Liste sind auch die Anordnung in der Oberfläche. Ist das erste Item in der Liste der Name, so wird dieser ganz oben in der \textit{View} angezeigt.
 Bei der \textit{DetailView} jedoch gibt es nicht eine Liste mit den Attributen, sondern eine Liste mit Kategorien. Diese besitzen 
 einen Namen und eine Liste mit den Attributen ihrer Kategorie. Die Darstellungsreihenfolge der Kategorien und deren Attribute ist analog zu der der \textit{CardView}. Weiter besitzt die \textit{DetailView} das Attribut \textit{image}, dieses wird hier aus der Liste der Attribute herausgezogen, da dieses Attribut bestimmt, ob die \textit{View} eine \textit{CollapsingToolbar} besitzen wird oder nicht. Wiederum haben beide \textit{Views} das Attribut \textit{titleOfResource} dieses bestimmt welches Attribut unserer Ressource beispielsweise in der \textit{Toolbar} angezeigt wird.
@@ -200,9 +200,65 @@ Mit dem \textit{attributeLabel} kann angegeben werden, wie dieses Attribut in de
 Dies geschickt mit dem Attribut \textit{AttributeType}. Es gibt folgende mögliche Typen: \textit{HOME}, \textit{MAIL}, \textit{LOCATION}, \textit{PICTURE}, \textit{PHONE\_NUMBER}, \textit{TEXT}, \textit{URL}, \textit{DATE}, \textit{SUBRESOURCE}. Jeder Typ bestimmt die Eigenschaften des Attributes. Über diesen wird bestimmt welches Icon in der Karte vor dem entsprechenden Attribut angezeigt wird oder welche Aktion bei Klick ausgeführt werden soll. So wird bei einem Klick auf ein Attribut vom Typ \textit{LOCATION} versucht die Anwendung \textit{Maps} zu öffnen und den angezeigten Standort dort anzuzeigen. Ist das Attribute vom Typ \textit{SUBRESOURCE} so wird für dieses Attribut ein \textit{Button} angezeigt, dieser ermöglicht es dann zu der entsprechenden Subressource zu wechseln. Diese Klick-Aktionen müssen jedoch mit dem Attribut \textit{clickActionAndroid} erst aktiviert werden.
 Manche Typen bringen noch ein paar andere Besonderheiten mit sich. So muss man beispielsweise bei einem \textit{URL}-Attribut noch eine Beschreibung mitgeben, welche anstelle der Hyperlinks angezeigt werden soll. Bei einem Bild kann beispielsweise noch bestimmt werden, ob dieses links oder rechts dargestellt werden soll. 
 
-Das im Anhang befindliche Listing \ref{lst:detailview_impl} zeigt die Definition einer \textit{DetailView}.
+Nachfolgend wird auf einige Besonderheiten der Nutzung der eingebenden \textit{Views} eingegangen und diese genauer erklärt. So zeigt Listing \ref{lst:grouped} beispielsweise das Erzeugen eines \textit{GroupedResourceViewAttributes}. Hierfür werden erst einmal drei \textit{DisplayViewAttribute} definiert. Das erste beschreibt hierbei das Aussehen, den Namen und den Typ der Gruppierung. Die Gruppe in diesem Beispiel wird aus den beiden Attributen \textit{firstName} und \textit{lastName} zusammengesetzt. Beide Attribute sind vom Typ \textit{TEXT} auch die Gruppe wird von diesem Typ sein. Der String im Konstruktor ist der Name dieses Attributes. Stellt das Attribut ein Attribut aus der Ressource dar, wie der \textit{firstName} beziehungsweise \textit{lastName} so muss dieser Name identisch mit dem Attribut der Ressource sein. Neben der Zusammensetzung der Gruppe, wird hier ebenfalls definiert, wie dies dargestellt werden soll. Mit \textit{setFontSize(DisplayViewAttribute.FontSize.LARGE)} wird deklariert das die Gruppe mit einer großen Schriftgröße dargestellt werden, und die Methode \textit{setFontColor("\#000")} bestimmt das die Schrift schwarz ist. Bei einer Gruppe hat es kein Effekt wenn die Schriftfarbe oder Größe der einzelnen Gruppenmitglieder bestimmt wird. Die Darstellung ist einzig von den Attributen der Gruppe abhängig.
 
-\subsubsection{Eingebende Views}
+\begin{lstlisting}[label=lst:grouped,
+language=java,
+firstnumber=1,
+caption=Erstellung eines \textit{GroupedResourceViewAttributes}.]		
+DisplayViewAttribute nameAttribute = new DisplayViewAttribute("name", ViewAttribute.AttributeType.TEXT);
+nameAttribute.setFontSize(DisplayViewAttribute.FontSize.LARGE);
+List<DisplayViewAttribute> nameAttributes = new ArrayList<>();
+
+DisplayViewAttribute firstNameAttributes = new DisplayViewAttribute("firstName", ViewAttribute.AttributeType.TEXT);
+firstNameAttributes.setAttributeLabel("FirstName");
+nameAttributes.add(firstNameAttributes);
+
+DisplayViewAttribute lastNameAttributes = new DisplayViewAttribute("lastName", ViewAttribute.AttributeType.TEXT);
+lastNameAttributes.setAttributeLabel("LastName");
+nameAttributes.add(lastNameAttributes);
+
+GroupResourceViewAttribute name;
+try {
+	nameAttribute.setFontColor("#000");
+	name = new GroupResourceViewAttribute(nameAttribute, nameAttributes);
+} catch (DisplayViewException ex) {
+	name = null;
+}
+\end{lstlisting}
+
+Das Listing \ref{lst:category} beschreibt die Definition einer \textit{Category} als Teil einer \textit{DetailView}. In diesem Listing wird eine \textit{Category} mit dem Namen \textit{Office} erzeugt. Diese Kategorie besitzt zwei Attribute, welche als \textit{DisplayViewAttribute} dargestellt werden. Eines der beiden Attribute ist in diesem Fall die Adresse. Es wird definiert, das dieses \textit{DisplayViewAttribute} vom Type \textit{LOCATION} ist und das es eine Aktion beim anklicken geben soll. Des weiteren wird definiert, das dieses Attribut ein Label \textit{Address} besitzt.
+
+\begin{lstlisting}[label=lst:category,
+language=java,
+firstnumber=1,
+caption=Erstellung einer \textit{Category}.]		
+...
+new Category("Office", getOfficeResourceViewAttributes());
+...
+
+private static List<ResourceViewAttribute> getOfficeResourceViewAttributes() {
+	List<ResourceViewAttribute> officeAttributes = new ArrayList<>();
+
+	DisplayViewAttribute addressAttribute = new DisplayViewAttribute("address", ViewAttribute.AttributeType.LOCATION);
+	addressAttribute.setAttributeLabel("Address");
+	addressAttribute.setClickActionAndroid(true);
+	SingleResourceViewAttribute address = new SingleResourceViewAttribute(addressAttribute);
+	officeAttributes.add(address);
+
+	DisplayViewAttribute roomAttribute = new DisplayViewAttribute("roomNumber", ViewAttribute.AttributeType.TEXT);
+	roomAttribute.setAttributeLabel("Room");
+	roomAttribute.setClickActionAndroid(true);
+	SingleResourceViewAttribute room = new SingleResourceViewAttribute(roomAttribute);
+	officeAttributes.add(room);
+
+	return officeAttributes;
+}
+\end{lstlisting}
+
+Im Anhang befinden sich unter Listing \ref{lst:detailview_impl} die vollständige Definition einer \textit{DetailView}, sowie unter Listing \ref{lst:cardview_impl} die vollständige Definition einer \textit{CardView}. 
+
+\subsubsection{Eingebende \textit{Views}}
 
 Bei der \textit{InputView} gibt es wieder eine Liste, welche dieses mal \textit{InputViewAttribute} mit der Oberklasse \textit{AbstractViewAttribute} hält. Diese Liste bestimmt analog zu den anzeigenden Views die darzustellende Reihenfolge der Attribute. 
 
@@ -212,7 +268,20 @@ Es ist jedoch für den Android-\textit{Client} nicht möglich Bilder zu Ressourc
 
 Einem \textit{InputViewAttribute} muss zusätzlich ein \textit{hintText} mitgegeben werden, der im \textit{EditText} des Attributs beschreibt, was in diesem Feld erwartet wird. Mit dem String \textit{missingText} kann dem Attribut mitgegeben werden, welche Nachricht dem Nutzer angezeigt wird, falls er versucht zu speichern ohne das entsprechende Feld auszufüllen. Mit der Kombination von \textit{checkPattern} und \textit{errorText} bekommt der Nutzer des Generators die Möglichkeit die Validierung des eingegebenen Attributes noch weiter zu verfeinern und auch dem Nutzer der Applikation ein Feedback zu geben, falls eine falsche Eingabe getätigt wurde.
 
-Die Definition einer \textit{InputView} wird im Anhang unter Listing \ref{lst:inputview_impl} dargestellt.
+Das Listing \ref{lst:input} stellt dar, wie ein \textit{InputViewAttribute} für eine \textit{InputView} definiert werden muss. Das hier initialisierte Attribut ist vom Type \textit{TEXT} und wird mit dem \textit{attributeName} \textit{roomNumber} seinem zugehörigen Attribut der Ressource zugewiesen.
+Auch wird hier wieder ein Label vergeben, daneben den \textit{Hint-Text} \textit{Room} sowie der \textit{Missing-Text} \textit{Room is missing!}.
+Im Anahng unter Listing \ref{lst:inputview_impl} befindet sich eine vollständige Definition einer \textit{InputView}.
+
+\begin{lstlisting}[label=lst:input,
+language=java,
+firstnumber=1,
+caption=Definition von \textit{InputViewAttributes} einer \textit{InputView}.]	
+InputViewAttribute room = new InputViewAttribute(
+	"roomNumber", ViewAttribute.AttributeType.TEXT, 
+	"Room", "Room is missing!");
+room.setAttributeLabel("Room");
+inputViewAttributes.add(room);
+\end{lstlisting}
 
 \subsection{Analyse und Design von allgemeinen Daten für eine Anwendung}
 
@@ -236,7 +305,7 @@ Mit dem Wissen, konnte eine Erweiterung des \textit{Enfield-Modell}s designet we
 
 Dieses Kapitel behandelt die Funktionsweise und den Aufbau des Generators. Des weiteren wird das Java \acf{api} \textit{JavaPoet} kurz vorgestellt \cite{poet}.
 
-\subsection{JavaPoet}
+\subsection{\textit{JavaPoet}}
 \textit{JavaPoet} ist ein Java \textit{\ac{api}}, welches ermöglicht Java-Klassen zu generieren \cite{poet}. Hierfür wird die zu generierende Klasse programmiert. Mit Hilfe von nur ein paar Schlüsselwörtern ist es möglich \textit{Klassen}, \textit{Interfaces} oder \textit{Methoden} zu generieren. 
 
 Da der größte Teil des Generators Java-Klassen erzeugen muss, ist dieses \ac{api} bestens für diesen Zweck geeignet. Sie erspart die aufwändige String-Manipulation. Durch die Nutzung wird auch bei der Ausführung des Programmes sichergestellt, das gültige Konventionen und Regeln von Java eingehalten werden. So ist der grundsätzliche korrekte Aufbau einer Java-Klasse bereits vorab sichergestellt.
@@ -350,7 +419,7 @@ Die Klasse \textit{ApplicationGenerator}, ist der Einstiegspunkt des Projekts. S
 
 Die \textit{ApplicationGenerator} Klasse verfügt über eine öffentliche Methode \textit{generate}. Beim Aufrufen dieser Methode, werden die einzelnen Generatoren, für den allgemeinen Bereich angestoßen. Weiterhin wird das iterieren über die \textit{States} des \textit{Enfield-Modell} begonnen. Zum Schluss wird noch das \textit{AppDescription} Objekt ausgewertet, und die darin enthaltenen Informationen in Dateien geschrieben und an die entsprechende Stelle im Projekt gespeichert.
 
-\subsubsection{Erstellung der AppDescription}
+\subsubsection{Erstellung der \textit{AppDescription}}
 
 \begin{figure}[H]
 	\begin{center}
@@ -389,7 +458,7 @@ Der Bereich, welcher die Bibliothek initialisiert, ist der Größte. Er generier
 
 Dieser gesamte Teilbereich des Projekts befasst sich damit ein Grundgerüst für die komplette Android Applikation zu erzeugen und vorab bereits alle benötigten Dateien aufzubereiten. Die generierten Klassen haben jedoch noch keinerlei Programmlogik, die den spezifischen Ablauf der zu generierenden Anwendung steuert.
 
-\subsubsection{Iterieren über die States}
+\subsubsection{Iterieren über die \textit{States}}
 
 Der Teilbereich, der sich mit dem iterieren über die einzelnen \textit{States} beschäftigt ist der komplexeste Bereich des Generators. Er ist dafür verantwortlich, das zu jedem \textit{State} die alle benötigten Klassen und Dateien generiert werden. 
 

@@ -1,4 +1,6 @@
 \chapter{Zusammenfassung}
+Im diesem Kapitel wird die gesamte Ausarbeitung noch einmal zusammengefasst, dabei spiegelt diese Zusammenfassung auch den noch einmal den Aufbau der Arbeit dar. Abschließend werden mögliche Ausblicke vorgestellt. Diese beinhalten Erweiterungen, um den der Software-Generator erweitert werden könnte.
+
 \section{Zusammenfassung}
 Im Rahmen dieser Arbeit wurde ein Generator für Android Applikationen als Teilprojekt des Generators \acf{gemara} entwickelt.
 Ein Ziel dabei war dem Leser die grundsätzliche Problematik bei der Entwicklung von Software-Generatoren näher zu bringen.
@@ -23,6 +25,8 @@ In der ersten Version des Generators ist es bisher nur möglich eine Ressource a
 Außerdem sind im Moment die \textit{Views} auf ein Bild beschränkt, in einer späteren Version,  könnte diese Begrenzung  aufgehoben werden und dadurch einer Ressource mehrere Bilder als Attribute zugeteilt werden. Dafür müsste jedoch auch das Modell dahingehend erweitert werden, das der Generator weiß, welches Bild als Titelbild verwendet wird. Dieses würde dann weiterhin in der \textit{CollapsingToolbar} der Detailansicht angezeigt werden. Da die \textit{CollapsingToolbar} ein Style-Element von Material Design ist, sollte dieses so beibehalten werden. Jedoch müsste überlegt werden wie die zusätzlichen Bilder angezeigt werden sollen.
 
 Auch wurde in der Ausarbeitung darauf eingegangen, das einem Attribut in einer \textit{InputResourceView} ein \textit{checkPattern} sowie ein \textit{errorText} mitgegeben werden kann. Jedoch werden aktuell diese Eigenschaften nicht zur Validierung der Eingabe herangezogen. Zusätzlich könnten für die Checks noch angegeben werden ob es optionale Eingabefelder gibt. Im Moment müssen alle angegebenen Felder befüllt werden.
+
+\newpage
 
 Da es für Android-Anwendungen eher unüblich ist Bilder zu einer Ressource, durch das Hochladen dieses, hinzuzufügen, wurde im ersten Entwurf auf das Feature verzichtet. In Zukunft wäre es jedoch denkbar, diese Möglichkeit zu unterstützten. 
 Ein weitere nützliche Erweiterung wäre die Suche nach einer bestimmten Ressource. Dieses Feature war zwar Anfangs bereits angedacht, wurde jedoch erst einmal wegen einer geringeren Priorität hinten angestellt.
