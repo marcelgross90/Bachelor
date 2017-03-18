@@ -1,7 +1,7 @@
 \chapter{Problemstellung} \label{ch:problem}
-%todo
-In diesem Kapitel wird die Referenzanwendung für diese Arbeit vorgestellt. Um einen Generator zu entwickeln, ist es hilfreich, eine solche Implementierung der gewünschten Applikation mit all ihren Funktionen und Anforderungen zu entwickeln. Bei einer anschließenden Quellcode-Analyse sollte darauf geachtet werden, dass die einzelnen Klassen weitestgehend abstrahiert sind und eine Einteilung in generischen und spezifischen Quellcode erfolgen kann. Der generische Quellcode ist einfacher zu generieren, da dieser statisch ist und sich für alle folgenden Implementierungen nicht verändert. 
-Es wird darauf eingegangen, das das benötigte \textit{\acf{api}} mit Hilfe von \acf{gemara} generiert wurde und wie das zugehörige \textit{Enfield-Meta-Modell} aussieht. Nach der Vorstellung des Modells wird auch das erzeugte \textit{\acf{api}} dargestellt. Anschließend werden die Problemstellungen in Bezug auf die Kompatibilität des zu entwickelnden Software-Generators mit \ac{gemara}, dem Aufbau und Design der Android Anwendung sowie des Design des Software-Generators selbst eingegangen.
+In diesem Kapitel wird die Referenzanwendung für diese Arbeit vorgestellt. Zuerst wird das benötigte Backend vorgestellt. Es wird darauf eingegangen, das das benötigte \textit{\acf{api}} mit Hilfe von \acf{gemara} generiert wurde und wie das zugehörige \textit{Enfield-Meta-Modell} aussieht. Nach der Vorstellung des Modells wird auch das erzeugte \textit{\acf{api}} dargestellt. Anschließend wird die Android Applikation vorgestellt, wobei in diesem Bereich primär auf das \textit{\acf{ui}} eingegangen wird. Abschließend wird das \textit{Meta-Modell} und mögliche Erweiterungen vorgestellt und gegeneinander abgewogen.
+
+Um einen Generator zu entwickeln, ist es hilfreich, eine solche Implementierung der gewünschten Applikation mit all ihren Funktionen und Anforderungen zu entwickeln. Bei einer anschließenden Quellcode-Analyse sollte darauf geachtet werden, dass die einzelnen Klassen weitestgehend abstrahiert sind und eine Einteilung in generischen und spezifischen Quellcode erfolgen kann. Der generische Quellcode ist einfacher zu generieren, da dieser statisch ist und sich für alle folgenden Implementierungen nicht verändert. 
 
 \section{Vorstellung der Referenzanwendung}
 Die Beispielanwendung soll dem Nutzer die Möglichkeit geben, die Dozenten der Fakultät Informatik der FHWS, und deren Ämter einzusehen, einen neuen Dozenten anzulegen, einen existierenden Dozenten zu bearbeiten oder zu löschen. Neben den Dozenten, soll es weiterhin möglich sein die Ämter eines Dozenten einzusehen, zu bearbeiten, neu anzulegen oder zu löschen. Für jede dieser Aktionen werden entsprechende Endpunkte in dem \textit{\acf{api}} benötigt. Jeder dieser Endpunkte benötigt einen Zugriff auf die darunter liegende Datenbank. Um das zu realisieren wird ein \textit{Backend-Projekt} mit Hilfe von \ac{gemara} erzeugt.
@@ -111,12 +111,91 @@ Die Abbildung \ref{fig:api} zeigt das \textit{\acl{api}}, welches für die Beisp
 Nach der Vorstellung des Backends, geht dieses Kapitel darauf ein wie die Informationen des \textit{\acl{api}s} in die Android Applikation einfließt.
 Für die Realisierung der gewünschten Funktion werden folgende \textit{Views} benögt: eine \textit{RecyclerView}, welche alle Dozenten in jeweils einer eigenen \textit{CardView} darstellen, eine \textit{DetailView} diese zeigt einen einzelnen Dozenten und all seine Informationen, jeweils eine \textit{InputView} zur Erzeugung eines neuen Dozenten beziehungsweise zum bearbeiten eines existierenden Dozenten, eine \textit{RecyclerView}, welche die Ämter eines Dozenten anzeigt, die Detail-Ansicht eines Amtes sowie wiederum jeweils eine \textit{View} zum bearbeiten beziehungsweise zur Neuanlage eines Amtes.
 
-%todo
+\subsubsection{\textit{\acf{ui}} der Referenzimplementierung}
+In diesem Kapitel wird das \textit{\acl{ui}} der Android Applikation vorgestellt. Dabei wird gezeigt wie die einzelnen \textit{Views} umgesetzt werden.
+Wie dem \acl{api} entnommen werden kann, steigt der Nutzer mit der Liste aller Dozenten in die Applikation ein. Diese Liste ist in diesem Fall wie in der Einleitung beschrieben mit einer \textit{RecyclerView} und einzlenen \textit{CardViews} realisiert. Diese Liste kann in Abbildung \ref{fig:list} eingesehen werden.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{images/list.png}
+		\caption{\textit{RecyclerView} zur Darstellung aller Dozenten.}
+		\label{fig:list}
+	\end{center}
+\end{figure}
+
+Über den \textit{Plus-Button} auf der linken oberen Seite in der \textit{View} kommt der Nutzer zu der \textit{View}, welche es ermöglicht, einen neuen Dozenten anzulegen. Diese \textit{View} besteht aus \textit{EditText}-Feldern, welche Vorgeben welche Informationen zur Neuanlage benötigt werden. Die Abbildung \ref{fig:input_view} zeigt diese \textit{View}. Diese \textit{View} validiert auch ob eine Eingabe getätigt wurde, andernfalls wird eine Fehlermeldung angezeigt. Diese Darstellung der Fehlermeldung ist in Abbildung \ref{fig:input_error} dargestellt.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{images/input_small.png}
+		\caption{Ausschnitt der \textit{View} zur Erstellung eines Dozenten.}
+		\label{fig:input_view}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{images/input_error.png}
+		\caption{Fehlermeldung bei der Neuanlage eines Dozenten.}
+		\label{fig:input_error}
+	\end{center}
+\end{figure}
+
+Durch die Neuanlage eine Dozenten oder durch den Klick auf deine Karte in der Liste, wird der Nutzer auf die Detailansicht eines Dozenten weitergeleitet (Abbildung \ref{fig:detail_view}). Hier bekommt der Nutzer die Möglichkeit detaillierte Informationen zum betroffenen Dozenten zu bekommen. Des weiteren bekommt er die Möglichkeit den aktuellen Dozenten zu bearbeiten oder diesen zu löschen. Diese Aktionen können über das Kontextmenü aufgerufen werden. Wobei die \textit{View} zum editieren des Dozenten anlog der \textit{View} zur Neuanlage mit der Ausnahme, das die vorhandenen Daten bereits vor ausgefüllt sind, aussieht. Wird das Löschen des Dozenten über einen \textit{Dialog} realisiert. Dieser \textit{Dialog} ist in Abbildung \ref{fig:dialog} abgebildet.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{images/detail.png}
+		\caption{Detailansicht eines Dozenten.}
+		\label{fig:detail_view}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{images/dialog.png}
+		\caption{\textit{Dialog} zum Löschen eines Dozenten.}
+		\label{fig:dialog}
+	\end{center}
+\end{figure}
+
+Über den \textit{Charge-Button} gelangt der Nutzer zur Liste mit den Ämtern des Dozenten. Die \textit{Views} für diese Ämter sind analog zu denen der Dozenten. Mit der Ausnahme, dass bei der Neuanlage, beziehungsweise bei dem Bearbeiten eines Amtes dieses mal nicht ausschließlich \textit{EditText} zur Verfügung steht. Da die Ämter die zwei Datumsattribute für den Start und das Ende besitzen, so wurde hierfür das \textit{DateTimePicker-Widget} eingebaut. Dieses kann in Abbildung \ref{fig:date} eingesehen werden.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{images/date.png}
+		\caption{\textit{DateTimePicker-Widget} zur Datumsauswahl.}
+		\label{fig:date}
+	\end{center}
+\end{figure}
+
+\subsubsection{Zahlen und Fakten}
+In diesem Kapitel soll die Referenzimplementierung statistisch greifbar vorgestellt werden. So lässt sich die Applikation in zwei Bereiche einteilen, in die Applikation an sich, dies besitzt den kompletten spezifischen Code und eine Bibliothek. Diese beinhaltet den kompletten generischen Code sowie die \textit{CustomViews}. Die gesamte Anwendung besitzt ungefähr 3000 \textit{Lines of Java Code} und circa 1000 Zeilen an \textit{XML} Code. 
+
+Die Applikation an sich ist der kleinere Teil der Implementierung, sie enthält elf Java Klassen, wobei es sich dabei um vier \textit{Activities} und sieben \textit{Fragments} handelt. Daneben besitzt sie sechs Layout \textit{XML}-Dateien und zwei Animations \textit{XML}-Dateien. Daneben noch die üblichen \textit{XML}- und \textit{Gradle}-Dateien.
+
+Die Bibliothek an ist mit 44 Java Klassen wesentlich größer, wobei hiervon 15 Klassen spezifischen Code enthalten. Die Klassen lassen sich in \textit{abstrakte Activities}, \textit{abstrakte Fragments}, \textit{abstrakte Adapter}, \textit{abstrakte CustomViews}, \textit{abstrakte Models}, \textit{abstrakte Viewholder},  Klassen für die Netzwerkkommunikation, \textit{Adapter}, \textit{CustomViews}, \textit{Models} und \textit{Viewholder} einteilen. Neben den Java Klassen besitzt die Bibliothek 14 Layout- und drei Menü-Klassen. Diese 17 Klassen sind alles \textit{XML}-Dateien. Auch die Bibliothek besitzt die weiteren üblichen \textit{XML}- und \textit{Gradle}-Dateien.
 
 \section{Analyse der Android Anwendung}
-%todo
+Dieses Kapitel beschäftigt sich mit der Android Referenzimplementierung. Es wird der Aufbau der Applikation vorgestellt und anhand dessen analysiert, welcher Programmcode als \textit{Plattformcode} und welche Programmcode generiert werden muss. Es werden auch ein paar Kennzahlen vorgestellt, um ein besseres Bild der Komplexität der Applikation zu erhalten. Anschließend werden die einzelnen \textit{Views} analysiert. Diese Analyse beschäftigt sich mit dem Design und den Funktionen der \textit{Views}.
 
 \subsection{Analyse des Aufbaus}
+Wird der Aufbau der Referenzimplementierung analysiert, so fällt auf das es möglich ist die meisten Klassen soweit zu abstrahieren, das diese keine Projekt spezifischen Informationen mehr enthalten. Im Falle dieser Referenzimplementierung keine Informationen zu Dozenten oder deren Ämter. Diese Klassen ohne diese spezifischen Informationen, wird im laufenden als \textit{Plattformcode} oder generischer Code bezeichnet. Das Ziel bei der Referenzimplementierung ist es, möglichst viel \textit{Plattformcode} und möglichst wenig spezifischen Code in der Anwendung zu haben. 
+
+Das Schaubild \ref{fig:lecturer_structure} verdeutlicht das Verhältnis von generischen (weiße Kästen) und spezifischen (rote Kästen) Klassen. Die Anzahl der gleichbleibenden Klassen ist mit etwa 60 Prozent bereits höher als der Anteil an spezifischen Klassen. Je höher der Anteil dieser unveränderlichen Klassen, desto geringer wird die Komplexität des Generators. Da der Aufwand eine spezifische Klasse zu erzeugen mehr Logik benötigt, als eine Klasse, welche immer gleich bleibt.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth, angle=90]{images/Lecturer.png}
+		\caption{Aufbau der Referenzimplementierung.}
+		\label{fig:lecturer_structure}
+	\end{center}
+\end{figure}
+
+Daneben zeigt die Abbildung, auch noch die Aufteilung der Klassen in Klassen der Applikation (gestrichelte Kästen) und Klassen der Bibliothek (solide Kästen). Die Applikation an sich besteht nur aus ein paar wenigen \textit{Fragmenten} und \textit{Aktivities}, welche alle projektspezifisch sind. Der komplette generische Quellcode befindet sich in der Bibliothek. Des weiteren befinden sich dort auch die spezifischen Komponenten, beispielsweise der \textit{LecturerInputView}. Diese Komponente, kann in den Fragmenten zur Bearbeitung oder Neuanlage eines Dozenten dann mit wenigen Zeilen Programmcode verwendet werden.
+
+Diese Art der Aufteilung ermöglicht es das ein Applikation Entwickler sich die Komponente, für das Anzeigen, Bearbeiten, Löschen und der Neuanlage generieren lassen kann. Diese Komponenten jedoch beliebig in seiner eigenen Applikation verwenden kann.
+
 
 \subsection{Analyse der Android \textit{Views}}
 In diesem Kapitel sollen die \textit{Views} der Android Applikation an sich analysiert werden. Hierfür werden die Bereiche: Aufbau der \textit{Views}, Darstellung von Schrift, und Aktionen bei Klick genauer betrachtet. Um ein \textit{Meta-Modell} für Android Anwendungen zu entwickeln, muss der Designer untersuchen, welche Eigenschaften dieses Modell besitzen soll. Diese Eigenschaften spiegeln die Möglichkeiten wieder, die Android Anwendung zu beschreiben. Für das Extrahieren dieser Eigenschaften, ist ein guter Ansatz, eine Referenzimplementierung zu entwickeln. Diese Referenz dient fortan als Beispiel. Weiterhin stellt sie das als erstes zu erreichende Ziel dar. Alle Bemühungen sollten darauf hinauslaufen, eine Applikation generieren zu lassen, welche die Referenzimplementierung gleicht.
@@ -130,8 +209,7 @@ Neben diesen auf das \textit{\acf{ui}} bezogenen Kriterien müssen auch Entschei
 All diese Entscheidungen, welche über den Aufbau und dem Design der Android Applikation entscheiden, sind für einen Generator wichtig. Dieser benötigt all diese Informationen um diese in der zu generierende Anwendung zu realisieren. Hierfür muss ein \textit{Meta-Modell} entwickelt werden, welches alle der oben genanten Beschreibungen im Bezug zur Android Applikation widerspiegelt. Das Modell muss alle Informationen über die Anzahl und Arten der \textit{Views}, deren Aufbau und die exakte Darstellung von Schrift, Bildern und möglichen Funktionen, welche bei Klick ausgeführt werden sollen besitzen.
 
 \section{\textit{Meta-Modell}}
-%todo
-Nach der Anforderungsanalyse, wurden alle relevanten Informationen erkannt und zusammen gestellt. Diese Zusammenstellung an Daten, welche die Applikation beschreiben wird \textit{Meta-Modell} genannt.
+Nach dem die Referenzimplementierung vorstellt und analysiert  wurde, wurden alle relevanten Informationen erkannt und zusammen gestellt. Diese Zusammenstellung an Daten, welche die Applikation beschreiben wird \textit{Meta-Modell} genannt.
 
 \subsection{Kompatibilität mit \acs{gemara} und andern möglichen Clients}
 Da Enfield primär für die Generierung von Anwendungen im \textit{Backend}-Bereich entwickelt wurde, in welchem die Gestaltung von \acf{ui} eine eher untergeordnete Rolle spielen, muss die Erweiterung auch dieses Feature realisieren. Neben all diesen Erweiterungen muss auch sichergestellt werden, das das \textit{Meta-Modell} auch weiterhin für das generieren von \textit{Backends} genutzt werden kann. Idealerweise, ohne die Überarbeitung der bereits entwickelten Software-Generatoren. 

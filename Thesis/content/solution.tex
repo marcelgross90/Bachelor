@@ -1,7 +1,6 @@
 \chapter{Lösung}
-Dieses Kapitel befasst sich mit den Möglichkeiten und den Lösungsansätzen, zu den Problemstellungen aus Kapitel \ref{ch:problem}. Anhand von Beispielen wird verdeutlicht, wie gewisse Anforderungen umgesetzt werden könnten.
+In diesem Kapitel wird der in dieser Arbeit entwickelte Software-Generator \textit{Welling} vorgestellt. \textit{Welling} nutzt das vorher beschriebene \textit{Meta-Modell} um Android Applikationen generieren zu lassen. 
 
-%todo
 \section{Design des Software-Generators}
 In diesem Kapitel soll auf die Problematik des designen eines Software-Generators eingegangen werden. Ein funktionsfähiger Software-Generator benötigt neben einem geeigneten \textit{Meta-Modell} einen sinnvollen Aufbau. Der Aufbau bestimmt im Zusammenspiel mit dem \textit{Meta-Modell} an welcher Stelle im zeitlichen Verlauf, welche Klassen der Android Applikation generiert werden. Das ist wichtig, da für eine Anwendung die ausschließlich eine Liste darstellen soll, keine Klassen für beispielsweise die Neuanlage von Datensätzen generiert werden sollen. 
 Auch gibt es in Android Applikationen Abhängigkeiten zwischen verschiedenen Klassen, so müssen beispielsweise alle genutzten \textit{Activities} in der sogenannten \textit{AndroidMainfest.xml} registriert werden. Oder alle verwendeten Strings, sollten nicht im Programmcode stehen, sondern diese sollten ausgelagert in einer \textit{strings.xml} zu finden sein. Im Programmcode werden diese Strings dann mit Identifikatoren referenziert. Der Generator muss in der Lage sein diese Abhängigkeiten in der Applikation darzustellen. 
@@ -97,22 +96,8 @@ caption=Erzeugte \textit{XML}-Datei durch den Quellcode von Listing \ref{lst:app
 	</menu>
 \end{lstlisting}
 
-\subsection{Aufbau der zu generierenden Applikation}
+\subsection{Ablauf der Generierung}
 Um eine Android Applikation generieren zulassen müssen nicht alle Klassen, generiert werden. Es können auch Überlegungen angestrebt werden, generischen Klassen einfach im Generator abzulegen und bei Bedarf zu kopieren. Diese Methode wurde verworfen, da andernfalls jedes mal die kopierten Klassen via String-Manipulation bearbeitet werden müssten. Die minimale Änderung welche jedes mal getroffen werden müsste, wäre das Anpassen der \textit{Package} Anweisung am Anfang der Java-Klassen und die der \textit{Import}-Anweisungen. Eine weitere Überlegung wäre es, diese Klassen in eine Android Bibliothek auszulagern, und diese dann in jede Anwendung zu importieren. Auch von dieser Möglichkeit wurde in der ersten Version abgesehen, da die Applikation bereits aus zwei Komponenten besteht. Der Applikation an sich und einer Bibliothek, welche die Android-Komponenten für die Anwendung enthält. Um die Komplexität zu reduzieren werden die benötigten generischen Klassen als Teil der eingebunden Bibliothek jedes mal aufs neue generiert.
-
-Der Aufbau und der Funktionsumfang der Referenzimplementierung wird in Kapitel \ref{sec:ref_impl} vorgestellt. Das Schaubild \ref{fig:lecturer_structure} verdeutlicht das Verhältnis von generischen (weiße Kästen) und spezifischen (rote Kästen) Klassen. Die Anzahl der gleichbleibenden Klassen ist mit etwa 60 Prozent bereits höher als der Anteil an spezifischen Klassen. Je höher der Anteil dieser unveränderlichen Klassen, desto geringer wird die Komplexität des Generators. Da der Aufwand eine spezifische Klasse zu erzeugen mehr Logik benötigt, als eine Klasse, welche immer gleich bleibt.
-
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[width=\textwidth, angle=90]{images/Lecturer.png}
-		\caption{Aufbau der Referenzimplementierung.}
-		\label{fig:lecturer_structure}
-	\end{center}
-\end{figure}
-
-Daneben zeigt die Abbildung, auch noch die Aufteilung der Klassen in Klassen der Applikation (gestrichelte Kästen) und Klassen der Bibliothek (solide Kästen). Die Applikation an sich besteht nur aus ein paar wenigen \textit{Fragmenten} und \textit{Aktivities}, welche alle projektspezifisch sind. Der komplette generische Quellcode befindet sich in der Bibliothek. Des weiteren befinden sich dort auch die spezifischen Komponenten, beispielsweise der \textit{LecturerInputView}. Diese Komponente, kann in den Fragmenten zur Bearbeitung oder Neuanlage eines Dozenten dann mit wenigen Zeilen Programmcode verwendet werden.
-
-Diese Art der Aufteilung ermöglicht es das ein Applikation Entwickler sich die Komponente, für das Anzeigen, Bearbeiten, Löschen und der Neuanlage generieren lassen kann. Diese Komponenten jedoch beliebig in seiner eigenen Applikation verwenden kann.
 
 \subsection{Aufbau des Generators}
 
@@ -163,8 +148,7 @@ Neben dem Kopieren, werden sowohl für die Applikation, Bibliothek als auch für
 
 In der Sektion der Vorbereitung für die Applikation, werden Dateien erzeugt, die jede Applikation benötigt unabhängig von ihrem Aufbau oder den Features. Es wird beispielsweise die \textit{MainActivity} erzeugt, oder die \textit{XML}-Dateien, welche für die \textit{Transitions-Animationen} verantwortlich sind. Auch die \textit{styles.xml} wird erzeugt. Am Schluss werden noch die \textit{mipmap}-Ordner an dir richtige Stelle kopiert.
 
-%ref{fig:lecturer}
-Der Bereich, welcher die Bibliothek initialisiert, ist der Größte. Er generiert alle generell benötigten Klassen. Darunter fallen die Klassen der Netzwerkkommunikation, die Klasse für das Link-Objekt sowie das Interface \textit{Resource}. Es werden des weiteren auch die größten Teile der in der Abbildung \ref{fig:lecturer} abgebildeten generischen Klassen erzeugt. Auch werden die grundsätzlichen \textit{CustomViews} bereits erzeugt. Dazu gehören auch die benötigten \textit{XML}-Dateien. So kann für die Bibliothek beispielsweise das Manifest bereits erzeugt werden, da hier keine \textit{Activities} registriert werden müssen. Nach dem Ausführen des \textit{PrepareLibGenerators} steht, das Grundgerüst der Bibliothek. Diese enthält nun alle bereits vorab erzeugbaren und benötigten Dateien, welche unabhängig von der gewünschten Funktion der Applikation benötigt werden. 
+Der Bereich, welcher die Bibliothek initialisiert, ist der Größte. Er generiert alle generell benötigten Klassen. Darunter fallen die Klassen der Netzwerkkommunikation, die Klasse für das Link-Objekt sowie das Interface \textit{Resource}. Es werden des weiteren auch die größten Teile der in der Abbildung \ref{fig:lecturer_structure} abgebildeten generischen Klassen erzeugt. Auch werden die grundsätzlichen \textit{CustomViews} bereits erzeugt. Dazu gehören auch die benötigten \textit{XML}-Dateien. So kann für die Bibliothek beispielsweise das Manifest bereits erzeugt werden, da hier keine \textit{Activities} registriert werden müssen. Nach dem Ausführen des \textit{PrepareLibGenerators} steht, das Grundgerüst der Bibliothek. Diese enthält nun alle bereits vorab erzeugbaren und benötigten Dateien, welche unabhängig von der gewünschten Funktion der Applikation benötigt werden. 
 
 Dieser gesamte Teilbereich des Projekts befasst sich damit ein Grundgerüst für die komplette Android Applikation zu erzeugen und vorab bereits alle benötigten Dateien aufzubereiten. Die generierten Klassen haben jedoch noch keinerlei Programmlogik, die den spezifischen Ablauf der zu generierenden Anwendung steuert.
 
@@ -173,6 +157,8 @@ Dieser gesamte Teilbereich des Projekts befasst sich damit ein Grundgerüst für
 Der Teilbereich, der sich mit dem iterieren über die einzelnen \textit{States} beschäftigt ist der komplexeste Bereich des Generators. Er ist dafür verantwortlich, das zu jedem \textit{State} die alle benötigten Klassen und Dateien generiert werden. 
 
 Um diese Anforderung zu erfüllen, nutzt er den \textit{Visitor} \textit{IStateVisitor}, welcher durch das \textit{Enfield-Modell} zur Verfügung gestellt wird. Außerdem wird auch der \textit{Visitor} \textit{VisitStatesOnlyOnce} benutzt. Dieser zweite \textit{Visitor} stellt sicher, das jeder \textit{State} nur einmalig besucht wird. Würde der Generator einfach nur über die Transitionen der \textit{States} gehen, könnte es passieren, das er in eine Endlosschleife endet.
+
+\newpage
 
 Gelangt der Generator zu einem \textit{State}, wird mit dem \textit{ISateVisitor} identifiziert, von welchem Typ dieser ist. Mögliche \textit{Statetypen} sind: ein \textit{State} welcher einen \textit{GET-Request} auf eine einzelne Ressource oder auf eine Collection beschreibt oder \textit{States} welche einen \textit{POST-}, \textit{PUT-} oder \textit{DELETE-Request} repräsentieren.  Nach dieser Identifikation, wird bei jedem \textit{State}, außer dem \textit{DELETE-State}, eine Klasse für die in diesem \textit{State} betroffene Ressource erzeugt. Hierfür wird der \textit{ResourceGenerator} benutzt. Auch wenn dabei die Ressource mehrfach angelegt werden würde. Der Generator überschreibt eine bereits angelegte Ressource. Diese Redundanz garantiert das auf jeden Fall eine Ressource zum betreffenden \textit{State} existiert. 
 
