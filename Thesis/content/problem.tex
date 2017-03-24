@@ -1,10 +1,10 @@
 \chapter{Problemstellung} \label{ch:problem}
 In diesem Kapitel wird die Referenzanwendung für diese Arbeit vorgestellt. Zuerst wird das benötigte Backend vorgestellt. Es wird darauf eingegangen, das das benötigte \textit{\acf{api}} mit Hilfe von \acf{gemara} generiert wurde und wie das zugehörige \textit{Enfield-Meta-Modell} aussieht. Nach der Vorstellung des Modells wird auch das erzeugte \textit{\acf{api}} dargestellt. Anschließend wird die Android Applikation vorgestellt, wobei in diesem Bereich primär auf das \textit{\acf{ui}} eingegangen wird. Abschließend wird das \textit{Meta-Modell} und mögliche Erweiterungen vorgestellt und gegeneinander abgewogen.
 
-Um einen Generator zu entwickeln, ist es hilfreich, eine solche Implementierung der gewünschten Applikation mit all ihren Funktionen und Anforderungen zu entwickeln. Bei einer anschließenden Quellcode-Analyse sollte darauf geachtet werden, dass die einzelnen Klassen weitestgehend abstrahiert sind und eine Einteilung in generischen und spezifischen Quellcode erfolgen kann. Der generische Quellcode ist einfacher zu generieren, da dieser statisch ist und sich für alle folgenden Implementierungen nicht verändert. 
+Um einen Generator zu entwickeln, ist es hilfreich, eine Implementierung der gewünschten Applikation mit all ihren Funktionen und Anforderungen zu entwickeln. Bei einer anschließenden Quellcode-Analyse sollte darauf geachtet werden, dass die einzelnen Klassen weitestgehend abstrahiert sind und eine Einteilung in generischen und spezifischen Quellcode erfolgen kann. Der generische Quellcode ist einfacher zu generieren, da dieser statisch ist und sich für alle folgenden Implementierungen nicht verändert. 
 
 \section{Vorstellung der Referenzanwendung}
-Die Beispielanwendung soll dem Nutzer die Möglichkeit geben, die Dozenten der Fakultät Informatik der FHWS, und deren Ämter einzusehen, einen neuen Dozenten anzulegen, einen existierenden Dozenten zu bearbeiten oder zu löschen. Neben den Dozenten, soll es weiterhin möglich sein die Ämter eines Dozenten einzusehen, zu bearbeiten, neu anzulegen oder zu löschen. Für jede dieser Aktionen werden entsprechende Endpunkte in dem \textit{\acf{api}} benötigt. Jeder dieser Endpunkte benötigt einen Zugriff auf die darunter liegende Datenbank. Um das zu realisieren wird ein \textit{Backend-Projekt} mit Hilfe von \ac{gemara} erzeugt.
+Die Beispielanwendung soll dem Nutzer die Möglichkeit geben, die Dozenten der Fakultät Informatik der FHWS, und deren Ämter einzusehen, einen neuen Dozenten anzulegen, einen existierenden Dozenten zu bearbeiten oder zu löschen. Neben den Dozenten, soll es weiterhin möglich sein, die Ämter eines Dozenten einzusehen, zu bearbeiten, neu anzulegen oder zu löschen. Für jede dieser Aktionen werden entsprechende Endpunkte in dem \textit{\acf{api}} benötigt. Jeder dieser Endpunkte benötigt einen Zugriff auf die darunter liegende Datenbank. Um das zu realisieren, wird ein \textit{Backend-Projekt} mit Hilfe von \ac{gemara} erzeugt.
 
 \subsection{Backend Referenzimplementierung}
 Dieses Kapitel stellt die Referenzimplementierung des Backends für die Referenzanwendung vor. Dabei wird das \textit{Enfield-Meta-Modell} und das daraus resultierende \textit{\acf{api}} vorgestellt.
@@ -27,7 +27,7 @@ public MyEnfieldModel() {
 }
 \end{lstlisting}
 
-Das Listing \ref{lst:lecturer_res} zeigt wie eine Ressource angelegt wird, welche einen Dozenten darstellen sollen. Der Ressource wird einen Namen zugewiesen und bekommt einen \textit{MediaType}. Außerdem werden alle Attribute in dem sie benannt und einen Datentyp zugewiesen bekommen definiert.
+Listing \ref{lst:lecturer_res} zeigt, wie eine Ressource angelegt wird, welche einen Dozenten darstellen soll. Der Ressource wird ein Name zugewiesen und sie bekommt einen \textit{MediaType}. Außerdem werden alle Attribute definiert, in dem sie benannt und einen Datentyp zugewiesen bekommen.
  Da eines der Attribute eines Dozenten seine Ämter sind, welche als Subressource der \textit{SingleResource Lecturer} dargestellt ist, ist es wichtig, dass das \textit{Enfield-Modell} ebenfalls eine \textit{SingleResource} für diese Ämter besitzt. Dies wird hier durch den Methodenaufruf \textit{createSingleResourceCharge()} sichergestellt.
 
 \newpage
@@ -46,7 +46,7 @@ this.lecturerResource.setMediaType(
 	"application/vnd.fhws-lecturer.default+json");
 
 final SimpleAttribute title = new SimpleAttribute("title", SimpleDatatype.STRING);
-...
+[...]
 final SimpleAttribute roomNumber = new SimpleAttribute("roomNumber", SimpleDatatype.STRING);
 final SimpleAttribute homepage = new SimpleAttribute("homepage", SimpleDatatype.LINK);
 
@@ -54,13 +54,13 @@ createSingleResourceCharge();
 final ResourceCollectionAttribute charge = new ResourceCollectionAttribute("chargeUrl", this.chargeResource);
 
 this.lecturerResource.addAttribute(title);
-...
+[...]
 this.lecturerResource.addAttribute(charge);
 
 addImageAttributeForLecturerResource();
 \end{lstlisting}
 
-Sind alle benötigten Ressourcen im Modell definiert, wird der \textit{endliche Automat} beschrieben angefangen mit dem \textit{DispatcherState} (\ref{lst:dispatcher_impl}). Dieser bekommt einen Namen, und wird als \textit{DispatcherState} dem Modell hinzugefügt.
+Sind alle benötigten Ressourcen im Modell definiert, wird der \textit{endliche Automat} beschrieben, angefangen mit dem \textit{DispatcherState} (\ref{lst:dispatcher_impl}). Dieser bekommt einen Namen, und wird als \textit{DispatcherState} dem Modell hinzugefügt.
 
 \begin{lstlisting}[label=lst:dispatcher_impl,
 language=java,
@@ -76,7 +76,7 @@ this.dispatcherState = dispatcherState;
 \newpage
 
 Beispielhaft für alle nachfolgenden \textit{States} zeigt Listing \ref{lst:getState_impl} wie der \textit{State GetAllLecturers} erzeugt wird.
-Auch dieser \textit{State} bekommt einen Namen, daneben wird ihm die Ressource zugewiesen, welche er bedienen soll. Neben diesen Eigenschaften, werden dem \textit{State} alle \textit{Transitionen} hinzugefügt. In diesem Fall wird zusätzlich dem \textit{DispatcherState} die Information übergeben, das der \textit{GetAllLecturers State} sein \textit{Folgestate} ist. Alle weiteren \textit{States} werden analog definiert (siehe Listing \ref{lst:enfield_model}).
+Auch dieser \textit{State} bekommt einen Namen, daneben wird ihm die Ressource zugewiesen, welche er bedienen soll. Neben diesen Eigenschaften, werden dem \textit{State} alle \textit{Transitionen} hinzugefügt. In diesem Fall wird zusätzlich dem \textit{DispatcherState} die Information übergeben, dass der \textit{GetAllLecturers State} sein \textit{Folgestate} ist. Alle weiteren \textit{States} werden analog definiert (siehe Listing \ref{lst:enfield_model}).
 
 \begin{lstlisting}[label=lst:getState_impl,
 language=java,
@@ -96,7 +96,7 @@ this.getCollectionOfLecturersState = getAllLecturersCollectionState;
 \end{lstlisting}
  
 \subsubsection{Vorstellung des \textit{\acf{api}}}
-Mit Hilfe des zuvor beschriebenen \textit{Enfield-Meta-Modell} wird ein \textit{\acl{api}} generiert, welche in diesem Kapitel vorgestellt wird.
+Mit Hilfe des zuvor beschriebenen \textit{Enfield-Meta-Modells} wird ein \textit{\acl{api}} generiert, welches in diesem Kapitel vorgestellt wird.
 Die Abbildung \ref{fig:api} zeigt das \textit{\acl{api}}, welches für die Beispielanwendung benötigt wird. Dieses\textit{ \ac{api}} entspricht einem \textit{endlichen Automaten} und spiegelt alle Funktionen der Applikation wieder.  
 
 \begin{figure}[H]
@@ -108,11 +108,11 @@ Die Abbildung \ref{fig:api} zeigt das \textit{\acl{api}}, welches für die Beisp
 \end{figure}
 
 \subsection{Android Referenzimplementierung}\label{sec:ref_impl}
-Nach der Vorstellung des Backends, geht dieses Kapitel darauf ein wie die Informationen des \textit{\acl{api}s} in die Android Applikation einfließt.
-Für die Realisierung der gewünschten Funktion werden folgende \textit{Views} benögt: eine \textit{RecyclerView}, welche alle Dozenten in jeweils einer eigenen \textit{CardView} darstellen, eine \textit{DetailView} diese zeigt einen einzelnen Dozenten und all seine Informationen, jeweils eine \textit{InputView} zur Erzeugung eines neuen Dozenten beziehungsweise zum bearbeiten eines existierenden Dozenten, eine \textit{RecyclerView}, welche die Ämter eines Dozenten anzeigt, die Detail-Ansicht eines Amtes sowie wiederum jeweils eine \textit{View} zum bearbeiten beziehungsweise zur Neuanlage eines Amtes.
+Nach der Vorstellung des Backends, geht dieses Kapitel darauf ein, wie Informationen des \textit{\acl{api}s} in die Android Applikation einfließen.
+Für die Realisierung der gewünschten Funktion werden folgende \textit{Views} benögt: eine \textit{RecyclerView}, welche alle Dozenten in jeweils einer eigenen \textit{CardView} darstellen; eine \textit{DetailView} - diese zeigt einen einzelnen Dozenten und all seine Informationen; jeweils eine \textit{InputView} zur Erzeugung eines neuen Dozenten beziehungsweise zum Bearbeiten eines existierenden Dozenten, eine \textit{RecyclerView}, welche die Ämter eines Dozenten anzeigt, die Detail-Ansicht eines Amtes sowie wiederum jeweils eine \textit{View} zum Bearbeiten beziehungsweise zur Neuanlage eines Amtes.
 
 \subsubsection{\textit{\acf{ui}} der Referenzimplementierung}
-In diesem Kapitel wird das \textit{\acl{ui}} der Android Applikation vorgestellt. Dabei wird gezeigt wie die einzelnen \textit{Views} umgesetzt werden.
+In diesem Kapitel wird das \textit{\acl{ui}} der Android Applikation vorgestellt. Dabei wird gezeigt, wie die einzelnen \textit{Views} umgesetzt werden.
 Wie dem \acl{api} entnommen werden kann, steigt der Nutzer mit der Liste aller Dozenten in die Applikation ein. Diese Liste ist in diesem Fall wie in der Einleitung beschrieben mit einer \textit{RecyclerView} und einzlenen \textit{CardViews} realisiert. Diese Liste kann in Abbildung \ref{fig:list} eingesehen werden.
 
 \begin{figure}[H]
@@ -123,7 +123,7 @@ Wie dem \acl{api} entnommen werden kann, steigt der Nutzer mit der Liste aller D
 	\end{center}
 \end{figure}
 
-Über den \textit{Plus-Button} auf der linken oberen Seite in der \textit{View} kommt der Nutzer zu der \textit{View}, welche es ermöglicht, einen neuen Dozenten anzulegen. Diese \textit{View} besteht aus \textit{EditText}-Feldern, welche Vorgeben welche Informationen zur Neuanlage benötigt werden. Die Abbildung \ref{fig:input_view} zeigt diese \textit{View}. Diese \textit{View} validiert auch ob eine Eingabe getätigt wurde, andernfalls wird eine Fehlermeldung angezeigt. Diese Darstellung der Fehlermeldung ist in Abbildung \ref{fig:input_error} dargestellt.
+Über den \textit{Plus-Button} links oben in der \textit{View} kommt der Nutzer zu der \textit{View}, welche es ermöglicht, einen neuen Dozenten anzulegen. Diese \textit{View} besteht aus \textit{EditText}-Feldern, welche Vorgeben, welche Informationen zur Neuanlage benötigt werden. Die Abbildung \ref{fig:input_view} zeigt diese \textit{View}. Diese \textit{View} validiert auch, ob eine Eingabe getätigt wurde, andernfalls wird eine Fehlermeldung angezeigt. Diese Darstellung der Fehlermeldung ist in Abbildung \ref{fig:input_error} dargestellt.
 
 \begin{figure}[H]
 	\begin{center}
@@ -141,7 +141,7 @@ Wie dem \acl{api} entnommen werden kann, steigt der Nutzer mit der Liste aller D
 	\end{center}
 \end{figure}
 
-Durch die Neuanlage eine Dozenten oder durch den Klick auf deine Karte in der Liste, wird der Nutzer auf die Detailansicht eines Dozenten weitergeleitet (Abbildung \ref{fig:detail_view}). Hier bekommt der Nutzer die Möglichkeit detaillierte Informationen zum betroffenen Dozenten zu bekommen. Des weiteren bekommt er die Möglichkeit den aktuellen Dozenten zu bearbeiten oder diesen zu löschen. Diese Aktionen können über das Kontextmenü aufgerufen werden. Wobei die \textit{View} zum editieren des Dozenten anlog der \textit{View} zur Neuanlage mit der Ausnahme, das die vorhandenen Daten bereits vor ausgefüllt sind, aussieht. Wird das Löschen des Dozenten über einen \textit{Dialog} realisiert. Dieser \textit{Dialog} ist in Abbildung \ref{fig:dialog} abgebildet.
+Durch die Neuanlage eines Dozenten oder durch den Klick auf seine Karte in der Liste, wird der Nutzer auf die Detailansicht eines Dozenten weitergeleitet (Abbildung \ref{fig:detail_view}). Hier bekommt der Nutzer die Möglichkeit detaillierte Informationen zum betroffenen Dozenten zu bekommen. Des Weiteren bekommt er die Möglichkeit, den aktuellen Dozenten zu bearbeiten oder diesen zu löschen. Diese Aktionen können über das Kontextmenü aufgerufen werden. Wobei die \textit{View} zum Editieren des Dozenten analog der \textit{View} zur Neuanlage aussieht mit der Ausnahme, dass die vorhandenen Daten bereits vor ausgefüllt sind. Das Löschen des Dozenten wird über einen \textit{Dialog} realisiert. Dieser \textit{Dialog} ist in Abbildung \ref{fig:dialog} abgebildet.
 
 \begin{figure}[H]
 	\begin{center}
@@ -159,7 +159,7 @@ Durch die Neuanlage eine Dozenten oder durch den Klick auf deine Karte in der Li
 	\end{center}
 \end{figure}
 
-Über den \textit{Charge-Button} gelangt der Nutzer zur Liste mit den Ämtern des Dozenten. Die \textit{Views} für diese Ämter sind analog zu denen der Dozenten. Mit der Ausnahme, dass bei der Neuanlage, beziehungsweise bei dem Bearbeiten eines Amtes dieses mal nicht ausschließlich \textit{EditText} zur Verfügung steht. Da die Ämter die zwei Datumsattribute für den Start und das Ende besitzen, so wurde hierfür das \textit{DateTimePicker-Widget} eingebaut. Dieses kann in Abbildung \ref{fig:date} eingesehen werden.
+Über den \textit{Charge-Button} gelangt der Nutzer zur Liste mit den Ämtern des Dozenten. Die \textit{Views} für diese Ämter sind analog zu denen der Dozenten. Mit der Ausnahme, dass bei Neuanlage, beziehungsweise beim Bearbeiten eines Amtes dieses mal nicht ausschließlich \textit{EditText} zur Verfügung steht. Da die Ämter die zwei Datumsattribute für den Start und das Ende besitzen, wurde hierfür das \textit{DateTimePicker-Widget} eingebaut. Dieses kann in Abbildung \ref{fig:date} eingesehen werden.
 
 \begin{figure}[H]
 	\begin{center}
@@ -170,17 +170,17 @@ Durch die Neuanlage eine Dozenten oder durch den Klick auf deine Karte in der Li
 \end{figure}
 
 \subsubsection{Zahlen und Fakten}
-In diesem Kapitel soll die Referenzimplementierung statistisch greifbar vorgestellt werden. So lässt sich die Applikation in zwei Bereiche einteilen, in die Applikation an sich, dies besitzt den kompletten spezifischen Code und eine Bibliothek. Diese beinhaltet den kompletten generischen Code sowie die \textit{CustomViews}. Die gesamte Anwendung besitzt ungefähr 3000 \textit{Lines of Java Code} und circa 1000 Zeilen an \textit{XML} Code. 
+In diesem Abschnitt sollen Statistiken der Referenzimplementierung vorgestellt werden. So lässt sich die Applikation in zwei Bereiche einteilen: die Applikation an sich, diese besitzt den kompletten spezifischen Code und eine Bibliothek. Diese beinhaltet den kompletten generischen Code sowie die \textit{CustomViews}. Die gesamte Anwendung besitzt ungefähr 3000 \textit{Lines of Java Code} und circa 1000 Zeilen an \textit{XML} Code. 
 
-Die Applikation an sich ist der kleinere Teil der Implementierung, sie enthält elf Java Klassen, wobei es sich dabei um vier \textit{Activities} und sieben \textit{Fragments} handelt. Daneben besitzt sie sechs Layout \textit{XML}-Dateien und zwei Animations \textit{XML}-Dateien. Daneben noch die üblichen \textit{XML}- und \textit{Gradle}-Dateien.
+Die Applikation ist der kleinere Teil der Implementierung, sie enthält elf Java Klassen, wobei es sich dabei um vier \textit{Activities} und sieben \textit{Fragments} handelt. Daneben besitzt sie sechs Layout-\textit{XML}-Dateien und zwei Animations-\textit{XML}-Dateien. Daneben noch die üblichen \textit{XML}- und \textit{Gradle}-Dateien.
 
-Die Bibliothek an ist mit 44 Java Klassen wesentlich größer, wobei hiervon 15 Klassen spezifischen Code enthalten. Die Klassen lassen sich in \textit{abstrakte Activities}, \textit{abstrakte Fragments}, \textit{abstrakte Adapter}, \textit{abstrakte CustomViews}, \textit{abstrakte Models}, \textit{abstrakte Viewholder},  Klassen für die Netzwerkkommunikation, \textit{Adapter}, \textit{CustomViews}, \textit{Models} und \textit{Viewholder} einteilen. Neben den Java Klassen besitzt die Bibliothek 14 Layout- und drei Menü-Klassen. Diese 17 Klassen sind alles \textit{XML}-Dateien. Auch die Bibliothek besitzt die weiteren üblichen \textit{XML}- und \textit{Gradle}-Dateien.
+Die Bibliothek ist mit 44 Java Klassen wesentlich größer, wobei hiervon 15 Klassen spezifischen Code enthalten. Die Klassen lassen sich in \textit{abstrakte Activities}, \textit{abstrakte Fragments}, \textit{abstrakte Adapter}, \textit{abstrakte CustomViews}, \textit{abstrakte Models}, \textit{abstrakte Viewholder},  Klassen für die Netzwerkkommunikation, \textit{Adapter}, \textit{CustomViews}, \textit{Models} und \textit{Viewholder} einteilen. Neben den Java Klassen besitzt die Bibliothek 14 Layout- und drei Menü-Klassen. Diese 17 Klassen sind alles \textit{XML}-Dateien. Auch die Bibliothek besitzt die weiteren, üblichen \textit{XML}- und \textit{Gradle}-Dateien.
 
 \section{Analyse der Android Anwendung}
-Dieses Kapitel beschäftigt sich mit der Android Referenzimplementierung. Es wird der Aufbau der Applikation vorgestellt und anhand dessen analysiert, welcher Programmcode als \textit{Plattformcode} und welche Programmcode generiert werden muss. Es werden auch ein paar Kennzahlen vorgestellt, um ein besseres Bild der Komplexität der Applikation zu erhalten. Anschließend werden die einzelnen \textit{Views} analysiert. Diese Analyse beschäftigt sich mit dem Design und den Funktionen der \textit{Views}.
+Dieses Kapitel beschäftigt sich mit der Android Referenzimplementierung. Es wird der Aufbau der Applikation vorgestellt und anhand dessen analysiert, welcher Programmcode als \textit{Plattformcode} und welcher Programmcode generiert werden muss. Es werden auch ein paar Kennzahlen vorgestellt, um ein besseres Bild der Komplexität der Applikation zu erhalten. Anschließend werden die einzelnen \textit{Views} analysiert. Diese Analyse beschäftigt sich mit dem Design und den Funktionen der \textit{Views}.
 
 \subsection{Analyse des Aufbaus}
-Wird der Aufbau der Referenzimplementierung analysiert, so fällt auf das es möglich ist die meisten Klassen soweit zu abstrahieren, das diese keine Projekt spezifischen Informationen mehr enthalten. Im Falle dieser Referenzimplementierung keine Informationen zu Dozenten oder deren Ämter. Diese Klassen ohne diese spezifischen Informationen, wird im laufenden als \textit{Plattformcode} oder generischer Code bezeichnet. Das Ziel bei der Referenzimplementierung ist es, möglichst viel \textit{Plattformcode} und möglichst wenig spezifischen Code in der Anwendung zu haben. 
+Wird der Aufbau der Referenzimplementierung analysiert, so fällt auf, dass es möglich ist die meisten Klassen soweit zu abstrahieren, dass diese keine Projekt spezifischen Informationen mehr enthalten. Im Falle dieser Referenzimplementierung keine Informationen zu Dozenten oder deren Ämter. Diese Klassen ohne diese spezifischen Informationen, wird im laufenden als \textit{Plattformcode} oder generischer Code bezeichnet. Das Ziel bei der Referenzimplementierung ist, möglichst viel \textit{Plattformcode} und möglichst wenig spezifischen Code in der Anwendung zu haben. 
 
 Das Schaubild \ref{fig:lecturer_structure} verdeutlicht das Verhältnis von generischen (weiße Kästen) und spezifischen (rote Kästen) Klassen. Die Anzahl der gleichbleibenden Klassen ist mit etwa 60 Prozent bereits höher als der Anteil an spezifischen Klassen. Je höher der Anteil dieser unveränderlichen Klassen, desto geringer wird die Komplexität des Generators. Da der Aufwand eine spezifische Klasse zu erzeugen mehr Logik benötigt, als eine Klasse, welche immer gleich bleibt.
 
@@ -192,30 +192,30 @@ Das Schaubild \ref{fig:lecturer_structure} verdeutlicht das Verhältnis von gene
 	\end{center}
 \end{figure}
 
-Daneben zeigt die Abbildung, auch noch die Aufteilung der Klassen in Klassen der Applikation (gestrichelte Kästen) und Klassen der Bibliothek (solide Kästen). Die Applikation an sich besteht nur aus ein paar wenigen \textit{Fragmenten} und \textit{Aktivities}, welche alle projektspezifisch sind. Der komplette generische Quellcode befindet sich in der Bibliothek. Des weiteren befinden sich dort auch die spezifischen Komponenten, beispielsweise der \textit{LecturerInputView}. Diese Komponente, kann in den Fragmenten zur Bearbeitung oder Neuanlage eines Dozenten dann mit wenigen Zeilen Programmcode verwendet werden.
+Daneben zeigt die Abbildung \ref{fig:lecturer_structure} auch noch die Aufteilung der Klassen in Klassen der Applikation (gestrichelte Kästen) und Klassen der Bibliothek (solide Kästen). Die Applikation an sich besteht nur aus ein paar wenigen \textit{Fragmenten} und \textit{Activities}, welche alle projektspezifisch sind. Der komplette generische Quellcode befindet sich in der Bibliothek. Des Weiteren befinden sich dort auch die spezifischen Komponenten, beispielsweise der \textit{LecturerInputView}. Diese Komponente, kann in den Fragmenten zur Bearbeitung oder Neuanlage eines Dozenten mit wenigen Zeilen Programmcode verwendet werden.
 
-Diese Art der Aufteilung ermöglicht es das ein Applikation Entwickler sich die Komponente, für das Anzeigen, Bearbeiten, Löschen und der Neuanlage generieren lassen kann. Diese Komponenten jedoch beliebig in seiner eigenen Applikation verwenden kann.
+Diese Art der Aufteilung ermöglicht, dass ein Applikations Entwickler sich die Komponente, für das Anzeigen, Bearbeiten, Löschen und der Neuanlage generieren lassen kann. Diese Komponenten jedoch beliebig in seiner eigenen Applikation verwenden kann.
 
 
 \subsection{Analyse der Android \textit{Views}}
-In diesem Kapitel sollen die \textit{Views} der Android Applikation an sich analysiert werden. Hierfür werden die Bereiche: Aufbau der \textit{Views}, Darstellung von Schrift, und Aktionen bei Klick genauer betrachtet. Um ein \textit{Meta-Modell} für Android Anwendungen zu entwickeln, muss der Designer untersuchen, welche Eigenschaften dieses Modell besitzen soll. Diese Eigenschaften spiegeln die Möglichkeiten wieder, die Android Anwendung zu beschreiben. Für das Extrahieren dieser Eigenschaften, ist ein guter Ansatz, eine Referenzimplementierung zu entwickeln. Diese Referenz dient fortan als Beispiel. Weiterhin stellt sie das als erstes zu erreichende Ziel dar. Alle Bemühungen sollten darauf hinauslaufen, eine Applikation generieren zu lassen, welche die Referenzimplementierung gleicht.
+In diesem Kapitel sollen die \textit{Views} der Android Applikation an sich analysiert werden. Hierfür werden die Bereiche: Aufbau der \textit{Views}, Darstellung von Schrift, und Aktionen bei Klick genauer betrachtet. Um ein \textit{Meta-Modell} für Android Anwendungen zu entwickeln, muss der Designer untersuchen, welche Eigenschaften dieses Modell besitzen soll. Diese Eigenschaften spiegeln die Möglichkeiten wider, die Android Anwendung zu beschreiben. Für das Extrahieren dieser Eigenschaften ist ein guter Ansatz, eine Referenzimplementierung, zu entwickeln. Diese Referenz dient fortan als Beispiel. Weiterhin stellt sie das erste zu erreichende Ziel dar. Alle Bemühungen sollten darauf hinauslaufen, eine Applikation generieren zu lassen, welche der Referenzimplementierung gleicht.
 
 Schon beim Entwickeln der Referenz muss sich der Entwickler Gedanken darüber machen, welche \textit{Views} die Anwendung besitzen soll. Diese \textit{Views} entscheiden auch über die Funktionalitäten, welche der Entwickler den Nutzern zur Verfügung stellen will. So wird bereits bei der Planung und Entwicklung der Applikation beschrieben welche Features realisiert werden. Dieser Funktionsumfang beschreibt ob der Nutzer Listen- und Detailansichten zur Verfügung hat und ob er Datensätze löschen, neu anlegen beziehungsweise bearbeiten darf. Mit der Entscheidung, dass es eine Möglichkeit zur Neuanlage und Bearbeitung von Datensätzen geben soll, muss zusätzlich festgelegt werden, welche Attribute des Datensatzes bearbeitet werden dürfen und welche minimal notwendig sind.
 
-Ist bekannt welche \textit{Views} realisiert werden, muss über den Aufbau der einzelnen \textit{Views} entschieden werden. Es müssen Entscheidungen über die Anordnung der darzustellenden Informationen innerhalb einer \textit{View} getroffen werden. Diese Entscheidungen beinhalten neben der Strukturierung und Darstellung textueller Informationen auch Überlegungen zum Erscheinungsbild. Zum Erscheinungsbild gehören Eigenschaften wie Schriftgröße oder Schriftfarbe. Ist eine \textit{View} fertig designet, steht fest, in welcher Reihenfolge gegebene Informationen angezeigt werden. Ob Informationen wie Vorname und Nachname zusammengefasst werden. Auch hat der Entwickler entschieden ob alle existierenden Daten in der entsprechenden Ansicht relevant sind oder ob darauf verzichtet werden kann.  Auch ist klar wo und wie möglicherweise existierende Bilder dargestellt werden sollen.
+Ist bekannt welche \textit{Views} realisiert werden, muss über den Aufbau der einzelnen \textit{Views} entschieden werden. Es müssen Entscheidungen über die Anordnung der darzustellenden Informationen innerhalb einer \textit{View} getroffen werden. Diese Entscheidungen beinhalten neben der Strukturierung und Darstellung textueller Informationen auch Überlegungen zum Erscheinungsbild. Zum Erscheinungsbild gehören Eigenschaften wie Schriftgröße oder Schriftfarbe. Ist eine \textit{View} fertig designed, steht fest, in welcher Reihenfolge gegebene Informationen angezeigt werden. Ob Informationen wie Vorname und Nachname zusammengefasst werden. Auch hat der Entwickler entschieden, ob alle existierenden Daten in der entsprechenden Ansicht relevant sind oder ob darauf verzichtet werden kann.  Auch ist klar wo und wie möglicherweise existierende Bilder dargestellt werden sollen.
 
-Neben diesen auf das \textit{\acf{ui}} bezogenen Kriterien müssen auch Entscheidungen darüber gefällt werden, ob diese angezeigten Informationen ausschließlich informative Details sind oder ob diese interaktiv sind. Das heißt soll der Benutzer der Android Applikation die Möglichkeit haben weitere Funktionen durch das anklicken einer dieser Felder auszuführen. Mögliche Aktionen wären beispielsweise das Öffnen der Anwendung \textit{Maps} beim Klick auf eine Adresse oder das öffnen eines Webbrowsers beim anklicken eines Hyperlinks. 
+Neben diesen auf das \textit{\acf{ui}} bezogenen Kriterien müssen auch Entscheidungen darüber gefällt werden, ob diese angezeigten Informationen ausschließlich informative Details sind oder ob diese interaktiv sind. Das heißt der Benutzer der Android Applikation soll die Möglichkeit haben, weitere Funktionen durch das Anklicken einer dieser Felder auszuführen. Mögliche Aktionen wären beispielsweise das Öffnen der Anwendung \textit{Maps} beim Klick auf eine Adresse oder das Öffnen eines Webbrowsers beim Anklicken eines Hyperlinks. 
 
-All diese Entscheidungen, welche über den Aufbau und dem Design der Android Applikation entscheiden, sind für einen Generator wichtig. Dieser benötigt all diese Informationen um diese in der zu generierende Anwendung zu realisieren. Hierfür muss ein \textit{Meta-Modell} entwickelt werden, welches alle der oben genanten Beschreibungen im Bezug zur Android Applikation widerspiegelt. Das Modell muss alle Informationen über die Anzahl und Arten der \textit{Views}, deren Aufbau und die exakte Darstellung von Schrift, Bildern und möglichen Funktionen, welche bei Klick ausgeführt werden sollen besitzen.
+All diese Entscheidungen, welche über den Aufbau und das Design der Android Applikation entscheiden, sind für einen Generator wichtig. Dieser benötigt all diese Informationen, um diese in der zu generierende Anwendung zu realisieren. Hierfür muss ein \textit{Meta-Modell} entwickelt werden, welches alle der oben genannten Beschreibungen im Bezug zur Android Applikation widerspiegelt. Das Modell muss alle Informationen über die Anzahl und Arten der \textit{Views}, deren Aufbau und die exakte Darstellung von Schrift, Bildern und möglichen Funktionen, welche bei Klick ausgeführt werden sollen, besitzen.
 
 \section{\textit{Meta-Modell}}
-Nach dem die Referenzimplementierung vorstellt und analysiert  wurde, wurden alle relevanten Informationen erkannt und zusammen gestellt. Diese Zusammenstellung an Daten, welche die Applikation beschreiben wird \textit{Meta-Modell} genannt.
+Nach dem die Referenzimplementierung vorstellt und analysiert  wurde, wurden alle relevanten Informationen erkannt und zusammengestellt. Diese Zusammenstellung an Daten, welche die Applikation beschreiben, wird \textit{Meta-Modell} genannt.
 
 \subsection{Kompatibilität mit \acs{gemara} und andern möglichen Clients}
-Da Enfield primär für die Generierung von Anwendungen im \textit{Backend}-Bereich entwickelt wurde, in welchem die Gestaltung von \acf{ui} eine eher untergeordnete Rolle spielen, muss die Erweiterung auch dieses Feature realisieren. Neben all diesen Erweiterungen muss auch sichergestellt werden, das das \textit{Meta-Modell} auch weiterhin für das generieren von \textit{Backends} genutzt werden kann. Idealerweise, ohne die Überarbeitung der bereits entwickelten Software-Generatoren. 
+Da Enfield primär für die Generierung von Anwendungen im \textit{Backend}-Bereich entwickelt wurde, in welchem die Gestaltung von \textit{User Interfaces (UI)} eine eher untergeordnete Rolle spielen, muss die Erweiterung auch dieses Feature realisieren. Neben all diesen Erweiterungen muss auch sichergestellt werden, dass das \textit{Meta-Modell} auch weiterhin für das Generieren von \textit{Backends} genutzt werden kann. Idealerweise, ohne die Überarbeitung der bereits entwickelten Software-Generatoren. 
 
 Die Abbildung \ref{fig:enfield-model} zeigt die vereinfachte Modell-Klasse des \textit{Enfield-Meta-Modells}. 
-In dieser Klasse sind bereits die wichtigsten Informationen wie zum Beispiel der Name der Applikation oder unter welchem \textit{Package} diese zu finden ist vorhanden. Neben diesen grundsätzlichen Informationen liefert die Modell-Klasse auch den Startpunkt des \textit{endlichen Automaten}, welcher die Anwendung beschreibt. Dieser Startpunkt ist der \textit{GetDispatcherState}. Dieses Objekt besitzt das Attribut \textit{transitions}. Dieses Attribut beschreibt, welche \textit{States} auf den \textit{Dispatcher-State folgen}. Jeder dieser folgenden \textit{States}, besitzt wiederum eine Collection mit \textit{Transitionen}, welche auf die nachfolgenden \textit{States} verweisen. So wird mit Hilfe der \textit{Transitionen} und der \textit{States} der \textit{endliche Automat} beschrieben. Der Generator kann diese Beschreibung nutzen, um zu entscheiden in welcher Reihenfolge, welche Klassen generiert werden müssen.
+In dieser Klasse sind bereits die wichtigsten Informationen wie zum Beispiel der Name der Applikation oder unter welchem \textit{Package} diese zu finden ist, vorhanden. Neben diesen grundsätzlichen Informationen liefert die Modell-Klasse auch den Startpunkt des \textit{endlichen Automaten}, welcher die Anwendung beschreibt. Dieser Startpunkt ist der \textit{GetDispatcherState}. Dieses Objekt besitzt das Attribut \textit{transitions}. Dieses Attribut beschreibt, welche \textit{States} auf den \textit{Dispatcher-State folgen}. Jeder dieser folgenden \textit{States}, besitzt wiederum eine Collection mit \textit{Transitionen}, welche auf die nachfolgenden \textit{States} verweisen. So wird mit Hilfe der \textit{Transitionen} und der \textit{States} der \textit{endliche Automat} beschrieben. Der Generator kann diese Beschreibung nutzen, um zu entscheiden in welcher Reihenfolge, welche Klassen generiert werden müssen.
 
 \begin{figure}[H]
 	\begin{center}
@@ -225,12 +225,12 @@ In dieser Klasse sind bereits die wichtigsten Informationen wie zum Beispiel der
 	\end{center}
 \end{figure}
 
-Um jetzt zusätzlich benötigten Informationen für die Android Applikation in dieses bestehende Modell einzubauen, gibt es zwei Möglichkeiten.
+Um die zusätzlich benötigten Informationen für die Android Applikation in dieses bestehende Modell einzubauen, gibt es zwei Möglichkeiten.
 
 \subsection{Eigenes \textit{Android-Meta-Modell}}
 
-Es besteht die Möglichkeit die Modell-Klasse um ein Attribut \textit{Android-Meta-Modell} zu erweitern.
-Die Abbildung \ref{fig:android-model} zeigt schemenhaft ein Beispiel wie ein \textit{Android-Meta-Modell} aussehen könnte. Auffällig hierbei ist, das viele Informationen, die das \textit{Enfield-Modell} bereits liefern würde, noch einmal explizit beschrieben werden müssen. Ein Beispiel wären die \textit{Transitionen}, zwischen den \textit{Fragmenten} beziehungsweise zwischen den \textit{Activities}. 
+Es besteht die Möglichkeit, die Modell-Klasse um ein Attribut \textit{Android-Meta-Modell} zu erweitern.
+Die Abbildung \ref{fig:android-model} zeigt schemenhaft ein Beispiel, wie ein \textit{Android-Meta-Modell} aussehen könnte. Auffällig hierbei ist, dass viele Informationen, die das \textit{Enfield-Modell} bereits liefern würde, noch einmal explizit beschrieben werden müssen. Ein Beispiel wären die \textit{Transitionen}, zwischen den \textit{Fragmenten} beziehungsweise zwischen den \textit{Activities}. 
 
 
 \begin{figure}[H]
@@ -242,13 +242,13 @@ Die Abbildung \ref{fig:android-model} zeigt schemenhaft ein Beispiel wie ein \te
 \end{figure}
 
 Der Nutzer des Software-Generators, muss ziemlich viel über den Ablauf und die Funktionsweise einer Android-Anwendung wissen, um diesen Generator sinnvoll verwenden zu können.
-Dabei bleibt zusätzlich noch die Möglichkeit, das der Nutzer eigens geschriebene Methoden in das Modell einpflegen kann. John Abou-Jaoudeh at al., haben in ihrer Arbeit \textit{A High-Level Modeling Language for Efficent Design, Implementation, and Testing of Android Applications}\cite{abou2015high} ein \textit{Meta-Modell} entwickelt, welches genau solche Features unterstützt.
+Dabei bleibt zusätzlich noch die Möglichkeit, das der Nutzer eigens geschriebene Methoden in das Modell einpflegen kann. John Abou-Jaoudeh et al., haben in ihrer Arbeit ein \textit{Meta-Modell} entwickelt, welches genau solche Features unterstützt\cite{abou2015high}.
 
-Der Vorteil einer solchen Erweiterung des \textit{Enfield-Modell}s ist, das alle benötigten Daten für die Android Anwendung an einer Stelle zu finden sind. Auch hat der Nutzer die Möglichkeit an manchen Stellen eigene Methoden einzufügen und somit ist er in der Lage das Verhalten der App weiter zu individualisieren.
+Der Vorteil einer solchen Erweiterung des \textit{Enfield-Modell}s ist, dass alle benötigten Daten für die Android Anwendung an einer Stelle zu finden sind. Auch hat der Nutzer die Möglichkeit an manchen Stellen eigene Methoden einzufügen und somit ist er in der Lage das Verhalten der App weiter zu individualisieren.
 
-Jedoch überwiegen in diesem Fall die Nachteile. Ein Nachteil dieses Vorgehens ist, die redundante Beschreibung des Programm-Ablaufes. Einmal im \textit{Android-Meta-Modell} und einmal im \textit{Enfield-Meta-Modell}. Bei jeder Änderung gilt dies zu berücksichtigen. 
-Der nächste Nachteil ist der, der Nutzer des Software-Generators muss sich in der Entwicklung von Android Anwendungen auskennen. Er muss genau das Zusammenspiel von \textit{ViewHoldern}, \textit{Adaptern}, \textit{Fragments} und \textit{Activities} kennen. Er muss wissen wie diese ineinandergreifen und wann welche Aktionen ausgelöst werden müssen. Weiterhin sollte er ein grundsätzliches Verständnis für das \textit{\acf{mvc} Pattern} besitzen, welches bei der Entwicklung von Android Applikationen Anwendung findet.
-Ein weiterer Nachteil ist die Beschränkung des Modells auf Android. Wird das \textit{Enfield-Modell} um ein \textit{Android-Meta-Modell} erweitert, so muss dieses für jeden einzelnen \textit{Client} geschehen. Soll der Generator beispielsweise um Polymer-Webkomponente oder einer iOS-Anwendung erweitert werden, so müsste für jede einzelne Art von \textit{Client}, das \textit{Enfield-Modell} mit einem Entsprechenden \textit{Meta-Modell} erweitert werden.
+Jedoch überwiegen in diesem Fall die Nachteile. Ein Nachteil dieses Vorgehens ist die redundante Beschreibung des Programm-Ablaufes. Einmal im \textit{Android-Meta-Modell} und einmal im \textit{Enfield-Meta-Modell}. Bei jeder Änderung gilt dies zu berücksichtigen. 
+Der nächste Nachteil ist, dass der Nutzer des Software-Generators sich in der Entwicklung von Android Anwendungen auskennen muss. Er muss genau das Zusammenspiel von \textit{ViewHoldern}, \textit{Adaptern}, \textit{Fragments} und \textit{Activities} kennen. Er muss wissen, wie diese ineinandergreifen und wann welche Aktionen ausgelöst werden müssen. Weiterhin sollte er ein grundsätzliches Verständnis für das \textit{\acf{mvc} Pattern} besitzen, welches bei der Entwicklung von Android Applikationen Anwendung findet.
+Ein weiterer Nachteil ist die Beschränkung des Modells auf Android. Wird das \textit{Enfield-Modell} um ein \textit{Android-Meta-Modell} erweitert, so muss dieses für jeden einzelnen \textit{Client} geschehen. Soll der Generator beispielsweise um Polymer-Webkomponente oder einer iOS-Anwendung erweitert werden, so müsste für jede einzelne Art von \textit{Client}, das \textit{Enfield-Modell} mit einem entsprechenden \textit{Meta-Modell} erweitert werden.
 
 \subsection{Allgemeine Erweiterungen des \textit{Enfield-Modells}}
 
@@ -294,7 +294,7 @@ Die Analyse in dieser Arbeit beschränken sich auf die \textit{Clients} Android 
 language=json,
 firstnumber=1,
 caption=Demo Daten eines Dozenten.]	
-...			   
+[...]	   
 {
 "address": "Sanderheinrichsleitenweg 20 97074 Wuerzburg",
 "chargeUrl": {
@@ -305,7 +305,7 @@ caption=Demo Daten eines Dozenten.]
 "email": "peter.braun@fhws.de",
 "firstName": "Peter",
 "homepage": {
-"href": "http://www.welearn.de/.../prof-dr-peter-braun.html",
+"href": "http://www.welearn.de/[...]/prof-dr-peter-braun.html",
 "rel": "homepage",
 "type": "text/html"
 },
@@ -313,7 +313,7 @@ caption=Demo Daten eines Dozenten.]
 "lastName": "Braun",
 "phone": "0931/3511-8971",
 "profileImageUrl": {
-"href":"https://apistaging.fiw.fhws.de/.../4/profileimage",
+"href":"https://apistaging.fiw.fhws.de/[...]/4/profileimage",
 "rel": "profileImageUrl",
 "type": "image/png"
 },
@@ -325,7 +325,7 @@ caption=Demo Daten eines Dozenten.]
 },
 "title": "Prof. Dr."
 }
-...
+[...]
 \end{lstlisting}
 
 Die  \textit{\acf{json}} Repräsentation unter Listing \ref{lst:braun_json} beschreibt das Beispiel aus Abbildung \ref{fig:card}.
@@ -436,9 +436,9 @@ Das Listing \ref{lst:category} beschreibt die Definition einer \textit{Category}
 language=java,
 firstnumber=1,
 caption=Erstellung einer \textit{Category}.]		
-...
+[...]
 new Category("Office", getOfficeResourceViewAttributes());
-...
+[...]
 
 private static List<ResourceViewAttribute> getOfficeResourceViewAttributes() {
 List<ResourceViewAttribute> officeAttributes = new ArrayList<>();
