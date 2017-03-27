@@ -1,23 +1,23 @@
 \chapter{Lösung}
-In diesem Kapitel wird der in dieser Arbeit entwickelte Software-Generator \textit{Welling} vorgestellt. \textit{Welling} nutzt das vorher beschriebene \textit{Meta-Modell} um Android Applikationen generieren zu lassen. 
+In diesem Kapitel wird der in dieser Arbeit entwickelte Software-Generator \textit{Welling} vorgestellt. \textit{Welling} nutzt das zuvor beschriebene \textit{Meta-Modell}, um Android Applikationen generieren zu lassen. 
 
 \section{Design des Software-Generators}
-In diesem Kapitel soll auf die Problematik des designen eines Software-Generators eingegangen werden. Ein funktionsfähiger Software-Generator benötigt neben einem geeigneten \textit{Meta-Modell} einen sinnvollen Aufbau. Der Aufbau bestimmt im Zusammenspiel mit dem \textit{Meta-Modell} an welcher Stelle im zeitlichen Verlauf, welche Klassen der Android Applikation generiert werden. Das ist wichtig, da für eine Anwendung die ausschließlich eine Liste darstellen soll, keine Klassen für beispielsweise die Neuanlage von Datensätzen generiert werden sollen. 
+In diesem Kapitel soll auf die Problematik eines Software-Generator zu designen eingegangen werden. Ein funktionsfähiger Software-Generator benötigt neben einem geeigneten \textit{Meta-Modell} einen sinnvollen Aufbau. Der Aufbau bestimmt im Zusammenspiel mit dem \textit{Meta-Modell} an welcher Stelle im zeitlichen Verlauf, welche Klassen der Android Applikation generiert werden. Das ist wichtig, da für eine Anwendung die ausschließlich eine Liste darstellen beispielsweise keine Klassen für die Neuanlage von Datensätzen generiert werden sollen. 
 Auch gibt es in Android Applikationen Abhängigkeiten zwischen verschiedenen Klassen, so müssen beispielsweise alle genutzten \textit{Activities} in der sogenannten \textit{AndroidMainfest.xml} registriert werden. Oder alle verwendeten Strings, sollten nicht im Programmcode stehen, sondern diese sollten ausgelagert in einer \textit{strings.xml} zu finden sein. Im Programmcode werden diese Strings dann mit Identifikatoren referenziert. Der Generator muss in der Lage sein diese Abhängigkeiten in der Applikation darzustellen. 
 
-Eine Android Applikation besteht neben Java- und XML-Klassen zusätzlich noch aus \textit{Gradle}-Dateien und \textit{\acfp{jar}}. es macht durchaus Sinn nicht alle Dateien zu generieren. Bei machen der Dateien ist es besser diese an die entsprechende Stelle zu kopieren.
+Eine Android Applikation besteht neben Java- und XML-Klassen zusätzlich noch aus \textit{Gradle}-Dateien und \textit{\acfp{jar}}. Nicht alle Dateien zu generieren macht durchaus Sinn. Bei manchen der Dateien ist es besser, diese an die entsprechende Stelle zu kopieren.
 
 \subsection{\textit{JavaPoet}}
-\textit{JavaPoet} ist ein Java \textit{\ac{api}}, welches ermöglicht Java-Klassen zu generieren \cite{poet}. Hierfür wird die zu generierende Klasse programmiert. Mit Hilfe von nur ein paar Schlüsselwörtern ist es möglich \textit{Klassen}, \textit{Interfaces} oder \textit{Methoden} zu generieren. 
+\textit{JavaPoet} ist ein Java \textit{\ac{api}}, welches ermöglicht Java-Klassen zu generieren \cite{poet}. Hierfür wird die zu generierende Klasse programmiert. Mit Hilfe von nur ein paar Schlüsselwörtern ist es möglich, \textit{Klassen}, \textit{Interfaces} oder \textit{Methoden} zu generieren. 
 
-Da der größte Teil des Generators Java-Klassen erzeugen muss, ist dieses \ac{api} bestens für diesen Zweck geeignet. Sie erspart die aufwändige String-Manipulation. Durch die Nutzung wird auch bei der Ausführung des Programmes sichergestellt, das gültige Konventionen und Regeln von Java eingehalten werden. So ist der grundsätzliche korrekte Aufbau einer Java-Klasse bereits vorab sichergestellt.
+Da der größte Teil des Generators Java-Klassen erzeugen muss, ist dieses \ac{api} bestens für diesen Zweck geeignet. Sie erspart die aufwändige String-Manipulation. Durch die Nutzung wird auch bei der Ausführung des Programmes sichergestellt, dass gültige Konventionen und Regeln von Java eingehalten werden. So ist der grundsätzlich korrekte Aufbau einer Java-Klasse bereits vorab sichergestellt.
 
 Listing \ref{lst:poet} zeigt ein einfaches Beispiel zur Generierung einer Hello-World-Klasse und Listing \ref{lst:poet_result} zeigt das Ergebnis nach der Ausführung des Beispieles.
 
 \begin{lstlisting}[label=lst:poet,
 language=java,
 firstnumber=1,
-caption=Beispiel für die Generation einer Hallo-World-Klasse \cite{poet}.]				   
+caption=Beispiel für die Generation einer Hallo-World-Klasse mit JavaPoet \cite{poet}.]				   
 MethodSpec main = MethodSpec.methodBuilder("main")
 	.addModifiers(Modifier.PUBLIC, Modifier.STATIC)
 	.returns(void.class)
@@ -47,9 +47,9 @@ public final class HelloWorld {
 }
 \end{lstlisting}
 
-\subsection{Generierung anderer Daten-Typen}
+\subsection{Generierung anderer Datentypen}
 
-Neben Java-Klassen besitzt der Quellcode einer Android Applikation auch \textit{XML}-Dateien und \textit{Gradle}-Dateien. Für diese Typen muss eine andere Möglichkeit der Generierung gewählt werden. Hierfür liefert \acf{gemara} mit der Klasse \textit{GeneratedFile} eine Möglichkeit. Diese Klasse besitzt die beiden Methoden \textit{append(String contet)} und \textit{appendln(String content)}. Welche es ermöglichen jedes beliebige textbasiertes File-Format zu generieren. Ein \textit{GeneratedFile} Objekt erzeugt eine Datei, welcher mit den beiden erwähnten Methoden Strings hinzugefügt werden können. Dies ermöglicht es jede beliebige Textstruktur zu erzeugen. Jedoch liefert diese Klasse keinerlei Validierung, die Datei wird generiert egal ob die Struktur gültig ist oder nicht.
+Neben Java-Klassen besitzt der Quellcode einer Android Applikation auch \textit{XML}-Dateien und \textit{Gradle}-Dateien. Für diese Typen muss eine andere Möglichkeit der Generierung gewählt werden. Hierfür liefert \acf{gemara} mit der Klasse \textit{GeneratedFile} eine Möglichkeit. Diese Klasse besitzt die beiden Methoden \textit{append(String content)} und \textit{appendln(String content)}, welche ermöglichen, jedes beliebige textbasiertes File-Format zu generieren. Ein \textit{GeneratedFile} Objekt erzeugt eine Datei, welcher mit den beiden erwähnten Methoden Strings hinzugefügt werden können. Dies ermöglicht, jede beliebige Textstruktur zu erzeugen. Jedoch liefert diese Klasse keinerlei Validierung, die Datei wird generiert, egal ob die Struktur gültig ist oder nicht.
 
 Listing \ref{lst:append} erzeugt eine in Listing \ref{lst:append_result} dargestellte Datei \textit{test.xml} unter dem Verzeichnis \textit{generated}.
 \begin{lstlisting}[label=lst:append,
@@ -97,7 +97,7 @@ caption=Erzeugte \textit{XML}-Datei durch den Quellcode von Listing \ref{lst:app
 \end{lstlisting}
 
 \subsection{Ablauf der Generierung}
-Um eine Android Applikation generieren zulassen müssen nicht alle Klassen, generiert werden. Es können auch Überlegungen angestrebt werden, generischen Klassen einfach im Generator abzulegen und bei Bedarf zu kopieren. Diese Methode wurde verworfen, da andernfalls jedes mal die kopierten Klassen via String-Manipulation bearbeitet werden müssten. Die minimale Änderung welche jedes mal getroffen werden müsste, wäre das Anpassen der \textit{Package} Anweisung am Anfang der Java-Klassen und die der \textit{Import}-Anweisungen. Eine weitere Überlegung wäre es, diese Klassen in eine Android Bibliothek auszulagern, und diese dann in jede Anwendung zu importieren. Auch von dieser Möglichkeit wurde in der ersten Version abgesehen, da die Applikation bereits aus zwei Komponenten besteht. Der Applikation an sich und einer Bibliothek, welche die Android-Komponenten für die Anwendung enthält. Um die Komplexität zu reduzieren werden die benötigten generischen Klassen als Teil der eingebunden Bibliothek jedes mal aufs neue generiert.
+Um eine Android Applikation generieren zu lassen, müssen nicht alle Klassen generiert werden. Es können auch Überlegungen angestrebt werden, generische Klassen einfach im Generator abzulegen und bei Bedarf zu kopieren. Diese Methode wurde verworfen, da andernfalls jedes mal die kopierten Klassen via String-Manipulation bearbeitet werden müssten. Die minimale Änderung welche jedes mal getroffen werden müsste, wäre das Anpassen der \textit{Package} Anweisung am Anfang der Java-Klassen und die der \textit{Import}-Anweisungen. Eine weitere Überlegung wäre, diese Klassen in eine Android Bibliothek auszulagern, und diese dann in jede Anwendung zu importieren. Auch von dieser Möglichkeit wurde in der ersten Version abgesehen, da die Applikation bereits aus zwei Komponenten besteht. Der Applikation an sich und einer Bibliothek, welche die Android-Komponenten für die Anwendung enthält. Um die Komplexität zu reduzieren, werden die benötigten generischen Klassen als Teil der eingebunden Bibliothek jedes mal aufs neue generiert.
 
 \subsection{Aufbau des Generators}
 
@@ -110,9 +110,9 @@ Um eine Android Applikation generieren zulassen müssen nicht alle Klassen, gene
 \end{figure}
 
 
-Die Klasse \textit{ApplicationGenerator}, ist der Einstiegspunkt des Projekts. Sie erwartet im Konstruktor ein \textit{Enfield-Modell} Objekt. Wie der Abbildung \ref{fig:welling} entnommen werden kann, so lässt sich das Projekt in drei Teilbereiche gliedern. Der erste Bereich erzeugt ein \textit{AppDescription} Objekt (Abbildung \ref{fig:appDescription}) der zweite Bereich befasst sich mit allgemeinen Vorbereitungen, die getroffen werden müssen. Der Letzte iteriert über die \textit{States}, und generiert nach Bedarf die benötigten Klassen.
+Die Klasse \textit{ApplicationGenerator} ist der Einstiegspunkt des Projekts. Sie erwartet im Konstruktor ein \textit{Enfield-Modell} Objekt. Wie der Abbildung \ref{fig:welling} entnommen werden kann, lässt sich das Projekt in drei Teilbereiche gliedern. Der erste Bereich erzeugt ein \textit{AppDescription} Objekt (Abbildung \ref{fig:appDescription}), der zweite Bereich befasst sich mit allgemeinen Vorbereitungen, die getroffen werden müssen. Der Letzte iteriert über die \textit{States}, und generiert nach Bedarf die benötigten Klassen.
 
-Die \textit{ApplicationGenerator} Klasse verfügt über eine öffentliche Methode \textit{generate}. Beim Aufrufen dieser Methode, werden die einzelnen Generatoren, für den allgemeinen Bereich angestoßen. Weiterhin wird das iterieren über die \textit{States} des \textit{Enfield-Modell} begonnen. Zum Schluss wird noch das \textit{AppDescription} Objekt ausgewertet, und die darin enthaltenen Informationen in Dateien geschrieben und an die entsprechende Stelle im Projekt gespeichert.
+Die \textit{ApplicationGenerator} Klasse verfügt über eine öffentliche Methode \textit{generate}. Beim Aufrufen dieser Methode werden die einzelnen Generatoren für den allgemeinen Bereich angestoßen. Weiterhin wird das Iterieren über die \textit{States} des \textit{Enfield-Modell} begonnen. Zum Schluss wird noch das \textit{AppDescription} Objekt ausgewertet und die darin enthaltenen Informationen in Dateien geschrieben und an die entsprechende Stelle im Projekt gespeichert.
 
 \subsubsection{Erstellung der \textit{AppDescription}}
 
@@ -125,42 +125,42 @@ Die \textit{ApplicationGenerator} Klasse verfügt über eine öffentliche Method
 \end{figure}
 
 In der \textit{AppDescription} werden alle allgemeinen Daten durch den Generator gereicht, welche an vielen Stellen benötigt werden. 
-Zum Beispiel der Name der Anwendung oder der Bibliothek. In jeder Java-Klasse wird der Paketname benötigt, da dieser in der Bibliothek und in der normalen Applikation verschieden sind, müssen diese für beide mitgeführt werden. Auch muss der Generator wissen, unter welchen Verzeichnissen die aktuelle Datei egal ob Java Klasse oder \textit{XML}-Datei gespeichert werden soll. 
-Diese Informationen können einfach aus dem \textit{Enfield-Modell} abgelesen werden. Auch die Ressourcen und die jeweiligen Subressourcen können direkt aus dem \textit{Meta-Modell} entnommen werden.  Dies ist der Teil des initialisieren der \textit{AppDescription}. Alle bereits verfügbaren Informationen werden der \textit{AppDescription} zugewiesen. 
+Zum Beispiel der Name der Anwendung oder der Bibliothek. In jeder Java-Klasse wird der Paketname benötigt. Da dieser in der Bibliothek und in der normalen Applikation verschieden sind, müssen diese für beide mitgeführt werden. Auch muss der Generator wissen, unter welchen Verzeichnissen die aktuelle Datei egal ob Java Klasse oder \textit{XML}-Datei, gespeichert werden soll. 
+Diese Informationen können einfach aus dem \textit{Enfield-Modell} abgelesen werden. Auch die Ressourcen und die jeweiligen Subressourcen können direkt aus dem \textit{Meta-Modell} entnommen werden.  Dies ist der Teil des Initialisierens der \textit{AppDescription}. Alle bereits verfügbaren Informationen werden der \textit{AppDescription} zugewiesen. 
 
 \newpage
 
 Neben diesen Daten, die an mehreren Stellen bei der Generierung benötigt werden, gibt es Dateien in einer Android-Applikation, die sich mit dem Generieren aufbauen. Ein Beispiel für eine solche Datei ist die \textit{strings.xml}. 
-Es wird in dem generierten Projekt zwei davon geben. Eine im Bereich der Applikation selbst und eine weitere in der Bibliothek. Diese Dateien enthalten neben dem Applikationsnamen beziehungsweise des Bibliotheksnamen auch viele Strings, die erst beispielsweise in einem Fragment auftauchen. Jedoch müssen die benötigten Datensätze in der \textit{strings.xml} eingetragen werden. Anstelle dies jedes mal wenn im Ablauf des Generierens ein String auftaucht, eine bereits generierte Datei zu erweitern, wird der Datensatz in der \textit{AppDescription} unter dem \textit{AppString} \textit{appString} beziehungsweise dem \textit{AppString} \textit{libString} hinterlegt.
+Es wird in dem generierten Projekt zwei davon geben. Eine im Bereich der Applikation selbst und eine weitere in der Bibliothek. Diese Dateien enthalten neben dem Applikationsnamen, beziehungsweise des Bibliotheksnamens auch viele Strings, die erst beispielsweise in einem Fragment auftauchen. Jedoch müssen die benötigten Datensätze in der \textit{strings.xml} eingetragen werden. Um zu verhindern, dass der Generator die \textit{strings.xml} mehrfach erweitern muss, wird die \textit{AppDescription} in den entsprechenden \textit{AppString}-Attributen \textit{appString} beziehungsweise \textit{libString} erweitert.
 
-Auch das \textit{AndroidManifest} wächst mit der Anwendung. So muss jede benutzte \textit{Aktivity} dort eingetragen sein. Andernfalls kann diese nicht genutzt werden. Am Anfang des Generierens ist die genaue Anzahl und die genauen Namen der \textit{Aktivities} unbekannt, weswegen der Generator diese beim Erzeugen zur \textit{AppDescription} hinzufügen muss. 
-Das Attribut \textit{appDeclareStyleable} enthält alle \textit{CustomViews}, welche wie, im Kapitel \ref{sec:custom_view}, in die \textit{attr.xml} eingetragen werden müssen.
+Auch das \textit{AndroidManifest} wächst mit der Anwendung. So muss jede benutzte \textit{Aktivity} dort eingetragen sein, andernfalls kann diese nicht genutzt werden. Am Anfang des Generierens ist die genaue Anzahl und die Namen der \textit{Activities} unbekannt, weswegen der Generator diese beim Erzeugen zur \textit{AppDescription} hinzufügen muss. 
+Das Attribut \textit{appDeclareStyleable} enthält alle \textit{CustomViews}, welche wie im Kapitel \ref{sec:custom_view}, in die \textit{attr.xml} eingetragen werden müssen.
 
 Da die Anwendung, welche generiert wird auch den \acf{rest} Ansätzen entsprechen soll, muss diese wissen welche \textit{Relationstypen} zu welchen Endpunkten gehören. Anfangs sind diese jedoch ebenfalls unbekannt und werden erst im weiteren Verlauf beim iterieren über die \textit{States} bekannt und zur \textit{AppDescription} hinzugefügt.
-So wächst die \textit{AppDescription} über den gesamten Prozess des Generierens. Am Ende, werden die gesammelten Daten in die entsprechenden Dateien an den jeweiligen Orten gespeichert. Das Verwenden und weiterreichen eines \textit{AppDescription} Objekts reduziert die Komplexität des Generators. Dieser muss nicht bei jeder Ergänzung einer der beschriebenen Dateien diese Aufrufen, den neuen Datensatz aufwändig hinzufügen und die Datei wieder abspeichern. Sondern der Generator muss die Datei nur einmal schreiben, da er zum Beginn des Schreibvorgangs alle von der Android Anwendung benötigten Informationen besitzt.
+So wächst die \textit{AppDescription} über den gesamten Prozess des Generierens. Am Ende, werden die gesammelten Daten in die entsprechenden Dateien an den jeweiligen Orten gespeichert. Das Verwenden und Weiterreichen eines \textit{AppDescription} Objekts reduziert die Komplexität des Generators. Dieser muss deshalb nicht bei jeder Ergänzung einer der beschriebenen Dateien diese Aufrufen, den neuen Datensatz aufwändig hinzufügen und die Datei wieder abspeichern. Stattdessen muss der Generator die Datei nur einmal schreiben, da er zu Beginn des Schreibvorgangs alle von der Android Anwendung benötigten Informationen besitzt.
 
 \subsubsection{Vorbereitung und Generierung allgemeiner Dateien}
 
 Der Bereich zur Vorbereitung und Generierung der allgemeinen Dateien gliedert sich ebenfalls in drei Bereiche. Der erste Bereich kümmert sich um alle Dateien die von \textit{Gradle} benötigt werden. 
 
 Er kopiert Daten wie die \textit{gradlew.bat}, \textit{gradlew}, \textit{build.gradle} und den \textit{Gradle Wrapper}. 
-Neben dem Kopieren, werden sowohl für die Applikation, Bibliothek als auch für das Gesamtprojekt die spezifischen Dateien generiert. So wird beispielsweise auf der Projektebene eine \textit{settings.gradle} erzeugt oder in der Applikation sowie der Bibliothek jeweils eine \textit{build.gradle}.
+Neben dem Kopieren werden sowohl für die Applikation, Bibliothek als auch für das Gesamtprojekt die spezifischen Dateien generiert. So wird beispielsweise auf der Projektebene eine \textit{settings.gradle} erzeugt oder in der Applikation sowie der Bibliothek jeweils eine \textit{build.gradle}.
 
-In der Sektion der Vorbereitung für die Applikation, werden Dateien erzeugt, die jede Applikation benötigt unabhängig von ihrem Aufbau oder den Features. Es wird beispielsweise die \textit{MainActivity} erzeugt, oder die \textit{XML}-Dateien, welche für die \textit{Transitions-Animationen} verantwortlich sind. Auch die \textit{styles.xml} wird erzeugt. Am Schluss werden noch die \textit{mipmap}-Ordner an dir richtige Stelle kopiert.
+In der Sektion der Vorbereitung für die Applikation werden Dateien erzeugt, die jede Applikation benötigt, unabhängig von ihrem Aufbau oder deren Features. Es wird beispielsweise die \textit{MainActivity} erzeugt oder die \textit{XML}-Dateien, welche für die \textit{Transitions-Animationen} verantwortlich sind. Auch die \textit{styles.xml} wird erzeugt. Am Schluss werden noch die \textit{mipmap}-Ordner an die richtige Stelle kopiert.
 
-Der Bereich, welcher die Bibliothek initialisiert, ist der Größte. Er generiert alle generell benötigten Klassen. Darunter fallen die Klassen der Netzwerkkommunikation, die Klasse für das Link-Objekt sowie das Interface \textit{Resource}. Es werden des weiteren auch die größten Teile der in der Abbildung \ref{fig:lecturer_structure} abgebildeten generischen Klassen erzeugt. Auch werden die grundsätzlichen \textit{CustomViews} bereits erzeugt. Dazu gehören auch die benötigten \textit{XML}-Dateien. So kann für die Bibliothek beispielsweise das Manifest bereits erzeugt werden, da hier keine \textit{Activities} registriert werden müssen. Nach dem Ausführen des \textit{PrepareLibGenerators} steht, das Grundgerüst der Bibliothek. Diese enthält nun alle bereits vorab erzeugbaren und benötigten Dateien, welche unabhängig von der gewünschten Funktion der Applikation benötigt werden. 
+Der Bereich, welcher die Bibliothek initialisiert, ist der Größte. Er generiert alle generell benötigten Klassen. Darunter fallen die Klassen der Netzwerkkommunikation, die Klasse für das Link-Objekt sowie das Interface \textit{Resource}. Des Weiteren werden auch die größten Teile der in der Abbildung \ref{fig:lecturer_structure} abgebildeten generischen Klassen erzeugt. Auch werden die \textit{CustomViews}, welche definitiv benötigt werden, bereits erzeugt. Dazu gehören auch die benötigten \textit{XML}-Dateien. Für die Bibliothek kann beispielsweise das Manifest bereits erzeugt werden, da hier keine \textit{Activities} registriert werden müssen. Nach dem Ausführen des \textit{PrepareLibGenerators} steht das Grundgerüst der Bibliothek. Diese enthält nun alle bereits vorab erzeugbaren und benötigten Dateien, welche unabhängig von der gewünschten Funktion der Applikation benötigt werden. 
 
 Dieser gesamte Teilbereich des Projekts befasst sich damit ein Grundgerüst für die komplette Android Applikation zu erzeugen und vorab bereits alle benötigten Dateien aufzubereiten. Die generierten Klassen haben jedoch noch keinerlei Programmlogik, die den spezifischen Ablauf der zu generierenden Anwendung steuert.
 
 \subsubsection{Iterieren über die \textit{States}}
 
-Der Teilbereich, der sich mit dem iterieren über die einzelnen \textit{States} beschäftigt ist der komplexeste Bereich des Generators. Er ist dafür verantwortlich, das zu jedem \textit{State} die alle benötigten Klassen und Dateien generiert werden. 
+Der Teilbereich, der sich mit dem Iterieren über die einzelnen \textit{States} beschäftigt ist der komplexeste Bereich des Generators. Er ist dafür verantwortlich, dass zu jedem \textit{State} alle benötigten Klassen und Dateien generiert werden. 
 
-Um diese Anforderung zu erfüllen, nutzt er den \textit{Visitor} \textit{IStateVisitor}, welcher durch das \textit{Enfield-Modell} zur Verfügung gestellt wird. Außerdem wird auch der \textit{Visitor} \textit{VisitStatesOnlyOnce} benutzt. Dieser zweite \textit{Visitor} stellt sicher, das jeder \textit{State} nur einmalig besucht wird. Würde der Generator einfach nur über die Transitionen der \textit{States} gehen, könnte es passieren, das er in eine Endlosschleife endet.
+Um diese Anforderung zu erfüllen, nutzt er den \textit{Visitor} \textit{IStateVisitor}, welcher durch das \textit{Enfield-Modell} zur Verfügung gestellt wird. Außerdem wird auch der \textit{Visitor} \textit{VisitStatesOnlyOnce} benutzt. Dieser zweite \textit{Visitor} stellt sicher, dass jeder \textit{State} nur einmalig besucht wird. Würde der Generator einfach nur über die Transitionen der \textit{States} gehen, könnte es passieren, dass er in eine Endlosschleife endet.
 
 \newpage
 
-Gelangt der Generator zu einem \textit{State}, wird mit dem \textit{ISateVisitor} identifiziert, von welchem Typ dieser ist. Mögliche \textit{Statetypen} sind: ein \textit{State} welcher einen \textit{GET-Request} auf eine einzelne Ressource oder auf eine Collection beschreibt oder \textit{States} welche einen \textit{POST-}, \textit{PUT-} oder \textit{DELETE-Request} repräsentieren.  Nach dieser Identifikation, wird bei jedem \textit{State}, außer dem \textit{DELETE-State}, eine Klasse für die in diesem \textit{State} betroffene Ressource erzeugt. Hierfür wird der \textit{ResourceGenerator} benutzt. Auch wenn dabei die Ressource mehrfach angelegt werden würde. Der Generator überschreibt eine bereits angelegte Ressource. Diese Redundanz garantiert das auf jeden Fall eine Ressource zum betreffenden \textit{State} existiert. 
+Gelangt der Generator zu einem \textit{State}, wird mit dem \textit{IStateVisitor} identifiziert von welchem Typ dieser ist. Mögliche \textit{Statetypen} sind: ein \textit{State}, welcher einen \textit{GET-Request} auf eine einzelne Ressource oder auf eine Collection beschreibt oder \textit{States}, welche einen \textit{POST-}, \textit{PUT-} oder \textit{DELETE-Request} repräsentieren.  Nach dieser Identifikation wird bei jedem \textit{State}, außer dem \textit{DELETE-State}, eine Klasse für die in diesem \textit{State} betroffene Ressource erzeugt. Hierfür wird der \textit{ResourceGenerator} benutzt. Auch wenn dabei die Ressource mehrfach angelegt werden würde. Der Generator überschreibt eine bereits angelegte Ressource. Diese Redundanz garantiert, dass auf jeden Fall eine Ressource zum betreffenden \textit{State} existiert. 
 
 Neben diesen Ressource-Klassen, wird auch ein \textit{StateHolder}-Objekt erstellt. Die Abbildung \ref{fig:stateHolder} repräsentiert dieses. 
 
@@ -172,13 +172,13 @@ Neben diesen Ressource-Klassen, wird auch ein \textit{StateHolder}-Objekt erstel
 	\end{center}
 \end{figure}
 
-Dieses Objekt wird für jeden einzelnen \textit{State} angelegt, es enthält alle \textit{States}, welche über die \textit{Transitionen} erreicht werden können.
-So weiß der Generator genau, ob beispielsweise ein \textit{Button} angezeigt werden muss, der eine Neuanlage einer Ressource ermöglicht. Diese Informationen stecken zwar auch im \textit{Enfield-Modell}, jedoch müsste jedes mal wenn überprüft werden soll welche \textit{Folgestates} ein \textit{State} besitzt, über alle \textit{States} iteriert werden. Das \textit{StateHolder}-Objekt beschreibt sozusagen eine Landkarte für jeden einzelnen \textit{State}.
+Dieses Objekt wird für jeden einzelnen \textit{State} angelegt. Es enthält alle \textit{States}, welche über die \textit{Transitionen} erreicht werden können.
+So weiß der Generator genau, ob beispielsweise ein \textit{Button} angezeigt werden muss, der eine Neuanlage einer Ressource ermöglicht. Diese Informationen stecken zwar auch im \textit{Enfield-Modell}, jedoch müsste jedes mal, wenn überprüft werden soll, welche \textit{Folgestates} ein \textit{State} besitzt, über alle \textit{States} iteriert werden. Das \textit{StateHolder}-Objekt beschreibt sozusagen eine Landkarte für jeden einzelnen \textit{State}.
 
-Der \textit{State}, welcher für das Löschen einer Ressource verantwortlich ist, ist der einfachste zum generieren. Hierfür wird lediglich ein \textit{DialogFragment} erzeugt, welches für das Löschen verwendet wird. 
+Der \textit{State}, welcher für das Löschen einer Ressource verantwortlich ist, ist der einfachste zum Generieren. Hierfür wird lediglich ein \textit{DialogFragment} erzeugt, welches für das Löschen verwendet wird. 
 
-Für die anderen \textit{States}, werden mehr Klassen und Dateien benötigt. Außerdem werden die \textit{ResourceViews} (Kapitel \ref{sec:resourceViews}) benötigt, die jedem \textit{State} angehängt sind. Zur Identifizierung der einzelnen \textit{ResourceViews} wird wiederum mit dem \textit{Visitor-Pattern} gearbeitet. Die Klasse der \textit{ResourceView} stellt den \textit{Visitor} \textit{ResoruceViewVisitor} zur Verfügung. 
-Nachdem bekannt ist welche der drei \textit{ResourceView}-Typen im entsprechenden \textit{State} verwendet wurde, kann einer der Komponentengeneratoren: \textit{InputViewGenerator}, \textit{CardViewGenerator} oder \textit{DetailViewGenerator} alle notwendigen Dateien generieren.
+Für die anderen \textit{States} werden mehr Klassen und Dateien benötigt. Außerdem werden die \textit{ResourceViews} (Kapitel \ref{sec:resourceViews}) benötigt, die jedem \textit{State} angehängt sind. Zur Identifizierung der einzelnen \textit{ResourceViews} wird wiederum mit dem \textit{Visitor-Pattern} gearbeitet. Die Klasse der \textit{ResourceView} stellt den \textit{Visitor} \textit{ResourceViewVisitor} zur Verfügung. 
+Nachdem bekannt ist, welche der drei \textit{ResourceView}-Typen im entsprechenden \textit{State} verwendet wurde, kann einer der Komponentengeneratoren - \textit{InputViewGenerator}, \textit{CardViewGenerator} oder \textit{DetailViewGenerator} - alle notwendigen Dateien generieren.
 
 \begin{figure}[H]
 	\begin{center}
@@ -191,21 +191,21 @@ Nachdem bekannt ist welche der drei \textit{ResourceView}-Typen im entsprechende
 In Abbildung \ref{fig:swimlines} ist die Applikation für Dozenten noch einmal abgebildet. Zur Vereinfachung wurde bei diesem Diagramm jedoch die Ressource Ämter mit ihren zugehörigen Klassen weggelassen.
 
 Der Bereich \textit{Update} und der Bereich \textit{Create} werden hierbei vom \textit{InputViewGenerator}, der Bereich \textit{Read Collection} von \textit{CardViewGenerator} und der Bereich \textit{Read Single} vom \textit{DetailViewGenerator} erzeugt.
-Jeder der einzelnen Generatoren ist ein Zusammenschluss von vielen Teilgeneratoren. Es werden dabei in einem der Generatoren nicht nur die Java-Klassen für Applikation oder Bibliothek, sondern auch alle benötigten \textit{XML}-Dateien erzeugt.
+Jeder der einzelnen Generatoren ist ein Zusammenschluss von vielen Teilgeneratoren. Dabei werden in einem der Generatoren nicht nur die Java-Klassen für Applikation oder Bibliothek, sondern auch alle benötigten \textit{XML}-Dateien erzeugt.
 
 \newpage
 
-So ist beispielsweise der \textit{DetailViewGenerator} dafür verantwortlich, dass auf Seite der Applikation, die \textit{LecturerDetailActivity} inklusive ihrer XML-Datei erzeugt wird. Er muss weitergehend auch diese \textit{Aktivity} in die \textit{AppDescription} im Bereich des \textit{Manifestes} hinterlegen. Im Bereich der Bibliothek muss dafür gesorgt werden, dass die generischen Klassen \textit{ResourceDetailActivity}, \textit{ResourceDetailView} sowie die spezifischen Klassen: \textit{LectuererDetailView}, \textit{LectuererDetailAdapter}, \textit{LectuererDetailViewHolder}, \textit{LectuererDetailCardView} erzeugt werden. Zu all diesen Klassen müssen mögliche Strings oder \textit{CustomViews} in die \textit{AppDescription} aufgenommen werden. Wiederum müssen auch die entsprechenden \textit{XML}-Dateien erzeugt werden. 
+So ist beispielsweise der \textit{DetailViewGenerator} dafür verantwortlich, dass auf Seite der Applikation, die \textit{LecturerDetailActivity} inklusive ihrer XML-Datei erzeugt wird. Er muss weitergehend auch diese \textit{Activity} in die \textit{AppDescription} im Bereich des \textit{Manifests} hinterlegen. Im Bereich der Bibliothek muss dafür gesorgt werden, dass die generischen Klassen \textit{ResourceDetailActivity}, \textit{ResourceDetailView} sowie die spezifischen Klassen: \textit{LecturerDetailView}, \textit{LecturerDetailAdapter}, \textit{LecturerDetailViewHolder}, \textit{LecturerDetailCardView} erzeugt werden. Zu all diesen Klassen müssen mögliche Strings oder \textit{CustomViews} in die \textit{AppDescription} aufgenommen werden. Wiederum müssen auch die entsprechenden \textit{XML}-Dateien erzeugt werden. 
 
-Jeder Generator besitzt mehrere Möglichkeiten, welche Klassen generiert werden müssen. So entscheidet beispielsweise ob die Ressource ein Bild besitzt oder nicht über den Verhalt, ob eine \textit{Activity} mit einer \textit{CollapsingToolbar} verwendet wird oder ob ein einfaches \textit{Fragment} zur Detailanzeige ausreichend ist.
+Jeder Generator besitzt mehrere Möglichkeiten, welche Klassen generiert werden müssen. Ob eine \textit{Activity} mit einer \textit{CollapsingToolbar} verwendet wird oder ob ein einfaches \textit{Fragment} zur Detailanzeige ausreichend ist, hängt davon ab, ob die Ressource ein Bild besitzt oder nicht.
 Selbst die Generatoren auf der untersten Ebene, welche die einzelne Klassen erzeugen, wissen mit Hilfe von dem mitgegebenen \textit{StateHolder}, ob beispielsweise Menüeinträge für das Löschen oder das Bearbeiten von Ressourcen benötigt werden. Diese Generatoren richten sich auch nach den übergebenen \textit{RessourceViews}. Auf dieser Ebene haben die vom Benutzer des Generators mitgegebenen Informationen zum Aussehen, Einfluss. Hier werden die benötigten Attribute der Ressource hinzugefügt, und deren Aussehen in den entsprechenden \textit{XML}-Dateien beschrieben.
 
 
-\section{Bauen und ausführen der generierten Android Applikation}
+\section{Bauen und Ausführen der generierten Android Applikation}
 
 Wurden alle benötigten Dateien der Applikation erzeugt, gibt es zwei Möglichkeiten, die Applikation zu bauen und anschließend auf einem Android-Endgerät zu installieren.
 
-Variante 1: Importieren der generierten Dateien in eine \acf{ide} beispielsweise Android Studio. Dort wie bereits bekannt, die Anwendung bauen und auf einem sich im Entwicklermodus befindlichen Android-Endgerät installieren.
+Variante 1: Importieren der generierten Dateien in eine Integrierte Entwicklungsumgebung (IDE) beispielsweise Android Studio. Dort, wie bereits bekannt, die Anwendung bauen und auf einem sich im Entwicklermodus befindlichen Android-Endgerät installieren.
 
 Variante 2: Die Applikation mit Hilfe des \textit{Makefile} bauen und installieren. Hierfür muss ebenfalls ein Android-Endgerät im Entwicklermodus an dem entsprechenden Computer angeschlossen sein.
 
@@ -226,4 +226,4 @@ install:
 adb $(TARGET) install -rk $(APK)
 \end{lstlisting}
 
-Listing \ref{lst:make} zeigt das \textit{Makefile}, dieses bietet die Möglichkeit entweder mit dem Befehl \textit{make} eine Debug-Version der Anwendung zu bauen und zu Installieren, oder mit dem Befehl \textit{make debug} ausschließlich die Applikation zu bauen beziehungsweise mit dem Befehl \textit{make install} die bereits gebaute Applikation zu installieren.
+Listing \ref{lst:make} zeigt das \textit{Makefile}, welches die Möglichkeit beitet, entweder mit dem Befehl \textit{make} eine Debug-Version der Anwendung zu bauen und zu installieren, oder mit dem Befehl \textit{make debug} ausschließlich die Applikation zu bauen, beziehungsweise mit dem Befehl \textit{make install} die bereits gebaute Applikation zu installieren.

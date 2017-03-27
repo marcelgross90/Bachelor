@@ -3,7 +3,7 @@
 In dem generierten Projekt, sollen alle benötigten Daten mittels \textit{\ac{rest}} von dem zugehörigen, generierten \textit{Backend} geladen werden. 
 
  \textit{\ac{rest}} \cite{rest_fielding} ist ein Programmierparadigma, welches sich auf folgende Prinzipien stützt: \textit{Client-Server}, \textit{Zustandslose Kommunikation}, \textit{Caching}, \textit{Uniform Inferface}, \textit{Layered System} und dem optionalen Prinzip \textit{Code-on-Demand}.
-Diese Arbeit berücksichtigt vor allem \textit{\acf{hateoas}}, welches unter das Prinzip \textit{Uniform Interface} fällt. Es beschreibt, wie mit Hilfe eines \textit{endlichen Automaten} eine \textit{\ac{rest}-Architektur} entworfen werden kann.
+Diese Arbeit berücksichtigt vor allem \textit{\acf{hateoas}}, welches unter das Prinzip \textit{Uniform Interface} fällt. Es beschreibt, wie mit Hilfe eines \textit{endlichen Automaten} eine \textit{\ac{rest}-Architektur} entworfen werden kann \cite{hypermedia}.
 Der Architekt einer \textit{\ac{rest}}-konformen \textit{\acf{api}} überlegt sich im Voraus, wie der Applikation-Fluss in der späteren Anwendung aussehen soll. Dafür definiert er verschiedene \textit{States} und welche \textit{Transitionen} zum nächsten \textit{State} führen.
 
 Als ein \textit{State} kann beispielsweise das Anzeigen aller Lecturer in einer Campus-Applikation angesehen werden.
@@ -141,7 +141,6 @@ public PersonCardView(Context context, AttributeSet attrs, int defStyleAttr) {
 Innerhalb der \textit{init}-Methode wird definiert, was die \textit{View} anzeigen, beziehungsweise was sie tun soll. 
 In diesem Beispiel werden die verwendeten \textit{Widgets} initialisiert. Besäße die \textit{PersonCardView} noch eigene Attribute, so würden diese im \textit{AttributeSet} übergeben und könnten daraus in ein \textit{TypedArray} geschrieben werden. Dieses \textit{TypedArray} muss am Ende \textit{recycled} werden, damit es für einen späteren Aufruf wieder zur Verfügung steht.
 
-\newpage
 Jetzt wird die \textit{PersonCardView} um die Methode \textit{setPerson} erweitert. Diese ist angelehnt an die Methode \textit{setText} der \textit{TextView}. Sie ermöglicht, dass der \textit{PersonCardView} ein Objekt Person übergeben wird und füllt dann die entsprechenden \textit{Widgets} mit den dazugehörigen übergebenen Daten.
 
 \begin{lstlisting}[label=lst:setPerson,
@@ -149,17 +148,21 @@ language=java,
 firstnumber=1,
 caption=\textit{setPerson} - Methode aus der \textit{PersonCardView}.]				  
 public void setPerson(Person person) {
+
 	this.firstName.setText(person.getFirstName());
 	this.lastName.setText(person.getLastName());	
 	[...]
 }
 \end{lstlisting}
 
+\newpage
+
 Mit Hilfe dieser Methode wird die Nutztung der \textit{PersonCardView} vereinfacht. Im \textit{Adapter} der \textit{RecyclerView} wird jetzt nicht mehr jedes einzelne \textit{Widget} definiert und mit Informationen befüllt. Sondern nur noch die \textit{PersonCardView} und mit der \textit{setPerson} - Methode kann die komplette Karte mit den Daten einer Person mit nur einem Methodenaufruf befüllt werden.
 
 \section{Software-Generatoren}\label{sec:generators}
 
 Mit Software-Generatoren, ist es möglich Software generieren zu lassen. Dafür wird die Problemstellung der realen Welt so beschrieben, dass der Generator dies versteht, interpretieren und Programmcode erzeugen kann.
+Dieses Verfahren wird auch modellgetriebene Softwareentwicklung (MDSD) genannt \cite{mdsd}.
 
 \subsection{\textit{Domänenspezifische Sprache (DSL)}}\label{sec:dsl}
 Die Grundlage, um ein Model für einen Generator zu beschreiben ist die \textit{\acl{dsl}}.
@@ -181,6 +184,8 @@ Anders als die \textit{internen \acsp{dsl}} besitzen \textit{externen \acsp{dsl}
 Das Projekt \acs{gemara} beinhaltet ein Reihe von Software-Generatoren, deren Ziel es ist mobile und verteilte Applikationen basierend auf dem \textit{\acs{rest}} Architekturstil generieren zu lassen. Dafür wurde eine \textit{interne \acs{dsl}} entwickelt, mit deren Hilfe sowohl \textit{Client}-seitige als auch \textit{Server}-seitige Applikationen beschrieben werden können.
 
 Im Moment (Stand Februar 2017) ist es möglich, ein \textit{WAR-Artefakt} für einen \textit{Tomcat-Webserver} generieren zu lassen. Dieses erzeugte Projekt kann auf eine \textit{relationale MYSQL-Datenbank} oder eine \textit{dokumentenbasierten CouchDB} zugreifen. Des Weiteren ist ein Generator zur Erzeugung von Android-Applikationen sowie ein Generator für Polymer Webkomponenten in der Entwicklung.
+
+\newpage
 
 \subsubsection{Aufbau von \acs{gemara}}
 

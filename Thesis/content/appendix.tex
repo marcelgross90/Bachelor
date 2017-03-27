@@ -1,5 +1,7 @@
 \chapter{Anhang}
 
+Im Anhang befinden sich Codebeispiele und Ergänzungen zu den vorher angesprochenen Themen: \textit{Enfield-Modell} der Referenzimplementierung; Erstellung einer \textit{DetailView}; Erstellung einer \textit{InputView} sowie die Erstellung einer \textit{CardView}. Auch diese Listings sind teilweise auf das wesentliche reduziert, da sie lediglich ein besseres Verständnis über die jeweiligen Themenbereiche vermitteln sollen.
+
 \newpage
 
 \begin{lstlisting}[label=lst:enfield_model,
@@ -9,22 +11,19 @@ caption=Beschreibung des \textit{Enfield-Modell} der Referenzimplementierung. ]
 class MyEnfieldModel {
 
 		private final Model metaModel;
-
 		private SingleResource lecturerResource;
-
 		private SingleResource chargeResource;
-
 		private GetDispatcherState dispatcherState;
+		private GetPrimarySingleResourceByIdState
+			getLecturerByIdState;
+		private GetPrimaryCollectionResourceByQueryState 
+			getCollectionOfLecturersState;
+		private GetPrimarySingleResourceByIdState 
+			getChargeByIdState;
+		private GetPrimaryCollectionResourceByQueryState 
+			getCollectionOfChargesState;
 
-		private GetPrimarySingleResourceByIdState getLecturerByIdState;
-
-		private GetPrimaryCollectionResourceByQueryState getCollectionOfLecturersState;
-
-		private GetPrimarySingleResourceByIdState getChargeByIdState;
-
-		private GetPrimaryCollectionResourceByQueryState getCollectionOfChargesState;
-
-public MyEnfieldModel() {
+	public MyEnfieldModel() {
 		this.metaModel = new Model();
 
 		this.metaModel.setProducerName("fhws");
@@ -35,39 +34,28 @@ public MyEnfieldModel() {
 	}
 
 	public Model create() {
-		createSingleResourceLecturer();
-
-		createDispatcherState();
 	
+		createSingleResourceLecturer();
+		createDispatcherState();
 		createGetLecturerByIdState();
-
 		createGetCollectionOfLecturersState();
-
 		createDeleteLecturerState();
-
 		createPostNewLecturerState();
-
 		createUpdateLecturerState();
-
 		createPostLecturerImageState();
-
 		createGetLecturerImageState();
-
 		createGetCollectionOfChargesState();
-
 		createGetChargeByIdState();
-
 		createPostNewChargeState();
-
 		createUpdateChargeState();
-
 		createDeleteChargeState();
 
 		return this.metaModel;
 	}
 
 	private AppSpecifics getAppSpecifics() {
-		AppSpecifics appSpecifics = new AppSpecifics("https://apistaging.fiw.fhws.de/mig/api/");
+		AppSpecifics appSpecifics = new 
+			AppSpecifics("https://apistaging.fiw.fhws.de/mig/api/");
 		appSpecifics.setFrontendColor(getFrontendColor());
 
 		return appSpecifics;
@@ -75,7 +63,8 @@ public MyEnfieldModel() {
 
 	private FrontendColor getFrontendColor() {
 		try {
-			return new FrontendColor("#3F51B5", "#303F9F", "#FF4081", "#fff");
+			return new FrontendColor(
+				"#3F51B5", "#303F9F", "#FF4081", "#fff");
 		} catch (InputException ex) {
 			return null;
 		}
@@ -83,24 +72,33 @@ public MyEnfieldModel() {
 
 	private void createSingleResourceLecturer() {
 		this.metaModel.addSingleResource("Lecturer");
-
-		this.lecturerResource = this.metaModel.getSingleResource("Lecturer");
-
+		this.lecturerResource =
+			this.metaModel.getSingleResource("Lecturer");
 		this.lecturerResource.setModel(this.metaModel);
 		this.lecturerResource.setResourceName("Lecturer");
-		this.lecturerResource.setMediaType("application/vnd.fhws-lecturer.default+json");
-
-		final SimpleAttribute title = new SimpleAttribute("title", SimpleDatatype.STRING);
-		final SimpleAttribute firstName = new SimpleAttribute("firstName", SimpleDatatype.STRING);
-		final SimpleAttribute lastName = new SimpleAttribute("lastName", SimpleDatatype.STRING);
-		final SimpleAttribute email = new SimpleAttribute("email", SimpleDatatype.STRING);
-		final SimpleAttribute phone = new SimpleAttribute("phone", SimpleDatatype.STRING);
-		final SimpleAttribute address = new SimpleAttribute("address", SimpleDatatype.STRING);
-		final SimpleAttribute roomNumber = new SimpleAttribute("roomNumber", SimpleDatatype.STRING);
-		final SimpleAttribute homepage = new SimpleAttribute("homepage", SimpleDatatype.LINK);
+		this.lecturerResource.setMediaType(
+			"application/vnd.fhws-lecturer.default+json");
+		final SimpleAttribute title = new SimpleAttribute("title", 
+			SimpleDatatype.STRING);
+		final SimpleAttribute firstName = 
+			new SimpleAttribute("firstName", SimpleDatatype.STRING);
+		final SimpleAttribute lastName = 
+			new SimpleAttribute("lastName", SimpleDatatype.STRING);
+		final SimpleAttribute email = 
+			new SimpleAttribute("email", SimpleDatatype.STRING);
+		final SimpleAttribute phone = 
+			new SimpleAttribute("phone", SimpleDatatype.STRING);
+		final SimpleAttribute address = 
+			new SimpleAttribute("address", SimpleDatatype.STRING);
+		final SimpleAttribute roomNumber = 
+			new SimpleAttribute("roomNumber", SimpleDatatype.STRING);
+		final SimpleAttribute homepage = 
+			new SimpleAttribute("homepage", SimpleDatatype.LINK);
 		
 		createSingleResourceCharge();
-		final ResourceCollectionAttribute charge = new ResourceCollectionAttribute("chargeUrl", this.chargeResource);
+		final ResourceCollectionAttribute charge = 
+			new ResourceCollectionAttribute("chargeUrl",
+				this.chargeResource);
 	
 		this.lecturerResource.addAttribute(title);
 		this.lecturerResource.addAttribute(firstName);
@@ -110,7 +108,6 @@ public MyEnfieldModel() {
 		this.lecturerResource.addAttribute(address);
 		this.lecturerResource.addAttribute(roomNumber);
 		this.lecturerResource.addAttribute(homepage);
-		
 		this.lecturerResource.addAttribute(charge);
 		
 		addImageAttributeForLecturerResource();
@@ -118,25 +115,34 @@ public MyEnfieldModel() {
 	}
 
 	private void addImageAttributeForLecturerResource() {
-		final SimpleAttribute profileImage = new SimpleAttribute("profileImageUrl", SimpleDatatype.IMAGE);
+	
+		final SimpleAttribute profileImage = 
+			new SimpleAttribute("profileImageUrl",
+				SimpleDatatype.IMAGE);
 		profileImage.setBelongsToResource(this.lecturerResource);
 		this.lecturerResource.addAttribute(profileImage);
 		this.lecturerResource.setCaching(new CachingByEtag());
 	}
 
 	private void createSingleResourceCharge() {
+	
 		this.metaModel.addSingleResource("Charge");
 
-		this.chargeResource = this.metaModel.getSingleResource("Charge");
-
+		this.chargeResource =
+			this.metaModel.getSingleResource("Charge");
 		this.chargeResource.setModel(this.metaModel);
 		this.chargeResource.setResourceName("Charge");
-		this.chargeResource.setMediaType("application/vnd.fhws-charge.default+json");
+		this.chargeResource.setMediaType(
+			"application/vnd.fhws-charge.default+json");
 
-		final SimpleAttribute id = new SimpleAttribute("id", SimpleDatatype.INT);
-		final SimpleAttribute titleOfCharge = new SimpleAttribute("title", SimpleDatatype.STRING);
-		final SimpleAttribute fromDate = new SimpleAttribute("fromDate", SimpleDatatype.DATE);
-		final SimpleAttribute toDate = new SimpleAttribute("toDate", SimpleDatatype.DATE);
+		final SimpleAttribute id = 
+			new SimpleAttribute("id", SimpleDatatype.INT);
+		final SimpleAttribute titleOfCharge = 
+			new SimpleAttribute("title", SimpleDatatype.STRING);
+		final SimpleAttribute fromDate = 
+			new SimpleAttribute("fromDate", SimpleDatatype.DATE);
+		final SimpleAttribute toDate = 
+			new SimpleAttribute("toDate", SimpleDatatype.DATE);
 	
 		this.chargeResource.addAttribute(id);
 		this.chargeResource.addAttribute(titleOfCharge);
@@ -145,7 +151,9 @@ public MyEnfieldModel() {
 	}
 
 	private void createDispatcherState() {
-		final GetDispatcherState dispatcherState = new GetDispatcherState();
+	
+		final GetDispatcherState dispatcherState = 
+			new GetDispatcherState();
 		dispatcherState.setName("Dispatcher");
 		dispatcherState.setModel(this.metaModel);
 		this.metaModel.setDispatcherState(dispatcherState);
@@ -153,13 +161,17 @@ public MyEnfieldModel() {
 	}
 
 	private void createGetLecturerByIdState() {
-		final GetPrimarySingleResourceByIdState getLecturerByIdState = new GetPrimarySingleResourceByIdState();
+	
+		final GetPrimarySingleResourceByIdState getLecturerByIdState = 
+			new GetPrimarySingleResourceByIdState();
 		getLecturerByIdState.setName("GetOneLecturer");
 		getLecturerByIdState.setResourceType(this.lecturerResource);
 		getLecturerByIdState.setModel(this.metaModel);
-		this.lecturerResource.setDefaultStateForSelfUri(getLecturerByIdState);
+		this.lecturerResource
+			.setDefaultStateForSelfUri(getLecturerByIdState);
 		
-		this.metaModel.addState(getLecturerByIdState.getName(), getLecturerByIdState);
+		this.metaModel.addState(getLecturerByIdState.getName(),
+			getLecturerByIdState);
 
 		this.getLecturerByIdState = getLecturerByIdState;
 
@@ -167,9 +179,12 @@ public MyEnfieldModel() {
 	}
 
 	private void addLecturerDetailView() {
-		final DetailView lecturerDetailView = DetailViewModelGenerator.lecturer();
 	
-		final SingleResourceView resourceView = new SingleResourceView();
+		final DetailView lecturerDetailView = 
+			DetailViewModelGenerator.lecturer();
+	
+		final SingleResourceView resourceView = 
+			new SingleResourceView();
 
 		resourceView.setDetailView(lecturerDetailView);
 
@@ -177,59 +192,84 @@ public MyEnfieldModel() {
 	}
 
 	private void createGetCollectionOfLecturersState() {
-		final GetPrimaryCollectionResourceByQueryState getAllLecturersCollectionState = new GetPrimaryCollectionResourceByQueryState();
+	
+		final GetPrimaryCollectionResourceByQueryState
+			getAllLecturersCollectionState = 
+				new GetPrimaryCollectionResourceByQueryState();
 		getAllLecturersCollectionState.setName("GetAllLecturers");
 		getAllLecturersCollectionState.setModel(this.metaModel);
-		getAllLecturersCollectionState.setResourceType(this.lecturerResource);
+		getAllLecturersCollectionState.setResourceType(
+			this.lecturerResource);
 
-		this.dispatcherState.addTransition(new ActionTransition(getAllLecturersCollectionState, "getAllLecturers"));
-		getAllLecturersCollectionState.addTransition(this.getLecturerByIdState);
+		this.dispatcherState.addTransition(
+			new ActionTransition(getAllLecturersCollectionState, 
+				"getAllLecturers"));
+		getAllLecturersCollectionState.addTransition(
+			this.getLecturerByIdState);
 
-		this.metaModel.addState(getAllLecturersCollectionState.getName(), getAllLecturersCollectionState);
+		this.metaModel.addState(
+			getAllLecturersCollectionState.getName(), 
+			getAllLecturersCollectionState);
 
-		this.getCollectionOfLecturersState = getAllLecturersCollectionState;
+		this.getCollectionOfLecturersState = 
+			getAllLecturersCollectionState;
 
 		addLecturerCardView();
 	}
 
 	private void addLecturerCardView() {
-		final CardView lecturerCardView = CardViewModelGenerator.lecturer();
+	
+		final CardView lecturerCardView = 
+			CardViewModelGenerator.lecturer();
 
-		final SingleResourceView resourceView = new SingleResourceView();
+		final SingleResourceView resourceView = 
+			new SingleResourceView();
 
 		resourceView.setCardView(lecturerCardView);
 
-		this.getCollectionOfLecturersState.setSingleResourceView(resourceView);
+		this.getCollectionOfLecturersState.setSingleResourceView(
+			resourceView);
 	}
 
 	private void createDeleteLecturerState() {
-		final DeletePrimaryResourceState deleteLecturerState = new DeletePrimaryResourceState();
+	
+		final DeletePrimaryResourceState deleteLecturerState = 
+			new DeletePrimaryResourceState();
 		deleteLecturerState.setName("DeleteOneLecturer");
 		deleteLecturerState.setResourceType(this.lecturerResource);
 		deleteLecturerState.setModel(this.metaModel);
 		deleteLecturerState.addTransition(this.getCollectionOfLecturersState, "getAllLecturers");
+		this.getLecturerByIdState.addTransition(
+			deleteLecturerState, "deleteLecturer");
 
-		this.getLecturerByIdState.addTransition(deleteLecturerState, "deleteLecturer");
-
-		this.metaModel.addState(deleteLecturerState.getName(), deleteLecturerState);
+		this.metaModel.addState(
+			deleteLecturerState.getName(), deleteLecturerState);
 	}
 
 	private void createPostNewLecturerState() {
-		final PostPrimaryResourceState postNewLecturerState = new PostPrimaryResourceState();
+	
+		final PostPrimaryResourceState postNewLecturerState = 
+			new PostPrimaryResourceState();
 		postNewLecturerState.setName("CreateOneLecturer");
 		postNewLecturerState.setResourceType(this.lecturerResource);
 		postNewLecturerState.setModel(this.metaModel);
-		this.getCollectionOfLecturersState.addTransition(new ActionTransition(postNewLecturerState, "createNewLecturer"));
+		this.getCollectionOfLecturersState.addTransition(
+			new ActionTransition(postNewLecturerState, 
+			"createNewLecturer"));
 
-		this.metaModel.addState(postNewLecturerState.getName(), postNewLecturerState);
+		this.metaModel.addState(postNewLecturerState.getName(),
+		postNewLecturerState);
 
 		addLecturerInputView(postNewLecturerState);
 	}
 
 	private void addLecturerInputView(AbstractPrimaryState state) {
-		final InputView lecturerInputView = InputViewModelGenerator.lecturer();
+	
+		final InputView lecturerInputView = 
+			InputViewModelGenerator.lecturer();
 
-		final SingleResourceView resourceView = new SingleResourceView();
+		final SingleResourceView resourceView = 
+			new SingleResourceView();
 
 		resourceView.setInputView(lecturerInputView);
 
@@ -237,55 +277,79 @@ public MyEnfieldModel() {
 	}
 
 	private void createUpdateLecturerState() {
-		final PutPrimaryResourceState updateLecturerState = new PutPrimaryResourceState();
+	
+		final PutPrimaryResourceState updateLecturerState = 
+			new PutPrimaryResourceState();
 		updateLecturerState.setName("UpdateLecturer");
 		updateLecturerState.setResourceType(this.lecturerResource);
 		updateLecturerState.setModel(this.metaModel);
 
-		this.getLecturerByIdState.addTransition(new ActionTransition(updateLecturerState, "updateLecturer"));
+		this.getLecturerByIdState.addTransition(
+			new ActionTransition(updateLecturerState, "updateLecturer"));
 
-		this.metaModel.addState(updateLecturerState.getName(), updateLecturerState);
+		this.metaModel.addState(
+			updateLecturerState.getName(), updateLecturerState);
 
 		addLecturerInputView(updateLecturerState);
 	}
 
 	private void createPostLecturerImageState() {
-		final PostImageState postProfileImageState = new PostImageState();
+	
+		final PostImageState postProfileImageState = 
+			new PostImageState();
 		postProfileImageState.setName("PostProfileImage");
 		postProfileImageState.setResourceType(this.lecturerResource);
 		postProfileImageState.setModel(this.metaModel);
-		postProfileImageState.setImageAttribute((SimpleAttribute) this.lecturerResource.getAttributeByName("profileImageUrl"));
+		postProfileImageState.setImageAttribute(
+			(SimpleAttribute) this.lecturerResource.getAttributeByName(
+				"profileImageUrl"));
 
-		this.getLecturerByIdState.addTransition(postProfileImageState, "postImage");
+		this.getLecturerByIdState.addTransition(
+			postProfileImageState, "postImage");
 		postProfileImageState.setName("PostProfileImage");
 		postProfileImageState.setResourceType(this.lecturerResource);
 		postProfileImageState.setModel(this.metaModel);
-		postProfileImageState.setImageAttribute((SimpleAttribute) this.lecturerResource.getAttributeByName("profileImageUrl"));
+		postProfileImageState.setImageAttribute(
+			(SimpleAttribute) this.lecturerResource.getAttributeByName(
+			"profileImageUrl"));
 
-		this.metaModel.addState(postProfileImageState.getName(), postProfileImageState);
+		this.metaModel.addState(
+			postProfileImageState.getName(), postProfileImageState);
 	}
 
 	private void createGetLecturerImageState() {
+	
 		final GetImageState getProfileImageState = new GetImageState();
 		getProfileImageState.setName("GetProfileImage");
 		getProfileImageState.setResourceType(this.lecturerResource);
 		getProfileImageState.setModel(this.metaModel);
-		getProfileImageState.setImageAttribute((SimpleAttribute) this.lecturerResource.getAttributeByName("profileImageUrl"));
+		getProfileImageState.setImageAttribute(
+			(SimpleAttribute) this.lecturerResource.getAttributeByName(
+			"profileImageUrl"));
 
-		this.getLecturerByIdState.addTransition(getProfileImageState, "getProfileImage");
+		this.getLecturerByIdState.addTransition(
+			getProfileImageState, "getProfileImage");
 
-		this.metaModel.addState(getProfileImageState.getName(), getProfileImageState);
+		this.metaModel.addState(
+			getProfileImageState.getName(), getProfileImageState);
 	}
 
 	private void createGetCollectionOfChargesState() {
-		final GetPrimaryCollectionResourceByQueryState getCollectionOfChargesState = new GetPrimaryCollectionResourceByQueryState();
+	
+		final GetPrimaryCollectionResourceByQueryState 
+			getCollectionOfChargesState = 
+				new GetPrimaryCollectionResourceByQueryState();
 		getCollectionOfChargesState.setName("GetAllChargesOfLecturer");
 		getCollectionOfChargesState.setModel(this.metaModel);
-		getCollectionOfChargesState.setResourceType(this.chargeResource);
+		getCollectionOfChargesState.setResourceType(
+			this.chargeResource);
 
-		this.getLecturerByIdState.addTransition(new ContentTransition(getCollectionOfChargesState));
+		this.getLecturerByIdState.addTransition(
+			new ContentTransition(getCollectionOfChargesState));
 
-		this.metaModel.addState(getCollectionOfChargesState.getName(), getCollectionOfChargesState);
+		this.metaModel.addState(
+			getCollectionOfChargesState.getName(), 
+			getCollectionOfChargesState);
 
 		this.getCollectionOfChargesState = getCollectionOfChargesState;
 
@@ -293,25 +357,33 @@ public MyEnfieldModel() {
 	}
 
 	private void addChargeCardView() {
-		final CardView chargeCardView = CardViewModelGenerator.charges();
+	
+		final CardView chargeCardView = 
+			CardViewModelGenerator.charges();
 
-		final SingleResourceView resourceView = new SingleResourceView();
+		final SingleResourceView resourceView = 
+			new SingleResourceView();
 
 		resourceView.setCardView(chargeCardView);
 
-		this.getCollectionOfChargesState.setSingleResourceView(resourceView);
+		this.getCollectionOfChargesState.setSingleResourceView(
+			resourceView);
 	}
 
 	private void createGetChargeByIdState() {
-		final GetPrimarySingleResourceByIdState getChargeByIdState = new GetPrimarySingleResourceByIdState();
+	
+		final GetPrimarySingleResourceByIdState getChargeByIdState = 
+			new GetPrimarySingleResourceByIdState();
 		getChargeByIdState.setName("GetOneChargeOfLecturer");
 		getChargeByIdState.setResourceType(this.chargeResource);
 		getChargeByIdState.setModel(this.metaModel);
 		this.chargeResource.setDefaultStateForSelfUri(getChargeByIdState);
 		
-		this.getCollectionOfChargesState.addTransition(getChargeByIdState);
+		this.getCollectionOfChargesState.addTransition(
+			getChargeByIdState);
 
-		this.metaModel.addState(getChargeByIdState.getName(), getChargeByIdState);
+		this.metaModel.addState(
+			getChargeByIdState.getName(), getChargeByIdState);
 	
 		this.getChargeByIdState = getChargeByIdState;
 
@@ -319,9 +391,12 @@ public MyEnfieldModel() {
 	}
 
 	private void addChargeDetailView() {
-		final DetailView chargeDetailView = DetailViewModelGenerator.charge();
+	
+		final DetailView chargeDetailView =
+			DetailViewModelGenerator.charge();
 
-		final SingleResourceView resourceView = new SingleResourceView();
+		final SingleResourceView resourceView = 
+			new SingleResourceView();
 
 		resourceView.setDetailView(chargeDetailView);
 
@@ -329,21 +404,32 @@ public MyEnfieldModel() {
 	}
 
 	private void createPostNewChargeState() {
-		final PostPrimaryResourceState createSingleChargePrimaryState = new PostPrimaryResourceState();
+	
+		final PostPrimaryResourceState createSingleChargePrimaryState = 
+			new PostPrimaryResourceState();
 		createSingleChargePrimaryState.setName("CreateOneCharge");
-		createSingleChargePrimaryState.setResourceType(this.chargeResource);
+		createSingleChargePrimaryState.setResourceType(
+			this.chargeResource);
 		createSingleChargePrimaryState.setModel(this.metaModel);
-		this.getCollectionOfChargesState.addTransition(new ActionTransition(createSingleChargePrimaryState, "createChargeOfLecturer"));
+		this.getCollectionOfChargesState.addTransition(
+			new ActionTransition(
+				createSingleChargePrimaryState, 
+				"createChargeOfLecturer"));
 
-		this.metaModel.addState(createSingleChargePrimaryState.getName(), createSingleChargePrimaryState);
+		this.metaModel.addState(
+			createSingleChargePrimaryState.getName(), 
+			createSingleChargePrimaryState);
 
 		addChargeInputView(createSingleChargePrimaryState);
 	}
 
 	private void addChargeInputView(AbstractPrimaryState state) {
-		final InputView chargeInputView = InputViewModelGenerator.charge();
+	
+		final InputView chargeInputView = 
+			InputViewModelGenerator.charge();
 
-		final SingleResourceView resourceView = new SingleResourceView();
+		final SingleResourceView resourceView = 
+			new SingleResourceView();
 	
 		resourceView.setInputView(chargeInputView);
 	
@@ -351,28 +437,44 @@ public MyEnfieldModel() {
 	}
 
 	private void createUpdateChargeState() {
-		final PutPrimaryResourceState editSingleChargePrimaryState = new PutPrimaryResourceState();
-		editSingleChargePrimaryState.setName("UpdateOneChargeOfLecturer");
-		editSingleChargePrimaryState.setResourceType(this.chargeResource);
+	
+		final PutPrimaryResourceState editSingleChargePrimaryState = 
+			new PutPrimaryResourceState();
+		editSingleChargePrimaryState.setName(
+			"UpdateOneChargeOfLecturer");
+		editSingleChargePrimaryState.setResourceType(
+			this.chargeResource);
 		editSingleChargePrimaryState.setModel(this.metaModel);
 
-		this.getChargeByIdState.addTransition(new ActionTransition(editSingleChargePrimaryState, "updateCharge"));
+		this.getChargeByIdState.addTransition(
+			new ActionTransition(
+				editSingleChargePrimaryState, "updateCharge"));
 
-		this.metaModel.addState(editSingleChargePrimaryState.getName(), editSingleChargePrimaryState);
+		this.metaModel.addState(
+			editSingleChargePrimaryState.getName(), 
+			editSingleChargePrimaryState);
 
 		addChargeInputView(editSingleChargePrimaryState);
 	}
 
 	private void createDeleteChargeState() {
-		final DeletePrimaryResourceState deleteSingleChargePrimaryState = new DeletePrimaryResourceState();
-		deleteSingleChargePrimaryState.setName("DeleteOneChargeOfLecturer");
-		deleteSingleChargePrimaryState.setResourceType(this.chargeResource);
+	
+		final DeletePrimaryResourceState deleteSingleChargePrimaryState 
+			= new DeletePrimaryResourceState();
+		deleteSingleChargePrimaryState.setName(
+			"DeleteOneChargeOfLecturer");
+		deleteSingleChargePrimaryState.setResourceType(
+			this.chargeResource);
 		deleteSingleChargePrimaryState.setModel(this.metaModel);
 
-		deleteSingleChargePrimaryState.addTransition(this.getCollectionOfChargesState, "getAllCharges");
-		this.getChargeByIdState.addTransition(deleteSingleChargePrimaryState, "deleteCharge");
+		deleteSingleChargePrimaryState.addTransition(
+			this.getCollectionOfChargesState, "getAllCharges");
+		this.getChargeByIdState.addTransition(
+			deleteSingleChargePrimaryState, "deleteCharge");
 
-		this.metaModel.addState(deleteSingleChargePrimaryState.getName(), deleteSingleChargePrimaryState);
+		this.metaModel.addState(
+			deleteSingleChargePrimaryState.getName(), 
+			deleteSingleChargePrimaryState);
 	}
 }
 \end{lstlisting}
@@ -389,12 +491,19 @@ DetailView detailView;
 	try {
 		List<Category> categories = new ArrayList<>();
 
-		DisplayViewAttribute nameAttribute = new DisplayViewAttribute("name", ViewAttribute.AttributeType.TEXT);
-		GroupResourceViewAttribute name = new GroupResourceViewAttribute(nameAttribute, getViewTitleAttributes());
+		DisplayViewAttribute nameAttribute = 
+			new DisplayViewAttribute("name",
+				 ViewAttribute.AttributeType.TEXT);
+		GroupResourceViewAttribute name = 
+			new GroupResourceViewAttribute(nameAttribute,
+				 getViewTitleAttributes());
 
-		categories.add(new Category("Office", getOfficeResourceViewAttributes()));
-		categories.add(new Category("Contact", getContactResourceViewAttributes()));
-		categories.add(new Category("Charges", getChangeResourceViewAttributes()));
+		categories.add(new Category("Office",
+			getOfficeResourceViewAttributes()));
+		categories.add(new Category("Contact", 
+			getContactResourceViewAttributes()));
+		categories.add(new Category("Charges", 
+			getChangeResourceViewAttributes()));
 
 		detailView = new DetailView("Lecturer", name, categories);
 		detailView.setImage(getImage());
@@ -403,18 +512,25 @@ DetailView detailView;
 	}
 [...]
 private static List<ResourceViewAttribute> getOfficeResourceViewAttributes() {
+
 	List<ResourceViewAttribute> officeAttributes = new ArrayList<>();
 
-	DisplayViewAttribute addressAttribute = new DisplayViewAttribute("address", ViewAttribute.AttributeType.LOCATION);
+	DisplayViewAttribute addressAttribute = 
+		new DisplayViewAttribute("address", 
+		ViewAttribute.AttributeType.LOCATION);
 	addressAttribute.setAttributeLabel("Address");
 	addressAttribute.setClickActionAndroid(true);
-	SingleResourceViewAttribute address = new SingleResourceViewAttribute(addressAttribute);
+	SingleResourceViewAttribute address = 
+		new SingleResourceViewAttribute(addressAttribute);
 	officeAttributes.add(address);
 
-	DisplayViewAttribute roomAttribute = new DisplayViewAttribute("roomNumber", ViewAttribute.AttributeType.TEXT);
+	DisplayViewAttribute roomAttribute = 
+		new DisplayViewAttribute("roomNumber", 
+		ViewAttribute.AttributeType.TEXT);
 	roomAttribute.setAttributeLabel("Room");
 	roomAttribute.setClickActionAndroid(true);
-	SingleResourceViewAttribute room = new SingleResourceViewAttribute(roomAttribute);
+	SingleResourceViewAttribute room = 
+		new SingleResourceViewAttribute(roomAttribute);
 	officeAttributes.add(room);
 
 	return officeAttributes;
@@ -544,7 +660,8 @@ resourceViewAttributes.add(welearn);
 
 DisplayViewAttribute imageAttribute = new DisplayViewAttribute("profileImageUrl", ViewAttribute.AttributeType.PICTURE);
 imageAttribute.setAttributeLabel("ProfileImage");
-imageAttribute.setPicturePosition(DisplayViewAttribute.PicturePosition.LEFT);
+imageAttribute.setPicturePosition(
+	DisplayViewAttribute.PicturePosition.LEFT);
 SingleResourceViewAttribute image = new SingleResourceViewAttribute(imageAttribute);
 resourceViewAttributes.add(image);
 
