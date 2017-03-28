@@ -7,7 +7,7 @@ Auch gibt es in Android Applikationen Abhängigkeiten zwischen verschiedenen Kla
 
 Eine Android Applikation besteht neben Java- und XML-Klassen zusätzlich noch aus \textit{Gradle}-Dateien und \textit{\acfp{jar}}. Nicht alle Dateien zu generieren macht durchaus Sinn. Bei manchen der Dateien ist es besser, diese an die entsprechende Stelle zu kopieren.
 
-\subsection{\textit{JavaPoet}}
+\subsection{Generierung der Java Klassen mit \textit{JavaPoet}}
 \textit{JavaPoet} ist ein Java \textit{\ac{api}}, welches ermöglicht Java-Klassen zu generieren \cite{poet}. Hierfür wird die zu generierende Klasse programmiert. Mit Hilfe von nur ein paar Schlüsselwörtern ist es möglich, \textit{Klassen}, \textit{Interfaces} oder \textit{Methoden} zu generieren. 
 
 Da der größte Teil des Generators Java-Klassen erzeugen muss, ist dieses \ac{api} bestens für diesen Zweck geeignet. Sie erspart die aufwändige String-Manipulation. Durch die Nutzung wird auch bei der Ausführung des Programmes sichergestellt, dass gültige Konventionen und Regeln von Java eingehalten werden. So ist der grundsätzlich korrekte Aufbau einer Java-Klasse bereits vorab sichergestellt.
@@ -46,6 +46,8 @@ public final class HelloWorld {
 	}
 }
 \end{lstlisting}
+
+\newpage
 
 \subsection{Generierung anderer Datentypen}
 

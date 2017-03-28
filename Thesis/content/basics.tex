@@ -21,7 +21,7 @@ Dieses Beispiel verdeutlicht noch einmal bildlich, dass der Entwickler nur den E
 		semithick]
 		\tikzstyle{every state}=[fill=none,text=black]
 		
-		\node[initial,state] (A) [minimum width=3cm]       {Dispatcher};
+		\node[initial,state] (A) [minimum width=2cm]       {Dispatcher};
 		\node[state]     (B) [right of=A, minimum width=2cm] {Collection};
 		\node[state]     (D) [below of=B, minimum width=2cm] {Create};
 		\node[state]     (C) [right of=B, minimum width=2cm] {Single};
@@ -159,7 +159,7 @@ public void setPerson(Person person) {
 
 Mit Hilfe dieser Methode wird die Nutztung der \textit{PersonCardView} vereinfacht. Im \textit{Adapter} der \textit{RecyclerView} wird jetzt nicht mehr jedes einzelne \textit{Widget} definiert und mit Informationen befüllt. Sondern nur noch die \textit{PersonCardView} und mit der \textit{setPerson} - Methode kann die komplette Karte mit den Daten einer Person mit nur einem Methodenaufruf befüllt werden.
 
-\section{Software-Generatoren}\label{sec:generators}
+\section{Modellgetriebene Softwareentwicklung}\label{sec:generators}
 
 Mit Software-Generatoren, ist es möglich Software generieren zu lassen. Dafür wird die Problemstellung der realen Welt so beschrieben, dass der Generator dies versteht, interpretieren und Programmcode erzeugen kann.
 Dieses Verfahren wird auch modellgetriebene Softwareentwicklung (MDSD) genannt \cite{mdsd}.
@@ -189,7 +189,7 @@ Im Moment (Stand Februar 2017) ist es möglich, ein \textit{WAR-Artefakt} für e
 
 \subsubsection{Aufbau von \acs{gemara}}
 
-\acs{gemara} ist modular aufgebaut, jedes der einzelnen Module erfüllt einen eindeutig definierten Zweck.
+\acs{gemara} ist modular aufgebaut, jedes der einzelnen Module erfüllt einen eindeutig definierten Zweck. Die Abbildung \ref{fig:gemara} zeigt den Aufbau und Module von \acs{gemara}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -208,5 +208,6 @@ Im Moment (Stand Februar 2017) ist es möglich, ein \textit{WAR-Artefakt} für e
 	\item \textbf{Welling} ist ein Software-Generator, welcher Android Applikationen generiert.
 	\item \textbf{Purley} ist ein Software-Generator, welcher Polymer Webkomponenten generiert. 
 \end{itemize}
+
 
 Diese Arbeit behandelt das Design und die Entwicklung von \textbf{Welling}.

@@ -95,6 +95,8 @@ this.metaModel.addState(getAllLecturersCollectionState.getName(), getAllLecturer
 this.getCollectionOfLecturersState = getAllLecturersCollectionState;
 \end{lstlisting}
  
+ \newpage
+ 
 \subsubsection{Vorstellung des \textit{\acf{api}}}
 Mit Hilfe des zuvor beschriebenen \textit{Enfield-Meta-Modells} wird ein \textit{\acl{api}} generiert, welches in diesem Kapitel vorgestellt wird.
 Die Abbildung \ref{fig:api} zeigt das \textit{\acl{api}}, welches für die Beispielanwendung benötigt wird. Dieses\textit{ \ac{api}} entspricht einem \textit{endlichen Automaten} und spiegelt alle Funktionen der Applikation wieder.  
@@ -179,14 +181,14 @@ Die Bibliothek ist mit 44 Java Klassen wesentlich größer, wobei hiervon 15 Kla
 \section{Analyse der Android Anwendung}
 Dieses Kapitel beschäftigt sich mit der Android Referenzimplementierung. Es wird der Aufbau der Applikation vorgestellt und anhand dessen analysiert, welcher Programmcode als \textit{Plattformcode} und welcher Programmcode generiert werden muss. Es werden auch ein paar Kennzahlen vorgestellt, um ein besseres Bild der Komplexität der Applikation zu erhalten. Anschließend werden die einzelnen \textit{Views} analysiert. Diese Analyse beschäftigt sich mit dem Design und den Funktionen der \textit{Views}.
 
-\subsection{Analyse des Aufbaus}
+\subsection{Analyse des Aufbaus der Android Appliaktion}
 Wird der Aufbau der Referenzimplementierung analysiert, so fällt auf, dass es möglich ist die meisten Klassen soweit zu abstrahieren, dass diese keine Projekt spezifischen Informationen mehr enthalten. Im Falle dieser Referenzimplementierung keine Informationen zu Dozenten oder deren Ämter. Diese Klassen ohne diese spezifischen Informationen, wird im laufenden als \textit{Plattformcode} oder generischer Code bezeichnet. Das Ziel bei der Referenzimplementierung ist, möglichst viel \textit{Plattformcode} und möglichst wenig spezifischen Code in der Anwendung zu haben. 
 
 Das Schaubild \ref{fig:lecturer_structure} verdeutlicht das Verhältnis von generischen (weiße Kästen) und spezifischen (rote Kästen) Klassen. Die Anzahl der gleichbleibenden Klassen ist mit etwa 60 Prozent bereits höher als der Anteil an spezifischen Klassen. Je höher der Anteil dieser unveränderlichen Klassen, desto geringer wird die Komplexität des Generators. Da der Aufwand eine spezifische Klasse zu erzeugen mehr Logik benötigt, als eine Klasse, welche immer gleich bleibt.
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=\textwidth, angle=90]{images/Lecturer.png}
+		\includegraphics[width=\textwidth]{images/Lecturer.png}
 		\caption{Aufbau der Referenzimplementierung.}
 		\label{fig:lecturer_structure}
 	\end{center}
@@ -211,7 +213,7 @@ All diese Entscheidungen, welche über den Aufbau und das Design der Android App
 \section{\textit{Meta-Modell}}
 Nach dem die Referenzimplementierung vorstellt und analysiert  wurde, wurden alle relevanten Informationen erkannt und zusammengestellt. Diese Zusammenstellung an Daten, welche die Applikation beschreiben, wird \textit{Meta-Modell} genannt.
 
-\subsection{Kompatibilität mit \acs{gemara} und andern möglichen Clients}
+\subsection{Kompatibilität mit \acs{gemara} und anderen möglichen Clients}
 Da Enfield primär für die Generierung von Anwendungen im \textit{Backend}-Bereich entwickelt wurde, in welchem die Gestaltung von \textit{User Interfaces (UI)} eine eher untergeordnete Rolle spielen, muss die Erweiterung auch dieses Feature realisieren. Neben all diesen Erweiterungen muss auch sichergestellt werden, dass das \textit{Meta-Modell} auch weiterhin für das Generieren von \textit{Backends} genutzt werden kann. Idealerweise, ohne die Überarbeitung der bereits entwickelten Software-Generatoren. 
 
 Die Abbildung \ref{fig:enfield-model} zeigt die vereinfachte Modell-Klasse des \textit{Enfield-Meta-Modells}. 
@@ -227,11 +229,22 @@ In dieser Klasse sind bereits die wichtigsten Informationen wie zum Beispiel der
 
 Um die zusätzlich benötigten Informationen für die Android Applikation in dieses bestehende Modell einzubauen, gibt es zwei Möglichkeiten.
 
-\subsection{Eigenes \textit{Android-Meta-Modell}}
+\subsection{Definition eines eigenen \textit{Android-Meta-Modells}}
 
 Es besteht die Möglichkeit, die Modell-Klasse um ein Attribut \textit{Android-Meta-Modell} zu erweitern.
 Die Abbildung \ref{fig:android-model} zeigt schemenhaft ein Beispiel, wie ein \textit{Android-Meta-Modell} aussehen könnte. Auffällig hierbei ist, dass viele Informationen, die das \textit{Enfield-Modell} bereits liefern würde, noch einmal explizit beschrieben werden müssen. Ein Beispiel wären die \textit{Transitionen}, zwischen den \textit{Fragmenten} beziehungsweise zwischen den \textit{Activities}. 
 
+
+Der Nutzer des Software-Generators, muss ziemlich viel über den Ablauf und die Funktionsweise einer Android-Anwendung wissen, um diesen Generator sinnvoll verwenden zu können.
+Dabei bleibt zusätzlich noch die Möglichkeit, das der Nutzer eigens geschriebene Methoden in das Modell einpflegen kann. John Abou-Jaoudeh et al., haben in ihrer Arbeit ein \textit{Meta-Modell} entwickelt, welches genau solche Features unterstützt\cite{abou2015high}.
+
+\newpage
+
+Der Vorteil einer solchen Erweiterung des \textit{Enfield-Modell}s ist, dass alle benötigten Daten für die Android Anwendung an einer Stelle zu finden sind. Auch hat der Nutzer die Möglichkeit an manchen Stellen eigene Methoden einzufügen und somit ist er in der Lage das Verhalten der App weiter zu individualisieren.
+
+Jedoch überwiegen in diesem Fall die Nachteile. Ein Nachteil dieses Vorgehens ist die redundante Beschreibung des Programm-Ablaufes. Einmal im \textit{Android-Meta-Modell} und einmal im \textit{Enfield-Meta-Modell}. Bei jeder Änderung gilt dies zu berücksichtigen. 
+Der nächste Nachteil ist, dass der Nutzer des Software-Generators sich in der Entwicklung von Android Anwendungen auskennen muss. Er muss genau das Zusammenspiel von \textit{ViewHoldern}, \textit{Adaptern}, \textit{Fragments} und \textit{Activities} kennen. Er muss wissen, wie diese ineinandergreifen und wann welche Aktionen ausgelöst werden müssen. Weiterhin sollte er ein grundsätzliches Verständnis für das \textit{\acf{mvc} Pattern} besitzen, welches bei der Entwicklung von Android Applikationen Anwendung findet.
+Ein weiterer Nachteil ist die Beschränkung des Modells auf Android. Wird das \textit{Enfield-Modell} um ein \textit{Android-Meta-Modell} erweitert, so muss dieses für jeden einzelnen \textit{Client} geschehen. Soll der Generator beispielsweise um Polymer-Webkomponente oder einer iOS-Anwendung erweitert werden, so müsste für jede einzelne Art von \textit{Client}, das \textit{Enfield-Modell} mit einem entsprechenden \textit{Meta-Modell} erweitert werden.
 
 \begin{figure}[H]
 	\begin{center}
@@ -240,15 +253,6 @@ Die Abbildung \ref{fig:android-model} zeigt schemenhaft ein Beispiel, wie ein \t
 		\label{fig:android-model}
 	\end{center}
 \end{figure}
-
-Der Nutzer des Software-Generators, muss ziemlich viel über den Ablauf und die Funktionsweise einer Android-Anwendung wissen, um diesen Generator sinnvoll verwenden zu können.
-Dabei bleibt zusätzlich noch die Möglichkeit, das der Nutzer eigens geschriebene Methoden in das Modell einpflegen kann. John Abou-Jaoudeh et al., haben in ihrer Arbeit ein \textit{Meta-Modell} entwickelt, welches genau solche Features unterstützt\cite{abou2015high}.
-
-Der Vorteil einer solchen Erweiterung des \textit{Enfield-Modell}s ist, dass alle benötigten Daten für die Android Anwendung an einer Stelle zu finden sind. Auch hat der Nutzer die Möglichkeit an manchen Stellen eigene Methoden einzufügen und somit ist er in der Lage das Verhalten der App weiter zu individualisieren.
-
-Jedoch überwiegen in diesem Fall die Nachteile. Ein Nachteil dieses Vorgehens ist die redundante Beschreibung des Programm-Ablaufes. Einmal im \textit{Android-Meta-Modell} und einmal im \textit{Enfield-Meta-Modell}. Bei jeder Änderung gilt dies zu berücksichtigen. 
-Der nächste Nachteil ist, dass der Nutzer des Software-Generators sich in der Entwicklung von Android Anwendungen auskennen muss. Er muss genau das Zusammenspiel von \textit{ViewHoldern}, \textit{Adaptern}, \textit{Fragments} und \textit{Activities} kennen. Er muss wissen, wie diese ineinandergreifen und wann welche Aktionen ausgelöst werden müssen. Weiterhin sollte er ein grundsätzliches Verständnis für das \textit{\acf{mvc} Pattern} besitzen, welches bei der Entwicklung von Android Applikationen Anwendung findet.
-Ein weiterer Nachteil ist die Beschränkung des Modells auf Android. Wird das \textit{Enfield-Modell} um ein \textit{Android-Meta-Modell} erweitert, so muss dieses für jeden einzelnen \textit{Client} geschehen. Soll der Generator beispielsweise um Polymer-Webkomponente oder einer iOS-Anwendung erweitert werden, so müsste für jede einzelne Art von \textit{Client}, das \textit{Enfield-Modell} mit einem entsprechenden \textit{Meta-Modell} erweitert werden.
 
 \subsection{Allgemeine Erweiterungen des \textit{Enfield-Modells}}\label{sec:generic_modell}
 
@@ -280,15 +284,6 @@ Die Analyse in dieser Arbeit beschränkt sich auf die \textit{Clients} Android u
 
 \subsubsection{CardView}
 
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[width=0.86\textwidth]{images/card.png}
-		\caption{Beispiel einer \textit{CardView} eines Dozenten nach Material Design.}
-		\label{fig:card}
-	\end{center}
-\end{figure}
-
-\newpage
 
 \begin{lstlisting}[label=lst:braun_json,
 language=json,
@@ -328,12 +323,19 @@ caption=Demo Daten eines Dozenten.]
 [...]
 \end{lstlisting}
 
-Die  \textit{\acf{json}} Repräsentation unter Listing \ref{lst:braun_json} beschreibt das Beispiel aus Abbildung \ref{fig:card}.
-Jetzt gilt es zu überlegen, wie die Attribute des \ac{json} Objekts aufzubereiten sind, dass diese die Karte des Dozenten widerspiegeln. 
-In erster Linie muss entschieden werden, welche der gelieferten Informationen in der Liste für jeden einzelnen Dozenten angezeigt werden sollten. Ist es sinnvoll Informationen zu gruppieren? Hier beispielsweise die Attribute \textit{firstName} und \textit{lastName}, diese sollen in einer Zeile angezeigt werden. Ist bekannt welche Informationen eine Karte enthalten soll, so muss auch noch die Reihenfolge der einzelnen Attribute auf der Karte bestimmt werden.
-Neben der Reihenfolge gibt es noch die Möglichkeit, Schriftgröße oder Schriftfarbe der einzelnen Attribute unterschiedlich zu gestalten. Auch müssen die Standardicons den jeweiligen Attributen zugewiesen werden. Es sollte zudem möglich sein, einzelnen Attribute bestimmte Aktionen zuzuweisen. Beispielsweise beim Klick auf eine Homepage, sollte diese im Browser geöffnet werden, oder beim Klick auf die Adresse sollte sich die Applikation \textit{Maps} öffnen und die angeklickte Adresse dort anzeigen. Bei einem Attribut mit Hyperlink zu einer Website sollte es möglich sein, einen mitgegebenen Text anstelle des Hyperlinks anzuzeigen. 
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.75\textwidth]{images/card.png}
+		\caption{Beispiel einer \textit{CardView} eines Dozenten nach Material Design.}
+		\label{fig:card}
+	\end{center}
+\end{figure}
 
+Die  \textit{\acf{json}} Repräsentation unter Listing \ref{lst:braun_json} beschreibt das Beispiel aus Abbildung \ref{fig:card}.
+Jetzt gilt es zu überlegen, wie die Attribute des \textit{JSON} Objekts aufzubereiten sind, dass diese die Karte des Dozenten widerspiegeln. In erster Linie muss entschieden werden, welche der gelieferten Informationen in der Liste für jeden einzelnen Dozenten angezeigt werden sollten. Ist es sinnvoll Informationen zu gruppieren? Hier beispielsweise die Attribute \textit{firstName} und \textit{lastName}, diese sollen in einer Zeile angezeigt werden. Ist bekannt welche Informationen eine Karte enthalten soll, so muss auch noch die Reihenfolge der einzelnen Attribute auf der Karte bestimmt werden. Neben der Reihenfolge gibt es noch die Möglichkeit, Schriftgröße oder Schriftfarbe der einzelnen Attribute unterschiedlich zu gestalten. Auch müssen die Standardicons den jeweiligen Attributen zugewiesen werden. Es sollte zudem möglich sein, einzelnen Attribute bestimmte Aktionen zuzuweisen. Beispielsweise beim Klick auf eine Homepage, sollte diese im Browser geöffnet werden, oder beim Klick auf die Adresse sollte sich die Applikation \textit{Maps} öffnen und die angeklickte Adresse dort anzeigen. Bei einem Attribut mit Hyperlink zu einer Website sollte es möglich sein, einen mitgegebenen Text anstelle des Hyperlinks anzuzeigen.
 Besitzt die Karte ein Bild, so sollte der Nutzer die Möglichkeit besitzen, zu entscheiden, ob dieses auf der linken oder rechten Seite der Karte dargestellt werden soll.
+
+\newpage
 
 \subsubsection{\textit{DetailView}}
 
@@ -346,8 +348,6 @@ Besitzt die Karte ein Bild, so sollte der Nutzer die Möglichkeit besitzen, zu e
 \end{figure}
 
 Die zur Verfügung stehenden Daten sind die, die unter Listing \ref{lst:braun_json} einzusehen sind.
-
-\newpage
 
 Analog zu der \textit{CardView} stellt sich auch bei der \textit{DetailView} die Frage, welche Daten dargestellt werden sollen. Hier jedoch gibt es zusätzlich zu der horizontalen Gruppierung (Beispiel: Vornamen und Nachnamen) auch noch eine vertikale Gruppierung. Diese wird im Weiteren auch Kategorisierung genannt. In der detaillierten Ansicht eines Dozenten gibt es die Möglichkeit, Attribute zu kategorisieren und jede Kategorie mit einem Namen zu versehen. Für die Gestaltung und Anordnung sowie mögliche Klick-Aktionen müssen die selben Anforderungen wie bei der \textit{CardView} berücksichtigt werden. 
 
@@ -401,12 +401,16 @@ Es gibt zwei Ausprägungsarten: \textit{SingleResourceViewAttribute} und \textit
 
 Während bei der \textit{SingleResourceViewAttribute} das \textit{GroupedResourceViewAttribute} wiederum gibt eine Liste von diesen \textit{DisplayViewAttributen}, welche dann die anzuzeigenden Informationen widerspiegeln. Weitergehend besitzt das \textit{GroupedResourceViewAttribute} auch noch ein \textit{DisplayViewAttribute}, welches die neu entstandene Gruppierung beschreiben soll.
 
+\newpage
+
 Ein \textit{DisplayViewAttribute} besitzt nun die Möglichkeit, Schriftgröße und -farbe zu definieren. Die angegebene Farbe muss in hexadezimaler Darstellung angegeben werden, wird keine Farbe mitgegeben, wird die Defaultfarbe der Anwendung genommen. In der Regel ist diese Schwarz.  Die Schriftgröße wiederum ist auf drei Stufen beschränkt. Es gibt die Möglichkeit den Text in klein, normal und groß darzustellen. Per default ist normal eingestellt. Wegen der Oberklasse \textit{AbstractViewAttribute} besitzt das \textit{DisplayViewAttribute} noch das Attribut \textit{attributeName}, dieses muss exakt so heißen wie in der Definition der Ressource.
 Mit dem \textit{attributeLabel} kann angegeben werden, wie dieses Attribut in der \textit{View} angezeigt werden soll. Die Abbildung \ref{fig:detail} zeigt die Verwendung von den Labels Beispielsweise von der E-Mailadresse des Dozenten steht \textit{E-Mail}, dieser String entspricht dem Label des Attributes. Weiterhin muss angeben werden von welchem Typ das aktuell beschriebene Attribut ist.
 Dies geschieht mit dem Attribut \textit{AttributeType}. Es gibt folgende mögliche Typen: \textit{HOME}, \textit{MAIL}, \textit{LOCATION}, \textit{PICTURE}, \textit{PHONE\_NUMBER}, \textit{TEXT}, \textit{URL}, \textit{DATE}, \textit{SUBRESOURCE}. Jeder Typ bestimmt die Eigenschaften des Attributes. Über diesen wird bestimmt, welches Icon in der Karte vor dem entsprechenden Attribut angezeigt wird oder welche Aktion bei Klick ausgeführt werden soll. So wird bei einem Klick auf ein Attribut vom Typ \textit{LOCATION} versucht die Anwendung \textit{Maps} zu öffnen und den angezeigten Standort dort anzuzeigen. Ist das Attribute vom Typ \textit{SUBRESOURCE} so wird für dieses Attribut ein \textit{Button} angezeigt, dieser ermöglicht es dann zu der entsprechenden Subressource zu wechseln. Diese Klick-Aktionen müssen jedoch mit dem Attribut \textit{clickActionAndroid} erst aktiviert werden.
 Manche Typen bringen noch ein paar andere Besonderheiten mit sich. So muss beispielsweise bei einem \textit{URL}-Attribut noch eine Beschreibung mitgegeben werden, welche anstelle der Hyperlinks angezeigt werden soll. Bei einem Bild kann beispielsweise noch bestimmt werden, ob dieses links oder rechts dargestellt werden soll. 
 
 Nachfolgend wird auf einige Besonderheiten der Nutzung der eingebenden \textit{Views} eingegangen und diese genauer erklärt. So zeigt Listing \ref{lst:grouped} beispielsweise das Erzeugen eines \textit{GroupedResourceViewAttributes}. Hierfür werden erst einmal drei \textit{DisplayViewAttribute} definiert. Das erste beschreibt hierbei das Aussehen, den Namen und den Typ der Gruppierung. Die Gruppe in diesem Beispiel wird aus den beiden Attributen \textit{firstName} und \textit{lastName} zusammengesetzt. Beide Attribute sind vom Typ \textit{TEXT}; auch die Gruppe wird von diesem Typ sein. Der String im Konstruktor ist der Name dieses Attributes. Stellt das Attribut ein Attribut aus der Ressource dar, wie der \textit{firstName} beziehungsweise \textit{lastName}, muss dieser Name identisch mit dem Attribut der Ressource sein. Neben der Zusammensetzung der Gruppe wird hier ebenfalls definiert, wie dies dargestellt werden soll. Mit \textit{setFontSize(DisplayViewAttribute.FontSize.LARGE)} wird deklariert das die Gruppen mit einer großen Schriftgröße dargestellt werden, und die Methode \textit{setFontColor("\#000")} bestimmt, dass die Schrift schwarz ist. Bei einer Gruppe hat es kein Effekt, wenn die Schriftfarbe oder Größe der einzelnen Gruppenmitglieder bestimmt wird. Die Darstellung ist einzig von den Attributen der Gruppe abhängig.
+
+\newpage
 
 \begin{lstlisting}[label=lst:grouped,
 language=java,
@@ -434,6 +438,8 @@ name = null;
 \end{lstlisting}
 
 Das Listing \ref{lst:category} beschreibt die Definition einer \textit{Category} als Teil einer \textit{DetailView}. In diesem Listing wird eine \textit{Category} mit dem Namen \textit{Office} erzeugt. Diese Kategorie besitzt zwei Attribute, welche als \textit{DisplayViewAttribute} dargestellt werden. Eines der beiden Attribute ist in diesem Fall die Adresse. Es wird definiert, das dieses \textit{DisplayViewAttribute} vom Type \textit{LOCATION} ist und dass es eine Aktion beim Anklicken geben soll. Des Weiteren wird definiert, dass dieses Attribut ein Label \textit{Address} besitzt.
+
+\newpage
 
 \begin{lstlisting}[label=lst:category,
 language=java,
