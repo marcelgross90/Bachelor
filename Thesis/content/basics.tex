@@ -1,19 +1,19 @@
 \chapter{Grundlagen}\label{ch:basics}
 \section{\textit{\acf{rest}}}\label{sec:rest}
-In dem generierten Projekt, sollen alle benötigten Daten mittels \textit{\ac{rest}} von dem zugehörigen, generierten \textit{Backend} geladen werden. 
+In dem generierten Projekt sollen alle benötigten Daten mittels \textit{\ac{rest}} von dem zugehörigen, generierten \textit{Backend} geladen werden. 
 
  \textit{\ac{rest}} \cite{rest_fielding} ist ein Programmierparadigma, welches sich auf folgende Prinzipien stützt: \textit{Client-Server}, \textit{Zustandslose Kommunikation}, \textit{Caching}, \textit{Uniform Inferface}, \textit{Layered System} und dem optionalen Prinzip \textit{Code-on-Demand}.
 Diese Arbeit berücksichtigt vor allem \textit{\acf{hateoas}}, welches unter das Prinzip \textit{Uniform Interface} fällt. Es beschreibt, wie mit Hilfe eines \textit{endlichen Automaten} eine \textit{\ac{rest}-Architektur} entworfen werden kann \cite{hypermedia}.
 Der Architekt einer \textit{\ac{rest}}-konformen \textit{\acf{api}} überlegt sich im Voraus, wie der Applikation-Fluss in der späteren Anwendung aussehen soll. Dafür definiert er verschiedene \textit{States} und welche \textit{Transitionen} zum nächsten \textit{State} führen.
 
 Als ein \textit{State} kann beispielsweise das Anzeigen aller Lecturer in einer Campus-Applikation angesehen werden.
-Die \textit{Transition} hingegen ist zum Beispiel ein \textit{Link} im \textit{Link-Header} der Antwort oder ein Attribut, der empfangen Ressource. 
+Die \textit{Transition} hingegen ist zum Beispiel ein \textit{Link} im \textit{Link-Header} der Antwort oder ein Attribut der empfangenen Ressource. 
 
-Wird das \textit{\ac{api}} mit Hilfe eines \textit{endlichen Automaten} entwickelt, kann dieses dem \textit{Client}-Entwickler als Anleitung zum Erstellen des \textit{Clients} dienen. Er benötigt diesbezüglich einen \acf{url}, welcher auf den initialen \textit{State} des \textit{endlichen Automaten} führt. Dieser liefert dann alle, zu diesem Zeitpunkt möglichen \textit{Transitionen} zurück. Mit Hilfe dieser \textit{Transitionen} kann sich der Entwickler dann zum nächsten \textit{State} bewegen. Auch dieser \textit{State} liefert neben den Ressourcen alle möglichen weiteren \textit{Transitionen} zurück. 
+Wird das \textit{\ac{api}} mit Hilfe eines \textit{endlichen Automaten} entwickelt, kann dieses dem \textit{Client}-Entwickler als Anleitung zum Erstellen des \textit{Clients} dienen. Er benötigt diesbezüglich einen \acf{url}, welcher auf den initialen \textit{State} des \textit{endlichen Automaten} führt. Dieser liefert dann alle zu diesem Zeitpunkt möglichen \textit{Transitionen} zurück. Mit Hilfe dieser \textit{Transitionen} kann sich der Entwickler dann zum nächsten \textit{State} bewegen. Auch dieser \textit{State} liefert neben den Ressourcen alle möglichen weiteren \textit{Transitionen} zurück. 
 Wenn der Entwickler sich so durch die \textit{States} bewegt, bekommt er die benötigten Informationen zum Aufbau und Ablauf der Applikation.
 
-Die Abbildung \ref{fig:finite_state_machine} zeigt einen solchen Automaten. Der Einstiegspunkt ist der \textit{State} \enquote{Dispatcher} dieser liefert die \textit{Transition} zum \textit{State} \enquote{Collection} zurück. Dieser \textit{State}, verfügt über alle Informationen, die benötigt werden, um eine Collection der betroffenen Ressource anzuzeigen, weiterhin hat er auch das Wissen, über die beiden nächsten \textit{Transitionen} zu den \textit{State}s \enquote{Create} und \enquote{Single}. Wie der Name des \textit{States} annehmen lässt, wird der \textit{State} \enquote{Create} benötigt, um eine neue Ressource anzulegen. Von diesem \textit{State} aus kann die Anwendung nur zurück zum \textit{State} \enquote{Collection}. Der \textit{State} \enquote{Single} enthält alle benötigten Daten, um eine einzelne Ressource anzuzeigen. Von hier kann die Anwendung zum \textit{State} \enquote{Update} oder \enquote{Delete} wechseln. Der \textit{State} \enquote{Update} ermöglicht die Ressource zu bearbeiten. Von hier kann der Nutzer der Anwendung nur zum \textit{State} \enquote{Single} zurückkehren. Der \textit{State} \enquote{Delete} löscht die aktuelle Ressource und liefert die \textit{Transition} zum \textit{State} \enquote{Collection} zurück. 
-Dieses Beispiel verdeutlicht noch einmal bildlich, dass der Entwickler nur den Einstiegspunkt \enquote{Dispatcher} kennen muss. Die Anwendung liefert selbst alle benötigten Informationen, um die Daten für die Anwendung nachzuladen.
+Die Abbildung \ref{fig:finite_state_machine} zeigt einen solchen Automaten. Der Einstiegspunkt ist der \textit{State} \enquote{Dispatcher}. Dieser liefert die \textit{Transition} zum \textit{State} \enquote{Collection} zurück. Dieser \textit{State} verfügt über alle Informationen, die benötigt werden, um eine Collection der betroffenen Ressource anzuzeigen. Weiterhin hat er auch das Wissen über die beiden nächsten \textit{Transitionen} zu den \textit{State}s \enquote{Create} und \enquote{Single}. Wie der Name des \textit{States} annehmen lässt, wird der \textit{State} \enquote{Create} benötigt, um eine neue Ressource anzulegen. Von diesem \textit{State} aus kann die Anwendung nur zurück zum \textit{State} \enquote{Collection}. Der \textit{State} \enquote{Single} enthält alle benötigten Daten, um eine einzelne Ressource anzuzeigen. Von hier kann die Anwendung zum \textit{State} \enquote{Update} oder \enquote{Delete} wechseln. Der \textit{State} \enquote{Update}, ermöglicht die Ressource zu bearbeiten. Von hier kann der Nutzer der Anwendung nur zum \textit{State} \enquote{Single} zurückkehren. Der \textit{State} \enquote{Delete} löscht die aktuelle Ressource und liefert die \textit{Transition} zum \textit{State} \enquote{Collection} zurück. 
+Dieses Beispiel verdeutlicht bildlich, dass der Entwickler nur den Einstiegspunkt \enquote{Dispatcher} kennen muss. Die Anwendung liefert selbst alle benötigten Informationen, um die Daten für die Anwendung nachzuladen.
 
 \begin{figure}[H] \label{fig:finite_state_machine}
 	\begin{center}
@@ -47,15 +47,15 @@ Dieses Beispiel verdeutlicht noch einmal bildlich, dass der Entwickler nur den E
 
 \section{Entwicklung von Android \textit{CustomViews}}\label{sec:custom_view}
 Die Software-Plattform Android basiert auf Linux und wird als Betriebssystem für mobile Endgeräte verwendet.
-Das System wird als \textit{Open Source} Projekt von der Open Handset Alliance entwickelt \cite{open_handset_alliance}. Dabei ist ein Ziel, die Schaffung eines offenen Standards für mobile Endgeräte.
-Die Entwicklung ist nicht abgeschlossen, die aktuelle Version ist 7.0 Nougat (Stand Feb. 2017).
+Das System wird als \textit{Open Source} Projekt von der Open Handset Alliance entwickelt \cite{open_handset_alliance}. Dabei ist ein Ziel die Schaffung eines offenen Standards für mobile Endgeräte.
+Die Entwicklung ist nicht abgeschlossen. Die aktuelle Version ist 7.0 Nougat (Stand Feb. 2017).
 
 Programme für diese Plattform heißen Applikation oder kurz App. Eine App stellt alle nötigen Sourcen bereit, zum Beispiel den Programmcode, \textit{Layout} und Grafiken, die benötigt werden, um diese App auf einem Android-Endgerät auszuführen.
-Mit Hilfe von \textit{Widgets} und \textit{Layouts} können \textit{Views} definiert werden. Diese \textit{Views} stellen dann die gewünschte Information auf dem Display dar. Die bekanntesten \textit{Widgets} sind: \textit{TextView}, \textit{Button} und \textit{EditText}. Die Anordnung dieser \textit{Widgets} erfolgt dann mit einem \textit{Layout}. Es gibt hierbei verschiendene \textit{Layouts} zur Auswahl. Beispielsweise das \textit{LinearLayout}, mit horizontaler oder vertikaler Orientierung. Ein weiteres Beispiel ist das \textit{RelativeLayout}.
+Mit Hilfe von \textit{Widgets} und \textit{Layouts} können \textit{Views} definiert werden. Diese \textit{Views} stellen dann die gewünschte Information auf dem Display dar. Die bekanntesten \textit{Widgets} sind: \textit{TextView}, \textit{Button} und \textit{EditText}. Die Anordnung dieser \textit{Widgets} erfolgt mit einem \textit{Layout}. Es gibt hierbei verschiendene \textit{Layouts} zur Auswahl. Beispielsweise das \textit{LinearLayout} mit horizontaler oder vertikaler Orientierung. Ein weiteres Beispiel ist das \textit{RelativeLayout}.
 
-Reichen die Standard-\textit{Layouts} und -\textit{Widgets} nicht aus, gibt es noch die Möglichkeit eigene zu entwickeln. Dies ermöglicht diese \textit{Views} um Attribute und Methoden zu erweitern. Diese können dann sowohl in der \textit{Layout-XML} als auch im Programm-Code angesprochen werden.
+Reichen die Standard-\textit{Layouts} und -\textit{Widgets} nicht aus, gibt es noch die Option, eigene zu entwickeln. Dies ermöglicht, diese \textit{Views} um Attribute und Methoden zu erweitern. Diese können sowohl in der \textit{Layout-XML}, als auch im Programm-Code angesprochen werden.
 
-Ausgehend davon, dass eine Applikation eine Liste von Personen mit Hilfe einer \textit{RecyclerView} anzeigen soll, gibt es die Möglichkeit eine \textit{CardView} zu erzeugen, welche eine einzelne Person darstellt. Diese \textit{CardView} kann in einem \textit{XML-Layout} wie allgemein bekannt definiert werden. Um die \textit{View} dann mit den entsprechenden Informationen zu befüllen, werden im \textit{Adapter} der \textit{RecyclerView} dann die einzelnen Attribute einzeln angesprochen und mit den erforderlichen Details befüllt.
+Ausgehend davon, dass eine Applikation eine Liste von Personen mit Hilfe einer \textit{RecyclerView} anzeigen soll, gibt es die Alternative, eine \textit{CardView} zu erzeugen, welche eine einzelne Person darstellt. Diese \textit{CardView} kann in einem \textit{XML-Layout} wie allgemein bekannt definiert werden. Um die \textit{View} mit den entsprechenden Informationen zu befüllen, werden im \textit{Adapter} der \textit{RecyclerView} die einzelnen Attribute einzeln angesprochen und mit den erforderlichen Details befüllt.
 Alternativ besteht die Möglichkeit, eine \textit{CustomView} zu erzeugen, in diesem Fall eine \textit{PersonCardView}.
 Hierfür sind folgende Schritte notwendig: Registrieren der \textit{CustomViews}, Definieren des Aufbaus der \textit{CustonView} und Erzeugen einer \textit{CustomView} Klasse.
 
@@ -79,7 +79,7 @@ caption=Aufbau einer \textit{attrs.xml} - Datei.]
 
 \subsection{Definieren des Aufbaus der \textit{CustomView}}
 
-Da die \textit{PersonCardView} eine \textit{CustomView} ist, welche aus verschiedenen \textit{Widgets} zusammengesetzt wurde, müssen diese auch definiert werden. Dies geschieht wie gewohnt mit Hilfe einer \textit{XML-Datei}, mit einer Ausnahme. \textit{Die Root-View} ist in diesem Fall keine \textit{CardView} sondern ein beliebiges anderes \textit{Layout}. Da die \textit{PersonCardView} von \textit{CardView} erbt und somit bereits eine \textit{CardView} ist.
+Da die \textit{PersonCardView} eine \textit{CustomView} ist, welche aus verschiedenen \textit{Widgets} zusammengesetzt wurde, müssen diese auch definiert werden. Dies geschieht, wie gewohnt mit Hilfe einer \textit{XML-Datei}, mit einer Ausnahme. \textit{Die Root-View} ist in diesem Fall keine \textit{CardView}, sondern ein beliebiges anderes \textit{Layout}. Da die \textit{PersonCardView} von \textit{CardView} erbt und somit bereits eine \textit{CardView} ist.
 
 \begin{lstlisting}[label=lst:personCardViewXml,
 language=xml,
@@ -107,41 +107,42 @@ caption=Aufbau der \textit{PersonCardView} mit Hilfe einer \textit{XML}-Datei]
 </RelativeLayout>
 \end{lstlisting}
 
+\newpage
+
 \subsection{Erzeugen einer \textit{CustomView} Klasse}
 
-Hierfür wird eine neue Java-Klasse erzeugt, welche von \textit{CardView} erbt. Es kann auch direkt von der \textit{View}-Klasse geerbt werden, anschließend mithilfe der Methode \textit{onDraw}, welche überschrieben werden muss, den gewünschten Inhalt anzuzeigen. Sei es nun Text, Formen oder Benutzereingaben.
+Hierfür wird eine neue Java-Klasse erzeugt, welche von \textit{CardView} erbt. Es kann auch direkt von der \textit{View}-Klasse geerbt werden, anschließend mit Hilfe der Methode \textit{onDraw}, welche überschrieben werden muss, den gewünschten Inhalt anzuzeigen. Sei es nun Text, Formen oder Benutzereingaben.
 In diesem Fall entspricht die \textit{CardView} weitestgehend bereits den Anforderungen, so dass diese genutzt wird.
-Die Vererbungsstruktur bringt mit sich, das die \textit{Konstruktoren} der \textit{CardView} implementiert werden müssen.
-Die Anzahl dieser \textit{Konstruktoren} hängt von der Minimum \textit{SDK}-Versions des Projekts ab. Dieses Projekt nutzt das Minimum Level 12 weshalb drei \textit{Konstruktoren} überschrieben werden müssen. Ab einen Level von 21, sind es vier, da ein weiteres Attribut zur \textit{View} hinzugefügt wurde.
+Die Vererbungsstruktur bringt mit sich, dass die \textit{Konstruktoren} der \textit{CardView} implementiert werden müssen.
+Die Anzahl dieser \textit{Konstruktoren} hängt von der Minimum \textit{SDK}-Versions des Projekts ab. Dieses Projekt nutzt das Minimum Level 12, weshalb drei \textit{Konstruktoren} überschrieben werden müssen. Ab einem Level von 21 sind es vier, da ein weiteres Attribut zur \textit{View} hinzugefügt wurde.
+
+Innerhalb der \textit{init}-Methode wird definiert, was die \textit{View} anzeigen, beziehungsweise was sie tun soll. 
+In diesem Beispiel werden die verwendeten \textit{Widgets} initialisiert. Besäße die \textit{PersonCardView} noch eigene Attribute, so würden diese im \textit{AttributeSet} übergeben und könnten daraus in ein \textit{TypedArray} geschrieben werden. Dieses \textit{TypedArray} muss am Ende \textit{recycled} werden, damit es für einen späteren Aufruf wieder zur Verfügung steht.
+
+Jetzt wird die \textit{PersonCardView} um die Methode \textit{setPerson} erweitert. Diese ist angelehnt an die Methode \textit{setText} der \textit{TextView}. Sie ermöglicht, dass der \textit{PersonCardView} ein Objekt Person übergeben wird und füllt dann die entsprechenden \textit{Widgets} mit den dazugehörigen übergebenen Daten.
 
 \begin{lstlisting}[label=lst:personCardView,
 language=java,
 firstnumber=1,
 caption=\textit{Konstruktoren} der \textit{PersonCardView}]				  
 public class PersonCardView extends CardView {
-
 public PersonCardView(Context context) {
-	super(context);
-	init(context, null, 0);
+super(context);
+init(context, null, 0);
 }
 
 public PersonCardView(Context context, AttributeSet attrs) {
-	super(context, attrs);
-	init(context, attrs, 0);
+super(context, attrs);
+init(context, attrs, 0);
 }
 
 public PersonCardView(Context context, AttributeSet attrs, int defStyleAttr) {
-	super(context, attrs, defStyleAttr);
-	init(context, attrs, defStyleAttr);
+super(context, attrs, defStyleAttr);
+init(context, attrs, defStyleAttr);
 }
 [...]
 }
 \end{lstlisting}
-
-Innerhalb der \textit{init}-Methode wird definiert, was die \textit{View} anzeigen, beziehungsweise was sie tun soll. 
-In diesem Beispiel werden die verwendeten \textit{Widgets} initialisiert. Besäße die \textit{PersonCardView} noch eigene Attribute, so würden diese im \textit{AttributeSet} übergeben und könnten daraus in ein \textit{TypedArray} geschrieben werden. Dieses \textit{TypedArray} muss am Ende \textit{recycled} werden, damit es für einen späteren Aufruf wieder zur Verfügung steht.
-
-Jetzt wird die \textit{PersonCardView} um die Methode \textit{setPerson} erweitert. Diese ist angelehnt an die Methode \textit{setText} der \textit{TextView}. Sie ermöglicht, dass der \textit{PersonCardView} ein Objekt Person übergeben wird und füllt dann die entsprechenden \textit{Widgets} mit den dazugehörigen übergebenen Daten.
 
 \begin{lstlisting}[label=lst:setPerson,
 language=java,
@@ -155,41 +156,40 @@ public void setPerson(Person person) {
 }
 \end{lstlisting}
 
-\newpage
 
-Mit Hilfe dieser Methode wird die Nutztung der \textit{PersonCardView} vereinfacht. Im \textit{Adapter} der \textit{RecyclerView} wird jetzt nicht mehr jedes einzelne \textit{Widget} definiert und mit Informationen befüllt. Sondern nur noch die \textit{PersonCardView} und mit der \textit{setPerson} - Methode kann die komplette Karte mit den Daten einer Person mit nur einem Methodenaufruf befüllt werden.
+Mit Hilfe dieser Methode wird die Nutzung der \textit{PersonCardView} vereinfacht. Im \textit{Adapter} der \textit{RecyclerView} wird nicht mehr jedes einzelne \textit{Widget} definiert und mit Informationen befüllt, sondern nur noch die \textit{PersonCardView} und mit der \textit{setPerson} - Methode kann die komplette Karte mit den Daten einer Person mit nur einem Methodenaufruf befüllt werden.
 
 \section{Modellgetriebene Softwareentwicklung}\label{sec:generators}
 
-Mit Software-Generatoren, ist es möglich Software generieren zu lassen. Dafür wird die Problemstellung der realen Welt so beschrieben, dass der Generator dies versteht, interpretieren und Programmcode erzeugen kann.
+Mit Software-Generatoren ist es möglich, Software generieren zu lassen. Dafür wird die Problemstellung der realen Welt so beschrieben, dass der Generator dies versteht, interpretiert und Programmcode erzeugen kann.
 Dieses Verfahren wird auch modellgetriebene Softwareentwicklung (MDSD) genannt \cite{mdsd}.
 
-\subsection{\textit{Domänenspezifische Sprache (DSL)}}\label{sec:dsl}
-Die Grundlage, um ein Model für einen Generator zu beschreiben ist die \textit{\acl{dsl}}.
-Eine \textit{\acs{dsl}} ist eine Programmiersprache, welche auf die Probleme einer bestimmten Domäne ausgelegt ist \cite{dslHudak}. Dadurch dass diese Sprachen auf ein ganz bestimmtes Problem zugeschnitten sind, sind \textit{\acl{dsl}} in ihrer Ausdrucksfähigkeit beschränkter als herkömmliche Programmiersprachen wie beispielsweise Java, C++ oder C\# Eine \textit{\acl{dsl}} wird dafür entwickelt ein konkretes Problem so effizient wie möglich zu lösen, ohne die komplexen Strukturen des Programmcodes kennen zu müssen.
+\subsection{\textit{Domänenspezifische Sprache (DSL)} als Modell}\label{sec:dsl}
+Die Grundlage, um ein Model für einen Generator zu beschreiben, ist die \textit{\acl{dsl}}.
+Eine \textit{\acs{dsl}} ist eine Programmiersprache, welche auf die Probleme einer bestimmten Domäne ausgelegt ist \cite{dslHudak}. Dadurch, dass diese Sprachen auf ein ganz bestimmtes Problem zugeschnitten sind, sind \textit{domänenspezifische Sprachen} in ihrer Ausdrucksfähigkeit beschränkter als herkömmliche Programmiersprachen, wie beispielsweise Java, C++ oder C\#. Eine \textit{\acl{dsl}} wird dafür entwickelt, ein konkretes Problem so effizient wie möglich zu lösen, ohne die komplexen Strukturen des Programmcodes kennen zu müssen.
 Bekannte \textit{\aclp{dsl}} sind: \textit{\ac{sql}}, \textit{Make} und \textit{\acf{html}}.
 
-Die \textit{domänenspezifischen Sprachen} lassen sich in zwei Kategorien einteilen die \textit{internen} und die \textit{externen \acsp{dsl}}.
+Die \textit{domänenspezifischen Sprachen} lassen sich in zwei Kategorien einteilen: die \textit{internen} und die \textit{externen \acsp{dsl}}.
 
 \subsubsection{\textit{Interne \acsp{dsl}}} \label{sec:intern}
-Eine interne \textit{\acs{dsl}} wird auch \textit{embdded \acs{dsl}} genannt, weil sie keine eigene \textit{Syntax} und \textit{Grammatik} entwickelt. Sie bedienen sich der \textit{Hostsprache}. Das heißt sie nutzen die selbe Programmiersprache, in welcher auch das Resultat sein wird.
-Jedoch wird die verwendete \textit{Hostsprache} eingeschränkt, so nutzt die \textit{\acl{dsl}} nur eine Teilmenge der Möglichkeiten \cite{dsl}. Anwendungsfälle von \textit{internen \acsp{dsl}} sind zum Beispiel: Es muss kein neuer \textit{Compiler} und \textit{Parser} geschrieben werden. Auch gibt es bereits integrierte Entwicklungsumgebungen (IDEs). Außerdem muss der Programmierer keine neue Sprache lernen, um die \textit{acl{dsl}} zu nutzen, sollte er die verwendete \textit{Hostsprache} bereits kennen. 
+Eine interne \textit{\acs{dsl}} wird auch \textit{embdded \acs{dsl}} genannt, weil sie keine eigene \textit{Syntax} und \textit{Grammatik} entwickelt. Sie bedienen sich der \textit{Hostsprache}. Das heißt, sie nutzen dieselbe Programmiersprache, in welcher auch das Resultat sein wird.
+Jedoch wird die verwendete \textit{Hostsprache} eingeschränkt. So nutzt die \textit{\acl{dsl}} nur eine Teilmenge der Möglichkeiten \cite{dsl}. Vorteile von \textit{internen \acsp{dsl}} sind zum Beispiel, es muss kein neuer \textit{Compiler} und \textit{Parser} geschrieben werden. Auch gibt es bereits integrierte Entwicklungsumgebungen (IDEs). Außerdem muss der Programmierer keine neue Sprache lernen, um die \textit{\acl{dsl}} zu nutzen, sollte er die verwendete \textit{Hostsprache} bereits kennen. 
 
 \subsubsection{\textit{Externe \acsp{dsl}}} \label{sec:extern}
 
-Anders als die \textit{internen \acsp{dsl}} besitzen \textit{externen \acsp{dsl}} eine eigene Syntax. Dies macht die Entwicklung einer solchen \textit{\acl{dsl}} sehr viel aufwändiger, da nun ein eigener \textit{Parser} und \textit{Compiler} mitentwickelt werden muss \cite{dsl}. Jedoch bringt diese eigene \textit{Syntax} auch den Vorteil, dass die Sprache nicht auf die Besonderheiten einer \textit{Hostsprache} eingeschränkt ist. So können Anforderungen an die Domäne bereits beim Schreiben des \textit{Compilers} mit validiert werden.
+Anders als die \textit{internen \acsp{dsl}} besitzen \textit{externe \acsp{dsl}} eine eigene Syntax. Dies macht die Entwicklung einer solchen \textit{\acl{dsl}} sehr viel aufwändiger, da nun ein eigener \textit{Parser} und \textit{Compiler} mitentwickelt werden muss \cite{dsl}. Jedoch bringt diese eigene \textit{Syntax} auch den Vorteil, dass die Sprache nicht auf die Besonderheiten einer \textit{Hostsprache} eingeschränkt ist. So können Anforderungen an die Domäne bereits beim Schreiben des \textit{Compilers} mit validiert werden.
 
 \subsection{\acf{gemara}}\label{sec:gemara}
 
-Das Projekt \acs{gemara} beinhaltet ein Reihe von Software-Generatoren, deren Ziel es ist mobile und verteilte Applikationen basierend auf dem \textit{\acs{rest}} Architekturstil generieren zu lassen. Dafür wurde eine \textit{interne \acs{dsl}} entwickelt, mit deren Hilfe sowohl \textit{Client}-seitige als auch \textit{Server}-seitige Applikationen beschrieben werden können.
+Das Projekt \acs{gemara} beinhaltet ein Reihe von Software-Generatoren, deren Ziel es, ist mobile und verteilte Applikationen basierend auf dem \textit{\acs{rest}} Architekturstil generieren zu lassen. Dafür wurde eine \textit{interne \acs{dsl}} entwickelt, mit deren Hilfe sowohl \textit{Client}-seitige als auch \textit{Server}-seitige Applikationen beschrieben werden können.
 
-Im Moment (Stand Februar 2017) ist es möglich, ein \textit{WAR-Artefakt} für einen \textit{Tomcat-Webserver} generieren zu lassen. Dieses erzeugte Projekt kann auf eine \textit{relationale MYSQL-Datenbank} oder eine \textit{dokumentenbasierten CouchDB} zugreifen. Des Weiteren ist ein Generator zur Erzeugung von Android-Applikationen sowie ein Generator für Polymer Webkomponenten in der Entwicklung.
+Im Moment (Stand Februar 2017) ist es möglich, ein \textit{WAR-Artefakt} für einen \textit{Tomcat-Webserver} generieren zu lassen. Das erzeugte Projekt kann auf eine \textit{relationale MYSQL-Datenbank} oder eine \textit{dokumentenbasierten CouchDB} zugreifen. Des Weiteren ist ein Generator zur Erzeugung von Android-Applikationen, sowie ein Generator für Polymer Webkomponenten in der Entwicklung.
 
 \newpage
 
 \subsubsection{Aufbau von \acs{gemara}}
 
-\acs{gemara} ist modular aufgebaut, jedes der einzelnen Module erfüllt einen eindeutig definierten Zweck. Die Abbildung \ref{fig:gemara} zeigt den Aufbau und Module von \acs{gemara}.
+\acs{gemara} ist modular aufgebaut. Jedes der einzelnen Module erfüllt einen eindeutig definierten Zweck. Die Abbildung \ref{fig:gemara} zeigt den Aufbau und Module von \acs{gemara}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -201,7 +201,7 @@ Im Moment (Stand Februar 2017) ist es möglich, ein \textit{WAR-Artefakt} für e
 
 \begin{itemize}
 	\item \textbf{Ratcliff} definiert ein Enfield-Model, mit Hilfe einer \textit{Fluent \acs{api}}.
-	\item \textbf{Yeading} definiert eine Repräsentation eines Enfield-Models, mit \textit{\acf{yaml}} oder \textit{\acf{json}}, welches dann nach Ratcliff übersetzt werden.
+	\item \textbf{Yeading} definiert eine Repräsentation eines Enfield-Models mit \textit{\acf{yaml}} oder \textit{\acf{json}}, welche nach Ratcliff übersetzt werden.
 	\item \textbf{Enfield} liefert das \textit{Meta-Model}, welches für die Beschreibung der gewünschten Appliktion benötigt wird.
 	\item \textbf{Norbury} stellt für \textit{Server}-seitige Applikationen den Plattform Code bereit.
 	\item \textbf{Dalston} ist ein Software-Generator, welcher den \textit{Server}-seitigen Code in Java generiert.
