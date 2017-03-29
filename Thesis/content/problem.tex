@@ -264,6 +264,8 @@ Ein weiterer Nachteil ist die Beschränkung des Modells auf Android. Wird das \t
 In dieser Arbeit wurde sich für die Variante entschieden, das \textit{Enfield-Modell} an geeigneter Stelle zu erweitern.
 Diese Stelle befindet sich in den einzelnen \textit{States}. Jede Instanz des \textit{AbstractState} besitzt ein Attribut \textit{SingleResourceView}. Diese Klasse wird um die  Attribute, welche benötigt werden, ergänzt. In der Abbildung \ref{fig:enfield-model-extended} ist der vereinfachte Aufbau des \textit{AbstractStates} und einer \textit{SingleResourceView} zu sehen.
 
+\newpage
+
 Wird beispielsweise eine Instanz eines \textit{GetPrimarySingleResourceByIdStates} erzeugt, und dessen \textit{SingleResourceView} enthält alle notwendigen Informationen, um die \textit{View} in der Android Anwendung zu beschreiben, kann der Generator mit Hilfe der \textit{Transitionen} über die \textit{States} iterieren und verfügt an jedem \textit{State} über alle benötigten Informationen, um den aktuellen \textit{State} in der Anwendung generieren zu lassen.
 
 Bei dieser Methode befinden sich alle \textit{state}-spezifischen Daten direkt am \textit{State}. Jedoch gibt es neben diesen spezifischen Daten auch Daten, welche die komplette Applikation betreffen. Hierfür muss das \textit{Enfield-Modell} noch an einer anderen Stelle erweitert werden. 
