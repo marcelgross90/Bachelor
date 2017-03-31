@@ -291,6 +291,15 @@ Die Analyse in dieser Arbeit beschränkt sich auf die \textit{Clients} Android u
 
 \subsubsection{CardView}
 
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.75\textwidth]{images/card.png}
+		\caption{Beispiel einer \textit{CardView} eines Dozenten nach Material Design.}
+		\label{fig:card}
+	\end{center}
+\end{figure}
+
+\newpage
 
 \begin{lstlisting}[label=lst:braun_json,
 language=json,
@@ -330,19 +339,11 @@ caption=Demo Daten eines Dozenten.]
 [...]
 \end{lstlisting}
 
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[width=0.75\textwidth]{images/card.png}
-		\caption{Beispiel einer \textit{CardView} eines Dozenten nach Material Design.}
-		\label{fig:card}
-	\end{center}
-\end{figure}
 
 Die  \textit{\acf{json}} Repräsentation unter Listing \ref{lst:braun_json} beschreibt das Beispiel aus Abbildung \ref{fig:card}.
 Jetzt gilt es zu überlegen, wie die Attribute des \textit{JSON} Objekts aufzubereiten sind, dass diese die Karte des Dozenten widerspiegeln. In erster Linie muss entschieden werden, welche der gelieferten Informationen in der Liste für jeden einzelnen Dozenten angezeigt werden sollten. Ist es sinnvoll Informationen zu gruppieren? Hier beispielsweise die Attribute \textit{firstName} und \textit{lastName}, welche in einer Zeile angezeigt werden sollen. Ist bekannt welche Informationen eine Karte enthalten soll, so muss auch die Reihenfolge der einzelnen Attribute auf der Karte bestimmt werden. Neben der Reihenfolge gibt es außerdem die Möglichkeit, Schriftgröße oder Schriftfarbe der einzelnen Attribute unterschiedlich zu gestalten. Auch müssen die Standardicons den jeweiligen Attributen zugewiesen werden. Es sollte zudem möglich sein, einzelnen Attributen bestimmte Aktionen zuzuweisen. Beispielsweise sollte beim Klick auf eine Homepage, diese im Browser geöffnet werden oder beim Klick auf die Adresse sollte sich die Applikation \textit{Maps} öffnen und die angeklickte Adresse dort anzeigen. Bei einem Attribut mit Hyperlink zu einer Website sollte es möglich sein, einen mitgegebenen Text anstelle des Hyperlinks anzuzeigen.
 Besitzt die Karte ein Bild, so sollte der Nutzer die Möglichkeit besitzen, zu entscheiden, ob dieses auf der linken oder rechten Seite der Karte dargestellt werden soll.
 
-\newpage
 
 \subsubsection{\textit{DetailView}}
 
@@ -369,6 +370,8 @@ Jedoch muss die \textit{DetailView} wissen, welches Attribut den Titel der \text
 		\label{fig:input}
 	\end{center}
 \end{figure}
+
+\newpage
 
 Für das Anlegen eines Dozenten oder auch zum Bearbeiten muss entschieden werden, welche Attribute zum Anlegen nötig sind. Auch hier ist es notwendig, die Reihenfolge zu bestimmen. Jedoch kommt in dieser \textit{InputView} für jedes Attribut noch die Option hinzu, einen \textit{Hint}-Text anzugeben. Dieser Text beschreibt, was innerhalb der Android-\textit{View} \textit{EditText} als Beschreibung für das bestimmte Attribut steht. Weiter sollte es die Möglichkeit geben, jedem Feld eine Nachricht, welche angezeigt wird, wenn das Feld beispielsweise leer gelassen wird oder eine weitere Nachricht mitzugeben, wenn das Eingegebene nicht dem Erwarteten entspricht, zum Beispiel wenn in das Feld für die E-Mail eine Telefonnummer eingegeben. Oder ein regulärer Ausdruck mitgegeben wurde und das Eingegebene nicht dessen Anforderungen entspricht.
 
@@ -408,16 +411,15 @@ Es gibt zwei Ausprägungsarten: \textit{SingleResourceViewAttribute} und \textit
 
 Während bei der \textit{SingleResourceViewAttribute} das \textit{GroupedResourceViewAttribute} wiederum gibt eine Liste von diesen \textit{DisplayViewAttributen}, welche die anzuzeigenden Informationen widerspiegeln. Weitergehend besitzt das \textit{GroupedResourceViewAttribute} auch ein \textit{DisplayViewAttribute}, welches die neu entstandene Gruppierung beschreiben soll.
 
-\newpage
-
 Ein \textit{DisplayViewAttribute} ist nun in der Lage, Schriftgröße und -farbe zu definieren. Die angegebene Farbe muss in hexadezimaler Darstellung angegeben werden. Wird keine Farbe mitgegeben, wird die Defaultfarbe der Anwendung genommen. In der Regel ist diese schwarz. Die Schriftgröße wiederum ist auf drei Stufen beschränkt. Es gibt die Möglichkeit, den Text in klein, normal und groß darzustellen. Per Default ist normal eingestellt. Wegen der Oberklasse \textit{AbstractViewAttribute} besitzt das \textit{DisplayViewAttribute} noch das Attribut \textit{attributeName}. Dieses muss exakt so heißen, wie in der Definition der Ressource.
 Mit dem \textit{attributeLabel} kann angegeben werden, wie dieses Attribut in der \textit{View} angezeigt werden soll. Die Abbildung \ref{fig:detail} zeigt die Verwendung von den Labels, Beispielsweise steht von der E-Mailadresse des Dozenten \textit{E-Mail}. Dieser String entspricht dem Label des Attributs. Weiterhin muss angeben werden, von welchem Typ das aktuell beschriebene Attribut ist.
 Dies geschieht mit dem Attribut, \textit{AttributeType}. Es gibt folgende mögliche Typen: \textit{HOME}, \textit{MAIL}, \textit{LOCATION}, \textit{PICTURE}, \textit{PHONE\_NUMBER}, \textit{TEXT}, \textit{URL}, \textit{DATE}, \textit{SUBRESOURCE}. Jeder Typ bestimmt die Eigenschaften des Attributs. Über diesen wird bestimmt, welches Icon in der Karte vor dem entsprechenden Attribut angezeigt wird oder welche Aktion bei Klick ausgeführt werden soll. So wird bei einem Klick auf ein Attribut vom Typ \textit{LOCATION} versucht die Anwendung \textit{Maps} zu öffnen und den angezeigten Standort dort anzuzeigen. Ist das Attribute vom Typ \textit{SUBRESOURCE}, so wird für dieses Attribut ein \textit{Button} angezeigt. Dieser ermöglicht es dann zu der entsprechenden Subressource zu wechseln. Diese Klick-Aktionen müssen jedoch mit dem Attribut \textit{clickActionAndroid} erst aktiviert werden.
+\newpage
 Manche Typen bringen weitere Besonderheiten mit sich. So muss beispielsweise bei einem \textit{URL}-Attribut eine Beschreibung mitgegeben werden, welche anstelle der Hyperlinks angezeigt werden soll. Bei einem Bild kann beispielsweise bestimmt werden, ob dieses links oder rechts dargestellt werden soll. 
 
 Nachfolgend wird auf einige Besonderheiten der Nutzung der eingebenden \textit{Views} eingegangen und diese genauer erklärt. So zeigt Listing \ref{lst:grouped} beispielsweise das Erzeugen eines \textit{GroupedResourceViewAttributes}. Hierfür werden drei \textit{DisplayViewAttribute} definiert. Das erste beschreibt hierbei das Aussehen, den Namen und den Typ der Gruppierung. Die Gruppe in diesem Beispiel wird aus den beiden Attributen \textit{firstName} und \textit{lastName} zusammengesetzt. Beide Attribute sind vom Typ \textit{TEXT}. Auch die Gruppe wird von diesem Typ sein. Der String im Konstruktor ist der Name dieses Attributs. Stellt das Attribut ein Attribut aus der Ressource dar, wie der \textit{firstName} beziehungsweise \textit{lastName}, muss dieser Name identisch mit dem Attribut der Ressource sein. Neben der Zusammensetzung der Gruppe wird hier ebenfalls definiert, wie dies dargestellt werden soll. Mit \textit{setFontSize(DisplayViewAttribute.FontSize.LARGE)} wird deklariert, dass die Gruppen mit einer großen Schriftgröße dargestellt werden soll, und die Methode \textit{setFontColor("\#000")} bestimmt, dass die Schrift schwarz ist. Bei einer Gruppe hat es keinen Effekt, wenn die Schriftfarbe oder Größe der einzelnen Gruppenmitglieder bestimmt wird. Die Darstellung ist einzig von den Attributen der Gruppe abhängig.
 
-\newpage
+
 
 \begin{lstlisting}[label=lst:grouped,
 language=java,
@@ -443,10 +445,10 @@ name = new GroupResourceViewAttribute(nameAttribute, nameAttributes);
 name = null;
 }
 \end{lstlisting}
-
+ \newpage
+ 
 Das Listing \ref{lst:category} beschreibt die Definition einer \textit{Category} als Teil einer \textit{DetailView}. In diesem Listing wird eine \textit{Category} mit dem Namen \textit{Office} erzeugt. Diese Kategorie besitzt zwei Attribute, welche als \textit{DisplayViewAttribute} dargestellt werden. Eines der beiden Attribute ist in diesem Fall die Adresse. Es wird definiert, das dieses \textit{DisplayViewAttribute} vom Type \textit{LOCATION} ist und dass es eine Aktion beim Anklicken geben soll. Des Weiteren wird definiert, dass dieses Attribut ein Label \textit{Address} besitzt.
 
-\newpage
 
 \begin{lstlisting}[label=lst:category,
 language=java,
